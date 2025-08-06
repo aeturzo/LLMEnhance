@@ -1,0 +1,4 @@
+{"session":"s1","content":"DPP Section 3.2 states that the maximum pressure is 250 psi.","query":"What is the allowed max pressure?","relevant":true}
+{"session":"s1","content":"DPP diagrams use a blue background grid by convention.","query":"Which colour grid do diagrams have?","relevant":true}
+{"session":"s1","content":"The pump must be inspected every 6 months.","query":"How often is the valve checked?","relevant":false}
+
