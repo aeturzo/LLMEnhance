@@ -2,6 +2,9 @@ from fastapi import APIRouter, File, UploadFile, HTTPException
 from backend.services import ingestion_service
 from backend.services import search_service
 from backend.models.schemas import DocumentResponse, SearchResponse, QueryRequest
+from fastapi import APIRouter, File, UploadFile, HTTPException, Header
+from backend.services import ingestion_service, search_service, memory_service   # ← add memory_service
+from backend.models.schemas import DocumentResponse, SearchResponse, QueryRequest
 
 router = APIRouter()
 
@@ -28,3 +31,33 @@ async def semantic_search(query: QueryRequest):
     """Perform a semantic search over indexed documents."""
     results = search_service.search(query_text=query.query, top_k=5)
     return {"query": query.query, "results": results}
+
+# -------------  Memory module endpoints  -------------
+
+@router.post("/memory/add")
+async def add_memory(
+    req: QueryRequest,
+    session_id: str = Header(..., description="Conversation / session ID"),
+):
+    """
+    Store *content* in long-term memory for the given session.
+    """
+    memory_service.add_memory(session_id, req.query)
+    return {"status": "stored"}
+
+@router.post("/memory/search")
+async def search_memory(
+    req: QueryRequest,
+    session_id: str = Header(..., description="Conversation / session ID"),
+    top_k: int = 5,
+):
+    """
+    Retrieve the top-k most relevant memories for the session.
+    """
+    hits = memory_service.retrieve(session_id, req.query, top_k=top_k)
+    return {
+        "query": req.query,
+        "results": [
+            {"content": h.content, "score": h.score} for h in hits
+        ],
+    }
