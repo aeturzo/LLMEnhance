@@ -4,3 +4,9 @@ pydantic
 numpy
 faiss-cpu
 python-multipart
+rdflib
+owlrl
+httpx
+sentence-transformers
+torch
+openai
