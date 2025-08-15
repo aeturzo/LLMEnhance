@@ -1,0 +1,9 @@
+* text=auto eol=lf
+
+*.sh   text eol=lf
+*.py   text
+*.md   text
+*.json text
+*.jsonl text
+*.csv  text
+*.ttl  text

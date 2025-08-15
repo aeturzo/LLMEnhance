@@ -11,6 +11,7 @@ from backend.services.symbolic_reasoning_service import build_reasoner  # must e
 
 # --- Routers ----------------------------------------------------------------
 from backend.api.solve import router as solve_router
+from backend.api.solve_rl import router as rl_router
 
 # If you added seeding endpoints earlier, uncomment these:
 from backend.api.memory import router as memory_router
@@ -54,6 +55,7 @@ def health():
     return {"status": "ok", "message": "See /docs for the Swagger UI."}
 
 # --- Routes -----------------------------------------------------------------
-app.include_router(solve_router)        # POST /solve
+app.include_router(solve_router)      # POST /solve
+app.include_router(rl_router)       
 app.include_router(memory_router)     # POST /memory/put   (optional seeding)
 app.include_router(ingest_router)     # POST /ingest/put   (optional seeding)

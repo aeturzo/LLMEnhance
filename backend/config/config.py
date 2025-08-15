@@ -1,32 +1,29 @@
+# backend/config/config.py
 from __future__ import annotations
+from typing import Optional
 
-from functools import lru_cache
-from pydantic import BaseSettings
-
+try:
+    from pydantic_settings import BaseSettings, SettingsConfigDict  # v2
+    from pydantic import Field
+    _V2 = True
+except Exception:
+    from pydantic import BaseSettings, Field  # v1 fallback
+    SettingsConfigDict = dict  # type: ignore
+    _V2 = False
 
 class Settings(BaseSettings):
-    # App
-    RUN_MODE: str = "MEMSYM"
-    LOG_LEVEL: str = "INFO"
-    CORS_ALLOW_ORIGINS: str = "*"
+    # add BOTH names so old code is happy; MiniLM default = 384
+    EMBEDDING_VECTOR_DIM: int = Field(default=384)
+    EMBEDDING_MODEL_NAME: Optional[str] = Field(default=None)  # legacy name
+    EMBED_MODEL_NAME: Optional[str] = Field(default="sentence-transformers/all-MiniLM-L6-v2")  # preferred
+    OPENAI_API_KEY: Optional[str] = Field(default=None)
+    ENV: str = Field(default="dev")
 
-    # Embeddings
-    EMBEDDING_MODEL_NAME: str = "gpt4o-mini"   # or "all-MiniLM-L6-v2"
-    EMBEDDING_VECTOR_DIM: int = 768
+    if _V2:
+        model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+    else:
+        class Config:
+            env_file = ".env"
+            extra = "ignore"
 
-    # OpenAI (optional)
-    OPENAI_API_KEY: str | None = None
-    OPENAI_EMBEDDING_MODEL: str | None = None  # e.g., "text-embedding-3-small"
-
-    class Config:
-        env_file = ".env"
-        case_sensitive = False
-
-
-@lru_cache()
-def get_settings() -> Settings:
-    return Settings()
-
-
-# 👉 this is what `from backend.config.config import settings` expects
-settings: Settings = get_settings()
+settings = Settings()

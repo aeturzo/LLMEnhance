@@ -1,20 +1,78 @@
-# Python venvs
+# ---- OS / editor noise ----
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.code-workspace
+.idea/
+.vscode/
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
 .venv/
 venv/
 env/
-
-# Bytecode / build
-__pycache__/
-*.py[cod]
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+pip-wheel-metadata/
+*.egg-info/
 build/
 dist/
+site/
+.coverage
+coverage.xml
+htmlcov/
 
-# IDE / OS
-.DS_Store
-.vscode/
-.idea/
+# ---- Notebooks ----
+.ipynb_checkpoints/
 
-# Local run artifacts
+# ---- Logs ----
+logs/
+*.log
+
+# ---- Secrets / config ----
+.env
+.env.*
+.envrc
+
+# ---- Project artifacts (generated) ----
+artifacts/**
+!artifacts/.gitkeep
+
+# Memory/search persistence (generated at runtime)
 memory.index
 memory.meta.jsonl
-*.log
+memory.npy
+search.meta.jsonl
+search.npy
+
+# ---- Big binary/model blobs (don’t commit) ----
+*.npy
+*.npz
+*.pt
+*.bin
+*.ckpt
+*.onnx
+*.h5
+*.tflite
+*.tar
+*.gz
+*.zip
+
+# ---- Caches (within repo) ----
+.cache/
+models/
+model_cache/
+transformers_cache/
+huggingface_cache/
+hf_cache/
+
+# ---- Optional: local data staging dirs (keep dir, ignore contents) ----
+data/cache/**
+!data/cache/.gitkeep
+data/tmp/**
+!data/tmp/.gitkeep
