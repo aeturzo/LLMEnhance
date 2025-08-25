@@ -55,6 +55,7 @@ def _l2_normalize_rows(mat: np.ndarray) -> np.ndarray:
 
 class MemoryEntry:
     """Container for a single memory record."""
+
     def __init__(
         self,
         session_id: str,
@@ -179,20 +180,32 @@ class MemoryService:
         if self._mat.shape[0] == 0:
             return []
 
-        qv = self._embed(query).reshape(1, -1)          # (1, D), L2-normalized
-        sims = (self._mat @ qv.T).ravel()               # cosine via dot product
+        # indices belonging to this session
+        sess_idxs = [i for i, e in enumerate(self.entries) if e.session_id == session_id]
+        if not sess_idxs:
+            return []
 
-        # Top-k over all, then filter by session
-        k = int(min(top_k, sims.shape[0]))
-        idxs = np.argpartition(-sims, k - 1)[:k]
-        idxs = idxs[np.argsort(-sims[idxs])]
+        qv = self._embed(query).reshape(1, -1)          # (1, D)
+        sims_all = (self._mat @ qv.T).ravel()
+
+        # take scores only for this session
+        scored = [(i, float(sims_all[i])) for i in sess_idxs]
+        scored.sort(key=lambda t: t[1], reverse=True)
+
+        k = int(min(top_k, len(scored)))
+        # optional min-score threshold via env
+        try:
+            min_score = float(os.getenv("MEM_MIN_SCORE", "0.0"))
+        except Exception:
+            min_score = 0.0
 
         hits: List[MemoryEntry] = []
-        for rank, idx in enumerate(idxs):
-            e = self.entries[int(idx)]
-            if e.session_id == session_id:
-                e.score = float(sims[int(idx)])
-                hits.append(e)
+        for i, score in scored[:k]:
+            if score < min_score:
+                continue
+            e = self.entries[i]
+            e.score = score
+            hits.append(e)
         return hits
 
     def flush_session(self, session_id: str) -> int:

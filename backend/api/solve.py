@@ -1,15 +1,20 @@
 # backend/api/solve.py
 from __future__ import annotations
-from typing import Optional, Literal, List
+from typing import Optional, Literal, List, Dict, Any
 from pydantic import BaseModel, Field
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Header
 
 from backend.services import memory_service, search_service
+
+try:
+    # New Day-3 API
+    from backend.services.symbolic_reasoning_service import answer_symbolic  # type: ignore
+except Exception:
+    answer_symbolic = None  # type: ignore
 
 router = APIRouter()
 
 class SolveRequest(BaseModel):
-    # Accept both "query" and "q" to be lenient with clients.
     query: Optional[str] = Field(default=None)
     q: Optional[str] = Field(default=None)
     product: Optional[str] = None
@@ -20,24 +25,32 @@ def _pick_query(req: SolveRequest) -> str:
     return (req.query or req.q or "").strip()
 
 @router.post("/solve")
-def solve(req: SolveRequest):
+def solve(req: SolveRequest, x_run_mode: str | None = Header(default=None)) -> Dict[str, Any]:
     text = _pick_query(req)
     if not text:
         raise HTTPException(status_code=422, detail="Missing query/q")
 
-    mode = (req.mode or "BASE").upper()
+    mode = (x_run_mode or req.mode or "BASE").upper()
     session = req.session or "s1"
-    product = (req.product or "").strip()
+    product = (req.product or "").strip() or None
 
-    # Retrieve memory hits if needed
+    # --- SYMBOLIC (when asked) ---
+    sym_ans = None
+    if mode in ("SYM", "MEMSYM") and answer_symbolic is not None:
+        try:
+            sym_ans = answer_symbolic(text, product, session)
+        except Exception:
+            sym_ans = None
+
+    # --- MEMORY ---
     mem_hits = []
     if mode in ("MEM", "MEMSYM"):
         try:
             mem_hits = memory_service.retrieve(session_id=session, query=text, top_k=3)
-        except Exception as e:
+        except Exception:
             mem_hits = []
 
-    # Retrieve search hits (sym falls back to stronger query with product hint)
+    # --- SEARCH (kept for BASE/SYM/MEMSYM) ---
     search_q = f"{product} {text}".strip() if product else text
     search_hits = []
     if mode in ("BASE", "SYM", "MEMSYM"):
@@ -46,28 +59,94 @@ def solve(req: SolveRequest):
         except Exception:
             search_hits = []
 
-    # Compose a simple answer:
     parts: List[str] = []
-    if mode in ("MEM", "MEMSYM") and mem_hits:
-        parts.append(f"Memory: {mem_hits[0].content}")
+    steps: List[Dict[str, Any]] = []
+
+    if mode == "SYM":
+        if sym_ans:
+            parts.append(sym_ans.text)
+            steps.append({
+                "source": "SYM",
+                "sym_trace": {
+                    "product": getattr(sym_ans.trace, "product", product),
+                    "asserted": getattr(sym_ans.trace, "asserted", []),
+                    "inferred": getattr(sym_ans.trace, "inferred", []),
+                    "rules_fired": getattr(sym_ans.trace, "rules_fired", []),
+                },
+                "evidence": sym_ans.evidence,
+            })
+        else:
+            parts.append("No result found.")
+            steps.append({"source": "SYM"})
+        return {
+            "mode": mode,
+            "answer": "\n".join(parts),
+            "steps": steps,
+            "session": session,
+            "product": product,
+        }
+
+    if mode == "MEM":
+        if mem_hits:
+            parts.append(f"Memory: {mem_hits[0].content}")
+            steps.append({"source": "MEM", "score": getattr(mem_hits[0], "score", None)})
+        else:
+            parts.append("No result found.")
+            steps.append({"source": "MEM"})
+        return {
+            "mode": mode,
+            "answer": "\n".join(parts),
+            "steps": steps,
+            "session": session,
+            "product": product,
+        }
+
+    if mode == "MEMSYM":
+        if mem_hits:
+            parts.append(f"Memory: {mem_hits[0].content}")
+            steps.append({"source": "MEM", "score": getattr(mem_hits[0], "score", None)})
+
+        if sym_ans:
+            parts.append(sym_ans.text)
+            steps.append({
+                "source": "SYM",
+                "sym_trace": {
+                    "product": getattr(sym_ans.trace, "product", product),
+                    "asserted": getattr(sym_ans.trace, "asserted", []),
+                    "inferred": getattr(sym_ans.trace, "inferred", []),
+                    "rules_fired": getattr(sym_ans.trace, "rules_fired", []),
+                },
+                "evidence": sym_ans.evidence,
+            })
+
+        if not parts and search_hits:
+            parts.append(f"Search: {search_hits[0].text}")
+            steps.append({"source": "SEARCH"})
+
+        if not parts:
+            parts.append("No result found.")
+            steps.append({"source": "MEMSYM"})
+
+        return {
+            "mode": mode,
+            "answer": "\n".join(parts),
+            "steps": steps,
+            "session": session,
+            "product": product,
+        }
+
+    # BASE
     if search_hits:
         parts.append(f"Search: {search_hits[0].text}")
-    if not parts:
+        steps.append({"source": "SEARCH"})
+    else:
         parts.append("No result found.")
-
-    answer = " ".join(parts)
-
-    # Return structured response (your evaluator likely only cares about .answer)
-    sources = []
-    for h in mem_hits[:2]:
-        sources.append({"type": "memory", "score": getattr(h, "score", None), "snippet": h.content})
-    for h in search_hits[:2]:
-        sources.append({"type": "search", "score": getattr(h, "score", None), "snippet": h.text})
+        steps.append({"source": "BASE"})
 
     return {
         "mode": mode,
-        "answer": answer,
-        "sources": sources,
+        "answer": "\n".join(parts),
+        "steps": steps,
         "session": session,
-        "product": product or None,
+        "product": product,
     }
