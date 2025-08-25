@@ -1,6 +1,6 @@
 # backend/eval/faithfulness.py
 from __future__ import annotations
-from typing import Optional, Dict, Any, List
+from typing import Optional, Dict, Any
 from fastapi.testclient import TestClient
 
 from backend.main import app
@@ -9,19 +9,25 @@ from backend.services.symbolic_reasoning_service import disable_rules, enable_al
 client = TestClient(app)
 
 def _solve(query: str, product: Optional[str], session: str, mode: str) -> Dict[str, Any]:
-    resp = client.post("/solve", json={"query": query, "product": product, "session": session, "mode": mode})
+    resp = client.post("/solve", json={
+        "query": query, "product": product, "session": session, "mode": mode
+    })
     resp.raise_for_status()
     return resp.json()
 
 def knockout_memory_then_answer(query: str, product: Optional[str], session: str, mode: str = "MEMSYM") -> Dict[str, Any]:
     """
-    Simulate a memory knockout by forcing SYM-only answer when mode was MEM or MEMSYM.
+    Simulate a memory knockout by removing memory from the route:
+      - if mode == MEM   -> use BASE
+      - if mode == MEMSYM-> use SYM
+      - else             -> unchanged
     """
-    if mode.upper() == "MEM":
-        return _solve(query, product, session, "BASE")  # no MEM path
-    if mode.upper() == "MEMSYM":
+    m = (mode or "").upper()
+    if m == "MEM":
+        return _solve(query, product, session, "BASE")
+    if m == "MEMSYM":
         return _solve(query, product, session, "SYM")
-    return _solve(query, product, session, mode)
+    return _solve(query, product, session, m)
 
 def disable_rule_then_answer(rule_id: str, query: str, product: Optional[str], session: str, mode: str = "SYM") -> Dict[str, Any]:
     """

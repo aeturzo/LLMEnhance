@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Day 1+2 — Experiment spine + traces (with SYM step capture)
+Day 1+2+4 — Experiment spine + traces (with SYM trace + RL cost/reward)
 - Reads canonical tests from tests/dpp_rl/tests.jsonl (preferred), else tests/combined_eval/combined.jsonl.
 - Evaluates BASE, MEM, SYM, MEMSYM via /solve (mode in JSON), and RL via /solve_rl on the SAME tests.
 - Deterministic seeding for random/numpy/torch.
@@ -9,7 +9,7 @@ Day 1+2 — Experiment spine + traces (with SYM step capture)
     artifacts/eval_{MODE}_{stamp}.csv
     artifacts/eval_joined_{stamp}.csv
     artifacts/eval_summary_{stamp}.csv
-    artifacts/trace_{stamp}.jsonl   (features + full steps incl. sym_trace)
+    artifacts/trace_{stamp}.jsonl   (features + full steps incl. sym_trace, RL cost/reward)
 - Acceptance: no HTTP 4xx/5xx; joined rows == (#tests × 5 modes).
 """
 from __future__ import annotations
@@ -28,6 +28,7 @@ from fastapi.testclient import TestClient
 from backend.config.run_modes import RunMode
 from backend.services.symbolic_reasoning_service import build_reasoner
 from backend.services import memory_service
+from backend.services.policy_costs import episode_cost   # <-- Day 4
 from backend.main import app
 
 # -------- Paths --------
@@ -202,12 +203,17 @@ if __name__ == "__main__":
             # features for trace
             feats = extract_features_safe(ex["query"], ex.get("product"), ex["session"])
 
-            # persist trace (includes full steps and sym_trace if present)
+            # capture SYM sub-trace if present
             sym_step = None
             for s in steps or []:
                 if isinstance(s, dict) and s.get("source") == "SYM":
                     sym_step = s
                     break
+
+            # (optional) compute classic episode cost for observability
+            cost = episode_cost(steps)
+
+            # persist trace (includes full steps and sym_trace if present)
             trace_row = {
                 "id": ex["id"],
                 "mode": mode.value,
@@ -215,9 +221,11 @@ if __name__ == "__main__":
                 "product": ex.get("product"),
                 "session": ex["session"],
                 "features": feats,
-                "chosen_action": mode.value,  # classic: fixed by design
+                "chosen_action": mode.value,      # classic: fixed by design
                 "success": int(succ),
-                "reward": float(succ),
+                "reward": float(succ),            # classic: no alpha penalty
+                "cost": round(cost, 4),
+                "alpha": 0.0,
                 "latency_ms": round((t1 - t0) * 1000.0, 2),
                 "answer": ans,
                 "steps": steps,
@@ -267,12 +275,19 @@ if __name__ == "__main__":
         # infer chosen action from steps (fallback to answer text)
         action_guess = guess_action_from_steps(steps) or guess_action_from_answer(ans)
 
-        # persist trace
+        # Day 4: cost-aware reward
+        alpha = float(os.getenv("RL_ALPHA", "0.0"))
+        cost = episode_cost(steps)
+        reward = float(succ) - alpha * (cost / 2.0)  # simple normalization
+
+        # capture SYM sub-trace if present
         sym_step = None
         for s in steps or []:
             if isinstance(s, dict) and s.get("source") == "SYM":
                 sym_step = s
                 break
+
+        # persist trace
         trace_row = {
             "id": ex["id"],
             "mode": "RL",
@@ -282,7 +297,9 @@ if __name__ == "__main__":
             "features": feats,
             "chosen_action": action_guess,
             "success": int(succ),
-            "reward": float(succ),
+            "reward": round(reward, 4),
+            "cost": round(cost, 4),
+            "alpha": alpha,
             "latency_ms": round((t1 - t0) * 1000.0, 2),
             "answer": ans,
             "steps": steps,
