@@ -76,3 +76,9 @@ all: seed router eval pareto faithful freeze
 clean:
 	@echo ">> Cleaning artifacts"
 	- rm -f $(ARTIFACTS_DIR)/*.csv $(ARTIFACTS_DIR)/*.jsonl $(ARTIFACTS_DIR)/*.png $(ARTIFACTS_DIR)/*.html $(ARTIFACTS_DIR)/*.json
+
+.PHONY: robustness
+robustness:
+	@echo ">> Running robustness (augmentations + mem scale)"
+	python run_robustness.py
+

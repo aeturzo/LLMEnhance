@@ -3,34 +3,27 @@ from __future__ import annotations
 from enum import Enum
 
 class RunMode(str, Enum):
-    # Single-module routes
-    BASE = "BASE"          # plain search/LLM
-    MEM = "MEM"            # memory-only
-    SEARCH = "SEARCH"      # search-only (explicit)
-    SYM = "SYM"            # symbolic-only
+    BASE = "BASE"          # LLM/search only
+    MEM = "MEM"            # Memory only
+    SYM = "SYM"            # Symbolic only
+    MEMSYM = "MEMSYM"      # Memory + Symbolic
+    ROUTER = "ROUTER"      # Supervised policy router (Day 6)
+    ADAPTIVERAG = "ADAPTIVERAG"  # Heuristic adaptive RAG (Day 6)
+    RL = "RL"              # RL controller (Day 4+)
 
-    # Composed / learned routes
-    MEMSYM = "MEMSYM"      # memory + symbolic (composer)
-    ROUTER = "ROUTER"      # supervised router picks a module
-    ADAPTIVERAG = "ADAPTIVERAG"  # heuristic, feature-threshold router
-
-    # NOTE: RL is served via /solve_rl, not as a /solve mode.
-    # Keep aliases below for backward compatibility with old env settings.
-
-def mode_from_env(env: str | None) -> "RunMode":
+def parse_modes_csv(csv_string: str) -> tuple[RunMode, ...]:
     """
-    Backward-compatible resolver for environment strings.
-    - "RL"   → ROUTER  (closest modern analogue for /solve)
-    - "ALL"  → MEMSYM
-    - Unknown → MEMSYM (safe default)
+    Robust parser for '--modes' like 'BASE,MEM,RL'.
+    Unknown names are ignored.
     """
-    raw = (env or "MEMSYM").upper()
-    alias = {
-        "RL": "ROUTER",  # legacy setting
-        "ALL": "MEMSYM",
-    }
-    name = alias.get(raw, raw)
-    try:
-        return RunMode(name)
-    except Exception:
-        return RunMode.MEMSYM
+    out: list[RunMode] = []
+    if not csv_string:
+        return tuple(out)
+    for name in (x.strip().upper() for x in csv_string.split(",")):
+        if not name:
+            continue
+        try:
+            out.append(RunMode[name])
+        except KeyError:
+            print(f"[run_modes] WARN: unknown mode '{name}' (ignored)")
+    return tuple(out)
