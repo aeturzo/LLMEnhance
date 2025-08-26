@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Day 1+2+4 — Experiment spine + traces (with SYM trace + RL cost/reward)
+Day 1+2+4+6 — Experiment spine + traces (with SYM trace + RL cost/reward)
 - Reads canonical tests from tests/dpp_rl/tests.jsonl (preferred), else tests/combined_eval/combined.jsonl.
-- Evaluates BASE, MEM, SYM, MEMSYM via /solve (mode in JSON), and RL via /solve_rl on the SAME tests.
+- Evaluates BASE, MEM, SYM, MEMSYM, ROUTER, ADAPTIVERAG via /solve (mode in JSON),
+  and RL via /solve_rl on the SAME tests.
 - Deterministic seeding for random/numpy/torch.
 - Writes:
     artifacts/eval_{MODE}_{stamp}.csv
     artifacts/eval_joined_{stamp}.csv
     artifacts/eval_summary_{stamp}.csv
     artifacts/trace_{stamp}.jsonl   (features + full steps incl. sym_trace, RL cost/reward)
-- Acceptance: no HTTP 4xx/5xx; joined rows == (#tests × 5 modes).
+- Acceptance: no HTTP 4xx/5xx; joined rows == (#tests × (len(CLASSIC) + 1)).
 """
 from __future__ import annotations
 
@@ -179,8 +180,15 @@ if __name__ == "__main__":
     tests = load_tests()
     trace_fp = ART / f"trace_{rid}.jsonl"
 
-    # 1) Classic modes (BASE, MEM, SYM, MEMSYM)
-    CLASSIC = (RunMode.BASE, RunMode.MEM, RunMode.SYM, RunMode.MEMSYM)
+    # 1) Classic modes (BASE, MEM, SYM, MEMSYM, ROUTER, ADAPTIVERAG)
+    CLASSIC = (
+        RunMode.BASE,
+        RunMode.MEM,
+        RunMode.SYM,
+        RunMode.MEMSYM,
+        RunMode.ROUTER,
+        RunMode.ADAPTIVERAG,
+    )
     per_mode_paths: List[pathlib.Path] = []
 
     for mode in CLASSIC:
@@ -371,9 +379,9 @@ if __name__ == "__main__":
     print(f"Wrote {summary_fp}")
 
     # 4) Acceptance check
-    expected_rows = len(load_tests()) * 5  # BASE, MEM, SYM, MEMSYM, RL
+    expected_rows = len(load_tests()) * (len(CLASSIC) + 1)  # +1 for RL
     actual_rows = len(joined_rows)
     if actual_rows != expected_rows:
         raise SystemExit(f"❌ Acceptance failed: expected {expected_rows} joined rows, got {actual_rows}")
-    print(f"✅ Acceptance OK: {actual_rows} rows (tests × 5 modes)")
+    print(f"✅ Acceptance OK: {actual_rows} rows (tests × {len(CLASSIC)+1} modes)")
     print(f"📝 Traces: {trace_fp}")
