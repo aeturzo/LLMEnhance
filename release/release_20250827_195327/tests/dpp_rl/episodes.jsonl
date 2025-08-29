@@ -1,0 +1,4 @@
+{"id":"e1","session":"s2","product":"ProductA","query":"What do I still need to do for ProductA battery compliance?","gold":{"requires":["BatterySafetyStandard"],"missing":["BatteryTestStep"]}}
+{"id":"e2","session":"s2","product":null,"query":"When was coolant pump #2 last replaced?","gold":{"contains":"1 July 2025"}}
+{"id":"e3","session":"s3","product":"ProductC","query":"For ProductC, confirm wireless compliance and steps still required.","gold":{"requires":["WirelessComplianceStandard"],"missing":[]}}
+{"id":"e4","session":"s4","product":"ProductB","query":"What compliance standards are required for ProductB? Any missing test steps?","gold":{"requires":["RoHSStandard"],"missing":[]}}

@@ -1,0 +1,8 @@
+mode,n,accuracy,avg_latency_ms,median_latency_ms,avg_steps
+BASE,3,0.0,2.17,1.27,1.0
+MEM,3,0.6667,7.71,8.1,1.0
+SYM,3,0.6667,1.24,1.26,1.0
+MEMSYM,3,1.0,8.09,8.33,2.0
+ROUTER,3,1.0,15.32,15.36,1.0
+ADAPTIVERAG,3,1.0,9.36,8.5,1.0
+RL,3,1.0,9.4,8.48,1.33

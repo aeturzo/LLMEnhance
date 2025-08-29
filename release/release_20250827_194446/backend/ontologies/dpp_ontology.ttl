@@ -1,0 +1,104 @@
+@prefix ex:   <http://example.com/dpp#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+#######################################################################
+# CLASSES
+#######################################################################
+ex:Product     a rdfs:Class .
+ex:Component   a rdfs:Class .
+ex:Material    a rdfs:Class .
+ex:ProcessStep a rdfs:Class .
+ex:Standard    a rdfs:Class .
+
+#######################################################################
+# SUBCLASSES
+#######################################################################
+ex:Battery        rdfs:subClassOf ex:Component .
+ex:WirelessModule rdfs:subClassOf ex:Component .
+
+#######################################################################
+# PROPERTIES
+#######################################################################
+ex:hasComponent       a rdf:Property ; rdfs:domain ex:Product ;  rdfs:range ex:Component .
+ex:hasStep            a rdf:Property ; rdfs:domain ex:Product ;  rdfs:range ex:ProcessStep .
+ex:requiresCompliance a rdf:Property ; rdfs:domain ex:Product ;  rdfs:range ex:Standard .
+ex:requiresStep       a rdf:Property ; rdfs:domain ex:Product ;  rdfs:range ex:ProcessStep .
+ex:usesMaterial       a rdf:Property ; rdfs:domain ex:Component ; rdfs:range ex:Material .
+
+# Optional but convenient if some code checks for this name:
+ex:conformsTo a rdf:Property ; rdfs:domain ex:Product ; rdfs:range ex:Standard .
+
+#######################################################################
+# STANDARDS & CANONICAL STEPS
+#######################################################################
+ex:BatterySafetyStandard      a ex:Standard ; rdfs:label "Battery Safety Standard" .
+ex:WirelessComplianceStandard a ex:Standard ; rdfs:label "Wireless Compliance Standard" .
+ex:RoHSStandard               a ex:Standard ; rdfs:label "RoHS" .
+
+ex:BatteryTestStep  a ex:ProcessStep .
+ex:WirelessTestStep a ex:ProcessStep .
+
+#######################################################################
+# MATERIALS
+#######################################################################
+ex:LeadMaterial a ex:Material .
+
+#######################################################################
+# PRODUCT A
+#######################################################################
+ex:ProductA a ex:Product ;
+    ex:hasComponent ex:Battery1, ex:WirelessModule1, ex:Board1 ;
+    ex:hasStep ex:StepA_Assembly, ex:StepA_Packaging .
+
+ex:Battery1 a ex:Battery .
+ex:WirelessModule1 a ex:WirelessModule .
+ex:Board1 a ex:Component ; ex:usesMaterial ex:LeadMaterial .
+
+ex:StepA_Assembly  a ex:ProcessStep .
+ex:StepA_Packaging a ex:ProcessStep .
+
+#######################################################################
+# PRODUCT B
+#######################################################################
+ex:ProductB a ex:Product ;
+    ex:hasComponent ex:Board2 ;
+    ex:hasStep ex:StepB_Assembly, ex:StepB_Packaging .
+
+ex:Board2 a ex:Component ; ex:usesMaterial ex:LeadMaterial .
+
+ex:StepB_Assembly  a ex:ProcessStep .
+ex:StepB_Packaging a ex:ProcessStep .
+
+#######################################################################
+# PRODUCT C
+#######################################################################
+ex:ProductC a ex:Product ;
+    ex:hasComponent ex:WirelessModule2 ;
+    ex:hasStep ex:StepC_Assembly, ex:WirelessTestStep, ex:StepC_Packaging .
+
+ex:WirelessModule2 a ex:WirelessModule .
+ex:StepC_Assembly  a ex:ProcessStep .
+ex:StepC_Packaging a ex:ProcessStep .
+
+#######################################################################
+# >>> NEW FACTS so SYM can answer "Which standard applies to ProductA…?"
+#######################################################################
+# Concrete EN standard instance with a label that contains 'EN'
+ex:EN_62133_2 a ex:Standard ;
+    rdfs:label "EN 62133-2" .
+
+# Link ProductA to the EN standard (both props provided for flexibility)
+ex:ProductA ex:requiresCompliance ex:EN_62133_2 .
+ex:ProductA ex:conformsTo        ex:EN_62133_2 .
+
+#######################################################################
+# --- OPTIONAL (to make "battery label include" contain 'capacity') ---
+#######################################################################
+# If you want the logic question "What must a battery label include?"
+# to succeed via SYM using substring 'capacity', add this small requirement.
+ex:BatteryLabelRequirement a ex:Standard ;
+    rdfs:label "capacity" .
+
+ex:ProductA ex:requiresCompliance ex:BatteryLabelRequirement .
+#######################################################################

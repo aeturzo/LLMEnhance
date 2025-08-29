@@ -25,7 +25,7 @@ eval:
 # Train the supervised router AFTER eval so labels exist
 router: eval
 	@echo ">> Training supervised router"
-	PYTHONPATH=. $(PY) scripts/train_router.py
+	$(PY) scripts/train_router.py
 
 # RL Pareto sweep (alpha passed from env/var)
 pareto:

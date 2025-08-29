@@ -1,0 +1,4 @@
+type,ADAPTIVERAG,BASE,MEM,MEMSYM,RL,ROUTER,SYM
+logic,1.0,0.0,0.0,1.0,1.0,1.0,1.0
+open,1.0,0.0,1.0,1.0,1.0,1.0,1.0
+recall,1.0,0.0,1.0,1.0,1.0,1.0,0.0

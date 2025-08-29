@@ -1,0 +1,56 @@
+@prefix ex:   <http://example.com/lexmark#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+### Classes
+ex:Product     a rdfs:Class .
+ex:Component   a rdfs:Class .
+ex:Standard    a rdfs:Class .
+ex:ProcessStep a rdfs:Class .
+ex:Material    a rdfs:Class .
+
+### Subclasses
+ex:PrinterHead    rdfs:subClassOf ex:Component .
+ex:TonerCartridge rdfs:subClassOf ex:Component .
+ex:WirelessModule rdfs:subClassOf ex:Component .
+ex:MainBoard      rdfs:subClassOf ex:Component .
+
+### Properties
+ex:hasComponent        a rdf:Property ; rdfs:domain ex:Product ;  rdfs:range ex:Component .
+ex:requiresCompliance  a rdf:Property ; rdfs:domain ex:Product ;  rdfs:range ex:Standard .
+ex:requiresStep        a rdf:Property ; rdfs:domain ex:Product ;  rdfs:range ex:ProcessStep .
+ex:usesMaterial        a rdf:Property ; rdfs:domain ex:Component ; rdfs:range ex:Material .
+ex:conformsTo          a rdf:Property ; rdfs:domain ex:Product ;  rdfs:range ex:Standard .
+
+### Standards (labels)
+ex:EMCStandard               a ex:Standard ; rdfs:label "EMC Compliance" .
+ex:Safety62368               a ex:Standard ; rdfs:label "IEC 62368-1 Safety" .
+ex:RoHSStandard              a ex:Standard ; rdfs:label "RoHS" .
+ex:WEEEStandard              a ex:Standard ; rdfs:label "WEEE Marking" .
+ex:WirelessComplianceStandard a ex:Standard ; rdfs:label "Wireless Compliance" .
+
+### Steps (labels)
+ex:PrintQualityTest a ex:ProcessStep ; rdfs:label "Print Quality Test" .
+ex:LabelCheckStep   a ex:ProcessStep ; rdfs:label "Label Check" .
+ex:WirelessTestStep a ex:ProcessStep ; rdfs:label "Wireless Test" .
+
+### Materials
+ex:LeadMaterial a ex:Material .
+
+### Products
+ex:PrinterL1 a ex:Product ;
+  ex:hasComponent ex:Head1, ex:Toner1, ex:Board1, ex:Wlan1 ;
+  ex:conformsTo ex:EMCStandard .
+
+ex:Head1  a ex:PrinterHead .
+ex:Toner1 a ex:TonerCartridge .
+ex:Board1 a ex:MainBoard ;     ex:usesMaterial ex:LeadMaterial .
+ex:Wlan1  a ex:WirelessModule .
+
+# Simpler variant
+ex:PrinterL2 a ex:Product ;
+  ex:hasComponent ex:Head2, ex:Toner2, ex:Board2 .
+
+ex:Head2  a ex:PrinterHead .
+ex:Toner2 a ex:TonerCartridge .
+ex:Board2 a ex:MainBoard .

@@ -283,6 +283,7 @@ if __name__ == "__main__":
                 "latency_ms": round((t1 - t0) * 1000.0, 2),
                 "answer": ans,
                 "steps": steps,
+                "sources": out.get("sources", []),
                 "sym_trace": (sym_step or {}).get("sym_trace"),
             }
             with trace_fp.open("a", encoding="utf-8") as f:
@@ -350,6 +351,7 @@ if __name__ == "__main__":
             "latency_ms": round((t1 - t0) * 1000.0, 2),
             "answer": ans,
             "steps": steps,
+            "sources": out.get("sources", []),
             "sym_trace": (sym_step or {}).get("sym_trace"),
         }
         with trace_fp.open("a", encoding="utf-8") as f:
