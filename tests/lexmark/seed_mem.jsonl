@@ -1,0 +1,8 @@
+{"id": "mem-000000", "text": "PrinterL1 standard (conforms to) is EMC Compliance.", "tags": ["standard (conforms to)", "PrinterL1"]}
+{"id": "mem-000001", "text": "PrinterL1 component is Head1.", "tags": ["component", "PrinterL1"]}
+{"id": "mem-000002", "text": "PrinterL1 component is Toner1.", "tags": ["component", "PrinterL1"]}
+{"id": "mem-000003", "text": "PrinterL1 component is Board1.", "tags": ["component", "PrinterL1"]}
+{"id": "mem-000004", "text": "PrinterL1 component is Wlan1.", "tags": ["component", "PrinterL1"]}
+{"id": "mem-000005", "text": "PrinterL2 component is Head2.", "tags": ["component", "PrinterL2"]}
+{"id": "mem-000006", "text": "PrinterL2 component is Toner2.", "tags": ["component", "PrinterL2"]}
+{"id": "mem-000007", "text": "PrinterL2 component is Board2.", "tags": ["component", "PrinterL2"]}

@@ -1,0 +1,1112 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix ext:  <http://example.org/ext#> .
+
+# KG booster generated 20250830
+ext:Product a owl:Class .
+ext:Battery a owl:Class ; rdfs:subClassOf ext:Product .
+ext:RechargeableBattery a owl:Class ; rdfs:subClassOf ext:Battery .
+ext:LithiumIonBattery a owl:Class ; rdfs:subClassOf ext:RechargeableBattery .
+ext:Spec a owl:Class .
+ext:Capacity a owl:Class ; rdfs:subClassOf ext:Spec .
+ext:Voltage a owl:Class ; rdfs:subClassOf ext:Spec .
+ext:Accessory a owl:Class ; rdfs:subClassOf ext:Product .
+ext:Manufacturer a owl:Class .
+ext:hasSpec a owl:ObjectProperty ; rdfs:domain ext:Product ; rdfs:range ext:Spec .
+ext:hasCapacity a owl:ObjectProperty ; rdfs:subPropertyOf ext:hasSpec ; rdfs:domain ext:Battery ; rdfs:range ext:Capacity .
+ext:hasVoltage a owl:ObjectProperty ; rdfs:subPropertyOf ext:hasSpec ; rdfs:domain ext:Battery ; rdfs:range ext:Voltage .
+ext:compatibleWith a owl:ObjectProperty ; rdfs:domain ext:Product ; rdfs:range ext:Accessory .
+ext:madeBy a owl:ObjectProperty ; rdfs:domain ext:Product ; rdfs:range ext:Manufacturer .
+ext:Battery rdfs:label "Battery" .
+
+ext:RechargeableBattery rdfs:label "Rechargeable Battery" .
+
+ext:LithiumIonBattery rdfs:label "Lithium-ion Battery" .
+
+ext:Capacity rdfs:label "capacity" .
+
+ext:Voltage rdfs:label "voltage" .
+
+ext:Accessory rdfs:label "accessory" .
+
+ext:Manufacturer rdfs:label "manufacturer" .
+
+ext:hasCapacity rdfs:label "capacity" .
+
+ext:hasVoltage rdfs:label "voltage" .
+
+ext:compatibleWith rdfs:label "compatible accessory" .
+
+ext:madeBy rdfs:label "manufacturer" .
+
+ext:man_VoltMax a ext:Manufacturer .
+ext:man_VoltMax rdfs:label "VoltMax" .
+
+ext:man_PowerCore a ext:Manufacturer .
+ext:man_PowerCore rdfs:label "PowerCore" .
+
+ext:man_Energen a ext:Manufacturer .
+ext:man_Energen rdfs:label "Energen" .
+
+ext:man_CellTech a ext:Manufacturer .
+ext:man_CellTech rdfs:label "CellTech" .
+
+ext:man_NanoVolt a ext:Manufacturer .
+ext:man_NanoVolt rdfs:label "NanoVolt" .
+
+ext:acc_BMS-Guard a ext:Accessory .
+ext:acc_BMS-Guard rdfs:label "BMS-Guard" .
+
+ext:acc_Case-Pro a ext:Accessory .
+ext:acc_Case-Pro rdfs:label "Case-Pro" .
+
+ext:acc_QuickMount a ext:Accessory .
+ext:acc_QuickMount rdfs:label "QuickMount" .
+
+ext:acc_FuseKit a ext:Accessory .
+ext:acc_FuseKit rdfs:label "FuseKit" .
+
+ext:acc_ThermalPad a ext:Accessory .
+ext:acc_ThermalPad rdfs:label "ThermalPad" .
+
+ext:batt_000 a ext:LithiumIonBattery .
+ext:batt_000 rdfs:label "LiCell-000" .
+
+ext:cap_000 a ext:Capacity .
+ext:cap_000 rdfs:label "3500 mAh" .
+
+ext:vol_000 a ext:Voltage .
+ext:vol_000 rdfs:label "12 V" .
+
+ext:batt_000 ext:hasCapacity ext:cap_000 .
+ext:batt_000 ext:hasVoltage ext:vol_000 .
+ext:batt_000 ext:madeBy ext:man_Energen .
+ext:batt_000 ext:compatibleWith ext:acc_QuickMount .
+ext:batt_001 a ext:LithiumIonBattery .
+ext:batt_001 rdfs:label "LiCell-001" .
+
+ext:cap_001 a ext:Capacity .
+ext:cap_001 rdfs:label "1800 mAh" .
+
+ext:vol_001 a ext:Voltage .
+ext:vol_001 rdfs:label "3.7 V" .
+
+ext:batt_001 ext:hasCapacity ext:cap_001 .
+ext:batt_001 ext:hasVoltage ext:vol_001 .
+ext:batt_001 ext:madeBy ext:man_Energen .
+ext:batt_001 ext:compatibleWith ext:acc_QuickMount .
+ext:batt_002 a ext:LithiumIonBattery .
+ext:batt_002 rdfs:label "LiCell-002" .
+
+ext:cap_002 a ext:Capacity .
+ext:cap_002 rdfs:label "3000 mAh" .
+
+ext:vol_002 a ext:Voltage .
+ext:vol_002 rdfs:label "7.4 V" .
+
+ext:batt_002 ext:hasCapacity ext:cap_002 .
+ext:batt_002 ext:hasVoltage ext:vol_002 .
+ext:batt_002 ext:madeBy ext:man_NanoVolt .
+ext:batt_002 ext:compatibleWith ext:acc_ThermalPad .
+ext:batt_003 a ext:LithiumIonBattery .
+ext:batt_003 rdfs:label "LiCell-003" .
+
+ext:cap_003 a ext:Capacity .
+ext:cap_003 rdfs:label "3500 mAh" .
+
+ext:vol_003 a ext:Voltage .
+ext:vol_003 rdfs:label "7.4 V" .
+
+ext:batt_003 ext:hasCapacity ext:cap_003 .
+ext:batt_003 ext:hasVoltage ext:vol_003 .
+ext:batt_003 ext:madeBy ext:man_NanoVolt .
+ext:batt_003 ext:compatibleWith ext:acc_QuickMount .
+ext:batt_004 a ext:LithiumIonBattery .
+ext:batt_004 rdfs:label "LiCell-004" .
+
+ext:cap_004 a ext:Capacity .
+ext:cap_004 rdfs:label "2200 mAh" .
+
+ext:vol_004 a ext:Voltage .
+ext:vol_004 rdfs:label "7.4 V" .
+
+ext:batt_004 ext:hasCapacity ext:cap_004 .
+ext:batt_004 ext:hasVoltage ext:vol_004 .
+ext:batt_004 ext:madeBy ext:man_NanoVolt .
+ext:batt_004 ext:compatibleWith ext:acc_BMS-Guard .
+ext:batt_005 a ext:LithiumIonBattery .
+ext:batt_005 rdfs:label "LiCell-005" .
+
+ext:cap_005 a ext:Capacity .
+ext:cap_005 rdfs:label "3000 mAh" .
+
+ext:vol_005 a ext:Voltage .
+ext:vol_005 rdfs:label "7.4 V" .
+
+ext:batt_005 ext:hasCapacity ext:cap_005 .
+ext:batt_005 ext:hasVoltage ext:vol_005 .
+ext:batt_005 ext:madeBy ext:man_PowerCore .
+ext:batt_005 ext:compatibleWith ext:acc_ThermalPad .
+ext:batt_006 a ext:LithiumIonBattery .
+ext:batt_006 rdfs:label "LiCell-006" .
+
+ext:cap_006 a ext:Capacity .
+ext:cap_006 rdfs:label "2200 mAh" .
+
+ext:vol_006 a ext:Voltage .
+ext:vol_006 rdfs:label "7.4 V" .
+
+ext:batt_006 ext:hasCapacity ext:cap_006 .
+ext:batt_006 ext:hasVoltage ext:vol_006 .
+ext:batt_006 ext:madeBy ext:man_Energen .
+ext:batt_006 ext:compatibleWith ext:acc_ThermalPad .
+ext:batt_007 a ext:LithiumIonBattery .
+ext:batt_007 rdfs:label "LiCell-007" .
+
+ext:cap_007 a ext:Capacity .
+ext:cap_007 rdfs:label "2200 mAh" .
+
+ext:vol_007 a ext:Voltage .
+ext:vol_007 rdfs:label "12 V" .
+
+ext:batt_007 ext:hasCapacity ext:cap_007 .
+ext:batt_007 ext:hasVoltage ext:vol_007 .
+ext:batt_007 ext:madeBy ext:man_PowerCore .
+ext:batt_007 ext:compatibleWith ext:acc_FuseKit .
+ext:batt_008 a ext:LithiumIonBattery .
+ext:batt_008 rdfs:label "LiCell-008" .
+
+ext:cap_008 a ext:Capacity .
+ext:cap_008 rdfs:label "3000 mAh" .
+
+ext:vol_008 a ext:Voltage .
+ext:vol_008 rdfs:label "7.4 V" .
+
+ext:batt_008 ext:hasCapacity ext:cap_008 .
+ext:batt_008 ext:hasVoltage ext:vol_008 .
+ext:batt_008 ext:madeBy ext:man_CellTech .
+ext:batt_008 ext:compatibleWith ext:acc_QuickMount .
+ext:batt_009 a ext:LithiumIonBattery .
+ext:batt_009 rdfs:label "LiCell-009" .
+
+ext:cap_009 a ext:Capacity .
+ext:cap_009 rdfs:label "1800 mAh" .
+
+ext:vol_009 a ext:Voltage .
+ext:vol_009 rdfs:label "7.4 V" .
+
+ext:batt_009 ext:hasCapacity ext:cap_009 .
+ext:batt_009 ext:hasVoltage ext:vol_009 .
+ext:batt_009 ext:madeBy ext:man_CellTech .
+ext:batt_009 ext:compatibleWith ext:acc_Case-Pro .
+ext:batt_010 a ext:LithiumIonBattery .
+ext:batt_010 rdfs:label "LiCell-010" .
+
+ext:cap_010 a ext:Capacity .
+ext:cap_010 rdfs:label "2500 mAh" .
+
+ext:vol_010 a ext:Voltage .
+ext:vol_010 rdfs:label "18 V" .
+
+ext:batt_010 ext:hasCapacity ext:cap_010 .
+ext:batt_010 ext:hasVoltage ext:vol_010 .
+ext:batt_010 ext:madeBy ext:man_Energen .
+ext:batt_010 ext:compatibleWith ext:acc_ThermalPad .
+ext:batt_011 a ext:LithiumIonBattery .
+ext:batt_011 rdfs:label "LiCell-011" .
+
+ext:cap_011 a ext:Capacity .
+ext:cap_011 rdfs:label "1800 mAh" .
+
+ext:vol_011 a ext:Voltage .
+ext:vol_011 rdfs:label "3.7 V" .
+
+ext:batt_011 ext:hasCapacity ext:cap_011 .
+ext:batt_011 ext:hasVoltage ext:vol_011 .
+ext:batt_011 ext:madeBy ext:man_PowerCore .
+ext:batt_011 ext:compatibleWith ext:acc_ThermalPad .
+ext:batt_012 a ext:LithiumIonBattery .
+ext:batt_012 rdfs:label "LiCell-012" .
+
+ext:cap_012 a ext:Capacity .
+ext:cap_012 rdfs:label "1800 mAh" .
+
+ext:vol_012 a ext:Voltage .
+ext:vol_012 rdfs:label "12 V" .
+
+ext:batt_012 ext:hasCapacity ext:cap_012 .
+ext:batt_012 ext:hasVoltage ext:vol_012 .
+ext:batt_012 ext:madeBy ext:man_Energen .
+ext:batt_012 ext:compatibleWith ext:acc_QuickMount .
+ext:batt_013 a ext:LithiumIonBattery .
+ext:batt_013 rdfs:label "LiCell-013" .
+
+ext:cap_013 a ext:Capacity .
+ext:cap_013 rdfs:label "1800 mAh" .
+
+ext:vol_013 a ext:Voltage .
+ext:vol_013 rdfs:label "3.7 V" .
+
+ext:batt_013 ext:hasCapacity ext:cap_013 .
+ext:batt_013 ext:hasVoltage ext:vol_013 .
+ext:batt_013 ext:madeBy ext:man_CellTech .
+ext:batt_013 ext:compatibleWith ext:acc_ThermalPad .
+ext:batt_014 a ext:LithiumIonBattery .
+ext:batt_014 rdfs:label "LiCell-014" .
+
+ext:cap_014 a ext:Capacity .
+ext:cap_014 rdfs:label "3500 mAh" .
+
+ext:vol_014 a ext:Voltage .
+ext:vol_014 rdfs:label "18 V" .
+
+ext:batt_014 ext:hasCapacity ext:cap_014 .
+ext:batt_014 ext:hasVoltage ext:vol_014 .
+ext:batt_014 ext:madeBy ext:man_VoltMax .
+ext:batt_014 ext:compatibleWith ext:acc_Case-Pro .
+ext:batt_015 a ext:LithiumIonBattery .
+ext:batt_015 rdfs:label "LiCell-015" .
+
+ext:cap_015 a ext:Capacity .
+ext:cap_015 rdfs:label "2500 mAh" .
+
+ext:vol_015 a ext:Voltage .
+ext:vol_015 rdfs:label "24 V" .
+
+ext:batt_015 ext:hasCapacity ext:cap_015 .
+ext:batt_015 ext:hasVoltage ext:vol_015 .
+ext:batt_015 ext:madeBy ext:man_VoltMax .
+ext:batt_015 ext:compatibleWith ext:acc_QuickMount .
+ext:batt_016 a ext:LithiumIonBattery .
+ext:batt_016 rdfs:label "LiCell-016" .
+
+ext:cap_016 a ext:Capacity .
+ext:cap_016 rdfs:label "2200 mAh" .
+
+ext:vol_016 a ext:Voltage .
+ext:vol_016 rdfs:label "24 V" .
+
+ext:batt_016 ext:hasCapacity ext:cap_016 .
+ext:batt_016 ext:hasVoltage ext:vol_016 .
+ext:batt_016 ext:madeBy ext:man_Energen .
+ext:batt_016 ext:compatibleWith ext:acc_FuseKit .
+ext:batt_017 a ext:LithiumIonBattery .
+ext:batt_017 rdfs:label "LiCell-017" .
+
+ext:cap_017 a ext:Capacity .
+ext:cap_017 rdfs:label "3000 mAh" .
+
+ext:vol_017 a ext:Voltage .
+ext:vol_017 rdfs:label "24 V" .
+
+ext:batt_017 ext:hasCapacity ext:cap_017 .
+ext:batt_017 ext:hasVoltage ext:vol_017 .
+ext:batt_017 ext:madeBy ext:man_Energen .
+ext:batt_017 ext:compatibleWith ext:acc_ThermalPad .
+ext:batt_018 a ext:LithiumIonBattery .
+ext:batt_018 rdfs:label "LiCell-018" .
+
+ext:cap_018 a ext:Capacity .
+ext:cap_018 rdfs:label "2500 mAh" .
+
+ext:vol_018 a ext:Voltage .
+ext:vol_018 rdfs:label "7.4 V" .
+
+ext:batt_018 ext:hasCapacity ext:cap_018 .
+ext:batt_018 ext:hasVoltage ext:vol_018 .
+ext:batt_018 ext:madeBy ext:man_VoltMax .
+ext:batt_018 ext:compatibleWith ext:acc_QuickMount .
+ext:batt_019 a ext:LithiumIonBattery .
+ext:batt_019 rdfs:label "LiCell-019" .
+
+ext:cap_019 a ext:Capacity .
+ext:cap_019 rdfs:label "2500 mAh" .
+
+ext:vol_019 a ext:Voltage .
+ext:vol_019 rdfs:label "24 V" .
+
+ext:batt_019 ext:hasCapacity ext:cap_019 .
+ext:batt_019 ext:hasVoltage ext:vol_019 .
+ext:batt_019 ext:madeBy ext:man_CellTech .
+ext:batt_019 ext:compatibleWith ext:acc_QuickMount .
+ext:batt_020 a ext:LithiumIonBattery .
+ext:batt_020 rdfs:label "LiCell-020" .
+
+ext:cap_020 a ext:Capacity .
+ext:cap_020 rdfs:label "2500 mAh" .
+
+ext:vol_020 a ext:Voltage .
+ext:vol_020 rdfs:label "3.7 V" .
+
+ext:batt_020 ext:hasCapacity ext:cap_020 .
+ext:batt_020 ext:hasVoltage ext:vol_020 .
+ext:batt_020 ext:madeBy ext:man_VoltMax .
+ext:batt_020 ext:compatibleWith ext:acc_Case-Pro .
+ext:batt_021 a ext:LithiumIonBattery .
+ext:batt_021 rdfs:label "LiCell-021" .
+
+ext:cap_021 a ext:Capacity .
+ext:cap_021 rdfs:label "3500 mAh" .
+
+ext:vol_021 a ext:Voltage .
+ext:vol_021 rdfs:label "12 V" .
+
+ext:batt_021 ext:hasCapacity ext:cap_021 .
+ext:batt_021 ext:hasVoltage ext:vol_021 .
+ext:batt_021 ext:madeBy ext:man_CellTech .
+ext:batt_021 ext:compatibleWith ext:acc_QuickMount .
+ext:batt_022 a ext:LithiumIonBattery .
+ext:batt_022 rdfs:label "LiCell-022" .
+
+ext:cap_022 a ext:Capacity .
+ext:cap_022 rdfs:label "3000 mAh" .
+
+ext:vol_022 a ext:Voltage .
+ext:vol_022 rdfs:label "24 V" .
+
+ext:batt_022 ext:hasCapacity ext:cap_022 .
+ext:batt_022 ext:hasVoltage ext:vol_022 .
+ext:batt_022 ext:madeBy ext:man_CellTech .
+ext:batt_022 ext:compatibleWith ext:acc_FuseKit .
+ext:batt_023 a ext:LithiumIonBattery .
+ext:batt_023 rdfs:label "LiCell-023" .
+
+ext:cap_023 a ext:Capacity .
+ext:cap_023 rdfs:label "2200 mAh" .
+
+ext:vol_023 a ext:Voltage .
+ext:vol_023 rdfs:label "3.7 V" .
+
+ext:batt_023 ext:hasCapacity ext:cap_023 .
+ext:batt_023 ext:hasVoltage ext:vol_023 .
+ext:batt_023 ext:madeBy ext:man_NanoVolt .
+ext:batt_023 ext:compatibleWith ext:acc_ThermalPad .
+ext:batt_024 a ext:LithiumIonBattery .
+ext:batt_024 rdfs:label "LiCell-024" .
+
+ext:cap_024 a ext:Capacity .
+ext:cap_024 rdfs:label "2500 mAh" .
+
+ext:vol_024 a ext:Voltage .
+ext:vol_024 rdfs:label "3.7 V" .
+
+ext:batt_024 ext:hasCapacity ext:cap_024 .
+ext:batt_024 ext:hasVoltage ext:vol_024 .
+ext:batt_024 ext:madeBy ext:man_PowerCore .
+ext:batt_024 ext:compatibleWith ext:acc_BMS-Guard .
+ext:batt_025 a ext:LithiumIonBattery .
+ext:batt_025 rdfs:label "LiCell-025" .
+
+ext:cap_025 a ext:Capacity .
+ext:cap_025 rdfs:label "4000 mAh" .
+
+ext:vol_025 a ext:Voltage .
+ext:vol_025 rdfs:label "3.7 V" .
+
+ext:batt_025 ext:hasCapacity ext:cap_025 .
+ext:batt_025 ext:hasVoltage ext:vol_025 .
+ext:batt_025 ext:madeBy ext:man_CellTech .
+ext:batt_025 ext:compatibleWith ext:acc_BMS-Guard .
+ext:batt_026 a ext:LithiumIonBattery .
+ext:batt_026 rdfs:label "LiCell-026" .
+
+ext:cap_026 a ext:Capacity .
+ext:cap_026 rdfs:label "2500 mAh" .
+
+ext:vol_026 a ext:Voltage .
+ext:vol_026 rdfs:label "3.7 V" .
+
+ext:batt_026 ext:hasCapacity ext:cap_026 .
+ext:batt_026 ext:hasVoltage ext:vol_026 .
+ext:batt_026 ext:madeBy ext:man_Energen .
+ext:batt_026 ext:compatibleWith ext:acc_BMS-Guard .
+ext:batt_027 a ext:LithiumIonBattery .
+ext:batt_027 rdfs:label "LiCell-027" .
+
+ext:cap_027 a ext:Capacity .
+ext:cap_027 rdfs:label "2500 mAh" .
+
+ext:vol_027 a ext:Voltage .
+ext:vol_027 rdfs:label "12 V" .
+
+ext:batt_027 ext:hasCapacity ext:cap_027 .
+ext:batt_027 ext:hasVoltage ext:vol_027 .
+ext:batt_027 ext:madeBy ext:man_NanoVolt .
+ext:batt_027 ext:compatibleWith ext:acc_QuickMount .
+ext:batt_028 a ext:LithiumIonBattery .
+ext:batt_028 rdfs:label "LiCell-028" .
+
+ext:cap_028 a ext:Capacity .
+ext:cap_028 rdfs:label "2500 mAh" .
+
+ext:vol_028 a ext:Voltage .
+ext:vol_028 rdfs:label "18 V" .
+
+ext:batt_028 ext:hasCapacity ext:cap_028 .
+ext:batt_028 ext:hasVoltage ext:vol_028 .
+ext:batt_028 ext:madeBy ext:man_NanoVolt .
+ext:batt_028 ext:compatibleWith ext:acc_FuseKit .
+ext:batt_029 a ext:LithiumIonBattery .
+ext:batt_029 rdfs:label "LiCell-029" .
+
+ext:cap_029 a ext:Capacity .
+ext:cap_029 rdfs:label "3000 mAh" .
+
+ext:vol_029 a ext:Voltage .
+ext:vol_029 rdfs:label "24 V" .
+
+ext:batt_029 ext:hasCapacity ext:cap_029 .
+ext:batt_029 ext:hasVoltage ext:vol_029 .
+ext:batt_029 ext:madeBy ext:man_NanoVolt .
+ext:batt_029 ext:compatibleWith ext:acc_ThermalPad .
+ext:batt_030 a ext:LithiumIonBattery .
+ext:batt_030 rdfs:label "LiCell-030" .
+
+ext:cap_030 a ext:Capacity .
+ext:cap_030 rdfs:label "4000 mAh" .
+
+ext:vol_030 a ext:Voltage .
+ext:vol_030 rdfs:label "7.4 V" .
+
+ext:batt_030 ext:hasCapacity ext:cap_030 .
+ext:batt_030 ext:hasVoltage ext:vol_030 .
+ext:batt_030 ext:madeBy ext:man_VoltMax .
+ext:batt_030 ext:compatibleWith ext:acc_ThermalPad .
+ext:batt_031 a ext:LithiumIonBattery .
+ext:batt_031 rdfs:label "LiCell-031" .
+
+ext:cap_031 a ext:Capacity .
+ext:cap_031 rdfs:label "3000 mAh" .
+
+ext:vol_031 a ext:Voltage .
+ext:vol_031 rdfs:label "24 V" .
+
+ext:batt_031 ext:hasCapacity ext:cap_031 .
+ext:batt_031 ext:hasVoltage ext:vol_031 .
+ext:batt_031 ext:madeBy ext:man_PowerCore .
+ext:batt_031 ext:compatibleWith ext:acc_QuickMount .
+ext:batt_032 a ext:LithiumIonBattery .
+ext:batt_032 rdfs:label "LiCell-032" .
+
+ext:cap_032 a ext:Capacity .
+ext:cap_032 rdfs:label "2500 mAh" .
+
+ext:vol_032 a ext:Voltage .
+ext:vol_032 rdfs:label "24 V" .
+
+ext:batt_032 ext:hasCapacity ext:cap_032 .
+ext:batt_032 ext:hasVoltage ext:vol_032 .
+ext:batt_032 ext:madeBy ext:man_NanoVolt .
+ext:batt_032 ext:compatibleWith ext:acc_ThermalPad .
+ext:batt_033 a ext:LithiumIonBattery .
+ext:batt_033 rdfs:label "LiCell-033" .
+
+ext:cap_033 a ext:Capacity .
+ext:cap_033 rdfs:label "3500 mAh" .
+
+ext:vol_033 a ext:Voltage .
+ext:vol_033 rdfs:label "24 V" .
+
+ext:batt_033 ext:hasCapacity ext:cap_033 .
+ext:batt_033 ext:hasVoltage ext:vol_033 .
+ext:batt_033 ext:madeBy ext:man_PowerCore .
+ext:batt_033 ext:compatibleWith ext:acc_FuseKit .
+ext:batt_034 a ext:LithiumIonBattery .
+ext:batt_034 rdfs:label "LiCell-034" .
+
+ext:cap_034 a ext:Capacity .
+ext:cap_034 rdfs:label "2500 mAh" .
+
+ext:vol_034 a ext:Voltage .
+ext:vol_034 rdfs:label "7.4 V" .
+
+ext:batt_034 ext:hasCapacity ext:cap_034 .
+ext:batt_034 ext:hasVoltage ext:vol_034 .
+ext:batt_034 ext:madeBy ext:man_VoltMax .
+ext:batt_034 ext:compatibleWith ext:acc_Case-Pro .
+ext:batt_035 a ext:LithiumIonBattery .
+ext:batt_035 rdfs:label "LiCell-035" .
+
+ext:cap_035 a ext:Capacity .
+ext:cap_035 rdfs:label "3500 mAh" .
+
+ext:vol_035 a ext:Voltage .
+ext:vol_035 rdfs:label "18 V" .
+
+ext:batt_035 ext:hasCapacity ext:cap_035 .
+ext:batt_035 ext:hasVoltage ext:vol_035 .
+ext:batt_035 ext:madeBy ext:man_NanoVolt .
+ext:batt_035 ext:compatibleWith ext:acc_ThermalPad .
+ext:batt_036 a ext:LithiumIonBattery .
+ext:batt_036 rdfs:label "LiCell-036" .
+
+ext:cap_036 a ext:Capacity .
+ext:cap_036 rdfs:label "4000 mAh" .
+
+ext:vol_036 a ext:Voltage .
+ext:vol_036 rdfs:label "7.4 V" .
+
+ext:batt_036 ext:hasCapacity ext:cap_036 .
+ext:batt_036 ext:hasVoltage ext:vol_036 .
+ext:batt_036 ext:madeBy ext:man_CellTech .
+ext:batt_036 ext:compatibleWith ext:acc_BMS-Guard .
+ext:batt_037 a ext:LithiumIonBattery .
+ext:batt_037 rdfs:label "LiCell-037" .
+
+ext:cap_037 a ext:Capacity .
+ext:cap_037 rdfs:label "1800 mAh" .
+
+ext:vol_037 a ext:Voltage .
+ext:vol_037 rdfs:label "7.4 V" .
+
+ext:batt_037 ext:hasCapacity ext:cap_037 .
+ext:batt_037 ext:hasVoltage ext:vol_037 .
+ext:batt_037 ext:madeBy ext:man_PowerCore .
+ext:batt_037 ext:compatibleWith ext:acc_ThermalPad .
+ext:batt_038 a ext:LithiumIonBattery .
+ext:batt_038 rdfs:label "LiCell-038" .
+
+ext:cap_038 a ext:Capacity .
+ext:cap_038 rdfs:label "2200 mAh" .
+
+ext:vol_038 a ext:Voltage .
+ext:vol_038 rdfs:label "24 V" .
+
+ext:batt_038 ext:hasCapacity ext:cap_038 .
+ext:batt_038 ext:hasVoltage ext:vol_038 .
+ext:batt_038 ext:madeBy ext:man_CellTech .
+ext:batt_038 ext:compatibleWith ext:acc_QuickMount .
+ext:batt_039 a ext:LithiumIonBattery .
+ext:batt_039 rdfs:label "LiCell-039" .
+
+ext:cap_039 a ext:Capacity .
+ext:cap_039 rdfs:label "2500 mAh" .
+
+ext:vol_039 a ext:Voltage .
+ext:vol_039 rdfs:label "7.4 V" .
+
+ext:batt_039 ext:hasCapacity ext:cap_039 .
+ext:batt_039 ext:hasVoltage ext:vol_039 .
+ext:batt_039 ext:madeBy ext:man_VoltMax .
+ext:batt_039 ext:compatibleWith ext:acc_Case-Pro .
+ext:batt_040 a ext:LithiumIonBattery .
+ext:batt_040 rdfs:label "LiCell-040" .
+
+ext:cap_040 a ext:Capacity .
+ext:cap_040 rdfs:label "1800 mAh" .
+
+ext:vol_040 a ext:Voltage .
+ext:vol_040 rdfs:label "18 V" .
+
+ext:batt_040 ext:hasCapacity ext:cap_040 .
+ext:batt_040 ext:hasVoltage ext:vol_040 .
+ext:batt_040 ext:madeBy ext:man_Energen .
+ext:batt_040 ext:compatibleWith ext:acc_BMS-Guard .
+ext:batt_041 a ext:LithiumIonBattery .
+ext:batt_041 rdfs:label "LiCell-041" .
+
+ext:cap_041 a ext:Capacity .
+ext:cap_041 rdfs:label "3000 mAh" .
+
+ext:vol_041 a ext:Voltage .
+ext:vol_041 rdfs:label "12 V" .
+
+ext:batt_041 ext:hasCapacity ext:cap_041 .
+ext:batt_041 ext:hasVoltage ext:vol_041 .
+ext:batt_041 ext:madeBy ext:man_PowerCore .
+ext:batt_041 ext:compatibleWith ext:acc_FuseKit .
+ext:batt_042 a ext:LithiumIonBattery .
+ext:batt_042 rdfs:label "LiCell-042" .
+
+ext:cap_042 a ext:Capacity .
+ext:cap_042 rdfs:label "3000 mAh" .
+
+ext:vol_042 a ext:Voltage .
+ext:vol_042 rdfs:label "18 V" .
+
+ext:batt_042 ext:hasCapacity ext:cap_042 .
+ext:batt_042 ext:hasVoltage ext:vol_042 .
+ext:batt_042 ext:madeBy ext:man_CellTech .
+ext:batt_042 ext:compatibleWith ext:acc_FuseKit .
+ext:batt_043 a ext:LithiumIonBattery .
+ext:batt_043 rdfs:label "LiCell-043" .
+
+ext:cap_043 a ext:Capacity .
+ext:cap_043 rdfs:label "1800 mAh" .
+
+ext:vol_043 a ext:Voltage .
+ext:vol_043 rdfs:label "18 V" .
+
+ext:batt_043 ext:hasCapacity ext:cap_043 .
+ext:batt_043 ext:hasVoltage ext:vol_043 .
+ext:batt_043 ext:madeBy ext:man_VoltMax .
+ext:batt_043 ext:compatibleWith ext:acc_FuseKit .
+ext:batt_044 a ext:LithiumIonBattery .
+ext:batt_044 rdfs:label "LiCell-044" .
+
+ext:cap_044 a ext:Capacity .
+ext:cap_044 rdfs:label "2200 mAh" .
+
+ext:vol_044 a ext:Voltage .
+ext:vol_044 rdfs:label "3.7 V" .
+
+ext:batt_044 ext:hasCapacity ext:cap_044 .
+ext:batt_044 ext:hasVoltage ext:vol_044 .
+ext:batt_044 ext:madeBy ext:man_VoltMax .
+ext:batt_044 ext:compatibleWith ext:acc_ThermalPad .
+ext:batt_045 a ext:LithiumIonBattery .
+ext:batt_045 rdfs:label "LiCell-045" .
+
+ext:cap_045 a ext:Capacity .
+ext:cap_045 rdfs:label "3000 mAh" .
+
+ext:vol_045 a ext:Voltage .
+ext:vol_045 rdfs:label "3.7 V" .
+
+ext:batt_045 ext:hasCapacity ext:cap_045 .
+ext:batt_045 ext:hasVoltage ext:vol_045 .
+ext:batt_045 ext:madeBy ext:man_NanoVolt .
+ext:batt_045 ext:compatibleWith ext:acc_Case-Pro .
+ext:batt_046 a ext:LithiumIonBattery .
+ext:batt_046 rdfs:label "LiCell-046" .
+
+ext:cap_046 a ext:Capacity .
+ext:cap_046 rdfs:label "3000 mAh" .
+
+ext:vol_046 a ext:Voltage .
+ext:vol_046 rdfs:label "12 V" .
+
+ext:batt_046 ext:hasCapacity ext:cap_046 .
+ext:batt_046 ext:hasVoltage ext:vol_046 .
+ext:batt_046 ext:madeBy ext:man_CellTech .
+ext:batt_046 ext:compatibleWith ext:acc_ThermalPad .
+ext:batt_047 a ext:LithiumIonBattery .
+ext:batt_047 rdfs:label "LiCell-047" .
+
+ext:cap_047 a ext:Capacity .
+ext:cap_047 rdfs:label "2500 mAh" .
+
+ext:vol_047 a ext:Voltage .
+ext:vol_047 rdfs:label "12 V" .
+
+ext:batt_047 ext:hasCapacity ext:cap_047 .
+ext:batt_047 ext:hasVoltage ext:vol_047 .
+ext:batt_047 ext:madeBy ext:man_NanoVolt .
+ext:batt_047 ext:compatibleWith ext:acc_BMS-Guard .
+ext:batt_048 a ext:LithiumIonBattery .
+ext:batt_048 rdfs:label "LiCell-048" .
+
+ext:cap_048 a ext:Capacity .
+ext:cap_048 rdfs:label "4000 mAh" .
+
+ext:vol_048 a ext:Voltage .
+ext:vol_048 rdfs:label "12 V" .
+
+ext:batt_048 ext:hasCapacity ext:cap_048 .
+ext:batt_048 ext:hasVoltage ext:vol_048 .
+ext:batt_048 ext:madeBy ext:man_CellTech .
+ext:batt_048 ext:compatibleWith ext:acc_Case-Pro .
+ext:batt_049 a ext:LithiumIonBattery .
+ext:batt_049 rdfs:label "LiCell-049" .
+
+ext:cap_049 a ext:Capacity .
+ext:cap_049 rdfs:label "3000 mAh" .
+
+ext:vol_049 a ext:Voltage .
+ext:vol_049 rdfs:label "12 V" .
+
+ext:batt_049 ext:hasCapacity ext:cap_049 .
+ext:batt_049 ext:hasVoltage ext:vol_049 .
+ext:batt_049 ext:madeBy ext:man_PowerCore .
+ext:batt_049 ext:compatibleWith ext:acc_ThermalPad .
+ext:batt_050 a ext:LithiumIonBattery .
+ext:batt_050 rdfs:label "LiCell-050" .
+
+ext:cap_050 a ext:Capacity .
+ext:cap_050 rdfs:label "1800 mAh" .
+
+ext:vol_050 a ext:Voltage .
+ext:vol_050 rdfs:label "18 V" .
+
+ext:batt_050 ext:hasCapacity ext:cap_050 .
+ext:batt_050 ext:hasVoltage ext:vol_050 .
+ext:batt_050 ext:madeBy ext:man_Energen .
+ext:batt_050 ext:compatibleWith ext:acc_BMS-Guard .
+ext:batt_051 a ext:LithiumIonBattery .
+ext:batt_051 rdfs:label "LiCell-051" .
+
+ext:cap_051 a ext:Capacity .
+ext:cap_051 rdfs:label "2200 mAh" .
+
+ext:vol_051 a ext:Voltage .
+ext:vol_051 rdfs:label "18 V" .
+
+ext:batt_051 ext:hasCapacity ext:cap_051 .
+ext:batt_051 ext:hasVoltage ext:vol_051 .
+ext:batt_051 ext:madeBy ext:man_VoltMax .
+ext:batt_051 ext:compatibleWith ext:acc_QuickMount .
+ext:batt_052 a ext:LithiumIonBattery .
+ext:batt_052 rdfs:label "LiCell-052" .
+
+ext:cap_052 a ext:Capacity .
+ext:cap_052 rdfs:label "3500 mAh" .
+
+ext:vol_052 a ext:Voltage .
+ext:vol_052 rdfs:label "18 V" .
+
+ext:batt_052 ext:hasCapacity ext:cap_052 .
+ext:batt_052 ext:hasVoltage ext:vol_052 .
+ext:batt_052 ext:madeBy ext:man_VoltMax .
+ext:batt_052 ext:compatibleWith ext:acc_FuseKit .
+ext:batt_053 a ext:LithiumIonBattery .
+ext:batt_053 rdfs:label "LiCell-053" .
+
+ext:cap_053 a ext:Capacity .
+ext:cap_053 rdfs:label "3500 mAh" .
+
+ext:vol_053 a ext:Voltage .
+ext:vol_053 rdfs:label "12 V" .
+
+ext:batt_053 ext:hasCapacity ext:cap_053 .
+ext:batt_053 ext:hasVoltage ext:vol_053 .
+ext:batt_053 ext:madeBy ext:man_NanoVolt .
+ext:batt_053 ext:compatibleWith ext:acc_ThermalPad .
+ext:batt_054 a ext:LithiumIonBattery .
+ext:batt_054 rdfs:label "LiCell-054" .
+
+ext:cap_054 a ext:Capacity .
+ext:cap_054 rdfs:label "4000 mAh" .
+
+ext:vol_054 a ext:Voltage .
+ext:vol_054 rdfs:label "18 V" .
+
+ext:batt_054 ext:hasCapacity ext:cap_054 .
+ext:batt_054 ext:hasVoltage ext:vol_054 .
+ext:batt_054 ext:madeBy ext:man_VoltMax .
+ext:batt_054 ext:compatibleWith ext:acc_QuickMount .
+ext:batt_055 a ext:LithiumIonBattery .
+ext:batt_055 rdfs:label "LiCell-055" .
+
+ext:cap_055 a ext:Capacity .
+ext:cap_055 rdfs:label "2200 mAh" .
+
+ext:vol_055 a ext:Voltage .
+ext:vol_055 rdfs:label "12 V" .
+
+ext:batt_055 ext:hasCapacity ext:cap_055 .
+ext:batt_055 ext:hasVoltage ext:vol_055 .
+ext:batt_055 ext:madeBy ext:man_PowerCore .
+ext:batt_055 ext:compatibleWith ext:acc_Case-Pro .
+ext:batt_056 a ext:LithiumIonBattery .
+ext:batt_056 rdfs:label "LiCell-056" .
+
+ext:cap_056 a ext:Capacity .
+ext:cap_056 rdfs:label "1800 mAh" .
+
+ext:vol_056 a ext:Voltage .
+ext:vol_056 rdfs:label "18 V" .
+
+ext:batt_056 ext:hasCapacity ext:cap_056 .
+ext:batt_056 ext:hasVoltage ext:vol_056 .
+ext:batt_056 ext:madeBy ext:man_NanoVolt .
+ext:batt_056 ext:compatibleWith ext:acc_Case-Pro .
+ext:batt_057 a ext:LithiumIonBattery .
+ext:batt_057 rdfs:label "LiCell-057" .
+
+ext:cap_057 a ext:Capacity .
+ext:cap_057 rdfs:label "3500 mAh" .
+
+ext:vol_057 a ext:Voltage .
+ext:vol_057 rdfs:label "7.4 V" .
+
+ext:batt_057 ext:hasCapacity ext:cap_057 .
+ext:batt_057 ext:hasVoltage ext:vol_057 .
+ext:batt_057 ext:madeBy ext:man_NanoVolt .
+ext:batt_057 ext:compatibleWith ext:acc_FuseKit .
+ext:batt_058 a ext:LithiumIonBattery .
+ext:batt_058 rdfs:label "LiCell-058" .
+
+ext:cap_058 a ext:Capacity .
+ext:cap_058 rdfs:label "2200 mAh" .
+
+ext:vol_058 a ext:Voltage .
+ext:vol_058 rdfs:label "18 V" .
+
+ext:batt_058 ext:hasCapacity ext:cap_058 .
+ext:batt_058 ext:hasVoltage ext:vol_058 .
+ext:batt_058 ext:madeBy ext:man_CellTech .
+ext:batt_058 ext:compatibleWith ext:acc_Case-Pro .
+ext:batt_059 a ext:LithiumIonBattery .
+ext:batt_059 rdfs:label "LiCell-059" .
+
+ext:cap_059 a ext:Capacity .
+ext:cap_059 rdfs:label "2500 mAh" .
+
+ext:vol_059 a ext:Voltage .
+ext:vol_059 rdfs:label "24 V" .
+
+ext:batt_059 ext:hasCapacity ext:cap_059 .
+ext:batt_059 ext:hasVoltage ext:vol_059 .
+ext:batt_059 ext:madeBy ext:man_VoltMax .
+ext:batt_059 ext:compatibleWith ext:acc_BMS-Guard .
+ext:batt_060 a ext:LithiumIonBattery .
+ext:batt_060 rdfs:label "LiCell-060" .
+
+ext:cap_060 a ext:Capacity .
+ext:cap_060 rdfs:label "1800 mAh" .
+
+ext:vol_060 a ext:Voltage .
+ext:vol_060 rdfs:label "24 V" .
+
+ext:batt_060 ext:hasCapacity ext:cap_060 .
+ext:batt_060 ext:hasVoltage ext:vol_060 .
+ext:batt_060 ext:madeBy ext:man_NanoVolt .
+ext:batt_060 ext:compatibleWith ext:acc_QuickMount .
+ext:batt_061 a ext:LithiumIonBattery .
+ext:batt_061 rdfs:label "LiCell-061" .
+
+ext:cap_061 a ext:Capacity .
+ext:cap_061 rdfs:label "2200 mAh" .
+
+ext:vol_061 a ext:Voltage .
+ext:vol_061 rdfs:label "3.7 V" .
+
+ext:batt_061 ext:hasCapacity ext:cap_061 .
+ext:batt_061 ext:hasVoltage ext:vol_061 .
+ext:batt_061 ext:madeBy ext:man_VoltMax .
+ext:batt_061 ext:compatibleWith ext:acc_QuickMount .
+ext:batt_062 a ext:LithiumIonBattery .
+ext:batt_062 rdfs:label "LiCell-062" .
+
+ext:cap_062 a ext:Capacity .
+ext:cap_062 rdfs:label "2200 mAh" .
+
+ext:vol_062 a ext:Voltage .
+ext:vol_062 rdfs:label "7.4 V" .
+
+ext:batt_062 ext:hasCapacity ext:cap_062 .
+ext:batt_062 ext:hasVoltage ext:vol_062 .
+ext:batt_062 ext:madeBy ext:man_NanoVolt .
+ext:batt_062 ext:compatibleWith ext:acc_Case-Pro .
+ext:batt_063 a ext:LithiumIonBattery .
+ext:batt_063 rdfs:label "LiCell-063" .
+
+ext:cap_063 a ext:Capacity .
+ext:cap_063 rdfs:label "4000 mAh" .
+
+ext:vol_063 a ext:Voltage .
+ext:vol_063 rdfs:label "3.7 V" .
+
+ext:batt_063 ext:hasCapacity ext:cap_063 .
+ext:batt_063 ext:hasVoltage ext:vol_063 .
+ext:batt_063 ext:madeBy ext:man_NanoVolt .
+ext:batt_063 ext:compatibleWith ext:acc_Case-Pro .
+ext:batt_064 a ext:LithiumIonBattery .
+ext:batt_064 rdfs:label "LiCell-064" .
+
+ext:cap_064 a ext:Capacity .
+ext:cap_064 rdfs:label "3500 mAh" .
+
+ext:vol_064 a ext:Voltage .
+ext:vol_064 rdfs:label "3.7 V" .
+
+ext:batt_064 ext:hasCapacity ext:cap_064 .
+ext:batt_064 ext:hasVoltage ext:vol_064 .
+ext:batt_064 ext:madeBy ext:man_PowerCore .
+ext:batt_064 ext:compatibleWith ext:acc_Case-Pro .
+ext:batt_065 a ext:LithiumIonBattery .
+ext:batt_065 rdfs:label "LiCell-065" .
+
+ext:cap_065 a ext:Capacity .
+ext:cap_065 rdfs:label "2200 mAh" .
+
+ext:vol_065 a ext:Voltage .
+ext:vol_065 rdfs:label "24 V" .
+
+ext:batt_065 ext:hasCapacity ext:cap_065 .
+ext:batt_065 ext:hasVoltage ext:vol_065 .
+ext:batt_065 ext:madeBy ext:man_NanoVolt .
+ext:batt_065 ext:compatibleWith ext:acc_BMS-Guard .
+ext:batt_066 a ext:LithiumIonBattery .
+ext:batt_066 rdfs:label "LiCell-066" .
+
+ext:cap_066 a ext:Capacity .
+ext:cap_066 rdfs:label "3000 mAh" .
+
+ext:vol_066 a ext:Voltage .
+ext:vol_066 rdfs:label "12 V" .
+
+ext:batt_066 ext:hasCapacity ext:cap_066 .
+ext:batt_066 ext:hasVoltage ext:vol_066 .
+ext:batt_066 ext:madeBy ext:man_PowerCore .
+ext:batt_066 ext:compatibleWith ext:acc_QuickMount .
+ext:batt_067 a ext:LithiumIonBattery .
+ext:batt_067 rdfs:label "LiCell-067" .
+
+ext:cap_067 a ext:Capacity .
+ext:cap_067 rdfs:label "2500 mAh" .
+
+ext:vol_067 a ext:Voltage .
+ext:vol_067 rdfs:label "18 V" .
+
+ext:batt_067 ext:hasCapacity ext:cap_067 .
+ext:batt_067 ext:hasVoltage ext:vol_067 .
+ext:batt_067 ext:madeBy ext:man_Energen .
+ext:batt_067 ext:compatibleWith ext:acc_ThermalPad .
+ext:batt_068 a ext:LithiumIonBattery .
+ext:batt_068 rdfs:label "LiCell-068" .
+
+ext:cap_068 a ext:Capacity .
+ext:cap_068 rdfs:label "2200 mAh" .
+
+ext:vol_068 a ext:Voltage .
+ext:vol_068 rdfs:label "18 V" .
+
+ext:batt_068 ext:hasCapacity ext:cap_068 .
+ext:batt_068 ext:hasVoltage ext:vol_068 .
+ext:batt_068 ext:madeBy ext:man_VoltMax .
+ext:batt_068 ext:compatibleWith ext:acc_FuseKit .
+ext:batt_069 a ext:LithiumIonBattery .
+ext:batt_069 rdfs:label "LiCell-069" .
+
+ext:cap_069 a ext:Capacity .
+ext:cap_069 rdfs:label "3500 mAh" .
+
+ext:vol_069 a ext:Voltage .
+ext:vol_069 rdfs:label "24 V" .
+
+ext:batt_069 ext:hasCapacity ext:cap_069 .
+ext:batt_069 ext:hasVoltage ext:vol_069 .
+ext:batt_069 ext:madeBy ext:man_Energen .
+ext:batt_069 ext:compatibleWith ext:acc_QuickMount .
+ext:batt_070 a ext:LithiumIonBattery .
+ext:batt_070 rdfs:label "LiCell-070" .
+
+ext:cap_070 a ext:Capacity .
+ext:cap_070 rdfs:label "3500 mAh" .
+
+ext:vol_070 a ext:Voltage .
+ext:vol_070 rdfs:label "24 V" .
+
+ext:batt_070 ext:hasCapacity ext:cap_070 .
+ext:batt_070 ext:hasVoltage ext:vol_070 .
+ext:batt_070 ext:madeBy ext:man_PowerCore .
+ext:batt_070 ext:compatibleWith ext:acc_QuickMount .
+ext:batt_071 a ext:LithiumIonBattery .
+ext:batt_071 rdfs:label "LiCell-071" .
+
+ext:cap_071 a ext:Capacity .
+ext:cap_071 rdfs:label "2500 mAh" .
+
+ext:vol_071 a ext:Voltage .
+ext:vol_071 rdfs:label "12 V" .
+
+ext:batt_071 ext:hasCapacity ext:cap_071 .
+ext:batt_071 ext:hasVoltage ext:vol_071 .
+ext:batt_071 ext:madeBy ext:man_Energen .
+ext:batt_071 ext:compatibleWith ext:acc_QuickMount .
+ext:batt_072 a ext:LithiumIonBattery .
+ext:batt_072 rdfs:label "LiCell-072" .
+
+ext:cap_072 a ext:Capacity .
+ext:cap_072 rdfs:label "2500 mAh" .
+
+ext:vol_072 a ext:Voltage .
+ext:vol_072 rdfs:label "3.7 V" .
+
+ext:batt_072 ext:hasCapacity ext:cap_072 .
+ext:batt_072 ext:hasVoltage ext:vol_072 .
+ext:batt_072 ext:madeBy ext:man_VoltMax .
+ext:batt_072 ext:compatibleWith ext:acc_BMS-Guard .
+ext:batt_073 a ext:LithiumIonBattery .
+ext:batt_073 rdfs:label "LiCell-073" .
+
+ext:cap_073 a ext:Capacity .
+ext:cap_073 rdfs:label "3500 mAh" .
+
+ext:vol_073 a ext:Voltage .
+ext:vol_073 rdfs:label "18 V" .
+
+ext:batt_073 ext:hasCapacity ext:cap_073 .
+ext:batt_073 ext:hasVoltage ext:vol_073 .
+ext:batt_073 ext:madeBy ext:man_VoltMax .
+ext:batt_073 ext:compatibleWith ext:acc_ThermalPad .
+ext:batt_074 a ext:LithiumIonBattery .
+ext:batt_074 rdfs:label "LiCell-074" .
+
+ext:cap_074 a ext:Capacity .
+ext:cap_074 rdfs:label "2200 mAh" .
+
+ext:vol_074 a ext:Voltage .
+ext:vol_074 rdfs:label "3.7 V" .
+
+ext:batt_074 ext:hasCapacity ext:cap_074 .
+ext:batt_074 ext:hasVoltage ext:vol_074 .
+ext:batt_074 ext:madeBy ext:man_Energen .
+ext:batt_074 ext:compatibleWith ext:acc_Case-Pro .
+ext:batt_075 a ext:LithiumIonBattery .
+ext:batt_075 rdfs:label "LiCell-075" .
+
+ext:cap_075 a ext:Capacity .
+ext:cap_075 rdfs:label "3500 mAh" .
+
+ext:vol_075 a ext:Voltage .
+ext:vol_075 rdfs:label "24 V" .
+
+ext:batt_075 ext:hasCapacity ext:cap_075 .
+ext:batt_075 ext:hasVoltage ext:vol_075 .
+ext:batt_075 ext:madeBy ext:man_VoltMax .
+ext:batt_075 ext:compatibleWith ext:acc_ThermalPad .
+ext:batt_076 a ext:LithiumIonBattery .
+ext:batt_076 rdfs:label "LiCell-076" .
+
+ext:cap_076 a ext:Capacity .
+ext:cap_076 rdfs:label "2500 mAh" .
+
+ext:vol_076 a ext:Voltage .
+ext:vol_076 rdfs:label "12 V" .
+
+ext:batt_076 ext:hasCapacity ext:cap_076 .
+ext:batt_076 ext:hasVoltage ext:vol_076 .
+ext:batt_076 ext:madeBy ext:man_CellTech .
+ext:batt_076 ext:compatibleWith ext:acc_FuseKit .
+ext:batt_077 a ext:LithiumIonBattery .
+ext:batt_077 rdfs:label "LiCell-077" .
+
+ext:cap_077 a ext:Capacity .
+ext:cap_077 rdfs:label "2500 mAh" .
+
+ext:vol_077 a ext:Voltage .
+ext:vol_077 rdfs:label "7.4 V" .
+
+ext:batt_077 ext:hasCapacity ext:cap_077 .
+ext:batt_077 ext:hasVoltage ext:vol_077 .
+ext:batt_077 ext:madeBy ext:man_NanoVolt .
+ext:batt_077 ext:compatibleWith ext:acc_ThermalPad .
+ext:batt_078 a ext:LithiumIonBattery .
+ext:batt_078 rdfs:label "LiCell-078" .
+
+ext:cap_078 a ext:Capacity .
+ext:cap_078 rdfs:label "2200 mAh" .
+
+ext:vol_078 a ext:Voltage .
+ext:vol_078 rdfs:label "18 V" .
+
+ext:batt_078 ext:hasCapacity ext:cap_078 .
+ext:batt_078 ext:hasVoltage ext:vol_078 .
+ext:batt_078 ext:madeBy ext:man_CellTech .
+ext:batt_078 ext:compatibleWith ext:acc_BMS-Guard .
+ext:batt_079 a ext:LithiumIonBattery .
+ext:batt_079 rdfs:label "LiCell-079" .
+
+ext:cap_079 a ext:Capacity .
+ext:cap_079 rdfs:label "3500 mAh" .
+
+ext:vol_079 a ext:Voltage .
+ext:vol_079 rdfs:label "18 V" .
+
+ext:batt_079 ext:hasCapacity ext:cap_079 .
+ext:batt_079 ext:hasVoltage ext:vol_079 .
+ext:batt_079 ext:madeBy ext:man_Energen .
+ext:batt_079 ext:compatibleWith ext:acc_QuickMount .

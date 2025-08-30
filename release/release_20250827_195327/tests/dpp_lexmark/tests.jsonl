@@ -1,5 +1,0 @@
-{"id":"lx1","query":"Which standard applies to PrinterL1?","product":"PrinterL1","session":"s1","type":"recall","expected_contains":"RoHS"}
-{"id":"lx2","query":"List required steps for PrinterL1","product":"PrinterL1","session":"s1","type":"logic","expected_contains":"Print Quality"}
-{"id":"lx3","query":"Any EMC or safety compliance for PrinterL1?","product":"PrinterL1","session":"s1","type":"open","expected_contains":"EMC"}
-{"id":"lx4","query":"Does PrinterL1 need wireless testing?","product":"PrinterL1","session":"s1","type":"open","expected_contains":"Wireless Test"}
-{"id":"lx5","query":"What label checks or WEEE apply?","product":"PrinterL1","session":"s1","type":"open","expected_contains":"WEEE"}

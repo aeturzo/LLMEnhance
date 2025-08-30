@@ -15,8 +15,9 @@ from __future__ import annotations
 
 import os
 import csv
-import json
+from pathlib import Path
 import pathlib
+import json
 import time
 import random
 import argparse
@@ -55,22 +56,51 @@ def set_global_seed(seed: int = 42) -> None:
         pass
 
 
-# ---------------- IO helpers ----------------
-def seed_memory(seed_file: pathlib.Path) -> None:
-    """Load per-domain memory seeds if present."""
-    if not seed_file.exists():
-        print(f"[seed_memory] No seed file at {seed_file} (skipping)")
+def seed_memory(seed_file: str | None = None, domain: str | None = None, session: str = "s1"):
+    """Robust seeding that accepts multiple schemas and picks the right file per domain."""
+    def _extract_text(row: dict) -> str:
+        return row.get("text") or row.get("memory") or row.get("content") or row.get("doc") or ""
+
+    # resolve path
+    candidates = []
+    if seed_file:
+        candidates.append(Path(seed_file))
+    if domain:
+        candidates += [
+            Path(f"tests/{domain}/seed_mem.jsonl"),
+            Path(f"tests/{domain}/seed_docs.jsonl"),
+        ]
+    candidates += [
+        Path("tests/dpp_rl/seed_mem.jsonl"),
+        Path("tests/dpp_rl/seed_docs.jsonl"),
+    ]
+    path = next((p for p in candidates if p.exists()), None)
+    if not path:
+        print("[seed_memory] no seed file found; skipping.")
         return
-    with seed_file.open("r", encoding="utf-8") as f:
-        n = 0
+
+    n = 0
+    with path.open("r", encoding="utf-8") as f:
         for line in f:
-            s = line.strip()
-            if not s:
+            t = line.strip()
+            if not t:
                 continue
-            row = json.loads(s)
-            memory_service.add_memory(row.get("session", "default"), row["memory"])
+            row = json.loads(t)
+            txt = _extract_text(row)
+            if not txt:
+                continue
+            if hasattr(memory_service, "add_memory"):
+                memory_service.add_memory(session, txt)
+            elif hasattr(memory_service, "add"):
+                memory_service.add(session_id=session, content=txt, metadata={})
+            elif hasattr(memory_service, "insert"):
+                memory_service.insert(session_id=session, content=txt, metadata={})
+            elif hasattr(memory_service, "index_texts"):
+                memory_service.index_texts(session_id=session, texts=[txt])
+            else:
+                raise RuntimeError("memory_service has no add/insert/index_texts method")
             n += 1
-    print(f"[seed_memory] Added {n} memories from {seed_file}")
+    print(f"[seed_memory] Added {n} memories from {path}")
 
 
 def load_jsonl(path: pathlib.Path) -> List[dict]:
@@ -81,29 +111,52 @@ def load_jsonl(path: pathlib.Path) -> List[dict]:
 
 
 def tests_path_for_domain(domain: str) -> pathlib.Path:
-    if domain == "textiles":
-        return ROOT / "tests" / "dpp_textiles" / "tests.jsonl"
-    if domain == "viessmann":
-        return ROOT / "tests" / "dpp_viessmann" / "tests.jsonl"
-    if domain == "lexmark":
-        return ROOT / "tests" / "dpp_lexmark" / "tests.jsonl"
-    # default battery
-    return ROOT / "tests" / "dpp_rl" / "tests.jsonl"
+    """
+    Prefer the scaled dataset paths: tests/<domain>/tests.jsonl.
+    Fall back to legacy dpp_* paths only if the preferred file is missing.
+    """
+    # 1) preferred (scaled) location
+    preferred = ROOT / "tests" / domain / "tests.jsonl"
+    if preferred.exists():
+        return preferred
+
+    # 2) legacy fallbacks (old repo structure)
+    legacy_map = {
+        "battery":   ROOT / "tests" / "dpp_rl" / "tests.jsonl",
+        "textiles":  ROOT / "tests" / "dpp_textiles" / "tests.jsonl",
+        "viessmann": ROOT / "tests" / "dpp_viessmann" / "tests.jsonl",
+        "lexmark":   ROOT / "tests" / "dpp_lexmark" / "tests.jsonl",
+    }
+    return legacy_map.get(domain, preferred)
 
 
 def seed_path_for_domain(domain: str) -> pathlib.Path:
     """
-    Prefer seed_docs.jsonl; fallback to seed_mem.jsonl in the domain folder.
+    Prefer seeds next to the scaled dataset: tests/<domain>/{seed_docs.jsonl, seed_mem.jsonl}.
+    Then try legacy dpp_* folders; finally the default battery location.
     """
-    folder = {
+    # 1) preferred (scaled) folder
+    folder = ROOT / "tests" / domain
+    for name in ("seed_docs.jsonl", "seed_mem.jsonl"):
+        p = folder / name
+        if p.exists():
+            return p
+
+    # 2) legacy folders
+    legacy_folder = {
+        "battery":   ROOT / "tests" / "dpp_rl",
         "textiles":  ROOT / "tests" / "dpp_textiles",
         "viessmann": ROOT / "tests" / "dpp_viessmann",
         "lexmark":   ROOT / "tests" / "dpp_lexmark",
-        "battery":   ROOT / "tests" / "dpp_rl",
     }.get(domain, ROOT / "tests" / "dpp_rl")
-    p1 = folder / "seed_docs.jsonl"
-    p2 = folder / "seed_mem.jsonl"
-    return p1 if p1.exists() else p2
+
+    for name in ("seed_docs.jsonl", "seed_mem.jsonl"):
+        p = legacy_folder / name
+        if p.exists():
+            return p
+
+    # 3) nothing found → return a non-existing preferred path (caller prints a skip)
+    return folder / "seed_mem.jsonl"
 
 
 def load_tests(domain: str) -> List[Dict[str, Any]]:
@@ -217,20 +270,23 @@ if __name__ == "__main__":
         help="evaluation domain",
     )
     args = ap.parse_args()
-    os.environ["DPP_DOMAIN"] = args.domain  # visible to services
+
+    # define and export domain
+    domain = args.domain
+    os.environ["DPP_DOMAIN"] = domain  # visible to services
 
     set_global_seed(42)
 
-    # Domain-aware seeding
-    seed_file = seed_path_for_domain(args.domain)
-    seed_memory(seed_file)
+    # Domain-aware seeding (new layout preferred, legacy fallback)
+    seed_file = seed_path_for_domain(domain)
+    seed_memory(seed_file=seed_file, domain=domain)
 
     # Build reasoner once; reused by SYM via app.state.reasoner
-    app.state.reasoner = build_reasoner(run_owl_rl=True, domain=args.domain)
+    app.state.reasoner = build_reasoner(run_owl_rl=True, domain=domain)
     client = TestClient(app)
 
     rid = time.strftime("%Y%m%d_%H%M%S")
-    tests = load_tests(args.domain)
+    tests = load_tests(domain)
     trace_fp = ART / f"trace_{rid}.jsonl"
 
     # Classic + supervised baselines
@@ -297,6 +353,7 @@ if __name__ == "__main__":
                 "session": ex.get("session"),
                 "expected_contains": ex.get("expected_contains"),
                 "mode": mode.value,
+                "domain": domain,
                 "latency_ms": round((t1 - t0) * 1000.0, 2),
                 "steps": len(steps or []),
                 "success": int(succ),
@@ -312,7 +369,7 @@ if __name__ == "__main__":
         print(f"Wrote {fp}")
 
     # ----- RL on the same tests -----
-    rows: List[Dict[str, Any]] = []
+    rows = []
     for ex in tests:
         payload = {
             "query": ex["query"],
@@ -365,6 +422,7 @@ if __name__ == "__main__":
             "session": ex.get("session"),
             "expected_contains": ex.get("expected_contains"),
             "mode": "RL",
+            "domain": domain,
             "latency_ms": round((t1 - t0) * 1000.0, 2),
             "steps": len(steps or []),
             "success": int(succ),

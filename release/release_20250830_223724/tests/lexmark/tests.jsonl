@@ -1,0 +1,584 @@
+{"id": "rec-000000", "type": "recall", "session": "s1", "product": "PrinterL1", "query": "For PrinterL1, What's the component (datasheet v2)", "expected_contains": "Head1", "ontology_refs": ["component"]}
+{"id": "rec-000001", "type": "recall", "session": "s1", "product": "PrinterL1", "query": "What Is it the case that thes the standard (conforms to) of PrinterL1?", "expected_contains": "EMC Compliance", "ontology_refs": ["standard (conforms to)"]}
+{"id": "rec-000002", "type": "recall", "session": "s1", "product": "PrinterL2", "query": "Please provide the component for PrinterL2.", "expected_contains": "Head2", "ontology_refs": ["component"]}
+{"id": "log-000000", "type": "logic", "session": "s1", "product": "PrinterL2", "query": "Does PrinterL2 include a wireless module? (records)", "expected_contains": "no", "ontology_refs": ["Has wireless module"]}
+{"id": "log-000001", "type": "logic", "session": "s1", "product": "PrinterL2", "query": "Do we have PrinterL2 include any lead-containing component?", "expected_contains": "no", "ontology_refs": ["Lead material present"]}
+{"id": "log-000002", "type": "logic", "session": "s1", "product": "PrinterL2", "query": "Would you say PrinterL2 linked to any compliance standard? (records)", "expected_contains": "no", "ontology_refs": ["Compliance linked"]}
+{"id": "log-000003", "type": "logic", "session": "s1", "product": "PrinterL1", "query": "Do we have PrinterL1 include any lead-containing component? (records)", "expected_contains": "yes", "ontology_refs": ["Lead material present"]}
+{"id": "log-000004", "type": "logic", "session": "s1", "product": "PrinterL1", "query": "Would you say PrinterL1 linked to any compliance standard? (records)", "expected_contains": "yes", "ontology_refs": ["Compliance linked"]}
+{"id": "log-000005", "type": "logic", "session": "s1", "product": "PrinterL1", "query": "Do we have PrinterL1 include a wireless module? (records)", "expected_contains": "yes", "ontology_refs": ["Has wireless module"]}
+{"id": "opn-000000", "type": "open", "session": "s1", "product": "PrinterL1", "query": "List the componente that are documented for PrinterL1s (datasheet v2) (datasheet v2)", "expected_contains": "Head1", "ontology_refs": ["component"]}
+{"id": "opn-000001", "type": "open", "session": "s1", "product": "PrinterL1", "query": "Froms the product sheet, what standard (conforms to) applies to PrinterL1? (datasheet v2)", "expected_contains": "EMC Compliance", "ontology_refs": ["standard (conforms to)"]}
+{"id": "opn-000002", "type": "open", "session": "s1", "product": "PrinterL2", "query": "From the product sheet, what component applies to PrinterL2? (datasheet v2)", "expected_contains": "Head2", "ontology_refs": ["component"]}
+{"type": "recall", "query": "What is the cartridge of Lex-077?", "expected_contains": "E077A11E", "session": "s1", "id": "lexmark.kb.recall.00013"}
+{"type": "recall", "query": "What is the duplex unit of Lex-063?", "expected_contains": "DuplexUnit", "session": "s1", "id": "lexmark.kb.recall.00014"}
+{"type": "recall", "query": "What is the cartridge of Lex-058?", "expected_contains": "E058A11E", "session": "s1", "id": "lexmark.kb.recall.00015"}
+{"type": "recall", "query": "What is the duplex unit of Lex-032?", "expected_contains": "WiFiModule", "session": "s1", "id": "lexmark.kb.recall.00016"}
+{"type": "recall", "query": "What is the cartridge of Lex-007?", "expected_contains": "E007A11E", "session": "s1", "id": "lexmark.kb.recall.00017"}
+{"type": "recall", "query": "What is the duplex unit of Lex-003?", "expected_contains": "DuplexUnit", "session": "s1", "id": "lexmark.kb.recall.00018"}
+{"type": "recall", "query": "What is the yield of E066A11E?", "expected_contains": "2500 pages", "session": "s1", "id": "lexmark.kb.recall.00019"}
+{"type": "recall", "query": "What is the yield of E012A11E?", "expected_contains": "3500 pages", "session": "s1", "id": "lexmark.kb.recall.00020"}
+{"type": "recall", "query": "What is the cartridge of Lex-015?", "expected_contains": "E015A11E", "session": "s1", "id": "lexmark.kb.recall.00021"}
+{"type": "recall", "query": "What is the cartridge of Lex-052?", "expected_contains": "E052A11E", "session": "s1", "id": "lexmark.kb.recall.00022"}
+{"type": "recall", "query": "What is the duplex unit of Lex-006?", "expected_contains": "DuplexUnit", "session": "s1", "id": "lexmark.kb.recall.00023"}
+{"type": "recall", "query": "What is the yield of E015A11E?", "expected_contains": "1500 pages", "session": "s1", "id": "lexmark.kb.recall.00024"}
+{"type": "recall", "query": "What is the duplex unit of Lex-046?", "expected_contains": "Tray500", "session": "s1", "id": "lexmark.kb.recall.00025"}
+{"type": "recall", "query": "What is the cartridge of Lex-026?", "expected_contains": "E026A11E", "session": "s1", "id": "lexmark.kb.recall.00026"}
+{"type": "recall", "query": "What is the duplex unit of Lex-061?", "expected_contains": "Tray500", "session": "s1", "id": "lexmark.kb.recall.00027"}
+{"type": "recall", "query": "What is the cartridge of Lex-024?", "expected_contains": "E024A11E", "session": "s1", "id": "lexmark.kb.recall.00028"}
+{"type": "recall", "query": "What is the yield of E058A11E?", "expected_contains": "6000 pages", "session": "s1", "id": "lexmark.kb.recall.00029"}
+{"type": "recall", "query": "What is the duplex unit of Lex-004?", "expected_contains": "Tray500", "session": "s1", "id": "lexmark.kb.recall.00030"}
+{"type": "recall", "query": "What is the duplex unit of Lex-018?", "expected_contains": "DuplexUnit", "session": "s1", "id": "lexmark.kb.recall.00031"}
+{"type": "recall", "query": "What is the cartridge of Lex-071?", "expected_contains": "E071A11E", "session": "s1", "id": "lexmark.kb.recall.00032"}
+{"type": "recall", "query": "What is the cartridge of Lex-036?", "expected_contains": "E036A11E", "session": "s1", "id": "lexmark.kb.recall.00033"}
+{"type": "recall", "query": "What is the yield of E041A11E?", "expected_contains": "2500 pages", "session": "s1", "id": "lexmark.kb.recall.00034"}
+{"type": "recall", "query": "What is the duplex unit of Lex-069?", "expected_contains": "DuplexUnit", "session": "s1", "id": "lexmark.kb.recall.00035"}
+{"type": "recall", "query": "What is the yield of E067A11E?", "expected_contains": "3500 pages", "session": "s1", "id": "lexmark.kb.recall.00036"}
+{"type": "recall", "query": "What is the yield of E014A11E?", "expected_contains": "9000 pages", "session": "s1", "id": "lexmark.kb.recall.00037"}
+{"type": "recall", "query": "What is the yield of E017A11E?", "expected_contains": "3500 pages", "session": "s1", "id": "lexmark.kb.recall.00038"}
+{"type": "recall", "query": "What is the domain of yield?", "expected_contains": "cartridge", "session": "s1", "id": "lexmark.kb.recall.00039"}
+{"type": "recall", "query": "What is the cartridge of Lex-048?", "expected_contains": "E048A11E", "session": "s1", "id": "lexmark.kb.recall.00040"}
+{"type": "recall", "query": "What is the cartridge of Lex-009?", "expected_contains": "E009A11E", "session": "s1", "id": "lexmark.kb.recall.00041"}
+{"type": "recall", "query": "What is the cartridge of Lex-025?", "expected_contains": "E025A11E", "session": "s1", "id": "lexmark.kb.recall.00042"}
+{"type": "recall", "query": "What is the cartridge of Lex-041?", "expected_contains": "E041A11E", "session": "s1", "id": "lexmark.kb.recall.00043"}
+{"type": "recall", "query": "What is the yield of E002A11E?", "expected_contains": "3500 pages", "session": "s1", "id": "lexmark.kb.recall.00044"}
+{"type": "recall", "query": "What is the cartridge of Lex-038?", "expected_contains": "E038A11E", "session": "s1", "id": "lexmark.kb.recall.00045"}
+{"type": "recall", "query": "What is the yield of E001A11E?", "expected_contains": "2500 pages", "session": "s1", "id": "lexmark.kb.recall.00046"}
+{"type": "recall", "query": "What is the yield of E061A11E?", "expected_contains": "2500 pages", "session": "s1", "id": "lexmark.kb.recall.00047"}
+{"type": "recall", "query": "What is the duplex unit of Lex-023?", "expected_contains": "WiFiModule", "session": "s1", "id": "lexmark.kb.recall.00048"}
+{"type": "recall", "query": "What is the yield of E047A11E?", "expected_contains": "3500 pages", "session": "s1", "id": "lexmark.kb.recall.00049"}
+{"type": "recall", "query": "What is the yield of E034A11E?", "expected_contains": "9000 pages", "session": "s1", "id": "lexmark.kb.recall.00050"}
+{"type": "recall", "query": "What is the duplex unit of Lex-059?", "expected_contains": "WiFiModule", "session": "s1", "id": "lexmark.kb.recall.00051"}
+{"type": "recall", "query": "What is the duplex unit of Lex-012?", "expected_contains": "DuplexUnit", "session": "s1", "id": "lexmark.kb.recall.00052"}
+{"type": "recall", "query": "What is the duplex unit of Lex-034?", "expected_contains": "Tray500", "session": "s1", "id": "lexmark.kb.recall.00053"}
+{"type": "recall", "query": "What is the duplex unit of Lex-031?", "expected_contains": "Tray500", "session": "s1", "id": "lexmark.kb.recall.00054"}
+{"type": "recall", "query": "What is the duplex unit of Lex-044?", "expected_contains": "WiFiModule", "session": "s1", "id": "lexmark.kb.recall.00055"}
+{"type": "recall", "query": "What is the cartridge of Lex-017?", "expected_contains": "E017A11E", "session": "s1", "id": "lexmark.kb.recall.00056"}
+{"type": "recall", "query": "What is the yield of E055A11E?", "expected_contains": "1500 pages", "session": "s1", "id": "lexmark.kb.recall.00057"}
+{"type": "recall", "query": "What is the cartridge of Lex-076?", "expected_contains": "E076A11E", "session": "s1", "id": "lexmark.kb.recall.00058"}
+{"type": "recall", "query": "What is the range of duplex unit?", "expected_contains": "Accessory", "session": "s1", "id": "lexmark.kb.recall.00059"}
+{"type": "recall", "query": "What is the cartridge of Lex-018?", "expected_contains": "E018A11E", "session": "s1", "id": "lexmark.kb.recall.00060"}
+{"type": "recall", "query": "What is the range of hasComponent?", "expected_contains": "Component", "session": "s1", "id": "lexmark.kb.recall.00061"}
+{"type": "recall", "query": "What is the hasComponent of PrinterL2?", "expected_contains": "Board2", "session": "s1", "id": "lexmark.kb.recall.00062"}
+{"type": "recall", "query": "What is the yield of E057A11E?", "expected_contains": "3500 pages", "session": "s1", "id": "lexmark.kb.recall.00063"}
+{"type": "recall", "query": "What is the yield of E060A11E?", "expected_contains": "1500 pages", "session": "s1", "id": "lexmark.kb.recall.00064"}
+{"type": "recall", "query": "What is the yield of E071A11E?", "expected_contains": "2500 pages", "session": "s1", "id": "lexmark.kb.recall.00065"}
+{"type": "recall", "query": "What is the yield of E040A11E?", "expected_contains": "1500 pages", "session": "s1", "id": "lexmark.kb.recall.00066"}
+{"type": "recall", "query": "What is the yield of E069A11E?", "expected_contains": "9000 pages", "session": "s1", "id": "lexmark.kb.recall.00067"}
+{"type": "recall", "query": "What is the duplex unit of Lex-036?", "expected_contains": "DuplexUnit", "session": "s1", "id": "lexmark.kb.recall.00068"}
+{"type": "recall", "query": "What is the yield of E020A11E?", "expected_contains": "1500 pages", "session": "s1", "id": "lexmark.kb.recall.00069"}
+{"type": "recall", "query": "What is the cartridge of Lex-056?", "expected_contains": "E056A11E", "session": "s1", "id": "lexmark.kb.recall.00070"}
+{"type": "recall", "query": "What is the duplex unit of Lex-021?", "expected_contains": "DuplexUnit", "session": "s1", "id": "lexmark.kb.recall.00071"}
+{"type": "recall", "query": "What is the duplex unit of Lex-016?", "expected_contains": "Tray500", "session": "s1", "id": "lexmark.kb.recall.00072"}
+{"type": "recall", "query": "What is the duplex unit of Lex-014?", "expected_contains": "WiFiModule", "session": "s1", "id": "lexmark.kb.recall.00073"}
+{"type": "recall", "query": "What is the yield of E011A11E?", "expected_contains": "2500 pages", "session": "s1", "id": "lexmark.kb.recall.00074"}
+{"type": "recall", "query": "What is the duplex unit of Lex-030?", "expected_contains": "DuplexUnit", "session": "s1", "id": "lexmark.kb.recall.00075"}
+{"type": "recall", "query": "What is the cartridge of Lex-044?", "expected_contains": "E044A11E", "session": "s1", "id": "lexmark.kb.recall.00076"}
+{"type": "recall", "query": "What is the yield of E049A11E?", "expected_contains": "9000 pages", "session": "s1", "id": "lexmark.kb.recall.00077"}
+{"type": "recall", "query": "What is the duplex unit of Lex-052?", "expected_contains": "Tray500", "session": "s1", "id": "lexmark.kb.recall.00078"}
+{"type": "recall", "query": "What is the subClassOf of WirelessModule?", "expected_contains": "Component", "session": "s1", "id": "lexmark.kb.recall.00079"}
+{"type": "recall", "query": "What is the cartridge of Lex-059?", "expected_contains": "E059A11E", "session": "s1", "id": "lexmark.kb.recall.00080"}
+{"type": "recall", "query": "What is the yield of E030A11E?", "expected_contains": "1500 pages", "session": "s1", "id": "lexmark.kb.recall.00081"}
+{"type": "recall", "query": "What is the yield of E044A11E?", "expected_contains": "9000 pages", "session": "s1", "id": "lexmark.kb.recall.00082"}
+{"type": "recall", "query": "What is the duplex unit of Lex-057?", "expected_contains": "DuplexUnit", "session": "s1", "id": "lexmark.kb.recall.00083"}
+{"type": "recall", "query": "What is the duplex unit of Lex-048?", "expected_contains": "DuplexUnit", "session": "s1", "id": "lexmark.kb.recall.00084"}
+{"type": "recall", "query": "What is the duplex unit of Lex-049?", "expected_contains": "Tray500", "session": "s1", "id": "lexmark.kb.recall.00085"}
+{"type": "recall", "query": "What is the duplex unit of Lex-000?", "expected_contains": "DuplexUnit", "session": "s1", "id": "lexmark.kb.recall.00086"}
+{"type": "recall", "query": "What is the cartridge of Lex-020?", "expected_contains": "E020A11E", "session": "s1", "id": "lexmark.kb.recall.00087"}
+{"type": "recall", "query": "What is the hasComponent of PrinterL1?", "expected_contains": "Board1", "session": "s1", "id": "lexmark.kb.recall.00088"}
+{"type": "recall", "query": "What is the yield of E006A11E?", "expected_contains": "2500 pages", "session": "s1", "id": "lexmark.kb.recall.00089"}
+{"type": "recall", "query": "What is the cartridge of Lex-029?", "expected_contains": "E029A11E", "session": "s1", "id": "lexmark.kb.recall.00090"}
+{"type": "recall", "query": "What is the cartridge of Lex-053?", "expected_contains": "E053A11E", "session": "s1", "id": "lexmark.kb.recall.00091"}
+{"type": "recall", "query": "What is the yield of E073A11E?", "expected_contains": "6000 pages", "session": "s1", "id": "lexmark.kb.recall.00092"}
+{"type": "recall", "query": "What is the yield of E043A11E?", "expected_contains": "6000 pages", "session": "s1", "id": "lexmark.kb.recall.00093"}
+{"type": "recall", "query": "What is the yield of E032A11E?", "expected_contains": "3500 pages", "session": "s1", "id": "lexmark.kb.recall.00094"}
+{"type": "recall", "query": "What is the cartridge of Lex-008?", "expected_contains": "E008A11E", "session": "s1", "id": "lexmark.kb.recall.00095"}
+{"type": "recall", "query": "What is the duplex unit of Lex-047?", "expected_contains": "WiFiModule", "session": "s1", "id": "lexmark.kb.recall.00096"}
+{"type": "recall", "query": "What is the hasComponent of PrinterL1?", "expected_contains": "Wlan1", "session": "s1", "id": "lexmark.kb.recall.00097"}
+{"type": "recall", "query": "What is the range of requiresStep?", "expected_contains": "ProcessStep", "session": "s1", "id": "lexmark.kb.recall.00098"}
+{"type": "recall", "query": "What is the domain of requiresCompliance?", "expected_contains": "Product", "session": "s1", "id": "lexmark.kb.recall.00099"}
+{"type": "recall", "query": "What is the yield of E039A11E?", "expected_contains": "9000 pages", "session": "s1", "id": "lexmark.kb.recall.00100"}
+{"type": "recall", "query": "What is the duplex unit of Lex-025?", "expected_contains": "Tray500", "session": "s1", "id": "lexmark.kb.recall.00101"}
+{"type": "recall", "query": "What is the range of conformsTo?", "expected_contains": "Standard", "session": "s1", "id": "lexmark.kb.recall.00102"}
+{"type": "recall", "query": "What is the yield of E056A11E?", "expected_contains": "2500 pages", "session": "s1", "id": "lexmark.kb.recall.00103"}
+{"type": "recall", "query": "What is the duplex unit of Lex-035?", "expected_contains": "WiFiModule", "session": "s1", "id": "lexmark.kb.recall.00104"}
+{"type": "recall", "query": "What is the cartridge of Lex-050?", "expected_contains": "E050A11E", "session": "s1", "id": "lexmark.kb.recall.00105"}
+{"type": "recall", "query": "What is the yield of E019A11E?", "expected_contains": "9000 pages", "session": "s1", "id": "lexmark.kb.recall.00106"}
+{"type": "recall", "query": "What is the domain of requiresStep?", "expected_contains": "Product", "session": "s1", "id": "lexmark.kb.recall.00107"}
+{"type": "recall", "query": "What is the yield of E013A11E?", "expected_contains": "6000 pages", "session": "s1", "id": "lexmark.kb.recall.00108"}
+{"type": "recall", "query": "What is the yield of E024A11E?", "expected_contains": "9000 pages", "session": "s1", "id": "lexmark.kb.recall.00109"}
+{"type": "recall", "query": "What is the duplex unit of Lex-075?", "expected_contains": "DuplexUnit", "session": "s1", "id": "lexmark.kb.recall.00110"}
+{"type": "recall", "query": "What is the duplex unit of Lex-045?", "expected_contains": "DuplexUnit", "session": "s1", "id": "lexmark.kb.recall.00111"}
+{"type": "recall", "query": "What is the cartridge of Lex-073?", "expected_contains": "E073A11E", "session": "s1", "id": "lexmark.kb.recall.00112"}
+{"type": "recall", "query": "What is the duplex unit of Lex-060?", "expected_contains": "DuplexUnit", "session": "s1", "id": "lexmark.kb.recall.00113"}
+{"type": "recall", "query": "What is the domain of cartridge?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.recall.00114"}
+{"type": "recall", "query": "What is the duplex unit of Lex-078?", "expected_contains": "DuplexUnit", "session": "s1", "id": "lexmark.kb.recall.00115"}
+{"type": "recall", "query": "What is the duplex unit of Lex-039?", "expected_contains": "DuplexUnit", "session": "s1", "id": "lexmark.kb.recall.00116"}
+{"type": "recall", "query": "What is the yield of E036A11E?", "expected_contains": "2500 pages", "session": "s1", "id": "lexmark.kb.recall.00117"}
+{"type": "recall", "query": "What is the duplex unit of Lex-027?", "expected_contains": "DuplexUnit", "session": "s1", "id": "lexmark.kb.recall.00118"}
+{"type": "recall", "query": "What is the yield of E070A11E?", "expected_contains": "1500 pages", "session": "s1", "id": "lexmark.kb.recall.00119"}
+{"type": "recall", "query": "What is the yield of E046A11E?", "expected_contains": "2500 pages", "session": "s1", "id": "lexmark.kb.recall.00120"}
+{"type": "recall", "query": "What is the cartridge of Lex-033?", "expected_contains": "E033A11E", "session": "s1", "id": "lexmark.kb.recall.00121"}
+{"type": "recall", "query": "What is the duplex unit of Lex-058?", "expected_contains": "Tray500", "session": "s1", "id": "lexmark.kb.recall.00122"}
+{"type": "recall", "query": "What is the yield of E065A11E?", "expected_contains": "1500 pages", "session": "s1", "id": "lexmark.kb.recall.00123"}
+{"type": "recall", "query": "What is the duplex unit of Lex-020?", "expected_contains": "WiFiModule", "session": "s1", "id": "lexmark.kb.recall.00124"}
+{"type": "recall", "query": "What is the cartridge of Lex-012?", "expected_contains": "E012A11E", "session": "s1", "id": "lexmark.kb.recall.00125"}
+{"type": "recall", "query": "What is the yield of E077A11E?", "expected_contains": "3500 pages", "session": "s1", "id": "lexmark.kb.recall.00126"}
+{"type": "recall", "query": "What is the yield of E026A11E?", "expected_contains": "2500 pages", "session": "s1", "id": "lexmark.kb.recall.00127"}
+{"type": "recall", "query": "What is the yield of E050A11E?", "expected_contains": "1500 pages", "session": "s1", "id": "lexmark.kb.recall.00128"}
+{"type": "recall", "query": "What is the cartridge of Lex-062?", "expected_contains": "E062A11E", "session": "s1", "id": "lexmark.kb.recall.00129"}
+{"type": "recall", "query": "What is the duplex unit of Lex-054?", "expected_contains": "DuplexUnit", "session": "s1", "id": "lexmark.kb.recall.00130"}
+{"type": "recall", "query": "What is the duplex unit of Lex-067?", "expected_contains": "Tray500", "session": "s1", "id": "lexmark.kb.recall.00131"}
+{"type": "recall", "query": "What is the yield of E074A11E?", "expected_contains": "9000 pages", "session": "s1", "id": "lexmark.kb.recall.00132"}
+{"type": "recall", "query": "What is the cartridge of Lex-040?", "expected_contains": "E040A11E", "session": "s1", "id": "lexmark.kb.recall.00133"}
+{"type": "recall", "query": "What is the yield of E078A11E?", "expected_contains": "6000 pages", "session": "s1", "id": "lexmark.kb.recall.00134"}
+{"type": "recall", "query": "What is the hasComponent of PrinterL2?", "expected_contains": "Head2", "session": "s1", "id": "lexmark.kb.recall.00135"}
+{"type": "recall", "query": "What is the duplex unit of Lex-072?", "expected_contains": "DuplexUnit", "session": "s1", "id": "lexmark.kb.recall.00136"}
+{"type": "recall", "query": "What is the duplex unit of Lex-071?", "expected_contains": "WiFiModule", "session": "s1", "id": "lexmark.kb.recall.00137"}
+{"type": "recall", "query": "What is the cartridge of Lex-078?", "expected_contains": "E078A11E", "session": "s1", "id": "lexmark.kb.recall.00138"}
+{"type": "recall", "query": "What is the yield of E033A11E?", "expected_contains": "6000 pages", "session": "s1", "id": "lexmark.kb.recall.00139"}
+{"type": "recall", "query": "What is the yield of E005A11E?", "expected_contains": "1500 pages", "session": "s1", "id": "lexmark.kb.recall.00140"}
+{"type": "recall", "query": "What is the cartridge of Lex-042?", "expected_contains": "E042A11E", "session": "s1", "id": "lexmark.kb.recall.00141"}
+{"type": "recall", "query": "What is the yield of E064A11E?", "expected_contains": "9000 pages", "session": "s1", "id": "lexmark.kb.recall.00142"}
+{"type": "recall", "query": "What is the range of requiresCompliance?", "expected_contains": "Standard", "session": "s1", "id": "lexmark.kb.recall.00143"}
+{"type": "recall", "query": "What is the yield of E021A11E?", "expected_contains": "2500 pages", "session": "s1", "id": "lexmark.kb.recall.00144"}
+{"type": "recall", "query": "What is the cartridge of Lex-031?", "expected_contains": "E031A11E", "session": "s1", "id": "lexmark.kb.recall.00145"}
+{"type": "recall", "query": "What is the cartridge of Lex-030?", "expected_contains": "E030A11E", "session": "s1", "id": "lexmark.kb.recall.00146"}
+{"type": "recall", "query": "What is the cartridge of Lex-000?", "expected_contains": "E000A11E", "session": "s1", "id": "lexmark.kb.recall.00147"}
+{"type": "recall", "query": "What is the cartridge of Lex-010?", "expected_contains": "E010A11E", "session": "s1", "id": "lexmark.kb.recall.00148"}
+{"type": "recall", "query": "What is the yield of E004A11E?", "expected_contains": "9000 pages", "session": "s1", "id": "lexmark.kb.recall.00149"}
+{"type": "recall", "query": "What is the duplex unit of Lex-070?", "expected_contains": "Tray500", "session": "s1", "id": "lexmark.kb.recall.00150"}
+{"type": "recall", "query": "What is the yield of E008A11E?", "expected_contains": "6000 pages", "session": "s1", "id": "lexmark.kb.recall.00151"}
+{"type": "recall", "query": "What is the cartridge of Lex-065?", "expected_contains": "E065A11E", "session": "s1", "id": "lexmark.kb.recall.00152"}
+{"type": "recall", "query": "What is the yield of E025A11E?", "expected_contains": "1500 pages", "session": "s1", "id": "lexmark.kb.recall.00153"}
+{"type": "recall", "query": "What is the duplex unit of Lex-055?", "expected_contains": "Tray500", "session": "s1", "id": "lexmark.kb.recall.00154"}
+{"type": "recall", "query": "What is the duplex unit of Lex-029?", "expected_contains": "WiFiModule", "session": "s1", "id": "lexmark.kb.recall.00155"}
+{"type": "recall", "query": "What is the cartridge of Lex-022?", "expected_contains": "E022A11E", "session": "s1", "id": "lexmark.kb.recall.00156"}
+{"type": "recall", "query": "What is the yield of E009A11E?", "expected_contains": "9000 pages", "session": "s1", "id": "lexmark.kb.recall.00157"}
+{"type": "recall", "query": "What is the yield of E037A11E?", "expected_contains": "3500 pages", "session": "s1", "id": "lexmark.kb.recall.00158"}
+{"type": "recall", "query": "What is the cartridge of Lex-075?", "expected_contains": "E075A11E", "session": "s1", "id": "lexmark.kb.recall.00159"}
+{"type": "recall", "query": "What is the subClassOf of MainBoard?", "expected_contains": "Component", "session": "s1", "id": "lexmark.kb.recall.00160"}
+{"type": "recall", "query": "What is the cartridge of Lex-023?", "expected_contains": "E023A11E", "session": "s1", "id": "lexmark.kb.recall.00161"}
+{"type": "recall", "query": "What is the yield of E063A11E?", "expected_contains": "6000 pages", "session": "s1", "id": "lexmark.kb.recall.00162"}
+{"type": "recall", "query": "What is the yield of E027A11E?", "expected_contains": "3500 pages", "session": "s1", "id": "lexmark.kb.recall.00163"}
+{"type": "recall", "query": "What is the cartridge of Lex-069?", "expected_contains": "E069A11E", "session": "s1", "id": "lexmark.kb.recall.00164"}
+{"type": "recall", "query": "What is the yield of E048A11E?", "expected_contains": "6000 pages", "session": "s1", "id": "lexmark.kb.recall.00165"}
+{"type": "recall", "query": "What is the cartridge of Lex-035?", "expected_contains": "E035A11E", "session": "s1", "id": "lexmark.kb.recall.00166"}
+{"type": "recall", "query": "What is the cartridge of Lex-013?", "expected_contains": "E013A11E", "session": "s1", "id": "lexmark.kb.recall.00167"}
+{"type": "recall", "query": "What is the yield of E045A11E?", "expected_contains": "1500 pages", "session": "s1", "id": "lexmark.kb.recall.00168"}
+{"type": "recall", "query": "What is the cartridge of Lex-051?", "expected_contains": "E051A11E", "session": "s1", "id": "lexmark.kb.recall.00169"}
+{"type": "recall", "query": "What is the cartridge of Lex-002?", "expected_contains": "E002A11E", "session": "s1", "id": "lexmark.kb.recall.00170"}
+{"type": "recall", "query": "What is the usesMaterial of Board1?", "expected_contains": "LeadMaterial", "session": "s1", "id": "lexmark.kb.recall.00171"}
+{"type": "recall", "query": "What is the hasComponent of PrinterL2?", "expected_contains": "Toner2", "session": "s1", "id": "lexmark.kb.recall.00172"}
+{"type": "recall", "query": "What is the subClassOf of PrinterHead?", "expected_contains": "Component", "session": "s1", "id": "lexmark.kb.recall.00173"}
+{"type": "recall", "query": "What is the subClassOf of laser printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.recall.00174"}
+{"type": "recall", "query": "What is the duplex unit of Lex-011?", "expected_contains": "WiFiModule", "session": "s1", "id": "lexmark.kb.recall.00175"}
+{"type": "recall", "query": "What is the duplex unit of Lex-051?", "expected_contains": "DuplexUnit", "session": "s1", "id": "lexmark.kb.recall.00176"}
+{"type": "recall", "query": "What is the cartridge of Lex-074?", "expected_contains": "E074A11E", "session": "s1", "id": "lexmark.kb.recall.00177"}
+{"type": "recall", "query": "What is the duplex unit of Lex-008?", "expected_contains": "WiFiModule", "session": "s1", "id": "lexmark.kb.recall.00178"}
+{"type": "recall", "query": "What is the hasComponent of PrinterL1?", "expected_contains": "Head1", "session": "s1", "id": "lexmark.kb.recall.00179"}
+{"type": "recall", "query": "What is the domain of duplex unit?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.recall.00180"}
+{"type": "recall", "query": "What is the duplex unit of Lex-066?", "expected_contains": "DuplexUnit", "session": "s1", "id": "lexmark.kb.recall.00181"}
+{"type": "recall", "query": "What is the cartridge of Lex-039?", "expected_contains": "E039A11E", "session": "s1", "id": "lexmark.kb.recall.00182"}
+{"type": "recall", "query": "What is the duplex unit of Lex-022?", "expected_contains": "Tray500", "session": "s1", "id": "lexmark.kb.recall.00183"}
+{"type": "recall", "query": "What is the yield of E022A11E?", "expected_contains": "3500 pages", "session": "s1", "id": "lexmark.kb.recall.00184"}
+{"type": "recall", "query": "What is the yield of E075A11E?", "expected_contains": "1500 pages", "session": "s1", "id": "lexmark.kb.recall.00185"}
+{"type": "recall", "query": "What is the cartridge of Lex-014?", "expected_contains": "E014A11E", "session": "s1", "id": "lexmark.kb.recall.00186"}
+{"type": "recall", "query": "What is the cartridge of Lex-068?", "expected_contains": "E068A11E", "session": "s1", "id": "lexmark.kb.recall.00187"}
+{"type": "recall", "query": "What is the duplex unit of Lex-043?", "expected_contains": "Tray500", "session": "s1", "id": "lexmark.kb.recall.00188"}
+{"type": "recall", "query": "What is the cartridge of Lex-055?", "expected_contains": "E055A11E", "session": "s1", "id": "lexmark.kb.recall.00189"}
+{"type": "recall", "query": "What is the cartridge of Lex-064?", "expected_contains": "E064A11E", "session": "s1", "id": "lexmark.kb.recall.00190"}
+{"type": "recall", "query": "What is the cartridge of Lex-067?", "expected_contains": "E067A11E", "session": "s1", "id": "lexmark.kb.recall.00191"}
+{"type": "recall", "query": "What is the cartridge of Lex-037?", "expected_contains": "E037A11E", "session": "s1", "id": "lexmark.kb.recall.00192"}
+{"type": "recall", "query": "What is the conformsTo of PrinterL1?", "expected_contains": "EMC Compliance", "session": "s1", "id": "lexmark.kb.recall.00193"}
+{"type": "recall", "query": "What is the duplex unit of Lex-026?", "expected_contains": "WiFiModule", "session": "s1", "id": "lexmark.kb.recall.00194"}
+{"type": "recall", "query": "What is the yield of E016A11E?", "expected_contains": "2500 pages", "session": "s1", "id": "lexmark.kb.recall.00195"}
+{"type": "recall", "query": "What is the cartridge of Lex-019?", "expected_contains": "E019A11E", "session": "s1", "id": "lexmark.kb.recall.00196"}
+{"type": "recall", "query": "What is the domain of hasComponent?", "expected_contains": "Product", "session": "s1", "id": "lexmark.kb.recall.00197"}
+{"type": "recall", "query": "What is the cartridge of Lex-003?", "expected_contains": "E003A11E", "session": "s1", "id": "lexmark.kb.recall.00198"}
+{"type": "recall", "query": "What is the cartridge of Lex-027?", "expected_contains": "E027A11E", "session": "s1", "id": "lexmark.kb.recall.00199"}
+{"type": "recall", "query": "What is the cartridge of Lex-004?", "expected_contains": "E004A11E", "session": "s1", "id": "lexmark.kb.recall.00200"}
+{"type": "recall", "query": "What is the cartridge of Lex-011?", "expected_contains": "E011A11E", "session": "s1", "id": "lexmark.kb.recall.00201"}
+{"type": "recall", "query": "What is the duplex unit of Lex-007?", "expected_contains": "Tray500", "session": "s1", "id": "lexmark.kb.recall.00202"}
+{"type": "recall", "query": "What is the duplex unit of Lex-001?", "expected_contains": "Tray500", "session": "s1", "id": "lexmark.kb.recall.00203"}
+{"type": "recall", "query": "What is the cartridge of Lex-049?", "expected_contains": "E049A11E", "session": "s1", "id": "lexmark.kb.recall.00204"}
+{"type": "recall", "query": "What is the yield of E010A11E?", "expected_contains": "1500 pages", "session": "s1", "id": "lexmark.kb.recall.00205"}
+{"type": "recall", "query": "What is the duplex unit of Lex-038?", "expected_contains": "WiFiModule", "session": "s1", "id": "lexmark.kb.recall.00206"}
+{"type": "recall", "query": "What is the cartridge of Lex-001?", "expected_contains": "E001A11E", "session": "s1", "id": "lexmark.kb.recall.00207"}
+{"type": "recall", "query": "What is the cartridge of Lex-045?", "expected_contains": "E045A11E", "session": "s1", "id": "lexmark.kb.recall.00208"}
+{"type": "recall", "query": "What is the cartridge of Lex-070?", "expected_contains": "E070A11E", "session": "s1", "id": "lexmark.kb.recall.00209"}
+{"type": "recall", "query": "What is the yield of E076A11E?", "expected_contains": "2500 pages", "session": "s1", "id": "lexmark.kb.recall.00210"}
+{"type": "recall", "query": "What is the cartridge of Lex-063?", "expected_contains": "E063A11E", "session": "s1", "id": "lexmark.kb.recall.00211"}
+{"type": "recall", "query": "What is the yield of E079A11E?", "expected_contains": "9000 pages", "session": "s1", "id": "lexmark.kb.recall.00212"}
+{"type": "recall", "query": "What is the cartridge of Lex-066?", "expected_contains": "E066A11E", "session": "s1", "id": "lexmark.kb.recall.00213"}
+{"type": "recall", "query": "What is the yield of E003A11E?", "expected_contains": "6000 pages", "session": "s1", "id": "lexmark.kb.recall.00214"}
+{"type": "recall", "query": "What is the duplex unit of Lex-015?", "expected_contains": "DuplexUnit", "session": "s1", "id": "lexmark.kb.recall.00215"}
+{"type": "recall", "query": "What is the duplex unit of Lex-053?", "expected_contains": "WiFiModule", "session": "s1", "id": "lexmark.kb.recall.00216"}
+{"type": "recall", "query": "What is the cartridge of Lex-043?", "expected_contains": "E043A11E", "session": "s1", "id": "lexmark.kb.recall.00217"}
+{"type": "recall", "query": "What is the yield of E029A11E?", "expected_contains": "9000 pages", "session": "s1", "id": "lexmark.kb.recall.00218"}
+{"type": "recall", "query": "What is the cartridge of Lex-032?", "expected_contains": "E032A11E", "session": "s1", "id": "lexmark.kb.recall.00219"}
+{"type": "recall", "query": "What is the cartridge of Lex-046?", "expected_contains": "E046A11E", "session": "s1", "id": "lexmark.kb.recall.00220"}
+{"type": "recall", "query": "What is the yield of E042A11E?", "expected_contains": "3500 pages", "session": "s1", "id": "lexmark.kb.recall.00221"}
+{"type": "recall", "query": "What is the duplex unit of Lex-041?", "expected_contains": "WiFiModule", "session": "s1", "id": "lexmark.kb.recall.00222"}
+{"type": "recall", "query": "What is the duplex unit of Lex-019?", "expected_contains": "Tray500", "session": "s1", "id": "lexmark.kb.recall.00223"}
+{"type": "recall", "query": "What is the duplex unit of Lex-040?", "expected_contains": "Tray500", "session": "s1", "id": "lexmark.kb.recall.00224"}
+{"type": "recall", "query": "What is the cartridge of Lex-034?", "expected_contains": "E034A11E", "session": "s1", "id": "lexmark.kb.recall.00225"}
+{"type": "recall", "query": "What is the yield of E007A11E?", "expected_contains": "3500 pages", "session": "s1", "id": "lexmark.kb.recall.00226"}
+{"type": "recall", "query": "What is the cartridge of Lex-072?", "expected_contains": "E072A11E", "session": "s1", "id": "lexmark.kb.recall.00227"}
+{"type": "recall", "query": "What is the range of cartridge?", "expected_contains": "cartridge", "session": "s1", "id": "lexmark.kb.recall.00228"}
+{"type": "recall", "query": "What is the cartridge of Lex-054?", "expected_contains": "E054A11E", "session": "s1", "id": "lexmark.kb.recall.00229"}
+{"type": "recall", "query": "What is the yield of E068A11E?", "expected_contains": "6000 pages", "session": "s1", "id": "lexmark.kb.recall.00230"}
+{"type": "recall", "query": "What is the cartridge of Lex-006?", "expected_contains": "E006A11E", "session": "s1", "id": "lexmark.kb.recall.00231"}
+{"type": "recall", "query": "What is the yield of E051A11E?", "expected_contains": "2500 pages", "session": "s1", "id": "lexmark.kb.recall.00232"}
+{"type": "recall", "query": "What is the yield of E038A11E?", "expected_contains": "6000 pages", "session": "s1", "id": "lexmark.kb.recall.00233"}
+{"type": "recall", "query": "What is the duplex unit of Lex-017?", "expected_contains": "WiFiModule", "session": "s1", "id": "lexmark.kb.recall.00234"}
+{"type": "recall", "query": "What is the duplex unit of Lex-065?", "expected_contains": "WiFiModule", "session": "s1", "id": "lexmark.kb.recall.00235"}
+{"type": "recall", "query": "What is the cartridge of Lex-060?", "expected_contains": "E060A11E", "session": "s1", "id": "lexmark.kb.recall.00236"}
+{"type": "recall", "query": "What is the duplex unit of Lex-028?", "expected_contains": "Tray500", "session": "s1", "id": "lexmark.kb.recall.00237"}
+{"type": "recall", "query": "What is the duplex unit of Lex-073?", "expected_contains": "Tray500", "session": "s1", "id": "lexmark.kb.recall.00238"}
+{"type": "recall", "query": "What is the yield of E072A11E?", "expected_contains": "3500 pages", "session": "s1", "id": "lexmark.kb.recall.00239"}
+{"type": "recall", "query": "What is the cartridge of Lex-061?", "expected_contains": "E061A11E", "session": "s1", "id": "lexmark.kb.recall.00240"}
+{"type": "recall", "query": "What is the range of yield?", "expected_contains": "yield", "session": "s1", "id": "lexmark.kb.recall.00241"}
+{"type": "recall", "query": "What is the duplex unit of Lex-074?", "expected_contains": "WiFiModule", "session": "s1", "id": "lexmark.kb.recall.00242"}
+{"type": "recall", "query": "What is the duplex unit of Lex-068?", "expected_contains": "WiFiModule", "session": "s1", "id": "lexmark.kb.recall.00243"}
+{"type": "recall", "query": "What is the yield of E028A11E?", "expected_contains": "6000 pages", "session": "s1", "id": "lexmark.kb.recall.00244"}
+{"type": "recall", "query": "What is the subClassOf of TonerCartridge?", "expected_contains": "Component", "session": "s1", "id": "lexmark.kb.recall.00245"}
+{"type": "recall", "query": "What is the duplex unit of Lex-050?", "expected_contains": "WiFiModule", "session": "s1", "id": "lexmark.kb.recall.00246"}
+{"type": "recall", "query": "What is the cartridge of Lex-016?", "expected_contains": "E016A11E", "session": "s1", "id": "lexmark.kb.recall.00247"}
+{"type": "recall", "query": "What is the cartridge of Lex-028?", "expected_contains": "E028A11E", "session": "s1", "id": "lexmark.kb.recall.00248"}
+{"type": "recall", "query": "What is the domain of conformsTo?", "expected_contains": "Product", "session": "s1", "id": "lexmark.kb.recall.00249"}
+{"type": "recall", "query": "What is the cartridge of Lex-057?", "expected_contains": "E057A11E", "session": "s1", "id": "lexmark.kb.recall.00250"}
+{"type": "recall", "query": "What is the yield of E018A11E?", "expected_contains": "6000 pages", "session": "s1", "id": "lexmark.kb.recall.00251"}
+{"type": "recall", "query": "What is the yield of E031A11E?", "expected_contains": "2500 pages", "session": "s1", "id": "lexmark.kb.recall.00252"}
+{"type": "recall", "query": "What is the duplex unit of Lex-062?", "expected_contains": "WiFiModule", "session": "s1", "id": "lexmark.kb.recall.00253"}
+{"type": "recall", "query": "What is the duplex unit of Lex-013?", "expected_contains": "Tray500", "session": "s1", "id": "lexmark.kb.recall.00254"}
+{"type": "recall", "query": "What is the duplex unit of Lex-079?", "expected_contains": "Tray500", "session": "s1", "id": "lexmark.kb.recall.00255"}
+{"type": "recall", "query": "What is the duplex unit of Lex-064?", "expected_contains": "Tray500", "session": "s1", "id": "lexmark.kb.recall.00256"}
+{"type": "recall", "query": "What is the cartridge of Lex-005?", "expected_contains": "E005A11E", "session": "s1", "id": "lexmark.kb.recall.00257"}
+{"type": "recall", "query": "What is the yield of E059A11E?", "expected_contains": "9000 pages", "session": "s1", "id": "lexmark.kb.recall.00258"}
+{"type": "recall", "query": "What is the duplex unit of Lex-033?", "expected_contains": "DuplexUnit", "session": "s1", "id": "lexmark.kb.recall.00259"}
+{"type": "recall", "query": "What is the duplex unit of Lex-002?", "expected_contains": "WiFiModule", "session": "s1", "id": "lexmark.kb.recall.00260"}
+{"type": "recall", "query": "What is the duplex unit of Lex-076?", "expected_contains": "Tray500", "session": "s1", "id": "lexmark.kb.recall.00261"}
+{"type": "recall", "query": "What is the duplex unit of Lex-005?", "expected_contains": "WiFiModule", "session": "s1", "id": "lexmark.kb.recall.00262"}
+{"type": "recall", "query": "What is the cartridge of Lex-079?", "expected_contains": "E079A11E", "session": "s1", "id": "lexmark.kb.recall.00263"}
+{"type": "recall", "query": "What is the range of usesMaterial?", "expected_contains": "Material", "session": "s1", "id": "lexmark.kb.recall.00264"}
+{"type": "recall", "query": "What is the hasComponent of PrinterL1?", "expected_contains": "Toner1", "session": "s1", "id": "lexmark.kb.recall.00265"}
+{"type": "recall", "query": "What is the yield of E054A11E?", "expected_contains": "9000 pages", "session": "s1", "id": "lexmark.kb.recall.00266"}
+{"type": "recall", "query": "What is the yield of E052A11E?", "expected_contains": "3500 pages", "session": "s1", "id": "lexmark.kb.recall.00267"}
+{"type": "recall", "query": "What is the duplex unit of Lex-024?", "expected_contains": "DuplexUnit", "session": "s1", "id": "lexmark.kb.recall.00268"}
+{"type": "recall", "query": "What is the duplex unit of Lex-010?", "expected_contains": "Tray500", "session": "s1", "id": "lexmark.kb.recall.00269"}
+{"type": "recall", "query": "What is the yield of E000A11E?", "expected_contains": "1500 pages", "session": "s1", "id": "lexmark.kb.recall.00270"}
+{"type": "recall", "query": "What is the yield of E035A11E?", "expected_contains": "1500 pages", "session": "s1", "id": "lexmark.kb.recall.00271"}
+{"type": "recall", "query": "What is the duplex unit of Lex-056?", "expected_contains": "WiFiModule", "session": "s1", "id": "lexmark.kb.recall.00272"}
+{"type": "recall", "query": "What is the duplex unit of Lex-042?", "expected_contains": "DuplexUnit", "session": "s1", "id": "lexmark.kb.recall.00273"}
+{"type": "recall", "query": "What is the cartridge of Lex-047?", "expected_contains": "E047A11E", "session": "s1", "id": "lexmark.kb.recall.00274"}
+{"type": "recall", "query": "What is the yield of E062A11E?", "expected_contains": "3500 pages", "session": "s1", "id": "lexmark.kb.recall.00275"}
+{"type": "recall", "query": "What is the yield of E023A11E?", "expected_contains": "6000 pages", "session": "s1", "id": "lexmark.kb.recall.00276"}
+{"type": "recall", "query": "What is the domain of usesMaterial?", "expected_contains": "Component", "session": "s1", "id": "lexmark.kb.recall.00277"}
+{"type": "recall", "query": "What is the duplex unit of Lex-009?", "expected_contains": "DuplexUnit", "session": "s1", "id": "lexmark.kb.recall.00278"}
+{"type": "recall", "query": "What is the duplex unit of Lex-077?", "expected_contains": "WiFiModule", "session": "s1", "id": "lexmark.kb.recall.00279"}
+{"type": "recall", "query": "What is the cartridge of Lex-021?", "expected_contains": "E021A11E", "session": "s1", "id": "lexmark.kb.recall.00280"}
+{"type": "recall", "query": "What is the yield of E053A11E?", "expected_contains": "6000 pages", "session": "s1", "id": "lexmark.kb.recall.00281"}
+{"type": "recall", "query": "What is the duplex unit of Lex-037?", "expected_contains": "Tray500", "session": "s1", "id": "lexmark.kb.recall.00282"}
+{"type": "logic", "query": "Is Lex-004 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00283"}
+{"type": "logic", "query": "Is E048A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00284"}
+{"type": "logic", "query": "Is Lex-073 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00285"}
+{"type": "logic", "query": "Is E044A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00286"}
+{"type": "logic", "query": "Is Lex-007 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00287"}
+{"type": "logic", "query": "Is Lex-019 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00288"}
+{"type": "logic", "query": "Is E018A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00289"}
+{"type": "logic", "query": "Is Lex-051 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00290"}
+{"type": "logic", "query": "Is Lex-001 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00291"}
+{"type": "logic", "query": "Is Lex-059 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00292"}
+{"type": "logic", "query": "Is Lex-071 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00293"}
+{"type": "logic", "query": "Is E063A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00294"}
+{"type": "logic", "query": "Is Lex-063 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00295"}
+{"type": "logic", "query": "Is unsignedByte a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00296"}
+{"type": "logic", "query": "Is Lex-007 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00297"}
+{"type": "logic", "query": "Is Lex-052 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00298"}
+{"type": "logic", "query": "Is long a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00299"}
+{"type": "logic", "query": "Is Lex-020 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00300"}
+{"type": "logic", "query": "Is base64Binary a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00301"}
+{"type": "logic", "query": "Is Head2 a Component?", "expected_contains": "Component", "session": "s1", "id": "lexmark.kb.logic.00302"}
+{"type": "logic", "query": "Is Lex-063 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00303"}
+{"type": "logic", "query": "Is dateTimeStamp a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00304"}
+{"type": "logic", "query": "Is language a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00305"}
+{"type": "logic", "query": "Is E077A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00306"}
+{"type": "logic", "query": "Is E030A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00307"}
+{"type": "logic", "query": "Is E002A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00308"}
+{"type": "logic", "query": "Is Lex-000 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00309"}
+{"type": "logic", "query": "Is E049A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00310"}
+{"type": "logic", "query": "Is Lex-035 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00311"}
+{"type": "logic", "query": "Is Lex-072 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00312"}
+{"type": "logic", "query": "Is Lex-000 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00313"}
+{"type": "logic", "query": "Is Lex-024 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00314"}
+{"type": "logic", "query": "Is E054A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00315"}
+{"type": "logic", "query": "Is Lex-078 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00316"}
+{"type": "logic", "query": "Is Lex-047 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00317"}
+{"type": "logic", "query": "Is unsignedShort a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00318"}
+{"type": "logic", "query": "Is Lex-070 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00319"}
+{"type": "logic", "query": "Is Lex-060 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00320"}
+{"type": "logic", "query": "Is Lex-040 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00321"}
+{"type": "logic", "query": "Is Lex-044 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00322"}
+{"type": "logic", "query": "Is E016A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00323"}
+{"type": "logic", "query": "Is Lex-068 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00324"}
+{"type": "logic", "query": "Is 9000 pages a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00325"}
+{"type": "logic", "query": "Is Lex-054 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00326"}
+{"type": "logic", "query": "Is Lex-034 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00327"}
+{"type": "logic", "query": "Is E034A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00328"}
+{"type": "logic", "query": "Is Lex-037 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00329"}
+{"type": "logic", "query": "Is E004A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00330"}
+{"type": "logic", "query": "Is Lex-079 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00331"}
+{"type": "logic", "query": "Is Lex-078 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00332"}
+{"type": "logic", "query": "Is E006A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00333"}
+{"type": "logic", "query": "Is incompatibleWith a AnnotationProperty?", "expected_contains": "AnnotationProperty", "session": "s1", "id": "lexmark.kb.logic.00334"}
+{"type": "logic", "query": "Is Lex-016 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00335"}
+{"type": "logic", "query": "Is PlainLiteral a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00336"}
+{"type": "logic", "query": "Is Lex-030 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00337"}
+{"type": "logic", "query": "Is versionInfo a AnnotationProperty?", "expected_contains": "AnnotationProperty", "session": "s1", "id": "lexmark.kb.logic.00338"}
+{"type": "logic", "query": "Is Lex-045 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00339"}
+{"type": "logic", "query": "Is Lex-055 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00340"}
+{"type": "logic", "query": "Is double a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00341"}
+{"type": "logic", "query": "Is Lex-012 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00342"}
+{"type": "logic", "query": "Is Lex-048 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00343"}
+{"type": "logic", "query": "Is Lex-079 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00344"}
+{"type": "logic", "query": "Is Lex-069 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00345"}
+{"type": "logic", "query": "Is 3500 pages a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00346"}
+{"type": "logic", "query": "Is Lex-072 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00347"}
+{"type": "logic", "query": "Is Literal a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00348"}
+{"type": "logic", "query": "Is E045A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00349"}
+{"type": "logic", "query": "Is Lex-065 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00350"}
+{"type": "logic", "query": "Is Lex-032 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00351"}
+{"type": "logic", "query": "Is Lex-074 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00352"}
+{"type": "logic", "query": "Is Lex-074 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00353"}
+{"type": "logic", "query": "Is Lex-006 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00354"}
+{"type": "logic", "query": "Is Lex-048 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00355"}
+{"type": "logic", "query": "Is 2500 pages a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00356"}
+{"type": "logic", "query": "Is E078A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00357"}
+{"type": "logic", "query": "Is Lex-010 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00358"}
+{"type": "logic", "query": "Is Lex-033 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00359"}
+{"type": "logic", "query": "Is Lex-027 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00360"}
+{"type": "logic", "query": "Is Board2 a Component?", "expected_contains": "Component", "session": "s1", "id": "lexmark.kb.logic.00361"}
+{"type": "logic", "query": "Is priorVersion a AnnotationProperty?", "expected_contains": "AnnotationProperty", "session": "s1", "id": "lexmark.kb.logic.00362"}
+{"type": "logic", "query": "Is Lex-043 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00363"}
+{"type": "logic", "query": "Is Lex-039 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00364"}
+{"type": "logic", "query": "Is Lex-065 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00365"}
+{"type": "logic", "query": "Is Lex-033 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00366"}
+{"type": "logic", "query": "Is E041A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00367"}
+{"type": "logic", "query": "Is Nothing a Class?", "expected_contains": "Class", "session": "s1", "id": "lexmark.kb.logic.00368"}
+{"type": "logic", "query": "Is token a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00369"}
+{"type": "logic", "query": "Is hexBinary a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00370"}
+{"type": "logic", "query": "Is E047A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00371"}
+{"type": "logic", "query": "Is nonNegativeInteger a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00372"}
+{"type": "logic", "query": "Is Lex-004 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00373"}
+{"type": "logic", "query": "Is Lex-070 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00374"}
+{"type": "logic", "query": "Is Lex-031 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00375"}
+{"type": "logic", "query": "Is Lex-043 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00376"}
+{"type": "logic", "query": "Is E066A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00377"}
+{"type": "logic", "query": "Is Lex-061 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00378"}
+{"type": "logic", "query": "Is E013A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00379"}
+{"type": "logic", "query": "Is Lex-049 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00380"}
+{"type": "logic", "query": "Is Lex-046 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00381"}
+{"type": "logic", "query": "Is negativeInteger a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00382"}
+{"type": "logic", "query": "Is Lex-010 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00383"}
+{"type": "logic", "query": "Is E000A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00384"}
+{"type": "logic", "query": "Is Lex-051 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00385"}
+{"type": "logic", "query": "Is Lex-047 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00386"}
+{"type": "logic", "query": "Is E052A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00387"}
+{"type": "logic", "query": "Is Lex-062 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00388"}
+{"type": "logic", "query": "Is Lex-005 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00389"}
+{"type": "logic", "query": "Is Lex-023 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00390"}
+{"type": "logic", "query": "Is Lex-075 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00391"}
+{"type": "logic", "query": "Is WiFiModule a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00392"}
+{"type": "logic", "query": "Is anyURI a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00393"}
+{"type": "logic", "query": "Is byte a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00394"}
+{"type": "logic", "query": "Is Lex-066 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00395"}
+{"type": "logic", "query": "Is Lex-019 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00396"}
+{"type": "logic", "query": "Is E069A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00397"}
+{"type": "logic", "query": "Is nonPositiveInteger a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00398"}
+{"type": "logic", "query": "Is E061A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00399"}
+{"type": "logic", "query": "Is Lex-076 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00400"}
+{"type": "logic", "query": "Is Toner1 a Component?", "expected_contains": "Component", "session": "s1", "id": "lexmark.kb.logic.00401"}
+{"type": "logic", "query": "Is time a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00402"}
+{"type": "logic", "query": "Is Tray500 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00403"}
+{"type": "logic", "query": "Is Lex-028 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00404"}
+{"type": "logic", "query": "Is E033A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00405"}
+{"type": "logic", "query": "Is Lex-001 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00406"}
+{"type": "logic", "query": "Is Lex-076 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00407"}
+{"type": "logic", "query": "Is Lex-029 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00408"}
+{"type": "logic", "query": "Is positiveInteger a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00409"}
+{"type": "logic", "query": "Is Lex-042 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00410"}
+{"type": "logic", "query": "Is E060A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00411"}
+{"type": "logic", "query": "Is E055A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00412"}
+{"type": "logic", "query": "Is Lex-030 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00413"}
+{"type": "logic", "query": "Is Lex-036 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00414"}
+{"type": "logic", "query": "Is E076A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00415"}
+{"type": "logic", "query": "Is Lex-014 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00416"}
+{"type": "logic", "query": "Is Lex-075 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00417"}
+{"type": "logic", "query": "Is E056A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00418"}
+{"type": "logic", "query": "Is Lex-032 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00419"}
+{"type": "logic", "query": "Is Lex-055 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00420"}
+{"type": "logic", "query": "Is Lex-045 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00421"}
+{"type": "logic", "query": "Is E028A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00422"}
+{"type": "logic", "query": "Is Lex-025 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00423"}
+{"type": "logic", "query": "Is Lex-017 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00424"}
+{"type": "logic", "query": "Is Lex-009 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00425"}
+{"type": "logic", "query": "Is E007A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00426"}
+{"type": "logic", "query": "Is E017A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00427"}
+{"type": "logic", "query": "Is Lex-068 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00428"}
+{"type": "logic", "query": "Is Lex-009 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00429"}
+{"type": "logic", "query": "Is isDefinedBy a AnnotationProperty?", "expected_contains": "AnnotationProperty", "session": "s1", "id": "lexmark.kb.logic.00430"}
+{"type": "logic", "query": "Is E070A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00431"}
+{"type": "logic", "query": "Is Wlan1 a Component?", "expected_contains": "Component", "session": "s1", "id": "lexmark.kb.logic.00432"}
+{"type": "logic", "query": "Is Lex-018 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00433"}
+{"type": "logic", "query": "Is Lex-066 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00434"}
+{"type": "logic", "query": "Is deprecated a AnnotationProperty?", "expected_contains": "AnnotationProperty", "session": "s1", "id": "lexmark.kb.logic.00435"}
+{"type": "logic", "query": "Is E062A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00436"}
+{"type": "logic", "query": "Is E059A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00437"}
+{"type": "logic", "query": "Is Lex-003 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00438"}
+{"type": "logic", "query": "Is Lex-026 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00439"}
+{"type": "logic", "query": "Is Lex-039 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00440"}
+{"type": "logic", "query": "Is Lex-021 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00441"}
+{"type": "logic", "query": "Is E019A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00442"}
+{"type": "logic", "query": "Is Lex-077 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00443"}
+{"type": "logic", "query": "Is E010A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00444"}
+{"type": "logic", "query": "Is backwardCompatibleWith a AnnotationProperty?", "expected_contains": "AnnotationProperty", "session": "s1", "id": "lexmark.kb.logic.00445"}
+{"type": "logic", "query": "Is Lex-050 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00446"}
+{"type": "logic", "query": "Is Lex-014 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00447"}
+{"type": "logic", "query": "Is Lex-028 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00448"}
+{"type": "logic", "query": "Is Lex-042 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00449"}
+{"type": "logic", "query": "Is short a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00450"}
+{"type": "logic", "query": "Is Lex-011 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00451"}
+{"type": "logic", "query": "Is Lex-029 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00452"}
+{"type": "logic", "query": "Is E074A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00453"}
+{"type": "logic", "query": "Is E075A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00454"}
+{"type": "logic", "query": "Is Lex-067 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00455"}
+{"type": "logic", "query": "Is E071A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00456"}
+{"type": "logic", "query": "Is Lex-053 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00457"}
+{"type": "logic", "query": "Is Lex-035 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00458"}
+{"type": "logic", "query": "Is E020A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00459"}
+{"type": "logic", "query": "Is E038A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00460"}
+{"type": "logic", "query": "Is E043A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00461"}
+{"type": "logic", "query": "Is seeAlso a AnnotationProperty?", "expected_contains": "AnnotationProperty", "session": "s1", "id": "lexmark.kb.logic.00462"}
+{"type": "logic", "query": "Is E057A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00463"}
+{"type": "logic", "query": "Is string a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00464"}
+{"type": "logic", "query": "Is E015A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00465"}
+{"type": "logic", "query": "Is Lex-034 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00466"}
+{"type": "logic", "query": "Is E029A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00467"}
+{"type": "logic", "query": "Is E065A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00468"}
+{"type": "logic", "query": "Is E053A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00469"}
+{"type": "logic", "query": "Is E058A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00470"}
+{"type": "logic", "query": "Is E050A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00471"}
+{"type": "logic", "query": "Is Lex-040 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00472"}
+{"type": "logic", "query": "Is Lex-005 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00473"}
+{"type": "logic", "query": "Is Lex-023 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00474"}
+{"type": "logic", "query": "Is E008A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00475"}
+{"type": "logic", "query": "Is Lex-037 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00476"}
+{"type": "logic", "query": "Is Lex-022 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00477"}
+{"type": "logic", "query": "Is Lex-057 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00478"}
+{"type": "logic", "query": "Is E031A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00479"}
+{"type": "logic", "query": "Is E037A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00480"}
+{"type": "logic", "query": "Is decimal a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00481"}
+{"type": "logic", "query": "Is Lex-054 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00482"}
+{"type": "logic", "query": "Is Lex-031 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00483"}
+{"type": "logic", "query": "Is Lex-050 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00484"}
+{"type": "logic", "query": "Is int a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00485"}
+{"type": "logic", "query": "Is E003A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00486"}
+{"type": "logic", "query": "Is Lex-026 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00487"}
+{"type": "logic", "query": "Is E068A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00488"}
+{"type": "logic", "query": "Is E073A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00489"}
+{"type": "logic", "query": "Is Lex-008 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00490"}
+{"type": "logic", "query": "Is E024A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00491"}
+{"type": "logic", "query": "Is normalizedString a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00492"}
+{"type": "logic", "query": "Is Lex-015 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00493"}
+{"type": "logic", "query": "Is unsignedInt a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00494"}
+{"type": "logic", "query": "Is E025A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00495"}
+{"type": "logic", "query": "Is Lex-008 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00496"}
+{"type": "logic", "query": "Is Lex-057 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00497"}
+{"type": "logic", "query": "Is E036A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00498"}
+{"type": "logic", "query": "Is Lex-056 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00499"}
+{"type": "logic", "query": "Is Lex-018 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00500"}
+{"type": "logic", "query": "Is langString a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00501"}
+{"type": "logic", "query": "Is E021A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00502"}
+{"type": "logic", "query": "Is E032A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00503"}
+{"type": "logic", "query": "Is Lex-056 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00504"}
+{"type": "logic", "query": "Is E079A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00505"}
+{"type": "logic", "query": "Is E011A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00506"}
+{"type": "logic", "query": "Is E051A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00507"}
+{"type": "logic", "query": "Is label a AnnotationProperty?", "expected_contains": "AnnotationProperty", "session": "s1", "id": "lexmark.kb.logic.00508"}
+{"type": "logic", "query": "Is Lex-011 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00509"}
+{"type": "logic", "query": "Is E046A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00510"}
+{"type": "logic", "query": "Is E067A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00511"}
+{"type": "logic", "query": "Is Lex-038 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00512"}
+{"type": "logic", "query": "Is E009A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00513"}
+{"type": "logic", "query": "Is Lex-012 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00514"}
+{"type": "logic", "query": "Is Lex-060 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00515"}
+{"type": "logic", "query": "Is E014A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00516"}
+{"type": "logic", "query": "Is Lex-067 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00517"}
+{"type": "logic", "query": "Is Lex-049 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00518"}
+{"type": "logic", "query": "Is integer a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00519"}
+{"type": "logic", "query": "Is Lex-016 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00520"}
+{"type": "logic", "query": "Is Lex-003 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00521"}
+{"type": "logic", "query": "Is Lex-038 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00522"}
+{"type": "logic", "query": "Is Lex-013 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00523"}
+{"type": "logic", "query": "Is float a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00524"}
+{"type": "logic", "query": "Is date a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00525"}
+{"type": "logic", "query": "Is Lex-036 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00526"}
+{"type": "logic", "query": "Is NMTOKEN a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00527"}
+{"type": "logic", "query": "Is Lex-015 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00528"}
+{"type": "logic", "query": "Is E040A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00529"}
+{"type": "logic", "query": "Is E064A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00530"}
+{"type": "logic", "query": "Is Lex-006 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00531"}
+{"type": "logic", "query": "Is Lex-013 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00532"}
+{"type": "logic", "query": "Is Lex-073 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00533"}
+{"type": "logic", "query": "Is E072A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00534"}
+{"type": "logic", "query": "Is Lex-041 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00535"}
+{"type": "logic", "query": "Is Lex-021 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00536"}
+{"type": "logic", "query": "Is Lex-027 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00537"}
+{"type": "logic", "query": "Is Lex-046 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00538"}
+{"type": "logic", "query": "Is Lex-017 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00539"}
+{"type": "logic", "query": "Is XMLLiteral a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00540"}
+{"type": "logic", "query": "Is boolean a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00541"}
+{"type": "logic", "query": "Is E005A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00542"}
+{"type": "logic", "query": "Is Toner2 a Component?", "expected_contains": "Component", "session": "s1", "id": "lexmark.kb.logic.00543"}
+{"type": "logic", "query": "Is 6000 pages a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00544"}
+{"type": "logic", "query": "Is comment a AnnotationProperty?", "expected_contains": "AnnotationProperty", "session": "s1", "id": "lexmark.kb.logic.00545"}
+{"type": "logic", "query": "Is E039A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00546"}
+{"type": "logic", "query": "Is Lex-024 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00547"}
+{"type": "logic", "query": "Is Lex-053 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00548"}
+{"type": "logic", "query": "Is E012A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00549"}
+{"type": "logic", "query": "Is Lex-025 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00550"}
+{"type": "logic", "query": "Is HTML a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00551"}
+{"type": "logic", "query": "Is Name a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00552"}
+{"type": "logic", "query": "Is E042A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00553"}
+{"type": "logic", "query": "Is Lex-071 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00554"}
+{"type": "logic", "query": "Is DuplexUnit a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00555"}
+{"type": "logic", "query": "Is Lex-022 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00556"}
+{"type": "logic", "query": "Is E023A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00557"}
+{"type": "logic", "query": "Is 1500 pages a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00558"}
+{"type": "logic", "query": "Is Lex-061 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00559"}
+{"type": "logic", "query": "Is Head1 a Component?", "expected_contains": "Component", "session": "s1", "id": "lexmark.kb.logic.00560"}
+{"type": "logic", "query": "Is dateTime a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00561"}
+{"type": "logic", "query": "Is E022A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00562"}
+{"type": "logic", "query": "Is Lex-044 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00563"}
+{"type": "logic", "query": "Is E001A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00564"}
+{"type": "logic", "query": "Is Lex-058 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00565"}
+{"type": "logic", "query": "Is unsignedLong a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00566"}
+{"type": "logic", "query": "Is Lex-058 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00567"}
+{"type": "logic", "query": "Is Lex-041 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00568"}
+{"type": "logic", "query": "Is Lex-064 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00569"}
+{"type": "logic", "query": "Is Lex-069 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00570"}
+{"type": "logic", "query": "Is Thing a Class?", "expected_contains": "Class", "session": "s1", "id": "lexmark.kb.logic.00571"}
+{"type": "logic", "query": "Is Lex-052 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00572"}
+{"type": "logic", "query": "Is Lex-020 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00573"}
+{"type": "logic", "query": "Is Lex-077 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00574"}
+{"type": "logic", "query": "Is Lex-002 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00575"}
+{"type": "logic", "query": "Is Lex-062 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00576"}
+{"type": "logic", "query": "Is E035A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00577"}
+{"type": "logic", "query": "Is E026A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00578"}
+{"type": "logic", "query": "Is E027A11E a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00579"}
+{"type": "logic", "query": "Is NCName a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "lexmark.kb.logic.00580"}
+{"type": "logic", "query": "Is Lex-059 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "lexmark.kb.logic.00581"}
+{"type": "logic", "query": "Is Board1 a Component?", "expected_contains": "Component", "session": "s1", "id": "lexmark.kb.logic.00582"}
+{"type": "logic", "query": "Is Lex-002 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00583"}
+{"type": "logic", "query": "Is Lex-064 a printer?", "expected_contains": "printer", "session": "s1", "id": "lexmark.kb.logic.00584"}

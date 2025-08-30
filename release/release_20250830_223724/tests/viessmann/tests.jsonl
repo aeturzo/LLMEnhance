@@ -1,0 +1,508 @@
+{"id": "rec-000000", "type": "recall", "session": "s1", "product": "ProductV1", "query": "For ProductV1, What's the component (datasheet v2)", "expected_contains": "Comp1", "ontology_refs": ["component"]}
+{"id": "rec-000001", "type": "recall", "session": "s1", "product": "ProductV1", "query": "For ProductV1, What Is it the cases that the the standard (conforms to)?", "expected_contains": "EU F-Gas Regulation", "ontology_refs": ["standard (conforms to)"]}
+{"id": "rec-000002", "type": "recall", "session": "s1", "product": "ProductV2", "query": "What's the component of ProductV2?", "expected_contains": "Comp2", "ontology_refs": ["component"]}
+{"id": "log-000000", "type": "logic", "session": "s1", "product": "ProductV2", "query": "Does ProductV2 use a refrigerant in any component? (records)", "expected_contains": "no", "ontology_refs": ["Uses refrigerant"]}
+{"id": "log-000001", "type": "logic", "session": "s1", "product": "ProductV2", "query": "Do we have ProductV2 include any lead-containing component?", "expected_contains": "no", "ontology_refs": ["Lead material present"]}
+{"id": "log-000002", "type": "logic", "session": "s1", "product": "ProductV2", "query": "Would you say ProductV2 linked to any compliance standard? (records)", "expected_contains": "no", "ontology_refs": ["Compliance linked"]}
+{"id": "log-000003", "type": "logic", "session": "s1", "product": "ProductV1", "query": "Do we have ProductV1 include any lead-containing component? (records)", "expected_contains": "yes", "ontology_refs": ["Lead material present"]}
+{"id": "log-000004", "type": "logic", "session": "s1", "product": "ProductV1", "query": "Would you say ProductV1 linked to any compliance standard? (records)", "expected_contains": "yes", "ontology_refs": ["Compliance linked"]}
+{"id": "log-000005", "type": "logic", "session": "s1", "product": "ProductV1", "query": "Do we have ProductV1 use a refrigerant in any component? (records)", "expected_contains": "yes", "ontology_refs": ["Uses refrigerant"]}
+{"id": "opn-000000", "type": "open", "session": "s1", "product": "ProductV1", "query": "List thee component associated with ProductV1. (datasheet v2)s (datasheet v2)", "expected_contains": "Comp1", "ontology_refs": ["component"]}
+{"id": "opn-000001", "type": "open", "session": "s1", "product": "ProductV1", "query": "Baseds on documentation, what standard (conforms to) applies to ProductV1? (datasheet v2)", "expected_contains": "EU F-Gas Regulation", "ontology_refs": ["standard (conforms to)"]}
+{"id": "opn-000002", "type": "open", "session": "s1", "product": "ProductV2", "query": "As per documentation, what component applies to ProductV2? (datasheet v2)", "expected_contains": "Comp2", "ontology_refs": ["component"]}
+{"type": "recall", "query": "What is the output of Vies-054?", "expected_contains": "35 kW", "session": "s1", "id": "viessmann.kb.recall.00013"}
+{"type": "recall", "query": "What is the range of usesRefrigerant?", "expected_contains": "Refrigerant", "session": "s1", "id": "viessmann.kb.recall.00014"}
+{"type": "recall", "query": "What is the subClassOf of heat pump?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.recall.00015"}
+{"type": "recall", "query": "What is the domain of hasComponent?", "expected_contains": "Product", "session": "s1", "id": "viessmann.kb.recall.00016"}
+{"type": "recall", "query": "What is the output of Vies-056?", "expected_contains": "18 kW", "session": "s1", "id": "viessmann.kb.recall.00017"}
+{"type": "recall", "query": "What is the output of Vies-004?", "expected_contains": "35 kW", "session": "s1", "id": "viessmann.kb.recall.00018"}
+{"type": "recall", "query": "What is the domain of fuel?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.recall.00019"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-041?", "expected_contains": "HydroKit", "session": "s1", "id": "viessmann.kb.recall.00020"}
+{"type": "recall", "query": "What is the output of Vies-041?", "expected_contains": "18 kW", "session": "s1", "id": "viessmann.kb.recall.00021"}
+{"type": "recall", "query": "What is the fuel of Vies-025?", "expected_contains": "Oil", "session": "s1", "id": "viessmann.kb.recall.00022"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-016?", "expected_contains": "Vitotrol", "session": "s1", "id": "viessmann.kb.recall.00023"}
+{"type": "recall", "query": "What is the output of Vies-047?", "expected_contains": "24 kW", "session": "s1", "id": "viessmann.kb.recall.00024"}
+{"type": "recall", "query": "What is the fuel of Vies-017?", "expected_contains": "Oil", "session": "s1", "id": "viessmann.kb.recall.00025"}
+{"type": "recall", "query": "What is the output of Vies-048?", "expected_contains": "30 kW", "session": "s1", "id": "viessmann.kb.recall.00026"}
+{"type": "recall", "query": "What is the fuel of Vies-035?", "expected_contains": "Electric", "session": "s1", "id": "viessmann.kb.recall.00027"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-059?", "expected_contains": "OutdoorSensor", "session": "s1", "id": "viessmann.kb.recall.00028"}
+{"type": "recall", "query": "What is the output of Vies-018?", "expected_contains": "30 kW", "session": "s1", "id": "viessmann.kb.recall.00029"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-053?", "expected_contains": "HydroKit", "session": "s1", "id": "viessmann.kb.recall.00030"}
+{"type": "recall", "query": "What is the output of Vies-020?", "expected_contains": "12 kW", "session": "s1", "id": "viessmann.kb.recall.00031"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-051?", "expected_contains": "OutdoorSensor", "session": "s1", "id": "viessmann.kb.recall.00032"}
+{"type": "recall", "query": "What is the fuel of Vies-003?", "expected_contains": "Electric", "session": "s1", "id": "viessmann.kb.recall.00033"}
+{"type": "recall", "query": "What is the output of Vies-008?", "expected_contains": "30 kW", "session": "s1", "id": "viessmann.kb.recall.00034"}
+{"type": "recall", "query": "What is the output of Vies-071?", "expected_contains": "18 kW", "session": "s1", "id": "viessmann.kb.recall.00035"}
+{"type": "recall", "query": "What is the fuel of Vies-052?", "expected_contains": "Gas", "session": "s1", "id": "viessmann.kb.recall.00036"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-003?", "expected_contains": "OutdoorSensor", "session": "s1", "id": "viessmann.kb.recall.00037"}
+{"type": "recall", "query": "What is the fuel of Vies-070?", "expected_contains": "Propane", "session": "s1", "id": "viessmann.kb.recall.00038"}
+{"type": "recall", "query": "What is the output of Vies-058?", "expected_contains": "30 kW", "session": "s1", "id": "viessmann.kb.recall.00039"}
+{"type": "recall", "query": "What is the range of fuel?", "expected_contains": "fuel type", "session": "s1", "id": "viessmann.kb.recall.00040"}
+{"type": "recall", "query": "What is the output of Vies-029?", "expected_contains": "35 kW", "session": "s1", "id": "viessmann.kb.recall.00041"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-023?", "expected_contains": "OutdoorSensor", "session": "s1", "id": "viessmann.kb.recall.00042"}
+{"type": "recall", "query": "What is the output of Vies-055?", "expected_contains": "12 kW", "session": "s1", "id": "viessmann.kb.recall.00043"}
+{"type": "recall", "query": "What is the output of Vies-007?", "expected_contains": "24 kW", "session": "s1", "id": "viessmann.kb.recall.00044"}
+{"type": "recall", "query": "What is the output of Vies-015?", "expected_contains": "12 kW", "session": "s1", "id": "viessmann.kb.recall.00045"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-033?", "expected_contains": "HydroKit", "session": "s1", "id": "viessmann.kb.recall.00046"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-065?", "expected_contains": "HydroKit", "session": "s1", "id": "viessmann.kb.recall.00047"}
+{"type": "recall", "query": "What is the output of Vies-073?", "expected_contains": "30 kW", "session": "s1", "id": "viessmann.kb.recall.00048"}
+{"type": "recall", "query": "What is the output of Vies-001?", "expected_contains": "18 kW", "session": "s1", "id": "viessmann.kb.recall.00049"}
+{"type": "recall", "query": "What is the output of Vies-003?", "expected_contains": "30 kW", "session": "s1", "id": "viessmann.kb.recall.00050"}
+{"type": "recall", "query": "What is the fuel of Vies-069?", "expected_contains": "Oil", "session": "s1", "id": "viessmann.kb.recall.00051"}
+{"type": "recall", "query": "What is the fuel of Vies-044?", "expected_contains": "Gas", "session": "s1", "id": "viessmann.kb.recall.00052"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-046?", "expected_contains": "BufferTank", "session": "s1", "id": "viessmann.kb.recall.00053"}
+{"type": "recall", "query": "What is the fuel of Vies-053?", "expected_contains": "Oil", "session": "s1", "id": "viessmann.kb.recall.00054"}
+{"type": "recall", "query": "What is the fuel of Vies-071?", "expected_contains": "Electric", "session": "s1", "id": "viessmann.kb.recall.00055"}
+{"type": "recall", "query": "What is the fuel of Vies-063?", "expected_contains": "Electric", "session": "s1", "id": "viessmann.kb.recall.00056"}
+{"type": "recall", "query": "What is the output of Vies-050?", "expected_contains": "12 kW", "session": "s1", "id": "viessmann.kb.recall.00057"}
+{"type": "recall", "query": "What is the output of Vies-026?", "expected_contains": "18 kW", "session": "s1", "id": "viessmann.kb.recall.00058"}
+{"type": "recall", "query": "What is the fuel of Vies-014?", "expected_contains": "Propane", "session": "s1", "id": "viessmann.kb.recall.00059"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-032?", "expected_contains": "Vitotrol", "session": "s1", "id": "viessmann.kb.recall.00060"}
+{"type": "recall", "query": "What is the domain of output?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.recall.00061"}
+{"type": "recall", "query": "What is the fuel of Vies-065?", "expected_contains": "Oil", "session": "s1", "id": "viessmann.kb.recall.00062"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-019?", "expected_contains": "OutdoorSensor", "session": "s1", "id": "viessmann.kb.recall.00063"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-055?", "expected_contains": "OutdoorSensor", "session": "s1", "id": "viessmann.kb.recall.00064"}
+{"type": "recall", "query": "What is the output of Vies-016?", "expected_contains": "18 kW", "session": "s1", "id": "viessmann.kb.recall.00065"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-064?", "expected_contains": "Vitotrol", "session": "s1", "id": "viessmann.kb.recall.00066"}
+{"type": "recall", "query": "What is the fuel of Vies-034?", "expected_contains": "Propane", "session": "s1", "id": "viessmann.kb.recall.00067"}
+{"type": "recall", "query": "What is the range of conformsTo?", "expected_contains": "Standard", "session": "s1", "id": "viessmann.kb.recall.00068"}
+{"type": "recall", "query": "What is the output of Vies-053?", "expected_contains": "30 kW", "session": "s1", "id": "viessmann.kb.recall.00069"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-004?", "expected_contains": "Vitotrol", "session": "s1", "id": "viessmann.kb.recall.00070"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-000?", "expected_contains": "Vitotrol", "session": "s1", "id": "viessmann.kb.recall.00071"}
+{"type": "recall", "query": "What is the hasComponent of ProductV2?", "expected_contains": "Comp2", "session": "s1", "id": "viessmann.kb.recall.00072"}
+{"type": "recall", "query": "What is the output of Vies-077?", "expected_contains": "24 kW", "session": "s1", "id": "viessmann.kb.recall.00073"}
+{"type": "recall", "query": "What is the fuel of Vies-009?", "expected_contains": "Oil", "session": "s1", "id": "viessmann.kb.recall.00074"}
+{"type": "recall", "query": "What is the output of Vies-036?", "expected_contains": "18 kW", "session": "s1", "id": "viessmann.kb.recall.00075"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-001?", "expected_contains": "HydroKit", "session": "s1", "id": "viessmann.kb.recall.00076"}
+{"type": "recall", "query": "What is the fuel of Vies-018?", "expected_contains": "Propane", "session": "s1", "id": "viessmann.kb.recall.00077"}
+{"type": "recall", "query": "What is the output of Vies-011?", "expected_contains": "18 kW", "session": "s1", "id": "viessmann.kb.recall.00078"}
+{"type": "recall", "query": "What is the fuel of Vies-078?", "expected_contains": "Propane", "session": "s1", "id": "viessmann.kb.recall.00079"}
+{"type": "recall", "query": "What is the domain of requiresCompliance?", "expected_contains": "Product", "session": "s1", "id": "viessmann.kb.recall.00080"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-067?", "expected_contains": "OutdoorSensor", "session": "s1", "id": "viessmann.kb.recall.00081"}
+{"type": "recall", "query": "What is the conformsTo of ProductV1?", "expected_contains": "EU F-Gas Regulation", "session": "s1", "id": "viessmann.kb.recall.00082"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-058?", "expected_contains": "BufferTank", "session": "s1", "id": "viessmann.kb.recall.00083"}
+{"type": "recall", "query": "What is the subClassOf of WirelessModule?", "expected_contains": "Component", "session": "s1", "id": "viessmann.kb.recall.00084"}
+{"type": "recall", "query": "What is the domain of requiresStep?", "expected_contains": "Product", "session": "s1", "id": "viessmann.kb.recall.00085"}
+{"type": "recall", "query": "What is the fuel of Vies-041?", "expected_contains": "Oil", "session": "s1", "id": "viessmann.kb.recall.00086"}
+{"type": "recall", "query": "What is the fuel of Vies-004?", "expected_contains": "Gas", "session": "s1", "id": "viessmann.kb.recall.00087"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-010?", "expected_contains": "BufferTank", "session": "s1", "id": "viessmann.kb.recall.00088"}
+{"type": "recall", "query": "What is the fuel of Vies-032?", "expected_contains": "Gas", "session": "s1", "id": "viessmann.kb.recall.00089"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-015?", "expected_contains": "OutdoorSensor", "session": "s1", "id": "viessmann.kb.recall.00090"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-008?", "expected_contains": "Vitotrol", "session": "s1", "id": "viessmann.kb.recall.00091"}
+{"type": "recall", "query": "What is the fuel of Vies-010?", "expected_contains": "Propane", "session": "s1", "id": "viessmann.kb.recall.00092"}
+{"type": "recall", "query": "What is the fuel of Vies-045?", "expected_contains": "Oil", "session": "s1", "id": "viessmann.kb.recall.00093"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-002?", "expected_contains": "BufferTank", "session": "s1", "id": "viessmann.kb.recall.00094"}
+{"type": "recall", "query": "What is the range of requiresCompliance?", "expected_contains": "Standard", "session": "s1", "id": "viessmann.kb.recall.00095"}
+{"type": "recall", "query": "What is the output of Vies-023?", "expected_contains": "30 kW", "session": "s1", "id": "viessmann.kb.recall.00096"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-021?", "expected_contains": "HydroKit", "session": "s1", "id": "viessmann.kb.recall.00097"}
+{"type": "recall", "query": "What is the subClassOf of Compressor?", "expected_contains": "Component", "session": "s1", "id": "viessmann.kb.recall.00098"}
+{"type": "recall", "query": "What is the output of Vies-035?", "expected_contains": "12 kW", "session": "s1", "id": "viessmann.kb.recall.00099"}
+{"type": "recall", "query": "What is the output of Vies-049?", "expected_contains": "35 kW", "session": "s1", "id": "viessmann.kb.recall.00100"}
+{"type": "recall", "query": "What is the output of Vies-006?", "expected_contains": "18 kW", "session": "s1", "id": "viessmann.kb.recall.00101"}
+{"type": "recall", "query": "What is the output of Vies-031?", "expected_contains": "18 kW", "session": "s1", "id": "viessmann.kb.recall.00102"}
+{"type": "recall", "query": "What is the output of Vies-064?", "expected_contains": "35 kW", "session": "s1", "id": "viessmann.kb.recall.00103"}
+{"type": "recall", "query": "What is the output of Vies-009?", "expected_contains": "35 kW", "session": "s1", "id": "viessmann.kb.recall.00104"}
+{"type": "recall", "query": "What is the output of Vies-061?", "expected_contains": "18 kW", "session": "s1", "id": "viessmann.kb.recall.00105"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-022?", "expected_contains": "BufferTank", "session": "s1", "id": "viessmann.kb.recall.00106"}
+{"type": "recall", "query": "What is the output of Vies-025?", "expected_contains": "12 kW", "session": "s1", "id": "viessmann.kb.recall.00107"}
+{"type": "recall", "query": "What is the fuel of Vies-079?", "expected_contains": "Electric", "session": "s1", "id": "viessmann.kb.recall.00108"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-024?", "expected_contains": "Vitotrol", "session": "s1", "id": "viessmann.kb.recall.00109"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-072?", "expected_contains": "Vitotrol", "session": "s1", "id": "viessmann.kb.recall.00110"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-012?", "expected_contains": "Vitotrol", "session": "s1", "id": "viessmann.kb.recall.00111"}
+{"type": "recall", "query": "What is the output of Vies-052?", "expected_contains": "24 kW", "session": "s1", "id": "viessmann.kb.recall.00112"}
+{"type": "recall", "query": "What is the fuel of Vies-024?", "expected_contains": "Gas", "session": "s1", "id": "viessmann.kb.recall.00113"}
+{"type": "recall", "query": "What is the fuel of Vies-066?", "expected_contains": "Propane", "session": "s1", "id": "viessmann.kb.recall.00114"}
+{"type": "recall", "query": "What is the fuel of Vies-011?", "expected_contains": "Electric", "session": "s1", "id": "viessmann.kb.recall.00115"}
+{"type": "recall", "query": "What is the fuel of Vies-061?", "expected_contains": "Oil", "session": "s1", "id": "viessmann.kb.recall.00116"}
+{"type": "recall", "query": "What is the fuel of Vies-019?", "expected_contains": "Electric", "session": "s1", "id": "viessmann.kb.recall.00117"}
+{"type": "recall", "query": "What is the output of Vies-012?", "expected_contains": "24 kW", "session": "s1", "id": "viessmann.kb.recall.00118"}
+{"type": "recall", "query": "What is the output of Vies-039?", "expected_contains": "35 kW", "session": "s1", "id": "viessmann.kb.recall.00119"}
+{"type": "recall", "query": "What is the fuel of Vies-027?", "expected_contains": "Electric", "session": "s1", "id": "viessmann.kb.recall.00120"}
+{"type": "recall", "query": "What is the fuel of Vies-068?", "expected_contains": "Gas", "session": "s1", "id": "viessmann.kb.recall.00121"}
+{"type": "recall", "query": "What is the fuel of Vies-059?", "expected_contains": "Electric", "session": "s1", "id": "viessmann.kb.recall.00122"}
+{"type": "recall", "query": "What is the fuel of Vies-020?", "expected_contains": "Gas", "session": "s1", "id": "viessmann.kb.recall.00123"}
+{"type": "recall", "query": "What is the output of Vies-027?", "expected_contains": "24 kW", "session": "s1", "id": "viessmann.kb.recall.00124"}
+{"type": "recall", "query": "What is the fuel of Vies-008?", "expected_contains": "Gas", "session": "s1", "id": "viessmann.kb.recall.00125"}
+{"type": "recall", "query": "What is the output of Vies-013?", "expected_contains": "30 kW", "session": "s1", "id": "viessmann.kb.recall.00126"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-047?", "expected_contains": "OutdoorSensor", "session": "s1", "id": "viessmann.kb.recall.00127"}
+{"type": "recall", "query": "What is the output of Vies-059?", "expected_contains": "35 kW", "session": "s1", "id": "viessmann.kb.recall.00128"}
+{"type": "recall", "query": "What is the fuel of Vies-039?", "expected_contains": "Electric", "session": "s1", "id": "viessmann.kb.recall.00129"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-050?", "expected_contains": "BufferTank", "session": "s1", "id": "viessmann.kb.recall.00130"}
+{"type": "recall", "query": "What is the fuel of Vies-074?", "expected_contains": "Propane", "session": "s1", "id": "viessmann.kb.recall.00131"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-076?", "expected_contains": "Vitotrol", "session": "s1", "id": "viessmann.kb.recall.00132"}
+{"type": "recall", "query": "What is the domain of conformsTo?", "expected_contains": "Product", "session": "s1", "id": "viessmann.kb.recall.00133"}
+{"type": "recall", "query": "What is the output of Vies-032?", "expected_contains": "24 kW", "session": "s1", "id": "viessmann.kb.recall.00134"}
+{"type": "recall", "query": "What is the fuel of Vies-055?", "expected_contains": "Electric", "session": "s1", "id": "viessmann.kb.recall.00135"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-025?", "expected_contains": "HydroKit", "session": "s1", "id": "viessmann.kb.recall.00136"}
+{"type": "recall", "query": "What is the output of Vies-046?", "expected_contains": "18 kW", "session": "s1", "id": "viessmann.kb.recall.00137"}
+{"type": "recall", "query": "What is the fuel of Vies-077?", "expected_contains": "Oil", "session": "s1", "id": "viessmann.kb.recall.00138"}
+{"type": "recall", "query": "What is the fuel of Vies-006?", "expected_contains": "Propane", "session": "s1", "id": "viessmann.kb.recall.00139"}
+{"type": "recall", "query": "What is the output of Vies-005?", "expected_contains": "12 kW", "session": "s1", "id": "viessmann.kb.recall.00140"}
+{"type": "recall", "query": "What is the output of Vies-079?", "expected_contains": "35 kW", "session": "s1", "id": "viessmann.kb.recall.00141"}
+{"type": "recall", "query": "What is the fuel of Vies-060?", "expected_contains": "Gas", "session": "s1", "id": "viessmann.kb.recall.00142"}
+{"type": "recall", "query": "What is the output of Vies-069?", "expected_contains": "35 kW", "session": "s1", "id": "viessmann.kb.recall.00143"}
+{"type": "recall", "query": "What is the range of compatible accessory?", "expected_contains": "accessory", "session": "s1", "id": "viessmann.kb.recall.00144"}
+{"type": "recall", "query": "What is the fuel of Vies-030?", "expected_contains": "Propane", "session": "s1", "id": "viessmann.kb.recall.00145"}
+{"type": "recall", "query": "What is the hasComponent of ProductV1?", "expected_contains": "Board1", "session": "s1", "id": "viessmann.kb.recall.00146"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-062?", "expected_contains": "BufferTank", "session": "s1", "id": "viessmann.kb.recall.00147"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-020?", "expected_contains": "Vitotrol", "session": "s1", "id": "viessmann.kb.recall.00148"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-039?", "expected_contains": "OutdoorSensor", "session": "s1", "id": "viessmann.kb.recall.00149"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-027?", "expected_contains": "OutdoorSensor", "session": "s1", "id": "viessmann.kb.recall.00150"}
+{"type": "recall", "query": "What is the fuel of Vies-012?", "expected_contains": "Gas", "session": "s1", "id": "viessmann.kb.recall.00151"}
+{"type": "recall", "query": "What is the output of Vies-045?", "expected_contains": "12 kW", "session": "s1", "id": "viessmann.kb.recall.00152"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-073?", "expected_contains": "HydroKit", "session": "s1", "id": "viessmann.kb.recall.00153"}
+{"type": "recall", "query": "What is the fuel of Vies-056?", "expected_contains": "Gas", "session": "s1", "id": "viessmann.kb.recall.00154"}
+{"type": "recall", "query": "What is the usesMaterial of Board1?", "expected_contains": "LeadMaterial", "session": "s1", "id": "viessmann.kb.recall.00155"}
+{"type": "recall", "query": "What is the output of Vies-000?", "expected_contains": "12 kW", "session": "s1", "id": "viessmann.kb.recall.00156"}
+{"type": "recall", "query": "What is the fuel of Vies-051?", "expected_contains": "Electric", "session": "s1", "id": "viessmann.kb.recall.00157"}
+{"type": "recall", "query": "What is the output of Vies-075?", "expected_contains": "12 kW", "session": "s1", "id": "viessmann.kb.recall.00158"}
+{"type": "recall", "query": "What is the output of Vies-065?", "expected_contains": "12 kW", "session": "s1", "id": "viessmann.kb.recall.00159"}
+{"type": "recall", "query": "What is the output of Vies-078?", "expected_contains": "30 kW", "session": "s1", "id": "viessmann.kb.recall.00160"}
+{"type": "recall", "query": "What is the fuel of Vies-016?", "expected_contains": "Gas", "session": "s1", "id": "viessmann.kb.recall.00161"}
+{"type": "recall", "query": "What is the fuel of Vies-028?", "expected_contains": "Gas", "session": "s1", "id": "viessmann.kb.recall.00162"}
+{"type": "recall", "query": "What is the output of Vies-028?", "expected_contains": "30 kW", "session": "s1", "id": "viessmann.kb.recall.00163"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-017?", "expected_contains": "HydroKit", "session": "s1", "id": "viessmann.kb.recall.00164"}
+{"type": "recall", "query": "What is the range of output?", "expected_contains": "power output", "session": "s1", "id": "viessmann.kb.recall.00165"}
+{"type": "recall", "query": "What is the output of Vies-070?", "expected_contains": "12 kW", "session": "s1", "id": "viessmann.kb.recall.00166"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-031?", "expected_contains": "OutdoorSensor", "session": "s1", "id": "viessmann.kb.recall.00167"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-034?", "expected_contains": "BufferTank", "session": "s1", "id": "viessmann.kb.recall.00168"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-057?", "expected_contains": "HydroKit", "session": "s1", "id": "viessmann.kb.recall.00169"}
+{"type": "recall", "query": "What is the fuel of Vies-037?", "expected_contains": "Oil", "session": "s1", "id": "viessmann.kb.recall.00170"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-075?", "expected_contains": "OutdoorSensor", "session": "s1", "id": "viessmann.kb.recall.00171"}
+{"type": "recall", "query": "What is the output of Vies-038?", "expected_contains": "30 kW", "session": "s1", "id": "viessmann.kb.recall.00172"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-006?", "expected_contains": "BufferTank", "session": "s1", "id": "viessmann.kb.recall.00173"}
+{"type": "recall", "query": "What is the output of Vies-010?", "expected_contains": "12 kW", "session": "s1", "id": "viessmann.kb.recall.00174"}
+{"type": "recall", "query": "What is the fuel of Vies-073?", "expected_contains": "Oil", "session": "s1", "id": "viessmann.kb.recall.00175"}
+{"type": "recall", "query": "What is the output of Vies-021?", "expected_contains": "18 kW", "session": "s1", "id": "viessmann.kb.recall.00176"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-038?", "expected_contains": "BufferTank", "session": "s1", "id": "viessmann.kb.recall.00177"}
+{"type": "recall", "query": "What is the subClassOf of boiler?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.recall.00178"}
+{"type": "recall", "query": "What is the output of Vies-024?", "expected_contains": "35 kW", "session": "s1", "id": "viessmann.kb.recall.00179"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-079?", "expected_contains": "OutdoorSensor", "session": "s1", "id": "viessmann.kb.recall.00180"}
+{"type": "recall", "query": "What is the fuel of Vies-047?", "expected_contains": "Electric", "session": "s1", "id": "viessmann.kb.recall.00181"}
+{"type": "recall", "query": "What is the fuel of Vies-062?", "expected_contains": "Propane", "session": "s1", "id": "viessmann.kb.recall.00182"}
+{"type": "recall", "query": "What is the hasComponent of ProductV2?", "expected_contains": "Board2", "session": "s1", "id": "viessmann.kb.recall.00183"}
+{"type": "recall", "query": "What is the fuel of Vies-048?", "expected_contains": "Gas", "session": "s1", "id": "viessmann.kb.recall.00184"}
+{"type": "recall", "query": "What is the range of requiresStep?", "expected_contains": "ProcessStep", "session": "s1", "id": "viessmann.kb.recall.00185"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-048?", "expected_contains": "Vitotrol", "session": "s1", "id": "viessmann.kb.recall.00186"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-045?", "expected_contains": "HydroKit", "session": "s1", "id": "viessmann.kb.recall.00187"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-043?", "expected_contains": "OutdoorSensor", "session": "s1", "id": "viessmann.kb.recall.00188"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-069?", "expected_contains": "HydroKit", "session": "s1", "id": "viessmann.kb.recall.00189"}
+{"type": "recall", "query": "What is the fuel of Vies-033?", "expected_contains": "Oil", "session": "s1", "id": "viessmann.kb.recall.00190"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-028?", "expected_contains": "Vitotrol", "session": "s1", "id": "viessmann.kb.recall.00191"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-009?", "expected_contains": "HydroKit", "session": "s1", "id": "viessmann.kb.recall.00192"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-005?", "expected_contains": "HydroKit", "session": "s1", "id": "viessmann.kb.recall.00193"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-054?", "expected_contains": "BufferTank", "session": "s1", "id": "viessmann.kb.recall.00194"}
+{"type": "recall", "query": "What is the range of hasComponent?", "expected_contains": "Component", "session": "s1", "id": "viessmann.kb.recall.00195"}
+{"type": "recall", "query": "What is the fuel of Vies-013?", "expected_contains": "Oil", "session": "s1", "id": "viessmann.kb.recall.00196"}
+{"type": "recall", "query": "What is the fuel of Vies-072?", "expected_contains": "Gas", "session": "s1", "id": "viessmann.kb.recall.00197"}
+{"type": "recall", "query": "What is the subClassOf of ElectricalModule?", "expected_contains": "Component", "session": "s1", "id": "viessmann.kb.recall.00198"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-037?", "expected_contains": "HydroKit", "session": "s1", "id": "viessmann.kb.recall.00199"}
+{"type": "recall", "query": "What is the output of Vies-066?", "expected_contains": "18 kW", "session": "s1", "id": "viessmann.kb.recall.00200"}
+{"type": "recall", "query": "What is the fuel of Vies-036?", "expected_contains": "Gas", "session": "s1", "id": "viessmann.kb.recall.00201"}
+{"type": "recall", "query": "What is the fuel of Vies-043?", "expected_contains": "Electric", "session": "s1", "id": "viessmann.kb.recall.00202"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-035?", "expected_contains": "OutdoorSensor", "session": "s1", "id": "viessmann.kb.recall.00203"}
+{"type": "recall", "query": "What is the fuel of Vies-067?", "expected_contains": "Electric", "session": "s1", "id": "viessmann.kb.recall.00204"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-068?", "expected_contains": "Vitotrol", "session": "s1", "id": "viessmann.kb.recall.00205"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-077?", "expected_contains": "HydroKit", "session": "s1", "id": "viessmann.kb.recall.00206"}
+{"type": "recall", "query": "What is the fuel of Vies-005?", "expected_contains": "Oil", "session": "s1", "id": "viessmann.kb.recall.00207"}
+{"type": "recall", "query": "What is the fuel of Vies-042?", "expected_contains": "Propane", "session": "s1", "id": "viessmann.kb.recall.00208"}
+{"type": "recall", "query": "What is the fuel of Vies-000?", "expected_contains": "Gas", "session": "s1", "id": "viessmann.kb.recall.00209"}
+{"type": "recall", "query": "What is the output of Vies-063?", "expected_contains": "30 kW", "session": "s1", "id": "viessmann.kb.recall.00210"}
+{"type": "recall", "query": "What is the fuel of Vies-021?", "expected_contains": "Oil", "session": "s1", "id": "viessmann.kb.recall.00211"}
+{"type": "recall", "query": "What is the output of Vies-002?", "expected_contains": "24 kW", "session": "s1", "id": "viessmann.kb.recall.00212"}
+{"type": "recall", "query": "What is the fuel of Vies-058?", "expected_contains": "Propane", "session": "s1", "id": "viessmann.kb.recall.00213"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-018?", "expected_contains": "BufferTank", "session": "s1", "id": "viessmann.kb.recall.00214"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-056?", "expected_contains": "Vitotrol", "session": "s1", "id": "viessmann.kb.recall.00215"}
+{"type": "recall", "query": "What is the output of Vies-044?", "expected_contains": "35 kW", "session": "s1", "id": "viessmann.kb.recall.00216"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-063?", "expected_contains": "OutdoorSensor", "session": "s1", "id": "viessmann.kb.recall.00217"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-040?", "expected_contains": "Vitotrol", "session": "s1", "id": "viessmann.kb.recall.00218"}
+{"type": "recall", "query": "What is the fuel of Vies-076?", "expected_contains": "Gas", "session": "s1", "id": "viessmann.kb.recall.00219"}
+{"type": "recall", "query": "What is the output of Vies-017?", "expected_contains": "24 kW", "session": "s1", "id": "viessmann.kb.recall.00220"}
+{"type": "recall", "query": "What is the output of Vies-072?", "expected_contains": "24 kW", "session": "s1", "id": "viessmann.kb.recall.00221"}
+{"type": "recall", "query": "What is the fuel of Vies-040?", "expected_contains": "Gas", "session": "s1", "id": "viessmann.kb.recall.00222"}
+{"type": "recall", "query": "What is the output of Vies-034?", "expected_contains": "35 kW", "session": "s1", "id": "viessmann.kb.recall.00223"}
+{"type": "recall", "query": "What is the output of Vies-043?", "expected_contains": "30 kW", "session": "s1", "id": "viessmann.kb.recall.00224"}
+{"type": "recall", "query": "What is the fuel of Vies-026?", "expected_contains": "Propane", "session": "s1", "id": "viessmann.kb.recall.00225"}
+{"type": "recall", "query": "What is the output of Vies-040?", "expected_contains": "12 kW", "session": "s1", "id": "viessmann.kb.recall.00226"}
+{"type": "recall", "query": "What is the usesRefrigerant of Comp1?", "expected_contains": "R32", "session": "s1", "id": "viessmann.kb.recall.00227"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-066?", "expected_contains": "BufferTank", "session": "s1", "id": "viessmann.kb.recall.00228"}
+{"type": "recall", "query": "What is the domain of compatible accessory?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.recall.00229"}
+{"type": "recall", "query": "What is the hasComponent of ProductV1?", "expected_contains": "Radio1", "session": "s1", "id": "viessmann.kb.recall.00230"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-052?", "expected_contains": "Vitotrol", "session": "s1", "id": "viessmann.kb.recall.00231"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-011?", "expected_contains": "OutdoorSensor", "session": "s1", "id": "viessmann.kb.recall.00232"}
+{"type": "recall", "query": "What is the fuel of Vies-038?", "expected_contains": "Propane", "session": "s1", "id": "viessmann.kb.recall.00233"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-036?", "expected_contains": "Vitotrol", "session": "s1", "id": "viessmann.kb.recall.00234"}
+{"type": "recall", "query": "What is the fuel of Vies-064?", "expected_contains": "Gas", "session": "s1", "id": "viessmann.kb.recall.00235"}
+{"type": "recall", "query": "What is the fuel of Vies-075?", "expected_contains": "Electric", "session": "s1", "id": "viessmann.kb.recall.00236"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-078?", "expected_contains": "BufferTank", "session": "s1", "id": "viessmann.kb.recall.00237"}
+{"type": "recall", "query": "What is the fuel of Vies-022?", "expected_contains": "Propane", "session": "s1", "id": "viessmann.kb.recall.00238"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-049?", "expected_contains": "HydroKit", "session": "s1", "id": "viessmann.kb.recall.00239"}
+{"type": "recall", "query": "What is the output of Vies-076?", "expected_contains": "18 kW", "session": "s1", "id": "viessmann.kb.recall.00240"}
+{"type": "recall", "query": "What is the output of Vies-068?", "expected_contains": "30 kW", "session": "s1", "id": "viessmann.kb.recall.00241"}
+{"type": "recall", "query": "What is the fuel of Vies-029?", "expected_contains": "Oil", "session": "s1", "id": "viessmann.kb.recall.00242"}
+{"type": "recall", "query": "What is the output of Vies-074?", "expected_contains": "35 kW", "session": "s1", "id": "viessmann.kb.recall.00243"}
+{"type": "recall", "query": "What is the fuel of Vies-049?", "expected_contains": "Oil", "session": "s1", "id": "viessmann.kb.recall.00244"}
+{"type": "recall", "query": "What is the output of Vies-037?", "expected_contains": "24 kW", "session": "s1", "id": "viessmann.kb.recall.00245"}
+{"type": "recall", "query": "What is the output of Vies-057?", "expected_contains": "24 kW", "session": "s1", "id": "viessmann.kb.recall.00246"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-071?", "expected_contains": "OutdoorSensor", "session": "s1", "id": "viessmann.kb.recall.00247"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-070?", "expected_contains": "BufferTank", "session": "s1", "id": "viessmann.kb.recall.00248"}
+{"type": "recall", "query": "What is the output of Vies-062?", "expected_contains": "24 kW", "session": "s1", "id": "viessmann.kb.recall.00249"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-029?", "expected_contains": "HydroKit", "session": "s1", "id": "viessmann.kb.recall.00250"}
+{"type": "recall", "query": "What is the output of Vies-019?", "expected_contains": "35 kW", "session": "s1", "id": "viessmann.kb.recall.00251"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-074?", "expected_contains": "BufferTank", "session": "s1", "id": "viessmann.kb.recall.00252"}
+{"type": "recall", "query": "What is the output of Vies-067?", "expected_contains": "24 kW", "session": "s1", "id": "viessmann.kb.recall.00253"}
+{"type": "recall", "query": "What is the hasComponent of ProductV1?", "expected_contains": "Comp1", "session": "s1", "id": "viessmann.kb.recall.00254"}
+{"type": "recall", "query": "What is the output of Vies-042?", "expected_contains": "24 kW", "session": "s1", "id": "viessmann.kb.recall.00255"}
+{"type": "recall", "query": "What is the fuel of Vies-050?", "expected_contains": "Propane", "session": "s1", "id": "viessmann.kb.recall.00256"}
+{"type": "recall", "query": "What is the output of Vies-030?", "expected_contains": "12 kW", "session": "s1", "id": "viessmann.kb.recall.00257"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-026?", "expected_contains": "BufferTank", "session": "s1", "id": "viessmann.kb.recall.00258"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-044?", "expected_contains": "Vitotrol", "session": "s1", "id": "viessmann.kb.recall.00259"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-061?", "expected_contains": "HydroKit", "session": "s1", "id": "viessmann.kb.recall.00260"}
+{"type": "recall", "query": "What is the fuel of Vies-007?", "expected_contains": "Electric", "session": "s1", "id": "viessmann.kb.recall.00261"}
+{"type": "recall", "query": "What is the fuel of Vies-001?", "expected_contains": "Oil", "session": "s1", "id": "viessmann.kb.recall.00262"}
+{"type": "recall", "query": "What is the output of Vies-014?", "expected_contains": "35 kW", "session": "s1", "id": "viessmann.kb.recall.00263"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-014?", "expected_contains": "BufferTank", "session": "s1", "id": "viessmann.kb.recall.00264"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-007?", "expected_contains": "OutdoorSensor", "session": "s1", "id": "viessmann.kb.recall.00265"}
+{"type": "recall", "query": "What is the fuel of Vies-057?", "expected_contains": "Oil", "session": "s1", "id": "viessmann.kb.recall.00266"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-030?", "expected_contains": "BufferTank", "session": "s1", "id": "viessmann.kb.recall.00267"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-060?", "expected_contains": "Vitotrol", "session": "s1", "id": "viessmann.kb.recall.00268"}
+{"type": "recall", "query": "What is the output of Vies-022?", "expected_contains": "24 kW", "session": "s1", "id": "viessmann.kb.recall.00269"}
+{"type": "recall", "query": "What is the fuel of Vies-002?", "expected_contains": "Propane", "session": "s1", "id": "viessmann.kb.recall.00270"}
+{"type": "recall", "query": "What is the output of Vies-060?", "expected_contains": "12 kW", "session": "s1", "id": "viessmann.kb.recall.00271"}
+{"type": "recall", "query": "What is the fuel of Vies-046?", "expected_contains": "Propane", "session": "s1", "id": "viessmann.kb.recall.00272"}
+{"type": "recall", "query": "What is the fuel of Vies-015?", "expected_contains": "Electric", "session": "s1", "id": "viessmann.kb.recall.00273"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-013?", "expected_contains": "HydroKit", "session": "s1", "id": "viessmann.kb.recall.00274"}
+{"type": "recall", "query": "What is the domain of usesRefrigerant?", "expected_contains": "Component", "session": "s1", "id": "viessmann.kb.recall.00275"}
+{"type": "recall", "query": "What is the output of Vies-051?", "expected_contains": "18 kW", "session": "s1", "id": "viessmann.kb.recall.00276"}
+{"type": "recall", "query": "What is the range of usesMaterial?", "expected_contains": "Material", "session": "s1", "id": "viessmann.kb.recall.00277"}
+{"type": "recall", "query": "What is the output of Vies-033?", "expected_contains": "30 kW", "session": "s1", "id": "viessmann.kb.recall.00278"}
+{"type": "recall", "query": "What is the fuel of Vies-031?", "expected_contains": "Electric", "session": "s1", "id": "viessmann.kb.recall.00279"}
+{"type": "recall", "query": "What is the fuel of Vies-054?", "expected_contains": "Propane", "session": "s1", "id": "viessmann.kb.recall.00280"}
+{"type": "recall", "query": "What is the domain of usesMaterial?", "expected_contains": "Component", "session": "s1", "id": "viessmann.kb.recall.00281"}
+{"type": "recall", "query": "What is the fuel of Vies-023?", "expected_contains": "Electric", "session": "s1", "id": "viessmann.kb.recall.00282"}
+{"type": "recall", "query": "What is the compatible accessory of Vies-042?", "expected_contains": "BufferTank", "session": "s1", "id": "viessmann.kb.recall.00283"}
+{"type": "logic", "query": "Is Vies-002 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00284"}
+{"type": "logic", "query": "Is dateTimeStamp a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00285"}
+{"type": "logic", "query": "Is Vies-065 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00286"}
+{"type": "logic", "query": "Is OutdoorSensor a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00287"}
+{"type": "logic", "query": "Is positiveInteger a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00288"}
+{"type": "logic", "query": "Is Vies-023 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00289"}
+{"type": "logic", "query": "Is Vies-044 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00290"}
+{"type": "logic", "query": "Is Vies-041 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00291"}
+{"type": "logic", "query": "Is Vies-005 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00292"}
+{"type": "logic", "query": "Is Vies-032 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00293"}
+{"type": "logic", "query": "Is Vies-072 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00294"}
+{"type": "logic", "query": "Is unsignedByte a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00295"}
+{"type": "logic", "query": "Is Vies-077 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00296"}
+{"type": "logic", "query": "Is Vies-075 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00297"}
+{"type": "logic", "query": "Is PlainLiteral a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00298"}
+{"type": "logic", "query": "Is Vies-061 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00299"}
+{"type": "logic", "query": "Is dateTime a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00300"}
+{"type": "logic", "query": "Is Vies-039 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00301"}
+{"type": "logic", "query": "Is boolean a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00302"}
+{"type": "logic", "query": "Is Vies-031 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00303"}
+{"type": "logic", "query": "Is incompatibleWith a AnnotationProperty?", "expected_contains": "AnnotationProperty", "session": "s1", "id": "viessmann.kb.logic.00304"}
+{"type": "logic", "query": "Is base64Binary a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00305"}
+{"type": "logic", "query": "Is NMTOKEN a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00306"}
+{"type": "logic", "query": "Is Vies-024 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00307"}
+{"type": "logic", "query": "Is Vies-068 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00308"}
+{"type": "logic", "query": "Is Vies-000 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00309"}
+{"type": "logic", "query": "Is Vies-070 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00310"}
+{"type": "logic", "query": "Is Vies-041 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00311"}
+{"type": "logic", "query": "Is Vies-012 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00312"}
+{"type": "logic", "query": "Is Vies-077 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00313"}
+{"type": "logic", "query": "Is Vies-073 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00314"}
+{"type": "logic", "query": "Is Vies-028 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00315"}
+{"type": "logic", "query": "Is Vies-060 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00316"}
+{"type": "logic", "query": "Is Vies-044 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00317"}
+{"type": "logic", "query": "Is Vies-043 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00318"}
+{"type": "logic", "query": "Is Vies-035 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00319"}
+{"type": "logic", "query": "Is Vies-009 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00320"}
+{"type": "logic", "query": "Is Vies-062 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00321"}
+{"type": "logic", "query": "Is unsignedShort a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00322"}
+{"type": "logic", "query": "Is Vies-011 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00323"}
+{"type": "logic", "query": "Is Vies-056 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00324"}
+{"type": "logic", "query": "Is Vies-030 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00325"}
+{"type": "logic", "query": "Is Vies-078 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00326"}
+{"type": "logic", "query": "Is Vies-028 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00327"}
+{"type": "logic", "query": "Is Vies-004 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00328"}
+{"type": "logic", "query": "Is Vies-004 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00329"}
+{"type": "logic", "query": "Is Vies-014 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00330"}
+{"type": "logic", "query": "Is Vies-018 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00331"}
+{"type": "logic", "query": "Is decimal a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00332"}
+{"type": "logic", "query": "Is Vies-036 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00333"}
+{"type": "logic", "query": "Is Vies-068 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00334"}
+{"type": "logic", "query": "Is NCName a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00335"}
+{"type": "logic", "query": "Is Vies-067 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00336"}
+{"type": "logic", "query": "Is Vies-029 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00337"}
+{"type": "logic", "query": "Is versionInfo a AnnotationProperty?", "expected_contains": "AnnotationProperty", "session": "s1", "id": "viessmann.kb.logic.00338"}
+{"type": "logic", "query": "Is int a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00339"}
+{"type": "logic", "query": "Is Vies-051 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00340"}
+{"type": "logic", "query": "Is unsignedLong a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00341"}
+{"type": "logic", "query": "Is Vies-000 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00342"}
+{"type": "logic", "query": "Is language a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00343"}
+{"type": "logic", "query": "Is Electric a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00344"}
+{"type": "logic", "query": "Is Vies-001 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00345"}
+{"type": "logic", "query": "Is Vies-037 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00346"}
+{"type": "logic", "query": "Is Vies-007 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00347"}
+{"type": "logic", "query": "Is Vies-079 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00348"}
+{"type": "logic", "query": "Is Vies-056 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00349"}
+{"type": "logic", "query": "Is Vies-027 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00350"}
+{"type": "logic", "query": "Is Vies-007 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00351"}
+{"type": "logic", "query": "Is Vies-013 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00352"}
+{"type": "logic", "query": "Is Vies-047 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00353"}
+{"type": "logic", "query": "Is Vies-038 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00354"}
+{"type": "logic", "query": "Is Vies-046 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00355"}
+{"type": "logic", "query": "Is Vies-076 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00356"}
+{"type": "logic", "query": "Is Vies-050 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00357"}
+{"type": "logic", "query": "Is label a AnnotationProperty?", "expected_contains": "AnnotationProperty", "session": "s1", "id": "viessmann.kb.logic.00358"}
+{"type": "logic", "query": "Is Vies-016 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00359"}
+{"type": "logic", "query": "Is Comp2 a Component?", "expected_contains": "Component", "session": "s1", "id": "viessmann.kb.logic.00360"}
+{"type": "logic", "query": "Is Vies-026 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00361"}
+{"type": "logic", "query": "Is Vies-011 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00362"}
+{"type": "logic", "query": "Is time a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00363"}
+{"type": "logic", "query": "Is XMLLiteral a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00364"}
+{"type": "logic", "query": "Is Gas a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00365"}
+{"type": "logic", "query": "Is Vies-001 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00366"}
+{"type": "logic", "query": "Is Vies-063 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00367"}
+{"type": "logic", "query": "Is hexBinary a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00368"}
+{"type": "logic", "query": "Is Vies-053 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00369"}
+{"type": "logic", "query": "Is Vies-015 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00370"}
+{"type": "logic", "query": "Is Vies-032 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00371"}
+{"type": "logic", "query": "Is Vies-031 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00372"}
+{"type": "logic", "query": "Is Vies-002 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00373"}
+{"type": "logic", "query": "Is Vitotrol a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00374"}
+{"type": "logic", "query": "Is Vies-052 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00375"}
+{"type": "logic", "query": "Is Vies-036 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00376"}
+{"type": "logic", "query": "Is Vies-010 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00377"}
+{"type": "logic", "query": "Is Vies-070 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00378"}
+{"type": "logic", "query": "Is Radio1 a Component?", "expected_contains": "Component", "session": "s1", "id": "viessmann.kb.logic.00379"}
+{"type": "logic", "query": "Is Board2 a Component?", "expected_contains": "Component", "session": "s1", "id": "viessmann.kb.logic.00380"}
+{"type": "logic", "query": "Is Vies-029 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00381"}
+{"type": "logic", "query": "Is unsignedInt a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00382"}
+{"type": "logic", "query": "Is backwardCompatibleWith a AnnotationProperty?", "expected_contains": "AnnotationProperty", "session": "s1", "id": "viessmann.kb.logic.00383"}
+{"type": "logic", "query": "Is Vies-064 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00384"}
+{"type": "logic", "query": "Is Vies-063 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00385"}
+{"type": "logic", "query": "Is Vies-067 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00386"}
+{"type": "logic", "query": "Is Vies-020 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00387"}
+{"type": "logic", "query": "Is Vies-021 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00388"}
+{"type": "logic", "query": "Is Vies-006 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00389"}
+{"type": "logic", "query": "Is Vies-009 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00390"}
+{"type": "logic", "query": "Is Vies-038 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00391"}
+{"type": "logic", "query": "Is Nothing a Class?", "expected_contains": "Class", "session": "s1", "id": "viessmann.kb.logic.00392"}
+{"type": "logic", "query": "Is Vies-033 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00393"}
+{"type": "logic", "query": "Is Vies-034 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00394"}
+{"type": "logic", "query": "Is Vies-046 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00395"}
+{"type": "logic", "query": "Is 18 kW a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00396"}
+{"type": "logic", "query": "Is Vies-078 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00397"}
+{"type": "logic", "query": "Is Vies-074 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00398"}
+{"type": "logic", "query": "Is Vies-022 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00399"}
+{"type": "logic", "query": "Is Vies-073 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00400"}
+{"type": "logic", "query": "Is Vies-026 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00401"}
+{"type": "logic", "query": "Is negativeInteger a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00402"}
+{"type": "logic", "query": "Is Vies-049 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00403"}
+{"type": "logic", "query": "Is normalizedString a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00404"}
+{"type": "logic", "query": "Is comment a AnnotationProperty?", "expected_contains": "AnnotationProperty", "session": "s1", "id": "viessmann.kb.logic.00405"}
+{"type": "logic", "query": "Is Vies-060 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00406"}
+{"type": "logic", "query": "Is Vies-065 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00407"}
+{"type": "logic", "query": "Is Vies-059 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00408"}
+{"type": "logic", "query": "Is Vies-072 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00409"}
+{"type": "logic", "query": "Is 35 kW a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00410"}
+{"type": "logic", "query": "Is Vies-074 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00411"}
+{"type": "logic", "query": "Is Vies-006 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00412"}
+{"type": "logic", "query": "Is Vies-014 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00413"}
+{"type": "logic", "query": "Is Vies-079 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00414"}
+{"type": "logic", "query": "Is Vies-066 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00415"}
+{"type": "logic", "query": "Is Vies-013 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00416"}
+{"type": "logic", "query": "Is byte a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00417"}
+{"type": "logic", "query": "Is Vies-054 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00418"}
+{"type": "logic", "query": "Is Vies-023 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00419"}
+{"type": "logic", "query": "Is Vies-054 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00420"}
+{"type": "logic", "query": "Is short a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00421"}
+{"type": "logic", "query": "Is Vies-048 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00422"}
+{"type": "logic", "query": "Is priorVersion a AnnotationProperty?", "expected_contains": "AnnotationProperty", "session": "s1", "id": "viessmann.kb.logic.00423"}
+{"type": "logic", "query": "Is Vies-048 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00424"}
+{"type": "logic", "query": "Is Vies-055 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00425"}
+{"type": "logic", "query": "Is Vies-024 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00426"}
+{"type": "logic", "query": "Is date a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00427"}
+{"type": "logic", "query": "Is Vies-057 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00428"}
+{"type": "logic", "query": "Is Vies-020 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00429"}
+{"type": "logic", "query": "Is Vies-040 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00430"}
+{"type": "logic", "query": "Is Literal a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00431"}
+{"type": "logic", "query": "Is Vies-066 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00432"}
+{"type": "logic", "query": "Is Vies-045 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00433"}
+{"type": "logic", "query": "Is Vies-042 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00434"}
+{"type": "logic", "query": "Is 12 kW a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00435"}
+{"type": "logic", "query": "Is Vies-019 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00436"}
+{"type": "logic", "query": "Is Vies-051 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00437"}
+{"type": "logic", "query": "Is Vies-010 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00438"}
+{"type": "logic", "query": "Is Vies-022 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00439"}
+{"type": "logic", "query": "Is Vies-059 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00440"}
+{"type": "logic", "query": "Is Vies-040 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00441"}
+{"type": "logic", "query": "Is string a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00442"}
+{"type": "logic", "query": "Is BufferTank a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00443"}
+{"type": "logic", "query": "Is Vies-062 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00444"}
+{"type": "logic", "query": "Is Vies-076 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00445"}
+{"type": "logic", "query": "Is token a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00446"}
+{"type": "logic", "query": "Is HTML a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00447"}
+{"type": "logic", "query": "Is Vies-012 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00448"}
+{"type": "logic", "query": "Is long a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00449"}
+{"type": "logic", "query": "Is Vies-005 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00450"}
+{"type": "logic", "query": "Is Vies-052 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00451"}
+{"type": "logic", "query": "Is Thing a Class?", "expected_contains": "Class", "session": "s1", "id": "viessmann.kb.logic.00452"}
+{"type": "logic", "query": "Is Vies-064 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00453"}
+{"type": "logic", "query": "Is Vies-025 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00454"}
+{"type": "logic", "query": "Is Vies-015 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00455"}
+{"type": "logic", "query": "Is Vies-017 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00456"}
+{"type": "logic", "query": "Is Vies-045 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00457"}
+{"type": "logic", "query": "Is Board1 a Component?", "expected_contains": "Component", "session": "s1", "id": "viessmann.kb.logic.00458"}
+{"type": "logic", "query": "Is Comp1 a Component?", "expected_contains": "Component", "session": "s1", "id": "viessmann.kb.logic.00459"}
+{"type": "logic", "query": "Is Vies-075 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00460"}
+{"type": "logic", "query": "Is Vies-042 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00461"}
+{"type": "logic", "query": "Is Vies-043 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00462"}
+{"type": "logic", "query": "Is Vies-057 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00463"}
+{"type": "logic", "query": "Is Vies-017 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00464"}
+{"type": "logic", "query": "Is Vies-055 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00465"}
+{"type": "logic", "query": "Is double a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00466"}
+{"type": "logic", "query": "Is Vies-003 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00467"}
+{"type": "logic", "query": "Is Vies-071 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00468"}
+{"type": "logic", "query": "Is Vies-003 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00469"}
+{"type": "logic", "query": "Is Vies-016 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00470"}
+{"type": "logic", "query": "Is Vies-027 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00471"}
+{"type": "logic", "query": "Is Vies-008 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00472"}
+{"type": "logic", "query": "Is Oil a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00473"}
+{"type": "logic", "query": "Is Vies-021 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00474"}
+{"type": "logic", "query": "Is seeAlso a AnnotationProperty?", "expected_contains": "AnnotationProperty", "session": "s1", "id": "viessmann.kb.logic.00475"}
+{"type": "logic", "query": "Is HydroKit a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00476"}
+{"type": "logic", "query": "Is Vies-034 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00477"}
+{"type": "logic", "query": "Is Vies-019 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00478"}
+{"type": "logic", "query": "Is Vies-018 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00479"}
+{"type": "logic", "query": "Is Vies-058 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00480"}
+{"type": "logic", "query": "Is Vies-071 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00481"}
+{"type": "logic", "query": "Is float a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00482"}
+{"type": "logic", "query": "Is Vies-061 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00483"}
+{"type": "logic", "query": "Is Vies-050 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00484"}
+{"type": "logic", "query": "Is nonPositiveInteger a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00485"}
+{"type": "logic", "query": "Is Vies-049 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00486"}
+{"type": "logic", "query": "Is Vies-037 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00487"}
+{"type": "logic", "query": "Is isDefinedBy a AnnotationProperty?", "expected_contains": "AnnotationProperty", "session": "s1", "id": "viessmann.kb.logic.00488"}
+{"type": "logic", "query": "Is Vies-069 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00489"}
+{"type": "logic", "query": "Is Propane a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00490"}
+{"type": "logic", "query": "Is Vies-039 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00491"}
+{"type": "logic", "query": "Is nonNegativeInteger a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00492"}
+{"type": "logic", "query": "Is deprecated a AnnotationProperty?", "expected_contains": "AnnotationProperty", "session": "s1", "id": "viessmann.kb.logic.00493"}
+{"type": "logic", "query": "Is Vies-069 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00494"}
+{"type": "logic", "query": "Is Vies-058 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00495"}
+{"type": "logic", "query": "Is Vies-053 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00496"}
+{"type": "logic", "query": "Is langString a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00497"}
+{"type": "logic", "query": "Is Vies-030 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00498"}
+{"type": "logic", "query": "Is Vies-035 a appliance?", "expected_contains": "appliance", "session": "s1", "id": "viessmann.kb.logic.00499"}
+{"type": "logic", "query": "Is anyURI a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00500"}
+{"type": "logic", "query": "Is Name a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00501"}
+{"type": "logic", "query": "Is 30 kW a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00502"}
+{"type": "logic", "query": "Is Vies-025 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00503"}
+{"type": "logic", "query": "Is Vies-008 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00504"}
+{"type": "logic", "query": "Is 24 kW a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00505"}
+{"type": "logic", "query": "Is Vies-047 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00506"}
+{"type": "logic", "query": "Is integer a Datatype?", "expected_contains": "Datatype", "session": "s1", "id": "viessmann.kb.logic.00507"}
+{"type": "logic", "query": "Is Vies-033 a Thing?", "expected_contains": "Thing", "session": "s1", "id": "viessmann.kb.logic.00508"}

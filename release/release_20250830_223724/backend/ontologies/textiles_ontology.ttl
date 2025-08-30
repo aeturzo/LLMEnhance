@@ -1,0 +1,59 @@
+@prefix ex:   <http://example.com/textiles#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+### Classes
+ex:Product     a rdfs:Class .
+ex:Component   a rdfs:Class .
+ex:Fabric      a rdfs:Class .
+ex:Label       a rdfs:Class .
+ex:Standard    a rdfs:Class .
+ex:ProcessStep a rdfs:Class .
+
+### Subclasses
+ex:WoolFabric     rdfs:subClassOf ex:Fabric .
+ex:SyntheticFabric rdfs:subClassOf ex:Fabric .
+
+### Properties
+ex:hasComponent        a rdf:Property ; rdfs:domain ex:Product ;  rdfs:range ex:Component .
+ex:usesFabric          a rdf:Property ; rdfs:domain ex:Component ; rdfs:range ex:Fabric .
+ex:requiresCompliance  a rdf:Property ; rdfs:domain ex:Product ;  rdfs:range ex:Standard .
+ex:requiresStep        a rdf:Property ; rdfs:domain ex:Product ;  rdfs:range ex:ProcessStep .
+ex:conformsTo          a rdf:Property ; rdfs:domain ex:Product ;  rdfs:range ex:Standard .
+
+### Standards
+ex:CareLabelStandard a ex:Standard ; rdfs:label "EN 13402 Care Label" .
+ex:WoolCareStandard  a ex:Standard ; rdfs:label "Wool-specific Care Standard" .
+
+### Steps
+ex:LabelCheckStep a ex:ProcessStep .
+ex:WoolWashTest   a ex:ProcessStep .
+
+### Products
+# P1: wool shirt
+ex:ProductT1 a ex:Product ;
+  ex:hasComponent ex:Shirt1 ;
+  ex:requiresStep ex:LabelCheckStep .
+
+ex:Shirt1 a ex:Component ; ex:usesFabric ex:MerinoWool .
+
+ex:MerinoWool a ex:WoolFabric .
+
+# P2: synthetic jacket without explicit label step (rule should add)
+ex:ProductT2 a ex:Product ;
+  ex:hasComponent ex:Jacket1 .
+
+ex:Jacket1 a ex:Component ; ex:usesFabric ex:NylonFabric .
+
+ex:NylonFabric a ex:SyntheticFabric .
+
+# P3: cotton tee (treated as generic Fabric)
+ex:ProductT3 a ex:Product ;
+  ex:hasComponent ex:Tee1 .
+
+ex:Tee1 a ex:Component ; ex:usesFabric ex:Cotton .
+
+ex:Cotton a ex:Fabric .
+
+### Optional prior facts (could be inferred by rules too)
+# none

@@ -1,0 +1,64 @@
+ttl_path: backend/ontologies/dpp_ontology.ttl
+
+prefixes:
+  ex: "http://example.com/dpp#"
+  rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+
+product_selector:
+  class_iri: "http://example.com/dpp#Product"
+
+name_predicates:
+  - "http://www.w3.org/2000/01/rdf-schema#label"
+
+# We’ll ask for labels of linked resources; the generator now resolves rdfs:label.
+recall_fields:
+  "standard (conforms to)": "http://example.com/dpp#conformsTo"
+  "required standard": "http://example.com/dpp#requiresCompliance"
+  "component": "http://example.com/dpp#hasComponent"
+  "required step": "http://example.com/dpp#requiresStep"
+
+logic_checks:
+  - name: "Has battery component"
+    positive_ask: |
+      PREFIX ex: <http://example.com/dpp#>
+      ASK {
+        ?p a ex:Product .
+        FILTER (?p = <{product}>)
+        ?p ex:hasComponent ?c .
+        ?c a ex:Battery .
+      }
+    question: "Does {name} include a battery component?"
+    yes_answer: "yes"
+    no_answer: "no"
+
+  - name: "Has wireless module"
+    positive_ask: |
+      PREFIX ex: <http://example.com/dpp#>
+      ASK {
+        ?p a ex:Product .
+        FILTER (?p = <{product}>)
+        ?p ex:hasComponent ?c .
+        ?c a ex:WirelessModule .
+      }
+    question: "Does {name} include a wireless module?"
+    yes_answer: "yes"
+    no_answer: "no"
+
+  - name: "Compliance linked"
+    positive_ask: |
+      PREFIX ex: <http://example.com/dpp#>
+      ASK {
+        ?p a ex:Product .
+        FILTER (?p = <{product}>)
+        { ?p ex:conformsTo ?s . } UNION { ?p ex:requiresCompliance ?s . }
+      }
+    question: "Is {name} linked to any compliance standard?"
+    yes_answer: "yes"
+    no_answer: "no"
+
+open_templates:
+  - "From the product documentation, what {slot} applies to {name}?"
+  - "According to records, list the {slot} for {name}."
+
+paraphrase_rate: 0.2
+noise_rate: 0.1
