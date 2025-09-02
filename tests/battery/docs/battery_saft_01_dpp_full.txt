@@ -1,0 +1,128 @@
+DIGITAL PRODUCT PASSPORT (TXT) — Saft (FR) Flex’ion‑style 48V‑100Ah LFP module — Full Sample
+============================================================================
+
+IMPORTANT NOTE
+--------------
+This is an illustrative Digital Product Passport (DPP) in plain text for the
+Saft (FR) Flex’ion‑style 48V‑100Ah LFP module. It is **not** an official manufacturer document. Values marked
+'verify' must be confirmed against the official test reports/datasheets/EPREL before
+any compliance use.
+
+1) PRODUCT IDENTIFICATION
+-------------------------
+Company: Saft (FR)
+Model: Flex’ion‑style 48V‑100Ah LFP module
+Category (EU 2023/1542): Industrial battery (>2 kWh)
+Chemistry: Lithium iron phosphate (LFP)
+Nominal ratings: 51.2 V, 100 Ah, ~5120 Wh
+Form factor / Enclosure: 19″ rack, ~3U
+Mass (approx.): ~45 kg
+GTIN: 03012345678933
+Serial number: SAFT-59E123EB92
+Manufacture date: 2025-05-20 (sample)
+Batch / Lot: B20250520-30 (sample)
+EPREL ID: (enter EPREL ID here)
+
+GS1 Digital Link (example): https://id.gs1.org/01/03012345678933/21/SAFT-59E123EB92
+
+2) MANUFACTURER & CONTACTS
+--------------------------
+Legal name: Saft (FR) (regional entity)
+Website: (enter)
+Support email/phone: (enter regional)
+Address: (enter HQ/plant)
+EU authorised representative: (enter if applicable)
+
+3) REGULATORY, SAFETY & COMPLIANCE (sample statuses)
+----------------------------------------------------
+Applicable standards/regulations (verify per SKU/market):
+• UN 38.3 (cells & pack)
+• IEC 62619 (pack)
+• CE/EMC per EN 61000 series
+• RoHS/REACH declarations
+Safety notes (summary; not exhaustive):
+LFP chemistry; avoid short circuit; use BMS limits; firefighting: cool with water; avoid re‑ignition; trained personnel only.
+
+4) ELECTRICAL & PERFORMANCE (illustrative; verify)
+--------------------------------------------------
+Charge window (typical): 42–58 V CC/CV, 0–45 °C (verify)
+Discharge window (typical): –20 to 55 °C (verify)
+Cycle life (example): see warranty criteria; depends on depth‑of‑discharge, temperature, C‑rates
+Thermal management: (enter — natural convection / liquid loop / forced air)
+Communication interfaces: CANopen / Modbus RTU
+Protection features: OVP/UVP/OCP/OTP; insulation monitoring (if applicable)
+
+5) MATERIALS & CRITICAL RAW MATERIALS
+-------------------------------------
+Cells: (enter format e.g., prismatic/pouch/cylindrical); separator: polyolefin
+Cathode/anode: (enter blend; e.g., NMC with high‑Ni; graphite/anode blend for Li‑ion)
+Electrolyte: LiPF6 in organic carbonate (Li‑ion) / acid for lead‑acid
+Critical raw materials: Lithium, Nickel, Cobalt, Graphite (Li‑ion); Lead (lead‑acid)
+Packaging: Aluminium/steel housing; connectors and harness per design
+
+6) SOFTWARE, CONNECTIVITY & CYBERSECURITY
+-----------------------------------------
+BMS update policy: security updates during product lifecycle (define duration)
+Interfaces: CAN/Modbus/SMBus (as specified); SOC/SOH reporting; fault logs
+Data: privacy and retention policies to be defined per contract
+
+7) MAINTENANCE, REPAIR & SPARE PARTS
+------------------------------------
+Routine maintenance:
+• Keep firmware/BMS updated; maintain connectors and cooling paths
+• Storage: 30–50 % SOC; 10–25 °C; check every 3–6 months
+Serviceability: Module replacement possible (design dependent); cell replacement by OEM only
+Spare parts availability target: 5–10 years (define contractually)
+
+8) INSTALLATION & COMMISSIONING
+-------------------------------
+• Verify polarity and torque specs; ensure correct BMS commissioning
+• Observe creepage/clearance; isolation test per standard
+• Integrate with charger/inverter meeting applicable standards
+
+9) TRANSPORT & HAZMAT
+---------------------
+UN number: UN 3480 (Li‑ion) / UN 3481 (with equipment) / UN 2794 (lead‑acid) / UN 2800 (non‑spillable)
+ADR/IATA/IMDG packaging: per test summary and packing instructions (e.g., P903, 965–970)
+Transport SOC: typically ≤30 %; pack in approved packaging; apply Class 9 labels
+
+10) END‑OF‑LIFE (EoL) & CIRCULARITY
+-----------------------------------
+• Producer responsibility (EPR): return through authorized schemes or contract take‑back
+• Diagnosis: assess SOH for 2nd‑life vs direct recycling
+• Recycling: recover Al/Cu/Fe; process black mass hydrometallurgically (Li‑ion) or closed‑loop lead
+
+11) ENVIRONMENTAL FOOTPRINT (illustrative)
+------------------------------------------
+Cradle‑to‑gate carbon footprint: (enter value and method, e.g., 70–120 kg CO₂e/kWh for Li‑ion; run LCA/EPD)
+Use‑phase note: charge/discharge efficiency and grid intensity drive impacts
+Packaging: recyclable corrugated; avoid unnecessary plastics
+
+12) WARRANTY (example; enter your terms)
+----------------------------------------
+5 years or 6,000 cycles @ ≥80 % EoL (example)
+
+13) TRACEABILITY & DATA CARRIER
+-------------------------------
+GS1 keys: GTIN 03012345678933, Serial SAFT-59E123EB92, Lot B20250520-30
+Digital Link (QR/NFC): https://id.gs1.org/01/03012345678933/21/SAFT-59E123EB92
+Data fields: manufacturing date, plant, batch, chemistry, recycling info
+
+14) LINKED DOCUMENTATION (insert your URLs or files)
+----------------------------------------------------
+• Test summary UN 38.3 (PDF): (enter)
+• IEC/EN certificates (PDF): (enter)
+• Safety information & SDS: (enter)
+• Installation/Use manual: (enter)
+• Recycling/take‑back info: (enter)
+
+15) GOVERNANCE & VERSIONING
+---------------------------
+DPP issuer: Example DPP Generator (sample)
+Version: 1.1
+Created: 2025-09-01
+Last updated: 2025-09-01
+Data quality: Public sources + placeholders — replace 'verify' with official values.
+Notes: Adapt to EU Battery Regulation (EU) 2023/1542 & delegated acts on DPP content.
+
+— END OF DOCUMENT —

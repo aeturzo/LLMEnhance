@@ -1,3 +1,0 @@
-{"id":"r1","query":"When was coolant pump #2 last replaced?","product":"ProductA","session":"s2","type":"recall","expected_contains":"1 July 2025"}
-{"id":"l1","query":"What must a battery label include?","product":"ProductA","session":"s1","type":"logic","expected_contains":"capacity"}
-{"id":"o1","query":"Which standard applies to ProductA batteries?","product":"ProductA","session":"s1","type":"open","expected_contains":"EN"}

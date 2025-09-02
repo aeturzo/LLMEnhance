@@ -1,0 +1,129 @@
+DIGITAL PRODUCT PASSPORT (TXT) — Lexmark MX622adhe — Full Sample
+============================================================================
+
+IMPORTANT NOTE
+--------------
+This is an illustrative Digital Product Passport (DPP) in plain text for the
+Lexmark MX622adhe. It is **not** an official manufacturer document. Values marked
+'verify' must be confirmed against the official datasheet and DoC before any
+compliance use.
+
+1) PRODUCT IDENTIFICATION
+-------------------------
+Brand: Lexmark
+Model: MX622adhe
+Function: Monochrome laser MFP (print/copy/scan/fax)
+Workgroup: Small/Medium (varies by configuration)
+GTIN: 07012345678977
+Serial number: LEX-MX622ADHE-6263088304
+Manufacture date: 2025-06-15 (sample)
+Batch / Lot: B20250615-34 (sample)
+Country of origin: (enter country/plant)
+SKU / Part numbers: (enter for your region)
+
+2) MANUFACTURER & CONTACTS
+--------------------------
+Legal name: Lexmark International (sample)
+Website: https://support.lexmark.com
+Support: Online knowledge base & drivers (enter regional hotline)
+EU authorised representative: (enter, if applicable)
+Address: (enter legal address)
+
+3) REGULATORY, SAFETY & COMPLIANCE (sample statuses)
+----------------------------------------------------
+CE Declaration of Conformity: Available via support portal (model-specific).
+Applicable directives/standards (typical):
+• Safety: EN 62368‑1
+• Laser safety: EN 60825‑1
+• EMC: EN 55032 (emissions), EN 55035 (immunity); EN 61000 series
+• Ecodesign/ErP: (where applicable); RoHS (EU) 2011/65/EU; REACH (EC 1907/2006)
+• WEEE 2012/19/EU — Separate collection symbol present
+
+4) ENERGY & PERFORMANCE (illustrative; verify)
+----------------------------------------------
+Print speed (A4/Letter): 47–50 ppm
+Print resolution: up to 1200 × 1200 dpi
+First page out: ~6.0 s
+Recommended monthly page volume: 2,000–20,000 pages
+Duty cycle (max): (verify datasheet)
+Duplex: Automatic 2‑sided printing
+Typical energy: ENERGY STAR® certified (region dependent)
+Noise/power modes: Quiet/eco modes; sleep and deep sleep
+
+5) DIMENSIONS, MEDIA & CONNECTIVITY
+-----------------------------------
+Dimensions (H×W×D): 470 × 489 × 429 mm | Unboxed weight: ~22–25 kg
+Media support: A6 to Legal; ADF for scanning; mixed media types
+Interfaces: Gigabit Ethernet, USB host/device; optional Wi‑Fi
+Mobile & cloud: AirPrint / Mopria / Cloud print (region dependent); driver support per OS
+
+6) MATERIALS & SUBSTANCES (indicative totals)
+---------------------------------------------
+Bill of materials (approx. % by mass; illustrative):
+• Plastics ~45 %; Steel ~35 %; Electronics ~12 %; Elastomers ~4 %; Others ~4 %
+Consumables:
+• Unison™ toner; standard/high‑yield; imaging unit/fuser replaceable
+REACH Candidate List / RoHS:
+• Compliant per manufacturer declarations; SDS for toner available upon request
+
+7) SOFTWARE, CONNECTIVITY & CYBERSECURITY
+-----------------------------------------
+Security (typical): Secure print, LDAP/AD auth, 802.1X, TLS, SNMPv3; HDD encryption if equipped.
+Firmware: Updatable via web UI/USB; verify signed firmware requirements
+Protocols: IPv4/IPv6; SNMPv3; TLS 1.2+; 802.1X (varies by model)
+Data: Print job data cleared per policy; storage encryption for HDD/flash (if equipped)
+
+8) MAINTENANCE, REPAIR & SPARE PARTS
+------------------------------------
+Routine maintenance:
+• Replace toner/drum/imaging units per life counters; clean rollers/paths
+• Keep firmware current; review logs for errors
+Field replaceables (typical): Toner, imaging unit/drum, fuser, rollers
+Spare parts availability target: 5–7 years from end of production (brand policy dependent)
+
+9) INSTALLATION & COMMISSIONING
+-------------------------------
+• Place on stable, ventilated surface; avoid high humidity/dust
+• Connect network per IT policy; set admin password; disable unused services
+• Load media within supported sizes/weights; calibrate color (for color models)
+
+10) END‑OF‑LIFE (EoL) & CIRCULARITY
+-----------------------------------
+• Return used cartridges via manufacturer take‑back program (where available)
+• Recycle printer via WEEE channels; remove consumables before transport
+• Materials: plastics/steel/copper boards separated by recycler
+
+11) ENVIRONMENTAL FOOTPRINT (illustrative)
+------------------------------------------
+Embodied carbon: dependent on BOM and manufacturing energy mix
+Use‑phase note: emissions dominated by energy consumption and supplies usage
+Packaging: recyclable corrugated; minimal foam where feasible
+
+12) WARRANTY (example; enter your terms)
+----------------------------------------
+Standard: 1‑Year Advanced Exchange / Carry‑in (region dependent)
+Extensions: 3–5‑year care packs available (enter SKUs)
+
+13) TRACEABILITY & DATA CARRIER
+-------------------------------
+GS1 keys: GTIN 07012345678977, Serial LEX-MX622ADHE-6263088304, Lot B20250615-34
+Digital Link (QR/NFC): https://support.lexmark.com (model page) + local asset tag
+
+14) LINKED DOCUMENTATION (insert your URLs or files)
+----------------------------------------------------
+• Product page: (enter regional URL)
+• Datasheet / User guide (PDF): (enter)
+• Safety information & DoC: (enter)
+• Supplies guide: (enter)
+• Firmware release notes: (enter)
+
+15) GOVERNANCE & VERSIONING
+---------------------------
+DPP issuer: Example DPP Generator (sample)
+Version: 1.1
+Created: 2025-09-01
+Last updated: 2025-09-01
+Data quality: Public sources + placeholders — replace 'verify' with official values.
+Notes: Adapt fields to future EU DPP delegated acts for imaging equipment.
+
+— END OF DOCUMENT —

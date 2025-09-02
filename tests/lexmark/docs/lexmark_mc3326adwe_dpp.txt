@@ -1,0 +1,34 @@
+DIGITAL PRODUCT PASSPORT (TXT) — Lexmark MC3326adwe (near‑real)
+============================================================================
+IMPORTANT: Compiled from Lexmark brochure/pages; confirm details for your region.
+
+1) PRODUCT IDENTIFICATION
+-------------------------
+Brand: Lexmark
+Model: MC3326adwe
+Function: Compact color laser MFP (print/copy/scan/fax)
+Workgroup: Small office / workgroup
+Serial: MC3326ADWE-F63D70C03C
+
+2) KEY SPECS (from Lexmark brochure/pages — verify)
+---------------------------------------------------
+Print speed: up to 26 ppm (color/mono)
+Recommended monthly page volume: 600–2,500 pages
+Duplex: Integrated 2‑sided printing
+Display: 2.8‑inch (7.2 cm) touch panel
+Dimensions (H×W×D): ~344 × 411 × 394 mm (compact footprint)
+Supplies: Unison™ toner — up to 2,500 pages/color and 3,000 pages/mono (ISO/IEC) extra‑yield
+Connectivity: Wi‑Fi, Gigabit Ethernet, USB
+Security: Lexmark full‑spectrum security architecture
+Energy: ENERGY STAR®
+
+3) PAPER & MEDIA
+----------------
+Std input: 250‑sheet input + 1‑sheet manual; 100‑sheet output bin
+Supported: A6 to Legal, envelopes; typical media 60–176 g/m² (see datasheet)
+
+4) TRACEABILITY
+---------------
+Internal serial: MC3326ADWE-F63D70C03C
+
+— END OF DOCUMENT —

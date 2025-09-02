@@ -1,0 +1,30 @@
+DIGITAL PRODUCT PASSPORT (TXT) — Lexmark B3442dw (near‑real)
+============================================================================
+1) PRODUCT IDENTIFICATION
+-------------------------
+Brand: Lexmark
+Model: B3442dw
+Function: Monochrome laser printer (single‑function)
+Workgroup: Small workgroup
+Serial: B3442DW-9C45B3287E
+
+2) KEY SPECS (from Lexmark brochure/pages — verify)
+---------------------------------------------------
+Print speed: up to 42 ppm (regionally also quoted up to 40 ppm)
+First page: as fast as ~5.9 s
+Processor/memory: 1‑GHz dual‑core; 256 MB
+Duplex: Automatic 2‑sided printing (standard)
+Connectivity: Wi‑Fi, Ethernet, USB
+Dimensions (H×W×D): ~222 × 368 × 363 mm (very compact)
+Recommended monthly page volume: ~800–8,000 pages
+Energy: ENERGY STAR® (see regional page)
+
+3) MEDIA & HANDLING
+-------------------
+Included handling: 250‑sheet input + 100‑sheet multipurpose feeder; 150‑sheet output bin
+
+4) TRACEABILITY
+---------------
+Internal serial: B3442DW-9C45B3287E
+
+— END OF DOCUMENT —

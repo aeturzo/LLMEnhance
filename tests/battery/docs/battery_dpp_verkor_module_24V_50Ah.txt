@@ -1,0 +1,43 @@
+DIGITAL PRODUCT PASSPORT (TXT) — Industrial Battery Module (Near‑real)
+============================================================================
+Company: Verkor (FR)
+Model: Industrial Li‑ion module 24V‑50Ah NMC (sample)
+Chemistry: Lithium‑ion NMC, pouch/prismatic cells with BMS
+Category (EU 2023/1542): Industrial battery (≤2 kWh module; pack may exceed)
+
+RATINGS
+-------
+Nominal voltage: 24 V   Capacity: 50 Ah   Energy: 1200 Wh
+Max discharge: 100 A (10 s) (example)   Max charge: 50 A (CC/CV)
+Cooling: Natural convection   Enclosure: IP20 (module)
+
+IDENTIFICATION & TRACEABILITY
+-----------------------------
+GTIN: 03012345678940
+Serial: VERK-MOD-24V50-3A99451820
+EPREL ID: EPREL-BATT-VKR-0005
+Manufacture date: 2025-03-08
+Batch/Lot: MOD-20250308-05
+GS1 Digital Link (example): https://id.gs1.org/01/03012345678940/21/VERK-MOD-24V50-3A99451820
+
+COMPLIANCE (VERIFY)
+-------------------
+• UN 38.3 transport test — compliant (provide test summary)
+• IEC 62619 (industrial battery safety) — compliant
+• EMC: EN 61000 series where applicable for integrated electronics
+• RoHS/REACH declarations available
+
+MATERIALS & CRITICALS (indicative)
+----------------------------------
+Cathode: Ni‑Mn‑Co   Anode: Graphite   Electrolyte: LiPF6
+Critical raw materials: Lithium, Nickel, Cobalt, Graphite
+
+END‑OF‑LIFE
+-----------
+• Producer take‑back/EPR; recyclable fractions: Al/Cu/Fe; black mass for hydrometallurgical recovery
+
+WARRANTY (EXAMPLE)
+------------------
+• 5 years or 3,000 cycles to ≥70–80 % capacity (usage window dependent)
+
+— END OF DOCUMENT —

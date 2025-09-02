@@ -1,0 +1,29 @@
+DIGITAL PRODUCT PASSPORT (TXT) — Lexmark C3426dw (near‑real)
+============================================================================
+1) PRODUCT IDENTIFICATION
+-------------------------
+Brand: Lexmark
+Model: C3426dw
+Function: Color laser printer (single‑function)
+Workgroup: Small office / workgroup
+Serial: C3426DW-282D04D967
+
+2) KEY SPECS (from Lexmark brochure/pages — verify)
+---------------------------------------------------
+Print speed: up to 24–26 ppm (region dependent)
+Processor/memory: 1‑GHz dual‑core; 512 MB
+Duplex: Automatic 2‑sided printing
+Connectivity: Wi‑Fi, Gigabit Ethernet, USB
+Dimensions (H×W×D): ~243.7 × 411.2 × 394.1 mm
+Supplies: Extra‑high‑yield cartridges up to ~4,500 pages (CMYK, ISO/IEC)
+Energy: ENERGY STAR®; compact/lightweight footprint
+
+3) MEDIA & HANDLING
+-------------------
+Std input: 250‑sheet input + manual single sheet; 100‑sheet output
+
+4) TRACEABILITY
+---------------
+Internal serial: C3426DW-282D04D967
+
+— END OF DOCUMENT —

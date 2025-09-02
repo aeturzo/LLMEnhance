@@ -1,0 +1,42 @@
+DIGITAL PRODUCT PASSPORT (TXT) — LMT (e‑bike) Battery (Near‑real)
+============================================================================
+Company: BMZ Group (DE)
+Model: e‑Bike LMT 36V‑14Ah (downtube) (sample)
+Chemistry: Lithium‑ion (NMC) with BMS
+Category (EU 2023/1542): Light Means of Transport (LMT) battery
+
+RATINGS
+-------
+Nominal voltage: 36 V   Capacity: 14 Ah   Energy: 504 Wh
+Max continuous discharge: 20–25 A (example)   Charger: 42 V CC/CV
+
+IDENTIFICATION & TRACEABILITY
+-----------------------------
+GTIN: 03012345678933
+Serial: BMZ-LMT-36V14-4334473DCF
+EPREL ID: EPREL-BATT-BMZ-0004
+Manufacture date: 2025-04-12
+Batch/Lot: LMT-20250412-04
+GS1 Digital Link (example): https://id.gs1.org/01/03012345678933/21/BMZ-LMT-36V14-4334473DCF
+
+COMPLIANCE (VERIFY REGION)
+--------------------------
+• UN 38.3 — transport test
+• EN 15194 (EPAC systems) — system level; IEC 62133‑2 for portable Li‑ion safety
+• IEC 60335‑2‑29 (charger safety) — charger
+• Markings: separate collection symbol; capacity/Wh; QR to safety/info
+
+SAFETY
+------
+• BMS protections: OVP/UVP/OCP/OTP; storage 30–50 % SOC; charge 0–45 °C; use only specified charger
+• Transport: UN 3480 (or UN 3481 if shipped with bicycle)
+
+END‑OF‑LIFE
+-----------
+• Return via retailer/EPR scheme; battery disassembly only by trained technicians
+
+WARRANTY (EXAMPLE)
+------------------
+• 2 years to ≥60–70 % capacity (cycles & terms region dependent)
+
+— END OF DOCUMENT —

@@ -1,0 +1,59 @@
+DIGITAL PRODUCT PASSPORT (TXT) — Industrial Battery (Near‑real)
+============================================================================
+Company: Saft (FR)
+Model: Flex’ion‑style 48V‑100Ah LFP module (sample)
+Chemistry: Lithium iron phosphate (LFP), prismatic cells
+Category (EU 2023/1542): Industrial battery (>2 kWh)
+Rated voltage / capacity / energy: 51.2 V nominal / 100 Ah / 5120 Wh
+Mass (approx.): 45 kg   Form factor: 19″ rack, ~3U
+
+IDENTIFICATION & TRACEABILITY
+-----------------------------
+GTIN: 03012345678902
+Serial: SAFT-FXM-48V100-7139A255D9
+EPREL ID: EPREL-BATT-SFT-0001
+Manufacture date: 2025-07-10
+Batch/Lot: FXM-20250710-01
+GS1 Digital Link (example): https://id.gs1.org/01/03012345678902/21/SAFT-FXM-48V100-7139A255D9
+
+MANUFACTURER (SUMMARY)
+----------------------
+Saft (TotalEnergies) — Headquarters: Levallois‑Perret, FR. Regional service via local partners.
+
+COMPLIANCE (VERIFY FOR YOUR SKU)
+--------------------------------
+• UN 38.3 transportation testing (cells & battery pack): compliant (declare test report ref)
+• IEC 62619 (industrial Li‑ion safety): compliant (declare CB report ref)
+• CE/EMC (pack with BMS): EN 61000 series (as applicable)
+• RoHS/REACH declarations available on request
+• Markings: Separate collection symbol; DoC link via QR/GS1
+
+BMS & INTERFACES
+----------------
+• BMS protections: OVP/UVP/OCP/OTP/charging temp window, passive balancing
+• Comms: CANopen / Modbus RTU (selectable); dry contact alarms
+• Parallel/series: up to 8 in parallel (verify cabinet spec)
+
+SAFETY & TRANSPORT
+------------------
+UN number: UN 3480 (Lithium‑ion batteries)
+Packaging: P903 (ADR) or equivalent   State of charge for transport: ≤30 % SOC
+Fire response: Class D agents not effective; use copious water for cooling per local guidance
+
+ENVIRONMENT & MATERIALS (indicative)
+------------------------------------
+Recycled content: aluminium/copper fractions depend on supplier (declare if known)
+Critical raw materials: Lithium, Graphite (anode), Phosphate/iron   Cobalt/Nickel: none (LFP)
+Carbon footprint (cradle‑to‑gate, placeholder): ~120 kg CO₂e per kWh (replace with EPD/CFP)
+
+END‑OF‑LIFE
+-----------
+• Return through producer responsibility scheme (EPR) or contractual take‑back
+• Discharge below 30 %; remove to certified recycler; recover Cu/Al/Fe; treat electrolyte safely
+
+WARRANTY & SERVICE (EXAMPLE)
+----------------------------
+• 5 years or 6,000 cycles @ 80 % EoL (whichever first), with operating window 10–90 % SOC
+• Keep firmware/BMS updated; log files available via service port
+
+— END OF DOCUMENT —

@@ -1,0 +1,57 @@
+DIGITAL PRODUCT PASSPORT (TXT) — Electric Vehicle Battery (Near‑real)
+============================================================================
+Company: Northvolt (SE)
+Model: EV traction pack 400 V—55 kWh (sample)
+Chemistry: Lithium‑ion NMC (nickel‑manganese‑cobalt), liquid‑cooled
+Category (EU 2023/1542): Electric vehicle battery (>2 kWh)
+
+ELECTRICAL & MECHANICAL (TYP. VALUES)
+-------------------------------------
+Nominal voltage: 400 V   Energy: 55 kWh   Peak power: 170 kW (10 s) (example)
+Cooling: Liquid glycol loop; integrated HV contactors and pyrofuse
+Communication: CAN FD   Isolation monitoring: integrated
+Mass (approx.): 350 kg   Enclosure: IP67 (pack), IP6K9K optional
+
+IDENTIFICATION & TRACEABILITY
+-----------------------------
+GTIN: 03012345678919
+Serial: NVLT-EVP-400-55-74DC0BC979
+EPREL ID: EPREL-BATT-NV-0002
+Manufacture date: 2025-06-15
+Batch/Lot: EVP-20250615-02
+GS1 Digital Link (example): https://id.gs1.org/01/03012345678919/21/NVLT-EVP-400-55-74DC0BC979
+
+COMPLIANCE (VERIFY PER OEM VARIANT)
+-----------------------------------
+• UN 38.3 (cells/modules/pack) — compliant (reference lab report)
+• UNECE R100 (electric powertrain safety) — compliant via vehicle type approval
+• UNECE R10 (EMC) — as part of vehicle E‑marking
+• ISO 26262 functional safety — applied at ASIL C/D for BMS controls
+• IEC 62660 series (cells) / IEC 62619 (modules) — as applicable
+
+SAFETY & HAZARD MITIGATION
+--------------------------
+• Venting paths and TPRDs where applicable; HVIL present
+• Passive propagation resistance features between modules (design‑dependent)
+• Thermal runaway detection: cell/module temperature, ΔT/ΔV patterns
+
+MATERIALS & CRITICAL RAW MATERIALS (indicative)
+-----------------------------------------------
+Cathode: Ni‑Mn‑Co; Anode: Graphite (blend)   Electrolyte: LiPF6 in organic solvent
+Critical raw materials: Lithium, Cobalt, Nickel, Graphite
+Pack recyclability: Al/Cu/Fe recovery; black mass to hydrometallurgical refining
+
+CARBON FOOTPRINT (placeholder)
+------------------------------
+Manufacturing footprint: e.g., 70–100 kg CO₂e/kWh if powered by low‑carbon electricity — replace with OEM value
+
+END‑OF‑LIFE
+-----------
+• Managed via OEM/producer take‑back; state‑of‑health measured before repurpose/recycle
+• UN 3480 for logistics; SOC ≤30 %, use EV‑battery transport packaging
+
+WARRANTY (EXAMPLE)
+------------------
+• 8 years / 160,000 km to ≥70–80 % capacity; exact terms per vehicle OEM
+
+— END OF DOCUMENT —

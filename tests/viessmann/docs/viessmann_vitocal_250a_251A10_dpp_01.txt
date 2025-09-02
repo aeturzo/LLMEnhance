@@ -1,0 +1,147 @@
+DIGITAL PRODUCT PASSPORT (TXT) — Viessmann Vitocal 250‑A (Tailored Sample #1)
+============================================================================
+
+IMPORTANT NOTE
+--------------
+This is an illustrative DPP in plain text for the Viessmann Vitocal 250‑A family,
+variant: AWO‑E‑AC 251.A10 (230 V, monobloc, R290). It is **not** an official
+manufacturer document. Values marked 'verify' should be confirmed against the
+official datasheet and EPREL entry before compliance use.
+
+1) PRODUCT IDENTIFICATION
+-------------------------
+Brand: Viessmann
+Family / Trade name: Vitocal 250‑A
+Variant / Type code: AWO‑E‑AC 251.A10
+Product type: Air‑to‑water heat pump (monobloc)
+GTIN: 04012345678918
+MPN / Package code: Z022774 (example; may vary)
+Serial number: VSN-251A10-A62320FED7
+Manufacture date: 2025-07-10 (sample)
+Batch / Lot: B20250710-01 (sample)
+Country of origin / Plant: DE / Allendorf (sample)
+EPREL ID: EPREL-PLACEHOLDER-251A10-0001
+
+GS1 Digital Link (example): https://id.gs1.org/01/04012345678918/21/VSN-251A10-A62320FED7
+
+2) MANUFACTURER & CONTACTS
+--------------------------
+Legal name: Viessmann Climate Solutions SE
+Address: Viessmannstraße 1, 35108 Allendorf (Eder), Germany
+Website: https://www.viessmann-climatesolutions.com
+Email: info@viessmann.com
+EU authorised representative: Same as manufacturer (sample)
+
+3) REGULATORY, SAFETY & COMPLIANCE (sample statuses)
+----------------------------------------------------
+CE Declaration of Conformity: Available on request (sample).
+Applicable directives/regulations:
+• 2014/35/EU Low Voltage Directive — Conforms (sample)
+• 2014/30/EU EMC Directive — Conforms (sample)
+• 2014/68/EU Pressure Equipment Directive — Conforms (sample)
+• 2011/65/EU RoHS — Compliant (sample)
+• REACH (EC 1907/2006) — No SVHC >0.1% w/w (manufacturer statement; verify)
+• WEEE 2012/19/EU — Category: Temperature exchange equipment
+
+Refrigerant: R290 (propane), flammability class A3
+Regulatory GWP100: use the value required by your regulator (commonly 3). 
+Charge (A10): ~2.0 kg (verify with datasheet/label).
+Max permitted flow temperature: up to 70 °C (modernization‑capable; verify model).
+
+Key safety notes (summary; not exhaustive):
+• Installation/service by qualified personnel only; observe EN 378 & local codes.
+• Ensure ventilation and control ignition sources during service.
+• Use hydrocarbon‑rated recovery and leak‑detection equipment.
+
+4) ENERGY & PERFORMANCE (illustrative; verify)
+----------------------------------------------
+Energy label (Average climate):
+• Low‑temperature (35 °C): A+++ (verify)
+• Medium‑temperature (55 °C): A+++ (verify)
+
+Rated heating capacity range (A‑7/W35): ~2.6–9.7 kW (A10)
+Selected performance points (typical for A10; verify):
+• COP A2/W35 ≈ 4.50
+• COP A7/W55 ≈ 2.97
+• COP A‑7/W55 ≈ 2.13
+
+Cooling function: Yes (verify option for your package)
+Acoustics (approx.; verify): Sound power outdoors ≈ 54 dB(A); indoors ≈ 41 dB(A).
+Operating range (indicative): down to approx. −20 °C ambient (verify).
+
+5) DIMENSIONS, CONNECTIONS & ELECTRICAL (verify exact variant)
+--------------------------------------------------------------
+Outdoor unit (approx.): D 600 × W 1144 × H 1382 mm; weight ≈ 215 kg
+Indoor unit (approx.):  D 360 × W 450 × H 920 mm;  weight ≈ 48 kg
+Hydraulics: Max system pressure 3 bar; Flow/return e.g. Rp 1″ (confirm)
+Electrical supply: 230 V ~ 50 Hz (single‑phase); phases: 1
+Ingress protection: IPX4 (outdoor unit; verify)
+
+6) MATERIALS & SUBSTANCES (indicative totals)
+---------------------------------------------
+Bill of materials (approx. kg):
+• Steel ~65; Aluminium ~22; Copper ~18; Plastics/elastomers ~14; Electronics ~3
+• Refrigerant (R290) ~2.0 kg
+Critical raw materials: Copper
+REACH Candidate List: None >0.1% w/w (declare if otherwise)
+RoHS: Compliant (declare exemptions if any)
+
+7) SOFTWARE, CONNECTIVITY & CYBERSECURITY
+-----------------------------------------
+Controller: Viessmann One Base (family)
+Connectivity: Local controller; optional app/cloud; Modbus/RTU (optional)
+Firmware version: (enter if known)
+Update policy: Security/feature updates during lifecycle (confirm with supplier)
+Data & privacy: Local control by default; cloud optional (confirm scope)
+
+8) MAINTENANCE, REPAIR & SPARE PARTS
+------------------------------------
+Routine maintenance:
+• Annually: Clean coils/fan/drains; check condensate; functional and safety tests
+• Every 2 years: Electrical checks; firmware review
+• As needed: Firmware updates; filter/strainer checks (site‑specific)
+
+Repairability: Service ports present (HC‑rated tools required)
+Spare parts availability target: 10 years (confirm)
+
+9) END‑OF‑LIFE (EoL) & CIRCULARITY
+----------------------------------
+WEEE: Temperature exchange equipment — return via authorized channels.
+R290 handling: Recover with hydrocarbon‑rated equipment and trained personnel.
+Material separation: Copper, aluminium, steel recycled; PCBs to WEEE hazardous fraction.
+Indicative disassembly time: ~45 minutes (skilled technician; site‑dependent).
+
+10) ENVIRONMENTAL FOOTPRINT (illustrative)
+------------------------------------------
+Embodied carbon (cradle‑to‑gate): ~620 kg CO₂e (placeholder; run an EPD/LCI for accuracy)
+Methodology: EN 15804‑style estimate; assumptions to be documented.
+Use‑phase note: Real‑world emissions depend on grid mix and in‑situ SCOP.
+
+11) WARRANTY (example; enter your terms)
+----------------------------------------
+Standard: 2 years parts & labour
+Compressor: 5 years
+Conditions: Qualified commissioning; annual service per schedule.
+
+12) TRACEABILITY & DATA CARRIER
+-------------------------------
+GS1 keys: GTIN 04012345678918, Serial VSN-251A10-A62320FED7, Lot B20250710-01
+Digital Link (QR/NFC): https://id.gs1.org/01/04012345678918/21/VSN-251A10-A62320FED7
+
+13) LINKED DOCUMENTATION (insert your URLs or files)
+----------------------------------------------------
+• Product page (regional): 
+• Installation / Service manual (PDF): 
+• Parts catalogue: 
+• Safety instructions (R290): 
+
+14) GOVERNANCE & VERSIONING
+---------------------------
+DPP issuer: Example DPP Generator (sample)
+Version: 1.1
+Created: 2025-08-31
+Last updated: 2025-08-31
+Data quality: Mixed (public sources + placeholders). Replace 'verify' fields with official values.
+Notes: Align final structure/fields with EU ESPR delegated act for heat pumps and with EPREL.
+
+— END OF DOCUMENT —

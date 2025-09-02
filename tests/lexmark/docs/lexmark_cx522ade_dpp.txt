@@ -1,0 +1,44 @@
+DIGITAL PRODUCT PASSPORT (TXT) — Lexmark CX522ade (near‑real)
+============================================================================
+IMPORTANT: Compiled from Lexmark brochures/pages; specs vary slightly by region.
+
+1) PRODUCT IDENTIFICATION
+-------------------------
+Brand: Lexmark
+Model: CX522ade
+Function: Color laser MFP (print/copy/scan/fax capable)
+Workgroup: Small–medium workgroup
+Serial: CX522ADE-AD1FA2D5C0
+
+2) KEY SPECS (from Lexmark brochures/pages — verify)
+----------------------------------------------------
+Engine/CPU: 1.2‑GHz quad‑core; up to 6 GB memory
+Print speed: up to 35 ppm (A4/Letter; some regions list 33 ppm)
+Scan speed: up to 50 images per minute (simplex)
+Display: 4.3‑inch (10.9 cm) color touch screen (e‑Task)
+Duplex: Integrated 2‑sided printing
+Input/Output: 250‑sheet input + 100‑sheet MPF / 150‑sheet output (typical)
+Interfaces: Gigabit Ethernet; USB 2.0 host (front) + USB 2.0 device; optional Wi‑Fi
+Dimensions (H×W×D): ~462 × 442 × 588 mm | Weight: ~27.1 kg
+Energy/eco: ENERGY STAR; many regions list EPEAT Silver
+Recommended monthly volume: ~1,500–8,500 pages (typical listing)
+
+3) SECURITY & SOFTWARE
+----------------------
+Security: Lexmark full‑spectrum security; network protocols incl. 802.1X, TLS, IPsec (see datasheet)
+Apps: e‑Task apps; mobile printing supported via AirPrint/Mopria/etc. (region dependent)
+
+4) COMPLIANCE
+-------------
+EU/Int’l safety/EMC as per EU DoC; laser safety EN 60825‑1; safety EN 62368‑1.
+
+5) SUPPLIES (examples; vary by SKU)
+-----------------------------------
+Unison™ toner yields: std and high‑yield black/color; CMY yields commonly 1,400+ pages;
+black standard ~2,000 pages; see supplies guide for exact codes.
+
+6) TRACEABILITY
+---------------
+Internal serial: CX522ADE-AD1FA2D5C0
+
+— END OF DOCUMENT —

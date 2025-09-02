@@ -1,0 +1,44 @@
+DIGITAL PRODUCT PASSPORT (TXT) — SLI Lead‑acid Battery (Near‑real)
+============================================================================
+Company: VARTA (DE)
+Model: AGM SLI 12V‑95Ah (non‑spillable) (sample)
+Chemistry: Lead‑acid AGM (absorbent glass mat), valve‑regulated
+Category (EU 2023/1542): SLI (starting, lighting, ignition)
+
+RATINGS (EXAMPLE)
+-----------------
+Nominal voltage: 12 V   Capacity: 95 Ah (20 h)   Energy: ~1140 Wh
+Cold cranking current (CCA): 850–950 A (EN) (model dependent)
+Non‑spillable design; vibration‑resistant; stop‑start compatible
+
+IDENTIFICATION & TRACEABILITY
+-----------------------------
+GTIN: 03012345678926
+Serial: VARTA-AGM-12V95-95CCCFF336
+EPREL ID: EPREL-BATT-VRT-0003
+Manufacture date: 2025-05-20
+Batch/Lot: SLI-20250520-03
+GS1 Digital Link (example): https://id.gs1.org/01/03012345678926/21/VARTA-AGM-12V95-95CCCFF336
+
+COMPLIANCE / STANDARDS
+----------------------
+• EN 50342 series (automotive lead‑acid — performance & endurance)
+• UN number: UN 2800 (Batteries, wet, non‑spillable)
+• Markings: Pb symbol; separate collection; recycling info label
+• REACH: SVHC disclosure for lead; safety data sheet available
+
+SAFETY & HANDLING
+-----------------
+• Do not tip; keep vents unobstructed; avoid sparks/open flame
+• Charging: follow vehicle/regulator specs; avoid over‑charge/over‑discharge
+
+END‑OF‑LIFE
+-----------
+• Return deposit/refund scheme where applicable; recycle with authorized facility (lead loop)
+• High recyclability (>95 % of lead by mass typically recovered)
+
+WARRANTY (EXAMPLE)
+------------------
+• 3 years passenger cars (region dependent)
+
+— END OF DOCUMENT —

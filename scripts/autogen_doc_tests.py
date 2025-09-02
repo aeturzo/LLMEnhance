@@ -1,146 +1,246 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Generate open + numeric-recall QAs from domain docs.
-
-Search order for documents (first existing wins and is merged):
-  tests/<dom>/seed_docs.jsonl
-  tests/<dom>/seed_mem.jsonl
-  tests/dpp_<dom>/seed_docs.jsonl
-  tests/dpp_<dom>/seed_mem.jsonl
-  tests/dpp_rl/seed_docs.jsonl        (battery)
-  tests/dpp_rl/seed_mem.jsonl         (battery)
-  tests/<dom>/docs/*.txt|*.md         (ingested if available)
-
-Lines may use keys: "text" or "content" or "doc" or "memory"
-"""
-from __future__ import annotations
-import argparse, json, random, re, glob, os
+import argparse, json, os, re, sys
 from pathlib import Path
-from typing import List, Dict
 
-ROOT = Path(__file__).resolve().parents[1]
-NUM_UNIT = re.compile(r"(\b\d+(?:\.\d+)?\s?(?:mAh|Ah|V|W|Watt|Wh|kg|g|mm|cm|°C|%)\b)", re.I)
-SENT_SPLIT = re.compile(r"(?<=[\.\?!])\s+")
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
 
-PATTERNS = [
-    (re.compile(r"\b([A-Z][\w\-]+)\s+has\s+([\w\-\s%°C]+)\b", re.I), "What does {prod} have?"),
-    (re.compile(r"\b([A-Z][\w\-]+)\s+supports\s+([\w\-\s]+)\b", re.I), "What feature does {prod} support?"),
-    (re.compile(r"\b([A-Z][\w\-]+)\s+is\s+compatible\s+with\s+([\w\-\s]+)\b", re.I), "What is {prod} compatible with?"),
-    (re.compile(r"\b([A-Z][\w\-]+)\s+weighs\s+([\d\.\s]*(?:kg|g))\b", re.I), "What is the weight of {prod}?"),
-    (re.compile(r"\b([A-Z][\w\-]+)\s+voltage\s+(?:is|:)\s*([\d\.\s]*V)\b", re.I), "What is the voltage of {prod}?"),
-]
+# ---------- Helpers ----------
 
-def collect_docs(dom: str) -> List[str]:
-    candidates = [
-        ROOT / "tests" / dom / "seed_docs.jsonl",
-        ROOT / "tests" / dom / "seed_mem.jsonl",
-        ROOT / "tests" / f"dpp_{dom}" / "seed_docs.jsonl",
-        ROOT / "tests" / f"dpp_{dom}" / "seed_mem.jsonl",
-    ]
-    if dom == "battery":
-        candidates += [
-            ROOT / "tests" / "dpp_rl" / "seed_docs.jsonl",
-            ROOT / "tests" / "dpp_rl" / "seed_mem.jsonl",
-        ]
+_WS = re.compile(r"\s+")
 
-    texts: List[str] = []
-    # JSONL sources
-    for p in candidates:
-        if p.exists():
-            with p.open("r", encoding="utf-8") as f:
-                for line in f:
-                    if not line.strip(): continue
-                    j = json.loads(line)
-                    t = j.get("text") or j.get("content") or j.get("doc") or j.get("memory") or ""
-                    if t: texts.append(str(t))
+def norm(s: str) -> str:
+    return _WS.sub(" ", (s or "").strip().lower())
 
-    # Raw docs ingested (if any)
-    docs_dir = ROOT / "tests" / dom / "docs"
-    for ext in ("*.txt","*.md"):
-        for p in docs_dir.glob(ext):
-            try:
-                texts.append(p.read_text(encoding="utf-8"))
-            except Exception:
-                pass
-    return texts
-
-def gen_from_sentence(s: str) -> List[Dict]:
+def load_jsonl(p: Path):
+    if not p.exists(): return []
     out = []
-    s = s.strip()
-    # numeric unit extraction → recall/open
-    m = NUM_UNIT.search(s)
-    if m:
-        val = m.group(1).strip()
-        prod = next((w for w in s.split() if re.match(r"^[A-Z][\w\-]+$", w)), None)
-        if prod:
-            out.append({"type":"recall","query":f"What is the specification value mentioned for {prod}?",
-                        "expected_contains":val,"session":"s1"})
-    for rex, qtpl in PATTERNS:
-        m = rex.search(s)
-        if m:
-            prod = m.group(1).strip()
-            val  = m.group(2).strip()
-            out.append({"type":"open","query":qtpl.format(prod=prod),
-                        "expected_contains":val,"session":"s1"})
+    with p.open("r", encoding="utf-8") as f:
+        for ln in f:
+            ln = ln.strip()
+            if ln:
+                try: out.append(json.loads(ln))
+                except: pass
     return out
+
+def append_jsonl(p: Path, rows):
+    with p.open("a", encoding="utf-8") as f:
+        for r in rows:
+            f.write(json.dumps(r, ensure_ascii=False) + "\n")
+
+def pick_text(obj):
+    return obj.get("text","") if isinstance(obj, dict) else ""
+
+def make_id_factory(existing_ids, prefix):
+    n = 0
+    def next_id():
+        nonlocal n
+        while True:
+            cand = f"{prefix}-{n:06d}"
+            n += 1
+            if cand not in existing_ids:
+                existing_ids.add(cand)
+                return cand
+    return next_id
+
+# ---------- Extractors ----------
+
+# Accept :, =, hyphen (-), en dash (–), em dash (—)
+SEP = r"[:=\-–—]"
+KV_ANY = re.compile(rf"(?m)^\s*([A-Za-z][\w\s\-/()%]+?)\s*{SEP}\s*([^\n]+?)\s*$")
+KV_TWOSPACE = re.compile(r"(?m)^\s*([A-Za-z][\w\s\-/()%]+?)\s{{2,}}([^\n]+?)\s*$")
+BULLET = re.compile(r"(?m)^\s*(?:[•\-\*]\s+)([^\n]+?)\s*$")
+
+NUMERIC = re.compile(
+    r"\b\d+(?:[\.,]\d+)?\s?(?:kWh|Wh|W|kW|V|mAh|Ah|A|°C|C|kg|g|mm|cm|m|%|ppm|bar|psi|years?|months?|days?)\b",
+    flags=re.IGNORECASE
+)
+
+HEADING_MODEL = re.compile(r"—\s*([^(\n]{3,80})")
+
+def extract_title_like(text: str):
+    first = text.splitlines()[0] if text else ""
+    m = HEADING_MODEL.search(first)
+    if not m: return None
+    val = m.group(1).split("(")[0].strip()
+    if not (3 <= len(val) <= 80): return None
+    return ("model name", val)
+
+def kv_pairs_rich(text: str):
+    """Yield (label, value) from multiple formatting styles."""
+    seen = set()
+    for m in KV_ANY.finditer(text):
+        label, value = m.group(1).strip(), m.group(2).strip()
+        k = (label.lower(), value)
+        if label and value and k not in seen:
+            seen.add(k); yield label, value
+    for m in KV_TWOSPACE.finditer(text):
+        label, value = m.group(1).strip(), m.group(2).strip()
+        k = (label.lower(), value)
+        if label and value and k not in seen:
+            seen.add(k); yield label, value
+    for m in BULLET.finditer(text):
+        line = m.group(1).strip()
+        m2 = re.search(SEP, line)
+        if m2:
+            label = line[:m2.start()].strip()
+            value = line[m2.end():].strip()
+            if label and value:
+                k = (label.lower(), value)
+                if k not in seen:
+                    seen.add(k); yield label, value
+
+# ---------- Item builders (schema-compliant) ----------
+
+def mk_open_item(next_id, source_id, label, span):
+    q = f"According to {source_id}, what is the {label}?"
+    return {
+        "id": next_id(),
+        "type": "open",
+        "session": "s_docs",
+        "product": source_id,
+        "query": q,
+        "expected_contains": span,
+        "meta": {"source_id": source_id, "label": label, "from": "docs"},
+    }
+
+def mk_recall_item(next_id, source_id, label, value):
+    q = f"According to {source_id}, what is the {label}?"
+    return {
+        "id": next_id(),
+        "type": "recall",
+        "session": "s_docs",
+        "product": source_id,
+        "query": q,
+        "expected_contains": value,
+        "meta": {"source_id": source_id, "label": label, "from": "docs"},
+    }
+
+def mk_recall_numeric(next_id, source_id, numval, ctx):
+    snip = _WS.sub(" ", ctx).strip()
+    if len(snip) > 120: snip = snip[:120] + "..."
+    q = f"In {source_id}, what is the value reported near: \"{snip}\"?"
+    return {
+        "id": next_id(),
+        "type": "recall",
+        "session": "s_docs",
+        "product": source_id,
+        "query": q,
+        "expected_contains": numval,
+        "meta": {"source_id": source_id, "from": "numeric"},
+    }
+
+# ---------- Main ----------
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--domain", required=True, choices=["battery","lexmark","viessmann"])
-    ap.add_argument("--n_open", type=int, default=600)
-    ap.add_argument("--n_recall", type=int, default=200)
+    ap.add_argument("--domain", required=True)
+    ap.add_argument("--n_open", type=int, default=800)
+    ap.add_argument("--n_recall", type=int, default=250)
     args = ap.parse_args()
 
-    out_dir = ROOT / "tests" / args.domain
-    out_dir.mkdir(parents=True, exist_ok=True)
-    out_path = out_dir / "tests.jsonl"
+    dom = args.domain
+    tests_path = ROOT / "tests" / dom / "tests.jsonl"
+    seeds_path = ROOT / "tests" / dom / "seed_docs.jsonl"
 
-    existing, seen = [], set()
-    if out_path.exists():
-        for line in out_path.read_text(encoding="utf-8").splitlines():
-            if not line.strip(): continue
-            j = json.loads(line)
-            existing.append(j)
-            seen.add((j.get("query",""), j.get("expected_contains","")))
+    if not seeds_path.exists():
+        print(json.dumps({"domain": dom, "error": f"missing {seeds_path}"}))
+        return 0
 
-    texts = collect_docs(args.domain)
-    sents = []
-    for t in texts:
-        sents.extend([s for s in SENT_SPLIT.split(t) if s.strip()])
+    existing = load_jsonl(tests_path)
+    existing_ids = {str(x.get("id")) for x in existing if x.get("id")}
+    next_open_id = make_id_factory(existing_ids, "docopen")
+    next_rec_id  = make_id_factory(existing_ids, "docrec")
 
-    candidates = []
-    for s in sents:
-        for ex in gen_from_sentence(s):
-            key = (ex["query"], ex["expected_contains"])
-            if key not in seen:
-                candidates.append(ex)
-                seen.add(key)
+    seen_queries = {norm(x.get("query") or "") for x in existing}
+    seen_queries.discard("")
 
-    random.shuffle(candidates)
-    nums   = [c for c in candidates if NUM_UNIT.search(c["expected_contains"])]
-    opens  = [c for c in candidates if c not in nums]
+    seeds = load_jsonl(seeds_path)
 
-    take_rec  = nums[:args.n_recall]
-    take_open = opens[:args.n_open]
+    # per-source caps (polish)
+    OPEN_LIMIT_PER_SRC   = int(os.getenv("OPEN_LIMIT_PER_SRC",   "12"))
+    RECALL_LIMIT_PER_SRC = int(os.getenv("RECALL_LIMIT_PER_SRC", "12"))
+    per_src_open, per_src_rec = {}, {}
 
-    rows = existing + [
-        {**ex, "id": ex.get("id") or f"{args.domain}.doc.{ex['type']}.{i:05d}"}
-        for i, ex in enumerate(take_rec + take_open, start=len(existing)+1)
-    ]
+    doc_ids = set()
+    open_added, recall_added = [], []
 
-    with out_path.open("w", encoding="utf-8") as f:
-        for j in rows:
-            f.write(json.dumps(j, ensure_ascii=False) + "\n")
+    # pass 0: heading/title → open
+    for idx, s in enumerate(seeds):
+        if len(open_added) >= args.n_open: break
+        text = pick_text(s)
+        if not text: continue
+        source_id = f"{dom}_seed_{idx:04d}"
+        doc_ids.add(source_id)
+        tkv = extract_title_like(text)
+        if not tkv: continue
+        label, span = tkv
+        item = mk_open_item(next_open_id, source_id, label, span)
+        k = norm(item["query"])
+        if k and k not in seen_queries and per_src_open.get(source_id, 0) < OPEN_LIMIT_PER_SRC:
+            open_added.append(item); seen_queries.add(k)
+            per_src_open[source_id] = per_src_open.get(source_id, 0) + 1
+
+    # pass 1: KV pairs → recall if NUMERIC else open
+    for idx, s in enumerate(seeds):
+        if len(open_added) >= args.n_open and len(recall_added) >= args.n_recall: break
+        text = pick_text(s)
+        if not text: continue
+        source_id = f"{dom}_seed_{idx:04d}"
+        doc_ids.add(source_id)
+
+        for label, value in kv_pairs_rich(text):
+            if NUMERIC.search(value):  # recall (numeric-with-unit)
+                if len(recall_added) < args.n_recall and per_src_rec.get(source_id, 0) < RECALL_LIMIT_PER_SRC:
+                    item = mk_recall_item(next_rec_id, source_id, label, value)
+                    k = norm(item["query"])
+                    if k and k not in seen_queries:
+                        recall_added.append(item); seen_queries.add(k)
+                        per_src_rec[source_id] = per_src_rec.get(source_id, 0) + 1
+            else:  # open (allow digits in answers, e.g., model names)
+                if len(open_added) < args.n_open and per_src_open.get(source_id, 0) < OPEN_LIMIT_PER_SRC:
+                    item = mk_open_item(next_open_id, source_id, label, value)
+                    k = norm(item["query"])
+                    if k and k not in seen_queries:
+                        open_added.append(item); seen_queries.add(k)
+                        per_src_open[source_id] = per_src_open.get(source_id, 0) + 1
+
+        if len(open_added) >= args.n_open and len(recall_added) >= args.n_recall:
+            break
+
+    # pass 2: numeric fallbacks (contextual recall)
+    if len(recall_added) < args.n_recall:
+        for idx, s in enumerate(seeds):
+            if len(recall_added) >= args.n_recall: break
+            text = pick_text(s)
+            if not text: continue
+            source_id = f"{dom}_seed_{idx:04d}"
+            doc_ids.add(source_id)
+            for m in NUMERIC.finditer(text):
+                if per_src_rec.get(source_id, 0) >= RECALL_LIMIT_PER_SRC:
+                    break
+                numval = m.group(0).strip()
+                ctx = text[max(0, m.start()-40): m.end()+40]
+                item = mk_recall_numeric(next_rec_id, source_id, numval, ctx)
+                k = norm(item["query"])
+                if k and k not in seen_queries:
+                    recall_added.append(item); seen_queries.add(k)
+                    per_src_rec[source_id] = per_src_rec.get(source_id, 0) + 1
+                if len(recall_added) >= args.n_recall: break
+
+    new_rows = open_added + recall_added
+    if new_rows:
+        append_jsonl(tests_path, new_rows)
 
     print(json.dumps({
-        "domain": args.domain,
-        "doc_sources": len(texts),
-        "added_doc_recall": len(take_rec),
-        "added_open": len(take_open),
-        "total": len(rows),
-        "out": out_path.as_posix()
-    }, indent=2))
+        "domain": dom,
+        "doc_sources": len(doc_ids),
+        "added_doc_recall": len(recall_added),
+        "added_open": len(open_added),
+        "total": len(existing) + len(new_rows),
+        "out": str(tests_path.resolve())
+    }, ensure_ascii=False))
+    return 0
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
