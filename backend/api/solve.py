@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import os
-from typing import Optional, Literal, List, Dict, Any
+from typing import Optional, Literal, List, Dict, Any, Tuple
 from pydantic import BaseModel, Field
 from fastapi import APIRouter, HTTPException, Header
 
@@ -39,6 +39,10 @@ def _get_router() -> RouterModel | None:
 
 
 def _safe_features(query: str, product: Optional[str], session: str) -> Dict[str, float | int]:
+    """
+    Best-effort feature extraction for router and adaptive logic.
+    Falls back to simple heuristics if policy_features isn't available.
+    """
     try:
         from backend.services.policy_features import extract_features  # type: ignore
         feats = extract_features(query, product, session) or {}
@@ -62,16 +66,117 @@ def _safe_features(query: str, product: Optional[str], session: str) -> Dict[str
             "sym_fired": int(sym_fire_flags(query, product)),
         }
 
+# -------------------------
+# Confidence computation
+# -------------------------
+
+def _sigmoid(x: float) -> float:
+    try:
+        import math
+        return 1.0 / (1.0 + math.exp(-x))
+    except Exception:
+        # Very defensive fallback
+        return 0.5 if x == 0 else (0.0 if x < 0 else 1.0)
+
+def _extract_top_score(steps: List[Dict[str, Any]], source_name: str) -> Optional[float]:
+    """
+    Find the best/first score for the given step source (e.g., 'MEM' or 'SEARCH').
+    """
+    best = None
+    for st in steps:
+        if (st.get("source") or "").upper() == source_name.upper():
+            sc = st.get("score")
+            if sc is None:
+                continue
+            try:
+                scf = float(sc)
+            except Exception:
+                continue
+            if best is None or scf > best:
+                best = scf
+    return best
+
+def _conf_from_mem(score: Optional[float]) -> Optional[float]:
+    if score is None:
+        return None
+    # Assume memory scores are already 0..1-ish; clamp just in case.
+    return max(0.0, min(1.0, float(score)))
+
+def _conf_from_search(score: Optional[float]) -> Optional[float]:
+    if score is None:
+        return None
+    # Search score may be unbounded; squash with sigmoid.
+    return _sigmoid(float(score) / 2.0)
+
+def _conf_from_sym(step: Dict[str, Any]) -> Optional[float]:
+    if (step.get("source") or "").upper() != "SYM":
+        return None
+    proved = step.get("proved")
+    refuted = step.get("refuted")
+    if proved is True:
+        return 1.0
+    if refuted is True:
+        return 0.0
+    # No explicit verdict
+    return 0.5
+
+def _attach_confidence(mode: str, out: Dict[str, Any]) -> float:
+    """
+    Derive a confidence in [0,1] from the evidence we have in steps/sources.
+    - MEM: memory top score
+    - SEARCH/BASE: search top score
+    - SYM: 1.0 proved / 0.0 refuted / 0.5 unknown
+    - MEMSYM/ADAPTIVERAG/ROUTER: take a robust max across available signals
+    """
+    steps: List[Dict[str, Any]] = out.get("steps") or []
+    m_top = _extract_top_score(steps, "MEM")
+    s_top = _extract_top_score(steps, "SEARCH")
+
+    mem_conf = _conf_from_mem(m_top)
+    search_conf = _conf_from_search(s_top)
+
+    sym_conf: Optional[float] = None
+    for st in steps:
+        if (st.get("source") or "").upper() == "SYM":
+            sym_conf = _conf_from_sym(st)
+            break
+
+    # Mode-specific selection
+    m = (mode or "").upper()
+    if m == "MEM":
+        return mem_conf if mem_conf is not None else 0.5
+    if m in ("SEARCH", "BASE"):
+        return search_conf if search_conf is not None else 0.5
+    if m == "SYM":
+        return sym_conf if sym_conf is not None else 0.5
+    if m == "MEMSYM":
+        # Prefer the strongest available signal
+        cands = [c for c in (mem_conf, search_conf, sym_conf) if c is not None]
+        return max(cands) if cands else 0.5
+    if m in ("ROUTER", "ADAPTIVERAG"):
+        # Steps reflect the chosen action already; take best available
+        cands = [c for c in (mem_conf, search_conf, sym_conf) if c is not None]
+        return max(cands) if cands else 0.5
+
+    return 0.5
+
+# -------------------------
+# Composition helpers
+# -------------------------
 
 def _compose_MEM(query, product, session, steps, sources, parts):
     hits = []
     try:
         hits = memory_service.retrieve(session_id=session, query=query, top_k=3)
     except Exception:
-        pass
+        hits = []
     if hits:
+        # main answer material
         parts.append(f"Memory: {hits[0].content}")
-        steps.append({"source": "MEM", "score": getattr(hits[0], "score", None)})
+        # record score for confidence
+        top_score = getattr(hits[0], "score", None)
+        steps.append({"source": "MEM", "score": top_score})
+        # add sources
         for h in hits[:2]:
             sources.append({"type": "memory", "score": getattr(h, "score", None), "snippet": h.content})
     return bool(hits)
@@ -83,12 +188,13 @@ def _compose_SEARCH(query, product, session, steps, sources, parts):
     try:
         hits = search_service.search(query_text=search_q, top_k=3)
     except Exception:
-        pass
+        hits = []
     if hits:
-        parts.append(f"Search: {hits[0].text}")
-        steps.append({"source": "SEARCH"})
+        parts.append(f"Search: {getattr(hits[0], 'text', getattr(hits[0], 'content', ''))}")
+        top_score = getattr(hits[0], "score", None)
+        steps.append({"source": "SEARCH", "score": top_score})
         for h in hits[:2]:
-            sources.append({"type": "search", "score": getattr(h, "score", None), "snippet": h.text})
+            sources.append({"type": "search", "score": getattr(h, "score", None), "snippet": getattr(h, "text", getattr(h, "content", ""))})
     return bool(hits)
 
 
@@ -102,6 +208,9 @@ def _compose_SYM(query, product, session, steps, sources, parts):
         parts.append(sym.text)
         steps.append({
             "source": "SYM",
+            # expose a minimal verdict for confidence if available
+            "proved": getattr(sym, "proved", None),
+            "refuted": getattr(sym, "refuted", None),
             "sym_trace": {
                 "product": getattr(sym.trace, "product", product),
                 "asserted": getattr(sym.trace, "asserted", []),
@@ -192,7 +301,15 @@ def solve(req: SolveRequest, x_run_mode: str | None = Header(default=None)):
             mode = "ADAPTIVERAG"  # fall through
         else:
             out = _compose_for_action(action, text, product, session)
-            out.update({"mode": "ROUTER", "chosen_action": action, "session": session, "product": product})
+            # attach confidence based on the underlying chosen action's evidence
+            conf = _attach_confidence(action, out)
+            out.update({
+                "mode": "ROUTER",
+                "chosen_action": action,
+                "session": session,
+                "product": product,
+                "confidence": conf,
+            })
             return out
 
     # --- ADAPTIVE-RAG (heuristic) ---
@@ -209,10 +326,18 @@ def solve(req: SolveRequest, x_run_mode: str | None = Header(default=None)):
         else:
             action = "MEMSYM"  # safe combo when signals are weak
         out = _compose_for_action(action, text, product, session)
-        out.update({"mode": "ADAPTIVERAG", "chosen_action": action, "session": session, "product": product})
+        conf = _attach_confidence(action, out)
+        out.update({
+            "mode": "ADAPTIVERAG",
+            "chosen_action": action,
+            "session": session,
+            "product": product,
+            "confidence": conf,
+        })
         return out
 
     # --- Classic modes ---
     out = _compose_for_action(mode, text, product, session)
-    out.update({"mode": mode, "session": session, "product": product})
+    conf = _attach_confidence(mode, out)
+    out.update({"mode": mode, "session": session, "product": product, "confidence": conf})
     return out

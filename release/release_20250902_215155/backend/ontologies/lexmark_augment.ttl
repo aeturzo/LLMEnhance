@@ -1,0 +1,4237 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix ext:  <http://example.org/ext#> .
+
+# KG booster generated 20250831
+ext:Printer a owl:Class .
+ext:LaserPrinter a owl:Class ; rdfs:subClassOf ext:Printer .
+ext:Cartridge a owl:Class .
+ext:Yield a owl:Class .
+ext:Accessory a owl:Class .
+ext:usesCartridge a owl:ObjectProperty ; rdfs:domain ext:Printer ; rdfs:range ext:Cartridge .
+ext:hasYield a owl:ObjectProperty ; rdfs:domain ext:Cartridge ; rdfs:range ext:Yield .
+ext:supportsDuplex a owl:ObjectProperty ; rdfs:domain ext:Printer ; rdfs:range ext:Accessory .
+ext:Printer rdfs:label "printer" .
+
+ext:LaserPrinter rdfs:label "laser printer" .
+
+ext:Cartridge rdfs:label "cartridge" .
+
+ext:Yield rdfs:label "yield" .
+
+ext:usesCartridge rdfs:label "cartridge" .
+
+ext:hasYield rdfs:label "yield" .
+
+ext:supportsDuplex rdfs:label "duplex unit" .
+
+ext:acc_DuplexUnit a ext:Accessory .
+ext:acc_DuplexUnit rdfs:label "DuplexUnit" .
+
+ext:acc_Tray500 a ext:Accessory .
+ext:acc_Tray500 rdfs:label "Tray500" .
+
+ext:acc_WiFiModule a ext:Accessory .
+ext:acc_WiFiModule rdfs:label "WiFiModule" .
+
+ext:lx_pr_000 a ext:LaserPrinter .
+ext:lx_pr_000 rdfs:label "Lex-000" .
+
+ext:cart_000 a ext:Cartridge .
+ext:cart_000 rdfs:label "E000A11E" .
+
+ext:yield_000 a ext:Yield .
+ext:yield_000 rdfs:label "1500 pages" .
+
+ext:lx_pr_000 ext:usesCartridge ext:cart_000 .
+ext:cart_000 ext:hasYield ext:yield_000 .
+ext:lx_pr_000 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_001 a ext:LaserPrinter .
+ext:lx_pr_001 rdfs:label "Lex-001" .
+
+ext:cart_001 a ext:Cartridge .
+ext:cart_001 rdfs:label "E001A11E" .
+
+ext:yield_001 a ext:Yield .
+ext:yield_001 rdfs:label "2500 pages" .
+
+ext:lx_pr_001 ext:usesCartridge ext:cart_001 .
+ext:cart_001 ext:hasYield ext:yield_001 .
+ext:lx_pr_001 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_002 a ext:LaserPrinter .
+ext:lx_pr_002 rdfs:label "Lex-002" .
+
+ext:cart_002 a ext:Cartridge .
+ext:cart_002 rdfs:label "E002A11E" .
+
+ext:yield_002 a ext:Yield .
+ext:yield_002 rdfs:label "3500 pages" .
+
+ext:lx_pr_002 ext:usesCartridge ext:cart_002 .
+ext:cart_002 ext:hasYield ext:yield_002 .
+ext:lx_pr_002 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_003 a ext:LaserPrinter .
+ext:lx_pr_003 rdfs:label "Lex-003" .
+
+ext:cart_003 a ext:Cartridge .
+ext:cart_003 rdfs:label "E003A11E" .
+
+ext:yield_003 a ext:Yield .
+ext:yield_003 rdfs:label "6000 pages" .
+
+ext:lx_pr_003 ext:usesCartridge ext:cart_003 .
+ext:cart_003 ext:hasYield ext:yield_003 .
+ext:lx_pr_003 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_004 a ext:LaserPrinter .
+ext:lx_pr_004 rdfs:label "Lex-004" .
+
+ext:cart_004 a ext:Cartridge .
+ext:cart_004 rdfs:label "E004A11E" .
+
+ext:yield_004 a ext:Yield .
+ext:yield_004 rdfs:label "9000 pages" .
+
+ext:lx_pr_004 ext:usesCartridge ext:cart_004 .
+ext:cart_004 ext:hasYield ext:yield_004 .
+ext:lx_pr_004 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_005 a ext:LaserPrinter .
+ext:lx_pr_005 rdfs:label "Lex-005" .
+
+ext:cart_005 a ext:Cartridge .
+ext:cart_005 rdfs:label "E005A11E" .
+
+ext:yield_005 a ext:Yield .
+ext:yield_005 rdfs:label "1500 pages" .
+
+ext:lx_pr_005 ext:usesCartridge ext:cart_005 .
+ext:cart_005 ext:hasYield ext:yield_005 .
+ext:lx_pr_005 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_006 a ext:LaserPrinter .
+ext:lx_pr_006 rdfs:label "Lex-006" .
+
+ext:cart_006 a ext:Cartridge .
+ext:cart_006 rdfs:label "E006A11E" .
+
+ext:yield_006 a ext:Yield .
+ext:yield_006 rdfs:label "2500 pages" .
+
+ext:lx_pr_006 ext:usesCartridge ext:cart_006 .
+ext:cart_006 ext:hasYield ext:yield_006 .
+ext:lx_pr_006 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_007 a ext:LaserPrinter .
+ext:lx_pr_007 rdfs:label "Lex-007" .
+
+ext:cart_007 a ext:Cartridge .
+ext:cart_007 rdfs:label "E007A11E" .
+
+ext:yield_007 a ext:Yield .
+ext:yield_007 rdfs:label "3500 pages" .
+
+ext:lx_pr_007 ext:usesCartridge ext:cart_007 .
+ext:cart_007 ext:hasYield ext:yield_007 .
+ext:lx_pr_007 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_008 a ext:LaserPrinter .
+ext:lx_pr_008 rdfs:label "Lex-008" .
+
+ext:cart_008 a ext:Cartridge .
+ext:cart_008 rdfs:label "E008A11E" .
+
+ext:yield_008 a ext:Yield .
+ext:yield_008 rdfs:label "6000 pages" .
+
+ext:lx_pr_008 ext:usesCartridge ext:cart_008 .
+ext:cart_008 ext:hasYield ext:yield_008 .
+ext:lx_pr_008 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_009 a ext:LaserPrinter .
+ext:lx_pr_009 rdfs:label "Lex-009" .
+
+ext:cart_009 a ext:Cartridge .
+ext:cart_009 rdfs:label "E009A11E" .
+
+ext:yield_009 a ext:Yield .
+ext:yield_009 rdfs:label "9000 pages" .
+
+ext:lx_pr_009 ext:usesCartridge ext:cart_009 .
+ext:cart_009 ext:hasYield ext:yield_009 .
+ext:lx_pr_009 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_010 a ext:LaserPrinter .
+ext:lx_pr_010 rdfs:label "Lex-010" .
+
+ext:cart_010 a ext:Cartridge .
+ext:cart_010 rdfs:label "E010A11E" .
+
+ext:yield_010 a ext:Yield .
+ext:yield_010 rdfs:label "1500 pages" .
+
+ext:lx_pr_010 ext:usesCartridge ext:cart_010 .
+ext:cart_010 ext:hasYield ext:yield_010 .
+ext:lx_pr_010 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_011 a ext:LaserPrinter .
+ext:lx_pr_011 rdfs:label "Lex-011" .
+
+ext:cart_011 a ext:Cartridge .
+ext:cart_011 rdfs:label "E011A11E" .
+
+ext:yield_011 a ext:Yield .
+ext:yield_011 rdfs:label "2500 pages" .
+
+ext:lx_pr_011 ext:usesCartridge ext:cart_011 .
+ext:cart_011 ext:hasYield ext:yield_011 .
+ext:lx_pr_011 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_012 a ext:LaserPrinter .
+ext:lx_pr_012 rdfs:label "Lex-012" .
+
+ext:cart_012 a ext:Cartridge .
+ext:cart_012 rdfs:label "E012A11E" .
+
+ext:yield_012 a ext:Yield .
+ext:yield_012 rdfs:label "3500 pages" .
+
+ext:lx_pr_012 ext:usesCartridge ext:cart_012 .
+ext:cart_012 ext:hasYield ext:yield_012 .
+ext:lx_pr_012 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_013 a ext:LaserPrinter .
+ext:lx_pr_013 rdfs:label "Lex-013" .
+
+ext:cart_013 a ext:Cartridge .
+ext:cart_013 rdfs:label "E013A11E" .
+
+ext:yield_013 a ext:Yield .
+ext:yield_013 rdfs:label "6000 pages" .
+
+ext:lx_pr_013 ext:usesCartridge ext:cart_013 .
+ext:cart_013 ext:hasYield ext:yield_013 .
+ext:lx_pr_013 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_014 a ext:LaserPrinter .
+ext:lx_pr_014 rdfs:label "Lex-014" .
+
+ext:cart_014 a ext:Cartridge .
+ext:cart_014 rdfs:label "E014A11E" .
+
+ext:yield_014 a ext:Yield .
+ext:yield_014 rdfs:label "9000 pages" .
+
+ext:lx_pr_014 ext:usesCartridge ext:cart_014 .
+ext:cart_014 ext:hasYield ext:yield_014 .
+ext:lx_pr_014 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_015 a ext:LaserPrinter .
+ext:lx_pr_015 rdfs:label "Lex-015" .
+
+ext:cart_015 a ext:Cartridge .
+ext:cart_015 rdfs:label "E015A11E" .
+
+ext:yield_015 a ext:Yield .
+ext:yield_015 rdfs:label "1500 pages" .
+
+ext:lx_pr_015 ext:usesCartridge ext:cart_015 .
+ext:cart_015 ext:hasYield ext:yield_015 .
+ext:lx_pr_015 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_016 a ext:LaserPrinter .
+ext:lx_pr_016 rdfs:label "Lex-016" .
+
+ext:cart_016 a ext:Cartridge .
+ext:cart_016 rdfs:label "E016A11E" .
+
+ext:yield_016 a ext:Yield .
+ext:yield_016 rdfs:label "2500 pages" .
+
+ext:lx_pr_016 ext:usesCartridge ext:cart_016 .
+ext:cart_016 ext:hasYield ext:yield_016 .
+ext:lx_pr_016 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_017 a ext:LaserPrinter .
+ext:lx_pr_017 rdfs:label "Lex-017" .
+
+ext:cart_017 a ext:Cartridge .
+ext:cart_017 rdfs:label "E017A11E" .
+
+ext:yield_017 a ext:Yield .
+ext:yield_017 rdfs:label "3500 pages" .
+
+ext:lx_pr_017 ext:usesCartridge ext:cart_017 .
+ext:cart_017 ext:hasYield ext:yield_017 .
+ext:lx_pr_017 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_018 a ext:LaserPrinter .
+ext:lx_pr_018 rdfs:label "Lex-018" .
+
+ext:cart_018 a ext:Cartridge .
+ext:cart_018 rdfs:label "E018A11E" .
+
+ext:yield_018 a ext:Yield .
+ext:yield_018 rdfs:label "6000 pages" .
+
+ext:lx_pr_018 ext:usesCartridge ext:cart_018 .
+ext:cart_018 ext:hasYield ext:yield_018 .
+ext:lx_pr_018 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_019 a ext:LaserPrinter .
+ext:lx_pr_019 rdfs:label "Lex-019" .
+
+ext:cart_019 a ext:Cartridge .
+ext:cart_019 rdfs:label "E019A11E" .
+
+ext:yield_019 a ext:Yield .
+ext:yield_019 rdfs:label "9000 pages" .
+
+ext:lx_pr_019 ext:usesCartridge ext:cart_019 .
+ext:cart_019 ext:hasYield ext:yield_019 .
+ext:lx_pr_019 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_020 a ext:LaserPrinter .
+ext:lx_pr_020 rdfs:label "Lex-020" .
+
+ext:cart_020 a ext:Cartridge .
+ext:cart_020 rdfs:label "E020A11E" .
+
+ext:yield_020 a ext:Yield .
+ext:yield_020 rdfs:label "1500 pages" .
+
+ext:lx_pr_020 ext:usesCartridge ext:cart_020 .
+ext:cart_020 ext:hasYield ext:yield_020 .
+ext:lx_pr_020 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_021 a ext:LaserPrinter .
+ext:lx_pr_021 rdfs:label "Lex-021" .
+
+ext:cart_021 a ext:Cartridge .
+ext:cart_021 rdfs:label "E021A11E" .
+
+ext:yield_021 a ext:Yield .
+ext:yield_021 rdfs:label "2500 pages" .
+
+ext:lx_pr_021 ext:usesCartridge ext:cart_021 .
+ext:cart_021 ext:hasYield ext:yield_021 .
+ext:lx_pr_021 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_022 a ext:LaserPrinter .
+ext:lx_pr_022 rdfs:label "Lex-022" .
+
+ext:cart_022 a ext:Cartridge .
+ext:cart_022 rdfs:label "E022A11E" .
+
+ext:yield_022 a ext:Yield .
+ext:yield_022 rdfs:label "3500 pages" .
+
+ext:lx_pr_022 ext:usesCartridge ext:cart_022 .
+ext:cart_022 ext:hasYield ext:yield_022 .
+ext:lx_pr_022 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_023 a ext:LaserPrinter .
+ext:lx_pr_023 rdfs:label "Lex-023" .
+
+ext:cart_023 a ext:Cartridge .
+ext:cart_023 rdfs:label "E023A11E" .
+
+ext:yield_023 a ext:Yield .
+ext:yield_023 rdfs:label "6000 pages" .
+
+ext:lx_pr_023 ext:usesCartridge ext:cart_023 .
+ext:cart_023 ext:hasYield ext:yield_023 .
+ext:lx_pr_023 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_024 a ext:LaserPrinter .
+ext:lx_pr_024 rdfs:label "Lex-024" .
+
+ext:cart_024 a ext:Cartridge .
+ext:cart_024 rdfs:label "E024A11E" .
+
+ext:yield_024 a ext:Yield .
+ext:yield_024 rdfs:label "9000 pages" .
+
+ext:lx_pr_024 ext:usesCartridge ext:cart_024 .
+ext:cart_024 ext:hasYield ext:yield_024 .
+ext:lx_pr_024 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_025 a ext:LaserPrinter .
+ext:lx_pr_025 rdfs:label "Lex-025" .
+
+ext:cart_025 a ext:Cartridge .
+ext:cart_025 rdfs:label "E025A11E" .
+
+ext:yield_025 a ext:Yield .
+ext:yield_025 rdfs:label "1500 pages" .
+
+ext:lx_pr_025 ext:usesCartridge ext:cart_025 .
+ext:cart_025 ext:hasYield ext:yield_025 .
+ext:lx_pr_025 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_026 a ext:LaserPrinter .
+ext:lx_pr_026 rdfs:label "Lex-026" .
+
+ext:cart_026 a ext:Cartridge .
+ext:cart_026 rdfs:label "E026A11E" .
+
+ext:yield_026 a ext:Yield .
+ext:yield_026 rdfs:label "2500 pages" .
+
+ext:lx_pr_026 ext:usesCartridge ext:cart_026 .
+ext:cart_026 ext:hasYield ext:yield_026 .
+ext:lx_pr_026 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_027 a ext:LaserPrinter .
+ext:lx_pr_027 rdfs:label "Lex-027" .
+
+ext:cart_027 a ext:Cartridge .
+ext:cart_027 rdfs:label "E027A11E" .
+
+ext:yield_027 a ext:Yield .
+ext:yield_027 rdfs:label "3500 pages" .
+
+ext:lx_pr_027 ext:usesCartridge ext:cart_027 .
+ext:cart_027 ext:hasYield ext:yield_027 .
+ext:lx_pr_027 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_028 a ext:LaserPrinter .
+ext:lx_pr_028 rdfs:label "Lex-028" .
+
+ext:cart_028 a ext:Cartridge .
+ext:cart_028 rdfs:label "E028A11E" .
+
+ext:yield_028 a ext:Yield .
+ext:yield_028 rdfs:label "6000 pages" .
+
+ext:lx_pr_028 ext:usesCartridge ext:cart_028 .
+ext:cart_028 ext:hasYield ext:yield_028 .
+ext:lx_pr_028 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_029 a ext:LaserPrinter .
+ext:lx_pr_029 rdfs:label "Lex-029" .
+
+ext:cart_029 a ext:Cartridge .
+ext:cart_029 rdfs:label "E029A11E" .
+
+ext:yield_029 a ext:Yield .
+ext:yield_029 rdfs:label "9000 pages" .
+
+ext:lx_pr_029 ext:usesCartridge ext:cart_029 .
+ext:cart_029 ext:hasYield ext:yield_029 .
+ext:lx_pr_029 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_030 a ext:LaserPrinter .
+ext:lx_pr_030 rdfs:label "Lex-030" .
+
+ext:cart_030 a ext:Cartridge .
+ext:cart_030 rdfs:label "E030A11E" .
+
+ext:yield_030 a ext:Yield .
+ext:yield_030 rdfs:label "1500 pages" .
+
+ext:lx_pr_030 ext:usesCartridge ext:cart_030 .
+ext:cart_030 ext:hasYield ext:yield_030 .
+ext:lx_pr_030 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_031 a ext:LaserPrinter .
+ext:lx_pr_031 rdfs:label "Lex-031" .
+
+ext:cart_031 a ext:Cartridge .
+ext:cart_031 rdfs:label "E031A11E" .
+
+ext:yield_031 a ext:Yield .
+ext:yield_031 rdfs:label "2500 pages" .
+
+ext:lx_pr_031 ext:usesCartridge ext:cart_031 .
+ext:cart_031 ext:hasYield ext:yield_031 .
+ext:lx_pr_031 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_032 a ext:LaserPrinter .
+ext:lx_pr_032 rdfs:label "Lex-032" .
+
+ext:cart_032 a ext:Cartridge .
+ext:cart_032 rdfs:label "E032A11E" .
+
+ext:yield_032 a ext:Yield .
+ext:yield_032 rdfs:label "3500 pages" .
+
+ext:lx_pr_032 ext:usesCartridge ext:cart_032 .
+ext:cart_032 ext:hasYield ext:yield_032 .
+ext:lx_pr_032 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_033 a ext:LaserPrinter .
+ext:lx_pr_033 rdfs:label "Lex-033" .
+
+ext:cart_033 a ext:Cartridge .
+ext:cart_033 rdfs:label "E033A11E" .
+
+ext:yield_033 a ext:Yield .
+ext:yield_033 rdfs:label "6000 pages" .
+
+ext:lx_pr_033 ext:usesCartridge ext:cart_033 .
+ext:cart_033 ext:hasYield ext:yield_033 .
+ext:lx_pr_033 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_034 a ext:LaserPrinter .
+ext:lx_pr_034 rdfs:label "Lex-034" .
+
+ext:cart_034 a ext:Cartridge .
+ext:cart_034 rdfs:label "E034A11E" .
+
+ext:yield_034 a ext:Yield .
+ext:yield_034 rdfs:label "9000 pages" .
+
+ext:lx_pr_034 ext:usesCartridge ext:cart_034 .
+ext:cart_034 ext:hasYield ext:yield_034 .
+ext:lx_pr_034 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_035 a ext:LaserPrinter .
+ext:lx_pr_035 rdfs:label "Lex-035" .
+
+ext:cart_035 a ext:Cartridge .
+ext:cart_035 rdfs:label "E035A11E" .
+
+ext:yield_035 a ext:Yield .
+ext:yield_035 rdfs:label "1500 pages" .
+
+ext:lx_pr_035 ext:usesCartridge ext:cart_035 .
+ext:cart_035 ext:hasYield ext:yield_035 .
+ext:lx_pr_035 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_036 a ext:LaserPrinter .
+ext:lx_pr_036 rdfs:label "Lex-036" .
+
+ext:cart_036 a ext:Cartridge .
+ext:cart_036 rdfs:label "E036A11E" .
+
+ext:yield_036 a ext:Yield .
+ext:yield_036 rdfs:label "2500 pages" .
+
+ext:lx_pr_036 ext:usesCartridge ext:cart_036 .
+ext:cart_036 ext:hasYield ext:yield_036 .
+ext:lx_pr_036 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_037 a ext:LaserPrinter .
+ext:lx_pr_037 rdfs:label "Lex-037" .
+
+ext:cart_037 a ext:Cartridge .
+ext:cart_037 rdfs:label "E037A11E" .
+
+ext:yield_037 a ext:Yield .
+ext:yield_037 rdfs:label "3500 pages" .
+
+ext:lx_pr_037 ext:usesCartridge ext:cart_037 .
+ext:cart_037 ext:hasYield ext:yield_037 .
+ext:lx_pr_037 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_038 a ext:LaserPrinter .
+ext:lx_pr_038 rdfs:label "Lex-038" .
+
+ext:cart_038 a ext:Cartridge .
+ext:cart_038 rdfs:label "E038A11E" .
+
+ext:yield_038 a ext:Yield .
+ext:yield_038 rdfs:label "6000 pages" .
+
+ext:lx_pr_038 ext:usesCartridge ext:cart_038 .
+ext:cart_038 ext:hasYield ext:yield_038 .
+ext:lx_pr_038 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_039 a ext:LaserPrinter .
+ext:lx_pr_039 rdfs:label "Lex-039" .
+
+ext:cart_039 a ext:Cartridge .
+ext:cart_039 rdfs:label "E039A11E" .
+
+ext:yield_039 a ext:Yield .
+ext:yield_039 rdfs:label "9000 pages" .
+
+ext:lx_pr_039 ext:usesCartridge ext:cart_039 .
+ext:cart_039 ext:hasYield ext:yield_039 .
+ext:lx_pr_039 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_040 a ext:LaserPrinter .
+ext:lx_pr_040 rdfs:label "Lex-040" .
+
+ext:cart_040 a ext:Cartridge .
+ext:cart_040 rdfs:label "E040A11E" .
+
+ext:yield_040 a ext:Yield .
+ext:yield_040 rdfs:label "1500 pages" .
+
+ext:lx_pr_040 ext:usesCartridge ext:cart_040 .
+ext:cart_040 ext:hasYield ext:yield_040 .
+ext:lx_pr_040 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_041 a ext:LaserPrinter .
+ext:lx_pr_041 rdfs:label "Lex-041" .
+
+ext:cart_041 a ext:Cartridge .
+ext:cart_041 rdfs:label "E041A11E" .
+
+ext:yield_041 a ext:Yield .
+ext:yield_041 rdfs:label "2500 pages" .
+
+ext:lx_pr_041 ext:usesCartridge ext:cart_041 .
+ext:cart_041 ext:hasYield ext:yield_041 .
+ext:lx_pr_041 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_042 a ext:LaserPrinter .
+ext:lx_pr_042 rdfs:label "Lex-042" .
+
+ext:cart_042 a ext:Cartridge .
+ext:cart_042 rdfs:label "E042A11E" .
+
+ext:yield_042 a ext:Yield .
+ext:yield_042 rdfs:label "3500 pages" .
+
+ext:lx_pr_042 ext:usesCartridge ext:cart_042 .
+ext:cart_042 ext:hasYield ext:yield_042 .
+ext:lx_pr_042 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_043 a ext:LaserPrinter .
+ext:lx_pr_043 rdfs:label "Lex-043" .
+
+ext:cart_043 a ext:Cartridge .
+ext:cart_043 rdfs:label "E043A11E" .
+
+ext:yield_043 a ext:Yield .
+ext:yield_043 rdfs:label "6000 pages" .
+
+ext:lx_pr_043 ext:usesCartridge ext:cart_043 .
+ext:cart_043 ext:hasYield ext:yield_043 .
+ext:lx_pr_043 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_044 a ext:LaserPrinter .
+ext:lx_pr_044 rdfs:label "Lex-044" .
+
+ext:cart_044 a ext:Cartridge .
+ext:cart_044 rdfs:label "E044A11E" .
+
+ext:yield_044 a ext:Yield .
+ext:yield_044 rdfs:label "9000 pages" .
+
+ext:lx_pr_044 ext:usesCartridge ext:cart_044 .
+ext:cart_044 ext:hasYield ext:yield_044 .
+ext:lx_pr_044 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_045 a ext:LaserPrinter .
+ext:lx_pr_045 rdfs:label "Lex-045" .
+
+ext:cart_045 a ext:Cartridge .
+ext:cart_045 rdfs:label "E045A11E" .
+
+ext:yield_045 a ext:Yield .
+ext:yield_045 rdfs:label "1500 pages" .
+
+ext:lx_pr_045 ext:usesCartridge ext:cart_045 .
+ext:cart_045 ext:hasYield ext:yield_045 .
+ext:lx_pr_045 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_046 a ext:LaserPrinter .
+ext:lx_pr_046 rdfs:label "Lex-046" .
+
+ext:cart_046 a ext:Cartridge .
+ext:cart_046 rdfs:label "E046A11E" .
+
+ext:yield_046 a ext:Yield .
+ext:yield_046 rdfs:label "2500 pages" .
+
+ext:lx_pr_046 ext:usesCartridge ext:cart_046 .
+ext:cart_046 ext:hasYield ext:yield_046 .
+ext:lx_pr_046 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_047 a ext:LaserPrinter .
+ext:lx_pr_047 rdfs:label "Lex-047" .
+
+ext:cart_047 a ext:Cartridge .
+ext:cart_047 rdfs:label "E047A11E" .
+
+ext:yield_047 a ext:Yield .
+ext:yield_047 rdfs:label "3500 pages" .
+
+ext:lx_pr_047 ext:usesCartridge ext:cart_047 .
+ext:cart_047 ext:hasYield ext:yield_047 .
+ext:lx_pr_047 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_048 a ext:LaserPrinter .
+ext:lx_pr_048 rdfs:label "Lex-048" .
+
+ext:cart_048 a ext:Cartridge .
+ext:cart_048 rdfs:label "E048A11E" .
+
+ext:yield_048 a ext:Yield .
+ext:yield_048 rdfs:label "6000 pages" .
+
+ext:lx_pr_048 ext:usesCartridge ext:cart_048 .
+ext:cart_048 ext:hasYield ext:yield_048 .
+ext:lx_pr_048 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_049 a ext:LaserPrinter .
+ext:lx_pr_049 rdfs:label "Lex-049" .
+
+ext:cart_049 a ext:Cartridge .
+ext:cart_049 rdfs:label "E049A11E" .
+
+ext:yield_049 a ext:Yield .
+ext:yield_049 rdfs:label "9000 pages" .
+
+ext:lx_pr_049 ext:usesCartridge ext:cart_049 .
+ext:cart_049 ext:hasYield ext:yield_049 .
+ext:lx_pr_049 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_050 a ext:LaserPrinter .
+ext:lx_pr_050 rdfs:label "Lex-050" .
+
+ext:cart_050 a ext:Cartridge .
+ext:cart_050 rdfs:label "E050A11E" .
+
+ext:yield_050 a ext:Yield .
+ext:yield_050 rdfs:label "1500 pages" .
+
+ext:lx_pr_050 ext:usesCartridge ext:cart_050 .
+ext:cart_050 ext:hasYield ext:yield_050 .
+ext:lx_pr_050 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_051 a ext:LaserPrinter .
+ext:lx_pr_051 rdfs:label "Lex-051" .
+
+ext:cart_051 a ext:Cartridge .
+ext:cart_051 rdfs:label "E051A11E" .
+
+ext:yield_051 a ext:Yield .
+ext:yield_051 rdfs:label "2500 pages" .
+
+ext:lx_pr_051 ext:usesCartridge ext:cart_051 .
+ext:cart_051 ext:hasYield ext:yield_051 .
+ext:lx_pr_051 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_052 a ext:LaserPrinter .
+ext:lx_pr_052 rdfs:label "Lex-052" .
+
+ext:cart_052 a ext:Cartridge .
+ext:cart_052 rdfs:label "E052A11E" .
+
+ext:yield_052 a ext:Yield .
+ext:yield_052 rdfs:label "3500 pages" .
+
+ext:lx_pr_052 ext:usesCartridge ext:cart_052 .
+ext:cart_052 ext:hasYield ext:yield_052 .
+ext:lx_pr_052 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_053 a ext:LaserPrinter .
+ext:lx_pr_053 rdfs:label "Lex-053" .
+
+ext:cart_053 a ext:Cartridge .
+ext:cart_053 rdfs:label "E053A11E" .
+
+ext:yield_053 a ext:Yield .
+ext:yield_053 rdfs:label "6000 pages" .
+
+ext:lx_pr_053 ext:usesCartridge ext:cart_053 .
+ext:cart_053 ext:hasYield ext:yield_053 .
+ext:lx_pr_053 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_054 a ext:LaserPrinter .
+ext:lx_pr_054 rdfs:label "Lex-054" .
+
+ext:cart_054 a ext:Cartridge .
+ext:cart_054 rdfs:label "E054A11E" .
+
+ext:yield_054 a ext:Yield .
+ext:yield_054 rdfs:label "9000 pages" .
+
+ext:lx_pr_054 ext:usesCartridge ext:cart_054 .
+ext:cart_054 ext:hasYield ext:yield_054 .
+ext:lx_pr_054 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_055 a ext:LaserPrinter .
+ext:lx_pr_055 rdfs:label "Lex-055" .
+
+ext:cart_055 a ext:Cartridge .
+ext:cart_055 rdfs:label "E055A11E" .
+
+ext:yield_055 a ext:Yield .
+ext:yield_055 rdfs:label "1500 pages" .
+
+ext:lx_pr_055 ext:usesCartridge ext:cart_055 .
+ext:cart_055 ext:hasYield ext:yield_055 .
+ext:lx_pr_055 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_056 a ext:LaserPrinter .
+ext:lx_pr_056 rdfs:label "Lex-056" .
+
+ext:cart_056 a ext:Cartridge .
+ext:cart_056 rdfs:label "E056A11E" .
+
+ext:yield_056 a ext:Yield .
+ext:yield_056 rdfs:label "2500 pages" .
+
+ext:lx_pr_056 ext:usesCartridge ext:cart_056 .
+ext:cart_056 ext:hasYield ext:yield_056 .
+ext:lx_pr_056 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_057 a ext:LaserPrinter .
+ext:lx_pr_057 rdfs:label "Lex-057" .
+
+ext:cart_057 a ext:Cartridge .
+ext:cart_057 rdfs:label "E057A11E" .
+
+ext:yield_057 a ext:Yield .
+ext:yield_057 rdfs:label "3500 pages" .
+
+ext:lx_pr_057 ext:usesCartridge ext:cart_057 .
+ext:cart_057 ext:hasYield ext:yield_057 .
+ext:lx_pr_057 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_058 a ext:LaserPrinter .
+ext:lx_pr_058 rdfs:label "Lex-058" .
+
+ext:cart_058 a ext:Cartridge .
+ext:cart_058 rdfs:label "E058A11E" .
+
+ext:yield_058 a ext:Yield .
+ext:yield_058 rdfs:label "6000 pages" .
+
+ext:lx_pr_058 ext:usesCartridge ext:cart_058 .
+ext:cart_058 ext:hasYield ext:yield_058 .
+ext:lx_pr_058 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_059 a ext:LaserPrinter .
+ext:lx_pr_059 rdfs:label "Lex-059" .
+
+ext:cart_059 a ext:Cartridge .
+ext:cart_059 rdfs:label "E059A11E" .
+
+ext:yield_059 a ext:Yield .
+ext:yield_059 rdfs:label "9000 pages" .
+
+ext:lx_pr_059 ext:usesCartridge ext:cart_059 .
+ext:cart_059 ext:hasYield ext:yield_059 .
+ext:lx_pr_059 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_060 a ext:LaserPrinter .
+ext:lx_pr_060 rdfs:label "Lex-060" .
+
+ext:cart_060 a ext:Cartridge .
+ext:cart_060 rdfs:label "E060A11E" .
+
+ext:yield_060 a ext:Yield .
+ext:yield_060 rdfs:label "1500 pages" .
+
+ext:lx_pr_060 ext:usesCartridge ext:cart_060 .
+ext:cart_060 ext:hasYield ext:yield_060 .
+ext:lx_pr_060 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_061 a ext:LaserPrinter .
+ext:lx_pr_061 rdfs:label "Lex-061" .
+
+ext:cart_061 a ext:Cartridge .
+ext:cart_061 rdfs:label "E061A11E" .
+
+ext:yield_061 a ext:Yield .
+ext:yield_061 rdfs:label "2500 pages" .
+
+ext:lx_pr_061 ext:usesCartridge ext:cart_061 .
+ext:cart_061 ext:hasYield ext:yield_061 .
+ext:lx_pr_061 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_062 a ext:LaserPrinter .
+ext:lx_pr_062 rdfs:label "Lex-062" .
+
+ext:cart_062 a ext:Cartridge .
+ext:cart_062 rdfs:label "E062A11E" .
+
+ext:yield_062 a ext:Yield .
+ext:yield_062 rdfs:label "3500 pages" .
+
+ext:lx_pr_062 ext:usesCartridge ext:cart_062 .
+ext:cart_062 ext:hasYield ext:yield_062 .
+ext:lx_pr_062 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_063 a ext:LaserPrinter .
+ext:lx_pr_063 rdfs:label "Lex-063" .
+
+ext:cart_063 a ext:Cartridge .
+ext:cart_063 rdfs:label "E063A11E" .
+
+ext:yield_063 a ext:Yield .
+ext:yield_063 rdfs:label "6000 pages" .
+
+ext:lx_pr_063 ext:usesCartridge ext:cart_063 .
+ext:cart_063 ext:hasYield ext:yield_063 .
+ext:lx_pr_063 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_064 a ext:LaserPrinter .
+ext:lx_pr_064 rdfs:label "Lex-064" .
+
+ext:cart_064 a ext:Cartridge .
+ext:cart_064 rdfs:label "E064A11E" .
+
+ext:yield_064 a ext:Yield .
+ext:yield_064 rdfs:label "9000 pages" .
+
+ext:lx_pr_064 ext:usesCartridge ext:cart_064 .
+ext:cart_064 ext:hasYield ext:yield_064 .
+ext:lx_pr_064 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_065 a ext:LaserPrinter .
+ext:lx_pr_065 rdfs:label "Lex-065" .
+
+ext:cart_065 a ext:Cartridge .
+ext:cart_065 rdfs:label "E065A11E" .
+
+ext:yield_065 a ext:Yield .
+ext:yield_065 rdfs:label "1500 pages" .
+
+ext:lx_pr_065 ext:usesCartridge ext:cart_065 .
+ext:cart_065 ext:hasYield ext:yield_065 .
+ext:lx_pr_065 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_066 a ext:LaserPrinter .
+ext:lx_pr_066 rdfs:label "Lex-066" .
+
+ext:cart_066 a ext:Cartridge .
+ext:cart_066 rdfs:label "E066A11E" .
+
+ext:yield_066 a ext:Yield .
+ext:yield_066 rdfs:label "2500 pages" .
+
+ext:lx_pr_066 ext:usesCartridge ext:cart_066 .
+ext:cart_066 ext:hasYield ext:yield_066 .
+ext:lx_pr_066 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_067 a ext:LaserPrinter .
+ext:lx_pr_067 rdfs:label "Lex-067" .
+
+ext:cart_067 a ext:Cartridge .
+ext:cart_067 rdfs:label "E067A11E" .
+
+ext:yield_067 a ext:Yield .
+ext:yield_067 rdfs:label "3500 pages" .
+
+ext:lx_pr_067 ext:usesCartridge ext:cart_067 .
+ext:cart_067 ext:hasYield ext:yield_067 .
+ext:lx_pr_067 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_068 a ext:LaserPrinter .
+ext:lx_pr_068 rdfs:label "Lex-068" .
+
+ext:cart_068 a ext:Cartridge .
+ext:cart_068 rdfs:label "E068A11E" .
+
+ext:yield_068 a ext:Yield .
+ext:yield_068 rdfs:label "6000 pages" .
+
+ext:lx_pr_068 ext:usesCartridge ext:cart_068 .
+ext:cart_068 ext:hasYield ext:yield_068 .
+ext:lx_pr_068 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_069 a ext:LaserPrinter .
+ext:lx_pr_069 rdfs:label "Lex-069" .
+
+ext:cart_069 a ext:Cartridge .
+ext:cart_069 rdfs:label "E069A11E" .
+
+ext:yield_069 a ext:Yield .
+ext:yield_069 rdfs:label "9000 pages" .
+
+ext:lx_pr_069 ext:usesCartridge ext:cart_069 .
+ext:cart_069 ext:hasYield ext:yield_069 .
+ext:lx_pr_069 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_070 a ext:LaserPrinter .
+ext:lx_pr_070 rdfs:label "Lex-070" .
+
+ext:cart_070 a ext:Cartridge .
+ext:cart_070 rdfs:label "E070A11E" .
+
+ext:yield_070 a ext:Yield .
+ext:yield_070 rdfs:label "1500 pages" .
+
+ext:lx_pr_070 ext:usesCartridge ext:cart_070 .
+ext:cart_070 ext:hasYield ext:yield_070 .
+ext:lx_pr_070 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_071 a ext:LaserPrinter .
+ext:lx_pr_071 rdfs:label "Lex-071" .
+
+ext:cart_071 a ext:Cartridge .
+ext:cart_071 rdfs:label "E071A11E" .
+
+ext:yield_071 a ext:Yield .
+ext:yield_071 rdfs:label "2500 pages" .
+
+ext:lx_pr_071 ext:usesCartridge ext:cart_071 .
+ext:cart_071 ext:hasYield ext:yield_071 .
+ext:lx_pr_071 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_072 a ext:LaserPrinter .
+ext:lx_pr_072 rdfs:label "Lex-072" .
+
+ext:cart_072 a ext:Cartridge .
+ext:cart_072 rdfs:label "E072A11E" .
+
+ext:yield_072 a ext:Yield .
+ext:yield_072 rdfs:label "3500 pages" .
+
+ext:lx_pr_072 ext:usesCartridge ext:cart_072 .
+ext:cart_072 ext:hasYield ext:yield_072 .
+ext:lx_pr_072 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_073 a ext:LaserPrinter .
+ext:lx_pr_073 rdfs:label "Lex-073" .
+
+ext:cart_073 a ext:Cartridge .
+ext:cart_073 rdfs:label "E073A11E" .
+
+ext:yield_073 a ext:Yield .
+ext:yield_073 rdfs:label "6000 pages" .
+
+ext:lx_pr_073 ext:usesCartridge ext:cart_073 .
+ext:cart_073 ext:hasYield ext:yield_073 .
+ext:lx_pr_073 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_074 a ext:LaserPrinter .
+ext:lx_pr_074 rdfs:label "Lex-074" .
+
+ext:cart_074 a ext:Cartridge .
+ext:cart_074 rdfs:label "E074A11E" .
+
+ext:yield_074 a ext:Yield .
+ext:yield_074 rdfs:label "9000 pages" .
+
+ext:lx_pr_074 ext:usesCartridge ext:cart_074 .
+ext:cart_074 ext:hasYield ext:yield_074 .
+ext:lx_pr_074 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_075 a ext:LaserPrinter .
+ext:lx_pr_075 rdfs:label "Lex-075" .
+
+ext:cart_075 a ext:Cartridge .
+ext:cart_075 rdfs:label "E075A11E" .
+
+ext:yield_075 a ext:Yield .
+ext:yield_075 rdfs:label "1500 pages" .
+
+ext:lx_pr_075 ext:usesCartridge ext:cart_075 .
+ext:cart_075 ext:hasYield ext:yield_075 .
+ext:lx_pr_075 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_076 a ext:LaserPrinter .
+ext:lx_pr_076 rdfs:label "Lex-076" .
+
+ext:cart_076 a ext:Cartridge .
+ext:cart_076 rdfs:label "E076A11E" .
+
+ext:yield_076 a ext:Yield .
+ext:yield_076 rdfs:label "2500 pages" .
+
+ext:lx_pr_076 ext:usesCartridge ext:cart_076 .
+ext:cart_076 ext:hasYield ext:yield_076 .
+ext:lx_pr_076 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_077 a ext:LaserPrinter .
+ext:lx_pr_077 rdfs:label "Lex-077" .
+
+ext:cart_077 a ext:Cartridge .
+ext:cart_077 rdfs:label "E077A11E" .
+
+ext:yield_077 a ext:Yield .
+ext:yield_077 rdfs:label "3500 pages" .
+
+ext:lx_pr_077 ext:usesCartridge ext:cart_077 .
+ext:cart_077 ext:hasYield ext:yield_077 .
+ext:lx_pr_077 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_078 a ext:LaserPrinter .
+ext:lx_pr_078 rdfs:label "Lex-078" .
+
+ext:cart_078 a ext:Cartridge .
+ext:cart_078 rdfs:label "E078A11E" .
+
+ext:yield_078 a ext:Yield .
+ext:yield_078 rdfs:label "6000 pages" .
+
+ext:lx_pr_078 ext:usesCartridge ext:cart_078 .
+ext:cart_078 ext:hasYield ext:yield_078 .
+ext:lx_pr_078 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_079 a ext:LaserPrinter .
+ext:lx_pr_079 rdfs:label "Lex-079" .
+
+ext:cart_079 a ext:Cartridge .
+ext:cart_079 rdfs:label "E079A11E" .
+
+ext:yield_079 a ext:Yield .
+ext:yield_079 rdfs:label "9000 pages" .
+
+ext:lx_pr_079 ext:usesCartridge ext:cart_079 .
+ext:cart_079 ext:hasYield ext:yield_079 .
+ext:lx_pr_079 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_080 a ext:LaserPrinter .
+ext:lx_pr_080 rdfs:label "Lex-080" .
+
+ext:cart_080 a ext:Cartridge .
+ext:cart_080 rdfs:label "E080A11E" .
+
+ext:yield_080 a ext:Yield .
+ext:yield_080 rdfs:label "1500 pages" .
+
+ext:lx_pr_080 ext:usesCartridge ext:cart_080 .
+ext:cart_080 ext:hasYield ext:yield_080 .
+ext:lx_pr_080 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_081 a ext:LaserPrinter .
+ext:lx_pr_081 rdfs:label "Lex-081" .
+
+ext:cart_081 a ext:Cartridge .
+ext:cart_081 rdfs:label "E081A11E" .
+
+ext:yield_081 a ext:Yield .
+ext:yield_081 rdfs:label "2500 pages" .
+
+ext:lx_pr_081 ext:usesCartridge ext:cart_081 .
+ext:cart_081 ext:hasYield ext:yield_081 .
+ext:lx_pr_081 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_082 a ext:LaserPrinter .
+ext:lx_pr_082 rdfs:label "Lex-082" .
+
+ext:cart_082 a ext:Cartridge .
+ext:cart_082 rdfs:label "E082A11E" .
+
+ext:yield_082 a ext:Yield .
+ext:yield_082 rdfs:label "3500 pages" .
+
+ext:lx_pr_082 ext:usesCartridge ext:cart_082 .
+ext:cart_082 ext:hasYield ext:yield_082 .
+ext:lx_pr_082 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_083 a ext:LaserPrinter .
+ext:lx_pr_083 rdfs:label "Lex-083" .
+
+ext:cart_083 a ext:Cartridge .
+ext:cart_083 rdfs:label "E083A11E" .
+
+ext:yield_083 a ext:Yield .
+ext:yield_083 rdfs:label "6000 pages" .
+
+ext:lx_pr_083 ext:usesCartridge ext:cart_083 .
+ext:cart_083 ext:hasYield ext:yield_083 .
+ext:lx_pr_083 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_084 a ext:LaserPrinter .
+ext:lx_pr_084 rdfs:label "Lex-084" .
+
+ext:cart_084 a ext:Cartridge .
+ext:cart_084 rdfs:label "E084A11E" .
+
+ext:yield_084 a ext:Yield .
+ext:yield_084 rdfs:label "9000 pages" .
+
+ext:lx_pr_084 ext:usesCartridge ext:cart_084 .
+ext:cart_084 ext:hasYield ext:yield_084 .
+ext:lx_pr_084 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_085 a ext:LaserPrinter .
+ext:lx_pr_085 rdfs:label "Lex-085" .
+
+ext:cart_085 a ext:Cartridge .
+ext:cart_085 rdfs:label "E085A11E" .
+
+ext:yield_085 a ext:Yield .
+ext:yield_085 rdfs:label "1500 pages" .
+
+ext:lx_pr_085 ext:usesCartridge ext:cart_085 .
+ext:cart_085 ext:hasYield ext:yield_085 .
+ext:lx_pr_085 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_086 a ext:LaserPrinter .
+ext:lx_pr_086 rdfs:label "Lex-086" .
+
+ext:cart_086 a ext:Cartridge .
+ext:cart_086 rdfs:label "E086A11E" .
+
+ext:yield_086 a ext:Yield .
+ext:yield_086 rdfs:label "2500 pages" .
+
+ext:lx_pr_086 ext:usesCartridge ext:cart_086 .
+ext:cart_086 ext:hasYield ext:yield_086 .
+ext:lx_pr_086 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_087 a ext:LaserPrinter .
+ext:lx_pr_087 rdfs:label "Lex-087" .
+
+ext:cart_087 a ext:Cartridge .
+ext:cart_087 rdfs:label "E087A11E" .
+
+ext:yield_087 a ext:Yield .
+ext:yield_087 rdfs:label "3500 pages" .
+
+ext:lx_pr_087 ext:usesCartridge ext:cart_087 .
+ext:cart_087 ext:hasYield ext:yield_087 .
+ext:lx_pr_087 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_088 a ext:LaserPrinter .
+ext:lx_pr_088 rdfs:label "Lex-088" .
+
+ext:cart_088 a ext:Cartridge .
+ext:cart_088 rdfs:label "E088A11E" .
+
+ext:yield_088 a ext:Yield .
+ext:yield_088 rdfs:label "6000 pages" .
+
+ext:lx_pr_088 ext:usesCartridge ext:cart_088 .
+ext:cart_088 ext:hasYield ext:yield_088 .
+ext:lx_pr_088 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_089 a ext:LaserPrinter .
+ext:lx_pr_089 rdfs:label "Lex-089" .
+
+ext:cart_089 a ext:Cartridge .
+ext:cart_089 rdfs:label "E089A11E" .
+
+ext:yield_089 a ext:Yield .
+ext:yield_089 rdfs:label "9000 pages" .
+
+ext:lx_pr_089 ext:usesCartridge ext:cart_089 .
+ext:cart_089 ext:hasYield ext:yield_089 .
+ext:lx_pr_089 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_090 a ext:LaserPrinter .
+ext:lx_pr_090 rdfs:label "Lex-090" .
+
+ext:cart_090 a ext:Cartridge .
+ext:cart_090 rdfs:label "E090A11E" .
+
+ext:yield_090 a ext:Yield .
+ext:yield_090 rdfs:label "1500 pages" .
+
+ext:lx_pr_090 ext:usesCartridge ext:cart_090 .
+ext:cart_090 ext:hasYield ext:yield_090 .
+ext:lx_pr_090 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_091 a ext:LaserPrinter .
+ext:lx_pr_091 rdfs:label "Lex-091" .
+
+ext:cart_091 a ext:Cartridge .
+ext:cart_091 rdfs:label "E091A11E" .
+
+ext:yield_091 a ext:Yield .
+ext:yield_091 rdfs:label "2500 pages" .
+
+ext:lx_pr_091 ext:usesCartridge ext:cart_091 .
+ext:cart_091 ext:hasYield ext:yield_091 .
+ext:lx_pr_091 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_092 a ext:LaserPrinter .
+ext:lx_pr_092 rdfs:label "Lex-092" .
+
+ext:cart_092 a ext:Cartridge .
+ext:cart_092 rdfs:label "E092A11E" .
+
+ext:yield_092 a ext:Yield .
+ext:yield_092 rdfs:label "3500 pages" .
+
+ext:lx_pr_092 ext:usesCartridge ext:cart_092 .
+ext:cart_092 ext:hasYield ext:yield_092 .
+ext:lx_pr_092 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_093 a ext:LaserPrinter .
+ext:lx_pr_093 rdfs:label "Lex-093" .
+
+ext:cart_093 a ext:Cartridge .
+ext:cart_093 rdfs:label "E093A11E" .
+
+ext:yield_093 a ext:Yield .
+ext:yield_093 rdfs:label "6000 pages" .
+
+ext:lx_pr_093 ext:usesCartridge ext:cart_093 .
+ext:cart_093 ext:hasYield ext:yield_093 .
+ext:lx_pr_093 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_094 a ext:LaserPrinter .
+ext:lx_pr_094 rdfs:label "Lex-094" .
+
+ext:cart_094 a ext:Cartridge .
+ext:cart_094 rdfs:label "E094A11E" .
+
+ext:yield_094 a ext:Yield .
+ext:yield_094 rdfs:label "9000 pages" .
+
+ext:lx_pr_094 ext:usesCartridge ext:cart_094 .
+ext:cart_094 ext:hasYield ext:yield_094 .
+ext:lx_pr_094 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_095 a ext:LaserPrinter .
+ext:lx_pr_095 rdfs:label "Lex-095" .
+
+ext:cart_095 a ext:Cartridge .
+ext:cart_095 rdfs:label "E095A11E" .
+
+ext:yield_095 a ext:Yield .
+ext:yield_095 rdfs:label "1500 pages" .
+
+ext:lx_pr_095 ext:usesCartridge ext:cart_095 .
+ext:cart_095 ext:hasYield ext:yield_095 .
+ext:lx_pr_095 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_096 a ext:LaserPrinter .
+ext:lx_pr_096 rdfs:label "Lex-096" .
+
+ext:cart_096 a ext:Cartridge .
+ext:cart_096 rdfs:label "E096A11E" .
+
+ext:yield_096 a ext:Yield .
+ext:yield_096 rdfs:label "2500 pages" .
+
+ext:lx_pr_096 ext:usesCartridge ext:cart_096 .
+ext:cart_096 ext:hasYield ext:yield_096 .
+ext:lx_pr_096 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_097 a ext:LaserPrinter .
+ext:lx_pr_097 rdfs:label "Lex-097" .
+
+ext:cart_097 a ext:Cartridge .
+ext:cart_097 rdfs:label "E097A11E" .
+
+ext:yield_097 a ext:Yield .
+ext:yield_097 rdfs:label "3500 pages" .
+
+ext:lx_pr_097 ext:usesCartridge ext:cart_097 .
+ext:cart_097 ext:hasYield ext:yield_097 .
+ext:lx_pr_097 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_098 a ext:LaserPrinter .
+ext:lx_pr_098 rdfs:label "Lex-098" .
+
+ext:cart_098 a ext:Cartridge .
+ext:cart_098 rdfs:label "E098A11E" .
+
+ext:yield_098 a ext:Yield .
+ext:yield_098 rdfs:label "6000 pages" .
+
+ext:lx_pr_098 ext:usesCartridge ext:cart_098 .
+ext:cart_098 ext:hasYield ext:yield_098 .
+ext:lx_pr_098 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_099 a ext:LaserPrinter .
+ext:lx_pr_099 rdfs:label "Lex-099" .
+
+ext:cart_099 a ext:Cartridge .
+ext:cart_099 rdfs:label "E099A11E" .
+
+ext:yield_099 a ext:Yield .
+ext:yield_099 rdfs:label "9000 pages" .
+
+ext:lx_pr_099 ext:usesCartridge ext:cart_099 .
+ext:cart_099 ext:hasYield ext:yield_099 .
+ext:lx_pr_099 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_100 a ext:LaserPrinter .
+ext:lx_pr_100 rdfs:label "Lex-100" .
+
+ext:cart_100 a ext:Cartridge .
+ext:cart_100 rdfs:label "E100A11E" .
+
+ext:yield_100 a ext:Yield .
+ext:yield_100 rdfs:label "1500 pages" .
+
+ext:lx_pr_100 ext:usesCartridge ext:cart_100 .
+ext:cart_100 ext:hasYield ext:yield_100 .
+ext:lx_pr_100 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_101 a ext:LaserPrinter .
+ext:lx_pr_101 rdfs:label "Lex-101" .
+
+ext:cart_101 a ext:Cartridge .
+ext:cart_101 rdfs:label "E101A11E" .
+
+ext:yield_101 a ext:Yield .
+ext:yield_101 rdfs:label "2500 pages" .
+
+ext:lx_pr_101 ext:usesCartridge ext:cart_101 .
+ext:cart_101 ext:hasYield ext:yield_101 .
+ext:lx_pr_101 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_102 a ext:LaserPrinter .
+ext:lx_pr_102 rdfs:label "Lex-102" .
+
+ext:cart_102 a ext:Cartridge .
+ext:cart_102 rdfs:label "E102A11E" .
+
+ext:yield_102 a ext:Yield .
+ext:yield_102 rdfs:label "3500 pages" .
+
+ext:lx_pr_102 ext:usesCartridge ext:cart_102 .
+ext:cart_102 ext:hasYield ext:yield_102 .
+ext:lx_pr_102 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_103 a ext:LaserPrinter .
+ext:lx_pr_103 rdfs:label "Lex-103" .
+
+ext:cart_103 a ext:Cartridge .
+ext:cart_103 rdfs:label "E103A11E" .
+
+ext:yield_103 a ext:Yield .
+ext:yield_103 rdfs:label "6000 pages" .
+
+ext:lx_pr_103 ext:usesCartridge ext:cart_103 .
+ext:cart_103 ext:hasYield ext:yield_103 .
+ext:lx_pr_103 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_104 a ext:LaserPrinter .
+ext:lx_pr_104 rdfs:label "Lex-104" .
+
+ext:cart_104 a ext:Cartridge .
+ext:cart_104 rdfs:label "E104A11E" .
+
+ext:yield_104 a ext:Yield .
+ext:yield_104 rdfs:label "9000 pages" .
+
+ext:lx_pr_104 ext:usesCartridge ext:cart_104 .
+ext:cart_104 ext:hasYield ext:yield_104 .
+ext:lx_pr_104 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_105 a ext:LaserPrinter .
+ext:lx_pr_105 rdfs:label "Lex-105" .
+
+ext:cart_105 a ext:Cartridge .
+ext:cart_105 rdfs:label "E105A11E" .
+
+ext:yield_105 a ext:Yield .
+ext:yield_105 rdfs:label "1500 pages" .
+
+ext:lx_pr_105 ext:usesCartridge ext:cart_105 .
+ext:cart_105 ext:hasYield ext:yield_105 .
+ext:lx_pr_105 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_106 a ext:LaserPrinter .
+ext:lx_pr_106 rdfs:label "Lex-106" .
+
+ext:cart_106 a ext:Cartridge .
+ext:cart_106 rdfs:label "E106A11E" .
+
+ext:yield_106 a ext:Yield .
+ext:yield_106 rdfs:label "2500 pages" .
+
+ext:lx_pr_106 ext:usesCartridge ext:cart_106 .
+ext:cart_106 ext:hasYield ext:yield_106 .
+ext:lx_pr_106 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_107 a ext:LaserPrinter .
+ext:lx_pr_107 rdfs:label "Lex-107" .
+
+ext:cart_107 a ext:Cartridge .
+ext:cart_107 rdfs:label "E107A11E" .
+
+ext:yield_107 a ext:Yield .
+ext:yield_107 rdfs:label "3500 pages" .
+
+ext:lx_pr_107 ext:usesCartridge ext:cart_107 .
+ext:cart_107 ext:hasYield ext:yield_107 .
+ext:lx_pr_107 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_108 a ext:LaserPrinter .
+ext:lx_pr_108 rdfs:label "Lex-108" .
+
+ext:cart_108 a ext:Cartridge .
+ext:cart_108 rdfs:label "E108A11E" .
+
+ext:yield_108 a ext:Yield .
+ext:yield_108 rdfs:label "6000 pages" .
+
+ext:lx_pr_108 ext:usesCartridge ext:cart_108 .
+ext:cart_108 ext:hasYield ext:yield_108 .
+ext:lx_pr_108 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_109 a ext:LaserPrinter .
+ext:lx_pr_109 rdfs:label "Lex-109" .
+
+ext:cart_109 a ext:Cartridge .
+ext:cart_109 rdfs:label "E109A11E" .
+
+ext:yield_109 a ext:Yield .
+ext:yield_109 rdfs:label "9000 pages" .
+
+ext:lx_pr_109 ext:usesCartridge ext:cart_109 .
+ext:cart_109 ext:hasYield ext:yield_109 .
+ext:lx_pr_109 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_110 a ext:LaserPrinter .
+ext:lx_pr_110 rdfs:label "Lex-110" .
+
+ext:cart_110 a ext:Cartridge .
+ext:cart_110 rdfs:label "E110A11E" .
+
+ext:yield_110 a ext:Yield .
+ext:yield_110 rdfs:label "1500 pages" .
+
+ext:lx_pr_110 ext:usesCartridge ext:cart_110 .
+ext:cart_110 ext:hasYield ext:yield_110 .
+ext:lx_pr_110 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_111 a ext:LaserPrinter .
+ext:lx_pr_111 rdfs:label "Lex-111" .
+
+ext:cart_111 a ext:Cartridge .
+ext:cart_111 rdfs:label "E111A11E" .
+
+ext:yield_111 a ext:Yield .
+ext:yield_111 rdfs:label "2500 pages" .
+
+ext:lx_pr_111 ext:usesCartridge ext:cart_111 .
+ext:cart_111 ext:hasYield ext:yield_111 .
+ext:lx_pr_111 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_112 a ext:LaserPrinter .
+ext:lx_pr_112 rdfs:label "Lex-112" .
+
+ext:cart_112 a ext:Cartridge .
+ext:cart_112 rdfs:label "E112A11E" .
+
+ext:yield_112 a ext:Yield .
+ext:yield_112 rdfs:label "3500 pages" .
+
+ext:lx_pr_112 ext:usesCartridge ext:cart_112 .
+ext:cart_112 ext:hasYield ext:yield_112 .
+ext:lx_pr_112 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_113 a ext:LaserPrinter .
+ext:lx_pr_113 rdfs:label "Lex-113" .
+
+ext:cart_113 a ext:Cartridge .
+ext:cart_113 rdfs:label "E113A11E" .
+
+ext:yield_113 a ext:Yield .
+ext:yield_113 rdfs:label "6000 pages" .
+
+ext:lx_pr_113 ext:usesCartridge ext:cart_113 .
+ext:cart_113 ext:hasYield ext:yield_113 .
+ext:lx_pr_113 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_114 a ext:LaserPrinter .
+ext:lx_pr_114 rdfs:label "Lex-114" .
+
+ext:cart_114 a ext:Cartridge .
+ext:cart_114 rdfs:label "E114A11E" .
+
+ext:yield_114 a ext:Yield .
+ext:yield_114 rdfs:label "9000 pages" .
+
+ext:lx_pr_114 ext:usesCartridge ext:cart_114 .
+ext:cart_114 ext:hasYield ext:yield_114 .
+ext:lx_pr_114 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_115 a ext:LaserPrinter .
+ext:lx_pr_115 rdfs:label "Lex-115" .
+
+ext:cart_115 a ext:Cartridge .
+ext:cart_115 rdfs:label "E115A11E" .
+
+ext:yield_115 a ext:Yield .
+ext:yield_115 rdfs:label "1500 pages" .
+
+ext:lx_pr_115 ext:usesCartridge ext:cart_115 .
+ext:cart_115 ext:hasYield ext:yield_115 .
+ext:lx_pr_115 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_116 a ext:LaserPrinter .
+ext:lx_pr_116 rdfs:label "Lex-116" .
+
+ext:cart_116 a ext:Cartridge .
+ext:cart_116 rdfs:label "E116A11E" .
+
+ext:yield_116 a ext:Yield .
+ext:yield_116 rdfs:label "2500 pages" .
+
+ext:lx_pr_116 ext:usesCartridge ext:cart_116 .
+ext:cart_116 ext:hasYield ext:yield_116 .
+ext:lx_pr_116 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_117 a ext:LaserPrinter .
+ext:lx_pr_117 rdfs:label "Lex-117" .
+
+ext:cart_117 a ext:Cartridge .
+ext:cart_117 rdfs:label "E117A11E" .
+
+ext:yield_117 a ext:Yield .
+ext:yield_117 rdfs:label "3500 pages" .
+
+ext:lx_pr_117 ext:usesCartridge ext:cart_117 .
+ext:cart_117 ext:hasYield ext:yield_117 .
+ext:lx_pr_117 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_118 a ext:LaserPrinter .
+ext:lx_pr_118 rdfs:label "Lex-118" .
+
+ext:cart_118 a ext:Cartridge .
+ext:cart_118 rdfs:label "E118A11E" .
+
+ext:yield_118 a ext:Yield .
+ext:yield_118 rdfs:label "6000 pages" .
+
+ext:lx_pr_118 ext:usesCartridge ext:cart_118 .
+ext:cart_118 ext:hasYield ext:yield_118 .
+ext:lx_pr_118 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_119 a ext:LaserPrinter .
+ext:lx_pr_119 rdfs:label "Lex-119" .
+
+ext:cart_119 a ext:Cartridge .
+ext:cart_119 rdfs:label "E119A11E" .
+
+ext:yield_119 a ext:Yield .
+ext:yield_119 rdfs:label "9000 pages" .
+
+ext:lx_pr_119 ext:usesCartridge ext:cart_119 .
+ext:cart_119 ext:hasYield ext:yield_119 .
+ext:lx_pr_119 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_120 a ext:LaserPrinter .
+ext:lx_pr_120 rdfs:label "Lex-120" .
+
+ext:cart_120 a ext:Cartridge .
+ext:cart_120 rdfs:label "E120A11E" .
+
+ext:yield_120 a ext:Yield .
+ext:yield_120 rdfs:label "1500 pages" .
+
+ext:lx_pr_120 ext:usesCartridge ext:cart_120 .
+ext:cart_120 ext:hasYield ext:yield_120 .
+ext:lx_pr_120 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_121 a ext:LaserPrinter .
+ext:lx_pr_121 rdfs:label "Lex-121" .
+
+ext:cart_121 a ext:Cartridge .
+ext:cart_121 rdfs:label "E121A11E" .
+
+ext:yield_121 a ext:Yield .
+ext:yield_121 rdfs:label "2500 pages" .
+
+ext:lx_pr_121 ext:usesCartridge ext:cart_121 .
+ext:cart_121 ext:hasYield ext:yield_121 .
+ext:lx_pr_121 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_122 a ext:LaserPrinter .
+ext:lx_pr_122 rdfs:label "Lex-122" .
+
+ext:cart_122 a ext:Cartridge .
+ext:cart_122 rdfs:label "E122A11E" .
+
+ext:yield_122 a ext:Yield .
+ext:yield_122 rdfs:label "3500 pages" .
+
+ext:lx_pr_122 ext:usesCartridge ext:cart_122 .
+ext:cart_122 ext:hasYield ext:yield_122 .
+ext:lx_pr_122 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_123 a ext:LaserPrinter .
+ext:lx_pr_123 rdfs:label "Lex-123" .
+
+ext:cart_123 a ext:Cartridge .
+ext:cart_123 rdfs:label "E123A11E" .
+
+ext:yield_123 a ext:Yield .
+ext:yield_123 rdfs:label "6000 pages" .
+
+ext:lx_pr_123 ext:usesCartridge ext:cart_123 .
+ext:cart_123 ext:hasYield ext:yield_123 .
+ext:lx_pr_123 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_124 a ext:LaserPrinter .
+ext:lx_pr_124 rdfs:label "Lex-124" .
+
+ext:cart_124 a ext:Cartridge .
+ext:cart_124 rdfs:label "E124A11E" .
+
+ext:yield_124 a ext:Yield .
+ext:yield_124 rdfs:label "9000 pages" .
+
+ext:lx_pr_124 ext:usesCartridge ext:cart_124 .
+ext:cart_124 ext:hasYield ext:yield_124 .
+ext:lx_pr_124 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_125 a ext:LaserPrinter .
+ext:lx_pr_125 rdfs:label "Lex-125" .
+
+ext:cart_125 a ext:Cartridge .
+ext:cart_125 rdfs:label "E125A11E" .
+
+ext:yield_125 a ext:Yield .
+ext:yield_125 rdfs:label "1500 pages" .
+
+ext:lx_pr_125 ext:usesCartridge ext:cart_125 .
+ext:cart_125 ext:hasYield ext:yield_125 .
+ext:lx_pr_125 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_126 a ext:LaserPrinter .
+ext:lx_pr_126 rdfs:label "Lex-126" .
+
+ext:cart_126 a ext:Cartridge .
+ext:cart_126 rdfs:label "E126A11E" .
+
+ext:yield_126 a ext:Yield .
+ext:yield_126 rdfs:label "2500 pages" .
+
+ext:lx_pr_126 ext:usesCartridge ext:cart_126 .
+ext:cart_126 ext:hasYield ext:yield_126 .
+ext:lx_pr_126 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_127 a ext:LaserPrinter .
+ext:lx_pr_127 rdfs:label "Lex-127" .
+
+ext:cart_127 a ext:Cartridge .
+ext:cart_127 rdfs:label "E127A11E" .
+
+ext:yield_127 a ext:Yield .
+ext:yield_127 rdfs:label "3500 pages" .
+
+ext:lx_pr_127 ext:usesCartridge ext:cart_127 .
+ext:cart_127 ext:hasYield ext:yield_127 .
+ext:lx_pr_127 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_128 a ext:LaserPrinter .
+ext:lx_pr_128 rdfs:label "Lex-128" .
+
+ext:cart_128 a ext:Cartridge .
+ext:cart_128 rdfs:label "E128A11E" .
+
+ext:yield_128 a ext:Yield .
+ext:yield_128 rdfs:label "6000 pages" .
+
+ext:lx_pr_128 ext:usesCartridge ext:cart_128 .
+ext:cart_128 ext:hasYield ext:yield_128 .
+ext:lx_pr_128 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_129 a ext:LaserPrinter .
+ext:lx_pr_129 rdfs:label "Lex-129" .
+
+ext:cart_129 a ext:Cartridge .
+ext:cart_129 rdfs:label "E129A11E" .
+
+ext:yield_129 a ext:Yield .
+ext:yield_129 rdfs:label "9000 pages" .
+
+ext:lx_pr_129 ext:usesCartridge ext:cart_129 .
+ext:cart_129 ext:hasYield ext:yield_129 .
+ext:lx_pr_129 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_130 a ext:LaserPrinter .
+ext:lx_pr_130 rdfs:label "Lex-130" .
+
+ext:cart_130 a ext:Cartridge .
+ext:cart_130 rdfs:label "E130A11E" .
+
+ext:yield_130 a ext:Yield .
+ext:yield_130 rdfs:label "1500 pages" .
+
+ext:lx_pr_130 ext:usesCartridge ext:cart_130 .
+ext:cart_130 ext:hasYield ext:yield_130 .
+ext:lx_pr_130 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_131 a ext:LaserPrinter .
+ext:lx_pr_131 rdfs:label "Lex-131" .
+
+ext:cart_131 a ext:Cartridge .
+ext:cart_131 rdfs:label "E131A11E" .
+
+ext:yield_131 a ext:Yield .
+ext:yield_131 rdfs:label "2500 pages" .
+
+ext:lx_pr_131 ext:usesCartridge ext:cart_131 .
+ext:cart_131 ext:hasYield ext:yield_131 .
+ext:lx_pr_131 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_132 a ext:LaserPrinter .
+ext:lx_pr_132 rdfs:label "Lex-132" .
+
+ext:cart_132 a ext:Cartridge .
+ext:cart_132 rdfs:label "E132A11E" .
+
+ext:yield_132 a ext:Yield .
+ext:yield_132 rdfs:label "3500 pages" .
+
+ext:lx_pr_132 ext:usesCartridge ext:cart_132 .
+ext:cart_132 ext:hasYield ext:yield_132 .
+ext:lx_pr_132 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_133 a ext:LaserPrinter .
+ext:lx_pr_133 rdfs:label "Lex-133" .
+
+ext:cart_133 a ext:Cartridge .
+ext:cart_133 rdfs:label "E133A11E" .
+
+ext:yield_133 a ext:Yield .
+ext:yield_133 rdfs:label "6000 pages" .
+
+ext:lx_pr_133 ext:usesCartridge ext:cart_133 .
+ext:cart_133 ext:hasYield ext:yield_133 .
+ext:lx_pr_133 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_134 a ext:LaserPrinter .
+ext:lx_pr_134 rdfs:label "Lex-134" .
+
+ext:cart_134 a ext:Cartridge .
+ext:cart_134 rdfs:label "E134A11E" .
+
+ext:yield_134 a ext:Yield .
+ext:yield_134 rdfs:label "9000 pages" .
+
+ext:lx_pr_134 ext:usesCartridge ext:cart_134 .
+ext:cart_134 ext:hasYield ext:yield_134 .
+ext:lx_pr_134 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_135 a ext:LaserPrinter .
+ext:lx_pr_135 rdfs:label "Lex-135" .
+
+ext:cart_135 a ext:Cartridge .
+ext:cart_135 rdfs:label "E135A11E" .
+
+ext:yield_135 a ext:Yield .
+ext:yield_135 rdfs:label "1500 pages" .
+
+ext:lx_pr_135 ext:usesCartridge ext:cart_135 .
+ext:cart_135 ext:hasYield ext:yield_135 .
+ext:lx_pr_135 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_136 a ext:LaserPrinter .
+ext:lx_pr_136 rdfs:label "Lex-136" .
+
+ext:cart_136 a ext:Cartridge .
+ext:cart_136 rdfs:label "E136A11E" .
+
+ext:yield_136 a ext:Yield .
+ext:yield_136 rdfs:label "2500 pages" .
+
+ext:lx_pr_136 ext:usesCartridge ext:cart_136 .
+ext:cart_136 ext:hasYield ext:yield_136 .
+ext:lx_pr_136 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_137 a ext:LaserPrinter .
+ext:lx_pr_137 rdfs:label "Lex-137" .
+
+ext:cart_137 a ext:Cartridge .
+ext:cart_137 rdfs:label "E137A11E" .
+
+ext:yield_137 a ext:Yield .
+ext:yield_137 rdfs:label "3500 pages" .
+
+ext:lx_pr_137 ext:usesCartridge ext:cart_137 .
+ext:cart_137 ext:hasYield ext:yield_137 .
+ext:lx_pr_137 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_138 a ext:LaserPrinter .
+ext:lx_pr_138 rdfs:label "Lex-138" .
+
+ext:cart_138 a ext:Cartridge .
+ext:cart_138 rdfs:label "E138A11E" .
+
+ext:yield_138 a ext:Yield .
+ext:yield_138 rdfs:label "6000 pages" .
+
+ext:lx_pr_138 ext:usesCartridge ext:cart_138 .
+ext:cart_138 ext:hasYield ext:yield_138 .
+ext:lx_pr_138 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_139 a ext:LaserPrinter .
+ext:lx_pr_139 rdfs:label "Lex-139" .
+
+ext:cart_139 a ext:Cartridge .
+ext:cart_139 rdfs:label "E139A11E" .
+
+ext:yield_139 a ext:Yield .
+ext:yield_139 rdfs:label "9000 pages" .
+
+ext:lx_pr_139 ext:usesCartridge ext:cart_139 .
+ext:cart_139 ext:hasYield ext:yield_139 .
+ext:lx_pr_139 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_140 a ext:LaserPrinter .
+ext:lx_pr_140 rdfs:label "Lex-140" .
+
+ext:cart_140 a ext:Cartridge .
+ext:cart_140 rdfs:label "E140A11E" .
+
+ext:yield_140 a ext:Yield .
+ext:yield_140 rdfs:label "1500 pages" .
+
+ext:lx_pr_140 ext:usesCartridge ext:cart_140 .
+ext:cart_140 ext:hasYield ext:yield_140 .
+ext:lx_pr_140 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_141 a ext:LaserPrinter .
+ext:lx_pr_141 rdfs:label "Lex-141" .
+
+ext:cart_141 a ext:Cartridge .
+ext:cart_141 rdfs:label "E141A11E" .
+
+ext:yield_141 a ext:Yield .
+ext:yield_141 rdfs:label "2500 pages" .
+
+ext:lx_pr_141 ext:usesCartridge ext:cart_141 .
+ext:cart_141 ext:hasYield ext:yield_141 .
+ext:lx_pr_141 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_142 a ext:LaserPrinter .
+ext:lx_pr_142 rdfs:label "Lex-142" .
+
+ext:cart_142 a ext:Cartridge .
+ext:cart_142 rdfs:label "E142A11E" .
+
+ext:yield_142 a ext:Yield .
+ext:yield_142 rdfs:label "3500 pages" .
+
+ext:lx_pr_142 ext:usesCartridge ext:cart_142 .
+ext:cart_142 ext:hasYield ext:yield_142 .
+ext:lx_pr_142 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_143 a ext:LaserPrinter .
+ext:lx_pr_143 rdfs:label "Lex-143" .
+
+ext:cart_143 a ext:Cartridge .
+ext:cart_143 rdfs:label "E143A11E" .
+
+ext:yield_143 a ext:Yield .
+ext:yield_143 rdfs:label "6000 pages" .
+
+ext:lx_pr_143 ext:usesCartridge ext:cart_143 .
+ext:cart_143 ext:hasYield ext:yield_143 .
+ext:lx_pr_143 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_144 a ext:LaserPrinter .
+ext:lx_pr_144 rdfs:label "Lex-144" .
+
+ext:cart_144 a ext:Cartridge .
+ext:cart_144 rdfs:label "E144A11E" .
+
+ext:yield_144 a ext:Yield .
+ext:yield_144 rdfs:label "9000 pages" .
+
+ext:lx_pr_144 ext:usesCartridge ext:cart_144 .
+ext:cart_144 ext:hasYield ext:yield_144 .
+ext:lx_pr_144 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_145 a ext:LaserPrinter .
+ext:lx_pr_145 rdfs:label "Lex-145" .
+
+ext:cart_145 a ext:Cartridge .
+ext:cart_145 rdfs:label "E145A11E" .
+
+ext:yield_145 a ext:Yield .
+ext:yield_145 rdfs:label "1500 pages" .
+
+ext:lx_pr_145 ext:usesCartridge ext:cart_145 .
+ext:cart_145 ext:hasYield ext:yield_145 .
+ext:lx_pr_145 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_146 a ext:LaserPrinter .
+ext:lx_pr_146 rdfs:label "Lex-146" .
+
+ext:cart_146 a ext:Cartridge .
+ext:cart_146 rdfs:label "E146A11E" .
+
+ext:yield_146 a ext:Yield .
+ext:yield_146 rdfs:label "2500 pages" .
+
+ext:lx_pr_146 ext:usesCartridge ext:cart_146 .
+ext:cart_146 ext:hasYield ext:yield_146 .
+ext:lx_pr_146 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_147 a ext:LaserPrinter .
+ext:lx_pr_147 rdfs:label "Lex-147" .
+
+ext:cart_147 a ext:Cartridge .
+ext:cart_147 rdfs:label "E147A11E" .
+
+ext:yield_147 a ext:Yield .
+ext:yield_147 rdfs:label "3500 pages" .
+
+ext:lx_pr_147 ext:usesCartridge ext:cart_147 .
+ext:cart_147 ext:hasYield ext:yield_147 .
+ext:lx_pr_147 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_148 a ext:LaserPrinter .
+ext:lx_pr_148 rdfs:label "Lex-148" .
+
+ext:cart_148 a ext:Cartridge .
+ext:cart_148 rdfs:label "E148A11E" .
+
+ext:yield_148 a ext:Yield .
+ext:yield_148 rdfs:label "6000 pages" .
+
+ext:lx_pr_148 ext:usesCartridge ext:cart_148 .
+ext:cart_148 ext:hasYield ext:yield_148 .
+ext:lx_pr_148 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_149 a ext:LaserPrinter .
+ext:lx_pr_149 rdfs:label "Lex-149" .
+
+ext:cart_149 a ext:Cartridge .
+ext:cart_149 rdfs:label "E149A11E" .
+
+ext:yield_149 a ext:Yield .
+ext:yield_149 rdfs:label "9000 pages" .
+
+ext:lx_pr_149 ext:usesCartridge ext:cart_149 .
+ext:cart_149 ext:hasYield ext:yield_149 .
+ext:lx_pr_149 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_150 a ext:LaserPrinter .
+ext:lx_pr_150 rdfs:label "Lex-150" .
+
+ext:cart_150 a ext:Cartridge .
+ext:cart_150 rdfs:label "E150A11E" .
+
+ext:yield_150 a ext:Yield .
+ext:yield_150 rdfs:label "1500 pages" .
+
+ext:lx_pr_150 ext:usesCartridge ext:cart_150 .
+ext:cart_150 ext:hasYield ext:yield_150 .
+ext:lx_pr_150 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_151 a ext:LaserPrinter .
+ext:lx_pr_151 rdfs:label "Lex-151" .
+
+ext:cart_151 a ext:Cartridge .
+ext:cart_151 rdfs:label "E151A11E" .
+
+ext:yield_151 a ext:Yield .
+ext:yield_151 rdfs:label "2500 pages" .
+
+ext:lx_pr_151 ext:usesCartridge ext:cart_151 .
+ext:cart_151 ext:hasYield ext:yield_151 .
+ext:lx_pr_151 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_152 a ext:LaserPrinter .
+ext:lx_pr_152 rdfs:label "Lex-152" .
+
+ext:cart_152 a ext:Cartridge .
+ext:cart_152 rdfs:label "E152A11E" .
+
+ext:yield_152 a ext:Yield .
+ext:yield_152 rdfs:label "3500 pages" .
+
+ext:lx_pr_152 ext:usesCartridge ext:cart_152 .
+ext:cart_152 ext:hasYield ext:yield_152 .
+ext:lx_pr_152 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_153 a ext:LaserPrinter .
+ext:lx_pr_153 rdfs:label "Lex-153" .
+
+ext:cart_153 a ext:Cartridge .
+ext:cart_153 rdfs:label "E153A11E" .
+
+ext:yield_153 a ext:Yield .
+ext:yield_153 rdfs:label "6000 pages" .
+
+ext:lx_pr_153 ext:usesCartridge ext:cart_153 .
+ext:cart_153 ext:hasYield ext:yield_153 .
+ext:lx_pr_153 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_154 a ext:LaserPrinter .
+ext:lx_pr_154 rdfs:label "Lex-154" .
+
+ext:cart_154 a ext:Cartridge .
+ext:cart_154 rdfs:label "E154A11E" .
+
+ext:yield_154 a ext:Yield .
+ext:yield_154 rdfs:label "9000 pages" .
+
+ext:lx_pr_154 ext:usesCartridge ext:cart_154 .
+ext:cart_154 ext:hasYield ext:yield_154 .
+ext:lx_pr_154 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_155 a ext:LaserPrinter .
+ext:lx_pr_155 rdfs:label "Lex-155" .
+
+ext:cart_155 a ext:Cartridge .
+ext:cart_155 rdfs:label "E155A11E" .
+
+ext:yield_155 a ext:Yield .
+ext:yield_155 rdfs:label "1500 pages" .
+
+ext:lx_pr_155 ext:usesCartridge ext:cart_155 .
+ext:cart_155 ext:hasYield ext:yield_155 .
+ext:lx_pr_155 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_156 a ext:LaserPrinter .
+ext:lx_pr_156 rdfs:label "Lex-156" .
+
+ext:cart_156 a ext:Cartridge .
+ext:cart_156 rdfs:label "E156A11E" .
+
+ext:yield_156 a ext:Yield .
+ext:yield_156 rdfs:label "2500 pages" .
+
+ext:lx_pr_156 ext:usesCartridge ext:cart_156 .
+ext:cart_156 ext:hasYield ext:yield_156 .
+ext:lx_pr_156 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_157 a ext:LaserPrinter .
+ext:lx_pr_157 rdfs:label "Lex-157" .
+
+ext:cart_157 a ext:Cartridge .
+ext:cart_157 rdfs:label "E157A11E" .
+
+ext:yield_157 a ext:Yield .
+ext:yield_157 rdfs:label "3500 pages" .
+
+ext:lx_pr_157 ext:usesCartridge ext:cart_157 .
+ext:cart_157 ext:hasYield ext:yield_157 .
+ext:lx_pr_157 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_158 a ext:LaserPrinter .
+ext:lx_pr_158 rdfs:label "Lex-158" .
+
+ext:cart_158 a ext:Cartridge .
+ext:cart_158 rdfs:label "E158A11E" .
+
+ext:yield_158 a ext:Yield .
+ext:yield_158 rdfs:label "6000 pages" .
+
+ext:lx_pr_158 ext:usesCartridge ext:cart_158 .
+ext:cart_158 ext:hasYield ext:yield_158 .
+ext:lx_pr_158 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_159 a ext:LaserPrinter .
+ext:lx_pr_159 rdfs:label "Lex-159" .
+
+ext:cart_159 a ext:Cartridge .
+ext:cart_159 rdfs:label "E159A11E" .
+
+ext:yield_159 a ext:Yield .
+ext:yield_159 rdfs:label "9000 pages" .
+
+ext:lx_pr_159 ext:usesCartridge ext:cart_159 .
+ext:cart_159 ext:hasYield ext:yield_159 .
+ext:lx_pr_159 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_160 a ext:LaserPrinter .
+ext:lx_pr_160 rdfs:label "Lex-160" .
+
+ext:cart_160 a ext:Cartridge .
+ext:cart_160 rdfs:label "E160A11E" .
+
+ext:yield_160 a ext:Yield .
+ext:yield_160 rdfs:label "1500 pages" .
+
+ext:lx_pr_160 ext:usesCartridge ext:cart_160 .
+ext:cart_160 ext:hasYield ext:yield_160 .
+ext:lx_pr_160 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_161 a ext:LaserPrinter .
+ext:lx_pr_161 rdfs:label "Lex-161" .
+
+ext:cart_161 a ext:Cartridge .
+ext:cart_161 rdfs:label "E161A11E" .
+
+ext:yield_161 a ext:Yield .
+ext:yield_161 rdfs:label "2500 pages" .
+
+ext:lx_pr_161 ext:usesCartridge ext:cart_161 .
+ext:cart_161 ext:hasYield ext:yield_161 .
+ext:lx_pr_161 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_162 a ext:LaserPrinter .
+ext:lx_pr_162 rdfs:label "Lex-162" .
+
+ext:cart_162 a ext:Cartridge .
+ext:cart_162 rdfs:label "E162A11E" .
+
+ext:yield_162 a ext:Yield .
+ext:yield_162 rdfs:label "3500 pages" .
+
+ext:lx_pr_162 ext:usesCartridge ext:cart_162 .
+ext:cart_162 ext:hasYield ext:yield_162 .
+ext:lx_pr_162 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_163 a ext:LaserPrinter .
+ext:lx_pr_163 rdfs:label "Lex-163" .
+
+ext:cart_163 a ext:Cartridge .
+ext:cart_163 rdfs:label "E163A11E" .
+
+ext:yield_163 a ext:Yield .
+ext:yield_163 rdfs:label "6000 pages" .
+
+ext:lx_pr_163 ext:usesCartridge ext:cart_163 .
+ext:cart_163 ext:hasYield ext:yield_163 .
+ext:lx_pr_163 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_164 a ext:LaserPrinter .
+ext:lx_pr_164 rdfs:label "Lex-164" .
+
+ext:cart_164 a ext:Cartridge .
+ext:cart_164 rdfs:label "E164A11E" .
+
+ext:yield_164 a ext:Yield .
+ext:yield_164 rdfs:label "9000 pages" .
+
+ext:lx_pr_164 ext:usesCartridge ext:cart_164 .
+ext:cart_164 ext:hasYield ext:yield_164 .
+ext:lx_pr_164 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_165 a ext:LaserPrinter .
+ext:lx_pr_165 rdfs:label "Lex-165" .
+
+ext:cart_165 a ext:Cartridge .
+ext:cart_165 rdfs:label "E165A11E" .
+
+ext:yield_165 a ext:Yield .
+ext:yield_165 rdfs:label "1500 pages" .
+
+ext:lx_pr_165 ext:usesCartridge ext:cart_165 .
+ext:cart_165 ext:hasYield ext:yield_165 .
+ext:lx_pr_165 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_166 a ext:LaserPrinter .
+ext:lx_pr_166 rdfs:label "Lex-166" .
+
+ext:cart_166 a ext:Cartridge .
+ext:cart_166 rdfs:label "E166A11E" .
+
+ext:yield_166 a ext:Yield .
+ext:yield_166 rdfs:label "2500 pages" .
+
+ext:lx_pr_166 ext:usesCartridge ext:cart_166 .
+ext:cart_166 ext:hasYield ext:yield_166 .
+ext:lx_pr_166 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_167 a ext:LaserPrinter .
+ext:lx_pr_167 rdfs:label "Lex-167" .
+
+ext:cart_167 a ext:Cartridge .
+ext:cart_167 rdfs:label "E167A11E" .
+
+ext:yield_167 a ext:Yield .
+ext:yield_167 rdfs:label "3500 pages" .
+
+ext:lx_pr_167 ext:usesCartridge ext:cart_167 .
+ext:cart_167 ext:hasYield ext:yield_167 .
+ext:lx_pr_167 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_168 a ext:LaserPrinter .
+ext:lx_pr_168 rdfs:label "Lex-168" .
+
+ext:cart_168 a ext:Cartridge .
+ext:cart_168 rdfs:label "E168A11E" .
+
+ext:yield_168 a ext:Yield .
+ext:yield_168 rdfs:label "6000 pages" .
+
+ext:lx_pr_168 ext:usesCartridge ext:cart_168 .
+ext:cart_168 ext:hasYield ext:yield_168 .
+ext:lx_pr_168 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_169 a ext:LaserPrinter .
+ext:lx_pr_169 rdfs:label "Lex-169" .
+
+ext:cart_169 a ext:Cartridge .
+ext:cart_169 rdfs:label "E169A11E" .
+
+ext:yield_169 a ext:Yield .
+ext:yield_169 rdfs:label "9000 pages" .
+
+ext:lx_pr_169 ext:usesCartridge ext:cart_169 .
+ext:cart_169 ext:hasYield ext:yield_169 .
+ext:lx_pr_169 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_170 a ext:LaserPrinter .
+ext:lx_pr_170 rdfs:label "Lex-170" .
+
+ext:cart_170 a ext:Cartridge .
+ext:cart_170 rdfs:label "E170A11E" .
+
+ext:yield_170 a ext:Yield .
+ext:yield_170 rdfs:label "1500 pages" .
+
+ext:lx_pr_170 ext:usesCartridge ext:cart_170 .
+ext:cart_170 ext:hasYield ext:yield_170 .
+ext:lx_pr_170 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_171 a ext:LaserPrinter .
+ext:lx_pr_171 rdfs:label "Lex-171" .
+
+ext:cart_171 a ext:Cartridge .
+ext:cart_171 rdfs:label "E171A11E" .
+
+ext:yield_171 a ext:Yield .
+ext:yield_171 rdfs:label "2500 pages" .
+
+ext:lx_pr_171 ext:usesCartridge ext:cart_171 .
+ext:cart_171 ext:hasYield ext:yield_171 .
+ext:lx_pr_171 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_172 a ext:LaserPrinter .
+ext:lx_pr_172 rdfs:label "Lex-172" .
+
+ext:cart_172 a ext:Cartridge .
+ext:cart_172 rdfs:label "E172A11E" .
+
+ext:yield_172 a ext:Yield .
+ext:yield_172 rdfs:label "3500 pages" .
+
+ext:lx_pr_172 ext:usesCartridge ext:cart_172 .
+ext:cart_172 ext:hasYield ext:yield_172 .
+ext:lx_pr_172 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_173 a ext:LaserPrinter .
+ext:lx_pr_173 rdfs:label "Lex-173" .
+
+ext:cart_173 a ext:Cartridge .
+ext:cart_173 rdfs:label "E173A11E" .
+
+ext:yield_173 a ext:Yield .
+ext:yield_173 rdfs:label "6000 pages" .
+
+ext:lx_pr_173 ext:usesCartridge ext:cart_173 .
+ext:cart_173 ext:hasYield ext:yield_173 .
+ext:lx_pr_173 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_174 a ext:LaserPrinter .
+ext:lx_pr_174 rdfs:label "Lex-174" .
+
+ext:cart_174 a ext:Cartridge .
+ext:cart_174 rdfs:label "E174A11E" .
+
+ext:yield_174 a ext:Yield .
+ext:yield_174 rdfs:label "9000 pages" .
+
+ext:lx_pr_174 ext:usesCartridge ext:cart_174 .
+ext:cart_174 ext:hasYield ext:yield_174 .
+ext:lx_pr_174 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_175 a ext:LaserPrinter .
+ext:lx_pr_175 rdfs:label "Lex-175" .
+
+ext:cart_175 a ext:Cartridge .
+ext:cart_175 rdfs:label "E175A11E" .
+
+ext:yield_175 a ext:Yield .
+ext:yield_175 rdfs:label "1500 pages" .
+
+ext:lx_pr_175 ext:usesCartridge ext:cart_175 .
+ext:cart_175 ext:hasYield ext:yield_175 .
+ext:lx_pr_175 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_176 a ext:LaserPrinter .
+ext:lx_pr_176 rdfs:label "Lex-176" .
+
+ext:cart_176 a ext:Cartridge .
+ext:cart_176 rdfs:label "E176A11E" .
+
+ext:yield_176 a ext:Yield .
+ext:yield_176 rdfs:label "2500 pages" .
+
+ext:lx_pr_176 ext:usesCartridge ext:cart_176 .
+ext:cart_176 ext:hasYield ext:yield_176 .
+ext:lx_pr_176 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_177 a ext:LaserPrinter .
+ext:lx_pr_177 rdfs:label "Lex-177" .
+
+ext:cart_177 a ext:Cartridge .
+ext:cart_177 rdfs:label "E177A11E" .
+
+ext:yield_177 a ext:Yield .
+ext:yield_177 rdfs:label "3500 pages" .
+
+ext:lx_pr_177 ext:usesCartridge ext:cart_177 .
+ext:cart_177 ext:hasYield ext:yield_177 .
+ext:lx_pr_177 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_178 a ext:LaserPrinter .
+ext:lx_pr_178 rdfs:label "Lex-178" .
+
+ext:cart_178 a ext:Cartridge .
+ext:cart_178 rdfs:label "E178A11E" .
+
+ext:yield_178 a ext:Yield .
+ext:yield_178 rdfs:label "6000 pages" .
+
+ext:lx_pr_178 ext:usesCartridge ext:cart_178 .
+ext:cart_178 ext:hasYield ext:yield_178 .
+ext:lx_pr_178 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_179 a ext:LaserPrinter .
+ext:lx_pr_179 rdfs:label "Lex-179" .
+
+ext:cart_179 a ext:Cartridge .
+ext:cart_179 rdfs:label "E179A11E" .
+
+ext:yield_179 a ext:Yield .
+ext:yield_179 rdfs:label "9000 pages" .
+
+ext:lx_pr_179 ext:usesCartridge ext:cart_179 .
+ext:cart_179 ext:hasYield ext:yield_179 .
+ext:lx_pr_179 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_180 a ext:LaserPrinter .
+ext:lx_pr_180 rdfs:label "Lex-180" .
+
+ext:cart_180 a ext:Cartridge .
+ext:cart_180 rdfs:label "E180A11E" .
+
+ext:yield_180 a ext:Yield .
+ext:yield_180 rdfs:label "1500 pages" .
+
+ext:lx_pr_180 ext:usesCartridge ext:cart_180 .
+ext:cart_180 ext:hasYield ext:yield_180 .
+ext:lx_pr_180 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_181 a ext:LaserPrinter .
+ext:lx_pr_181 rdfs:label "Lex-181" .
+
+ext:cart_181 a ext:Cartridge .
+ext:cart_181 rdfs:label "E181A11E" .
+
+ext:yield_181 a ext:Yield .
+ext:yield_181 rdfs:label "2500 pages" .
+
+ext:lx_pr_181 ext:usesCartridge ext:cart_181 .
+ext:cart_181 ext:hasYield ext:yield_181 .
+ext:lx_pr_181 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_182 a ext:LaserPrinter .
+ext:lx_pr_182 rdfs:label "Lex-182" .
+
+ext:cart_182 a ext:Cartridge .
+ext:cart_182 rdfs:label "E182A11E" .
+
+ext:yield_182 a ext:Yield .
+ext:yield_182 rdfs:label "3500 pages" .
+
+ext:lx_pr_182 ext:usesCartridge ext:cart_182 .
+ext:cart_182 ext:hasYield ext:yield_182 .
+ext:lx_pr_182 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_183 a ext:LaserPrinter .
+ext:lx_pr_183 rdfs:label "Lex-183" .
+
+ext:cart_183 a ext:Cartridge .
+ext:cart_183 rdfs:label "E183A11E" .
+
+ext:yield_183 a ext:Yield .
+ext:yield_183 rdfs:label "6000 pages" .
+
+ext:lx_pr_183 ext:usesCartridge ext:cart_183 .
+ext:cart_183 ext:hasYield ext:yield_183 .
+ext:lx_pr_183 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_184 a ext:LaserPrinter .
+ext:lx_pr_184 rdfs:label "Lex-184" .
+
+ext:cart_184 a ext:Cartridge .
+ext:cart_184 rdfs:label "E184A11E" .
+
+ext:yield_184 a ext:Yield .
+ext:yield_184 rdfs:label "9000 pages" .
+
+ext:lx_pr_184 ext:usesCartridge ext:cart_184 .
+ext:cart_184 ext:hasYield ext:yield_184 .
+ext:lx_pr_184 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_185 a ext:LaserPrinter .
+ext:lx_pr_185 rdfs:label "Lex-185" .
+
+ext:cart_185 a ext:Cartridge .
+ext:cart_185 rdfs:label "E185A11E" .
+
+ext:yield_185 a ext:Yield .
+ext:yield_185 rdfs:label "1500 pages" .
+
+ext:lx_pr_185 ext:usesCartridge ext:cart_185 .
+ext:cart_185 ext:hasYield ext:yield_185 .
+ext:lx_pr_185 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_186 a ext:LaserPrinter .
+ext:lx_pr_186 rdfs:label "Lex-186" .
+
+ext:cart_186 a ext:Cartridge .
+ext:cart_186 rdfs:label "E186A11E" .
+
+ext:yield_186 a ext:Yield .
+ext:yield_186 rdfs:label "2500 pages" .
+
+ext:lx_pr_186 ext:usesCartridge ext:cart_186 .
+ext:cart_186 ext:hasYield ext:yield_186 .
+ext:lx_pr_186 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_187 a ext:LaserPrinter .
+ext:lx_pr_187 rdfs:label "Lex-187" .
+
+ext:cart_187 a ext:Cartridge .
+ext:cart_187 rdfs:label "E187A11E" .
+
+ext:yield_187 a ext:Yield .
+ext:yield_187 rdfs:label "3500 pages" .
+
+ext:lx_pr_187 ext:usesCartridge ext:cart_187 .
+ext:cart_187 ext:hasYield ext:yield_187 .
+ext:lx_pr_187 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_188 a ext:LaserPrinter .
+ext:lx_pr_188 rdfs:label "Lex-188" .
+
+ext:cart_188 a ext:Cartridge .
+ext:cart_188 rdfs:label "E188A11E" .
+
+ext:yield_188 a ext:Yield .
+ext:yield_188 rdfs:label "6000 pages" .
+
+ext:lx_pr_188 ext:usesCartridge ext:cart_188 .
+ext:cart_188 ext:hasYield ext:yield_188 .
+ext:lx_pr_188 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_189 a ext:LaserPrinter .
+ext:lx_pr_189 rdfs:label "Lex-189" .
+
+ext:cart_189 a ext:Cartridge .
+ext:cart_189 rdfs:label "E189A11E" .
+
+ext:yield_189 a ext:Yield .
+ext:yield_189 rdfs:label "9000 pages" .
+
+ext:lx_pr_189 ext:usesCartridge ext:cart_189 .
+ext:cart_189 ext:hasYield ext:yield_189 .
+ext:lx_pr_189 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_190 a ext:LaserPrinter .
+ext:lx_pr_190 rdfs:label "Lex-190" .
+
+ext:cart_190 a ext:Cartridge .
+ext:cart_190 rdfs:label "E190A11E" .
+
+ext:yield_190 a ext:Yield .
+ext:yield_190 rdfs:label "1500 pages" .
+
+ext:lx_pr_190 ext:usesCartridge ext:cart_190 .
+ext:cart_190 ext:hasYield ext:yield_190 .
+ext:lx_pr_190 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_191 a ext:LaserPrinter .
+ext:lx_pr_191 rdfs:label "Lex-191" .
+
+ext:cart_191 a ext:Cartridge .
+ext:cart_191 rdfs:label "E191A11E" .
+
+ext:yield_191 a ext:Yield .
+ext:yield_191 rdfs:label "2500 pages" .
+
+ext:lx_pr_191 ext:usesCartridge ext:cart_191 .
+ext:cart_191 ext:hasYield ext:yield_191 .
+ext:lx_pr_191 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_192 a ext:LaserPrinter .
+ext:lx_pr_192 rdfs:label "Lex-192" .
+
+ext:cart_192 a ext:Cartridge .
+ext:cart_192 rdfs:label "E192A11E" .
+
+ext:yield_192 a ext:Yield .
+ext:yield_192 rdfs:label "3500 pages" .
+
+ext:lx_pr_192 ext:usesCartridge ext:cart_192 .
+ext:cart_192 ext:hasYield ext:yield_192 .
+ext:lx_pr_192 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_193 a ext:LaserPrinter .
+ext:lx_pr_193 rdfs:label "Lex-193" .
+
+ext:cart_193 a ext:Cartridge .
+ext:cart_193 rdfs:label "E193A11E" .
+
+ext:yield_193 a ext:Yield .
+ext:yield_193 rdfs:label "6000 pages" .
+
+ext:lx_pr_193 ext:usesCartridge ext:cart_193 .
+ext:cart_193 ext:hasYield ext:yield_193 .
+ext:lx_pr_193 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_194 a ext:LaserPrinter .
+ext:lx_pr_194 rdfs:label "Lex-194" .
+
+ext:cart_194 a ext:Cartridge .
+ext:cart_194 rdfs:label "E194A11E" .
+
+ext:yield_194 a ext:Yield .
+ext:yield_194 rdfs:label "9000 pages" .
+
+ext:lx_pr_194 ext:usesCartridge ext:cart_194 .
+ext:cart_194 ext:hasYield ext:yield_194 .
+ext:lx_pr_194 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_195 a ext:LaserPrinter .
+ext:lx_pr_195 rdfs:label "Lex-195" .
+
+ext:cart_195 a ext:Cartridge .
+ext:cart_195 rdfs:label "E195A11E" .
+
+ext:yield_195 a ext:Yield .
+ext:yield_195 rdfs:label "1500 pages" .
+
+ext:lx_pr_195 ext:usesCartridge ext:cart_195 .
+ext:cart_195 ext:hasYield ext:yield_195 .
+ext:lx_pr_195 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_196 a ext:LaserPrinter .
+ext:lx_pr_196 rdfs:label "Lex-196" .
+
+ext:cart_196 a ext:Cartridge .
+ext:cart_196 rdfs:label "E196A11E" .
+
+ext:yield_196 a ext:Yield .
+ext:yield_196 rdfs:label "2500 pages" .
+
+ext:lx_pr_196 ext:usesCartridge ext:cart_196 .
+ext:cart_196 ext:hasYield ext:yield_196 .
+ext:lx_pr_196 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_197 a ext:LaserPrinter .
+ext:lx_pr_197 rdfs:label "Lex-197" .
+
+ext:cart_197 a ext:Cartridge .
+ext:cart_197 rdfs:label "E197A11E" .
+
+ext:yield_197 a ext:Yield .
+ext:yield_197 rdfs:label "3500 pages" .
+
+ext:lx_pr_197 ext:usesCartridge ext:cart_197 .
+ext:cart_197 ext:hasYield ext:yield_197 .
+ext:lx_pr_197 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_198 a ext:LaserPrinter .
+ext:lx_pr_198 rdfs:label "Lex-198" .
+
+ext:cart_198 a ext:Cartridge .
+ext:cart_198 rdfs:label "E198A11E" .
+
+ext:yield_198 a ext:Yield .
+ext:yield_198 rdfs:label "6000 pages" .
+
+ext:lx_pr_198 ext:usesCartridge ext:cart_198 .
+ext:cart_198 ext:hasYield ext:yield_198 .
+ext:lx_pr_198 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_199 a ext:LaserPrinter .
+ext:lx_pr_199 rdfs:label "Lex-199" .
+
+ext:cart_199 a ext:Cartridge .
+ext:cart_199 rdfs:label "E199A11E" .
+
+ext:yield_199 a ext:Yield .
+ext:yield_199 rdfs:label "9000 pages" .
+
+ext:lx_pr_199 ext:usesCartridge ext:cart_199 .
+ext:cart_199 ext:hasYield ext:yield_199 .
+ext:lx_pr_199 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_200 a ext:LaserPrinter .
+ext:lx_pr_200 rdfs:label "Lex-200" .
+
+ext:cart_200 a ext:Cartridge .
+ext:cart_200 rdfs:label "E200A11E" .
+
+ext:yield_200 a ext:Yield .
+ext:yield_200 rdfs:label "1500 pages" .
+
+ext:lx_pr_200 ext:usesCartridge ext:cart_200 .
+ext:cart_200 ext:hasYield ext:yield_200 .
+ext:lx_pr_200 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_201 a ext:LaserPrinter .
+ext:lx_pr_201 rdfs:label "Lex-201" .
+
+ext:cart_201 a ext:Cartridge .
+ext:cart_201 rdfs:label "E201A11E" .
+
+ext:yield_201 a ext:Yield .
+ext:yield_201 rdfs:label "2500 pages" .
+
+ext:lx_pr_201 ext:usesCartridge ext:cart_201 .
+ext:cart_201 ext:hasYield ext:yield_201 .
+ext:lx_pr_201 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_202 a ext:LaserPrinter .
+ext:lx_pr_202 rdfs:label "Lex-202" .
+
+ext:cart_202 a ext:Cartridge .
+ext:cart_202 rdfs:label "E202A11E" .
+
+ext:yield_202 a ext:Yield .
+ext:yield_202 rdfs:label "3500 pages" .
+
+ext:lx_pr_202 ext:usesCartridge ext:cart_202 .
+ext:cart_202 ext:hasYield ext:yield_202 .
+ext:lx_pr_202 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_203 a ext:LaserPrinter .
+ext:lx_pr_203 rdfs:label "Lex-203" .
+
+ext:cart_203 a ext:Cartridge .
+ext:cart_203 rdfs:label "E203A11E" .
+
+ext:yield_203 a ext:Yield .
+ext:yield_203 rdfs:label "6000 pages" .
+
+ext:lx_pr_203 ext:usesCartridge ext:cart_203 .
+ext:cart_203 ext:hasYield ext:yield_203 .
+ext:lx_pr_203 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_204 a ext:LaserPrinter .
+ext:lx_pr_204 rdfs:label "Lex-204" .
+
+ext:cart_204 a ext:Cartridge .
+ext:cart_204 rdfs:label "E204A11E" .
+
+ext:yield_204 a ext:Yield .
+ext:yield_204 rdfs:label "9000 pages" .
+
+ext:lx_pr_204 ext:usesCartridge ext:cart_204 .
+ext:cart_204 ext:hasYield ext:yield_204 .
+ext:lx_pr_204 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_205 a ext:LaserPrinter .
+ext:lx_pr_205 rdfs:label "Lex-205" .
+
+ext:cart_205 a ext:Cartridge .
+ext:cart_205 rdfs:label "E205A11E" .
+
+ext:yield_205 a ext:Yield .
+ext:yield_205 rdfs:label "1500 pages" .
+
+ext:lx_pr_205 ext:usesCartridge ext:cart_205 .
+ext:cart_205 ext:hasYield ext:yield_205 .
+ext:lx_pr_205 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_206 a ext:LaserPrinter .
+ext:lx_pr_206 rdfs:label "Lex-206" .
+
+ext:cart_206 a ext:Cartridge .
+ext:cart_206 rdfs:label "E206A11E" .
+
+ext:yield_206 a ext:Yield .
+ext:yield_206 rdfs:label "2500 pages" .
+
+ext:lx_pr_206 ext:usesCartridge ext:cart_206 .
+ext:cart_206 ext:hasYield ext:yield_206 .
+ext:lx_pr_206 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_207 a ext:LaserPrinter .
+ext:lx_pr_207 rdfs:label "Lex-207" .
+
+ext:cart_207 a ext:Cartridge .
+ext:cart_207 rdfs:label "E207A11E" .
+
+ext:yield_207 a ext:Yield .
+ext:yield_207 rdfs:label "3500 pages" .
+
+ext:lx_pr_207 ext:usesCartridge ext:cart_207 .
+ext:cart_207 ext:hasYield ext:yield_207 .
+ext:lx_pr_207 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_208 a ext:LaserPrinter .
+ext:lx_pr_208 rdfs:label "Lex-208" .
+
+ext:cart_208 a ext:Cartridge .
+ext:cart_208 rdfs:label "E208A11E" .
+
+ext:yield_208 a ext:Yield .
+ext:yield_208 rdfs:label "6000 pages" .
+
+ext:lx_pr_208 ext:usesCartridge ext:cart_208 .
+ext:cart_208 ext:hasYield ext:yield_208 .
+ext:lx_pr_208 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_209 a ext:LaserPrinter .
+ext:lx_pr_209 rdfs:label "Lex-209" .
+
+ext:cart_209 a ext:Cartridge .
+ext:cart_209 rdfs:label "E209A11E" .
+
+ext:yield_209 a ext:Yield .
+ext:yield_209 rdfs:label "9000 pages" .
+
+ext:lx_pr_209 ext:usesCartridge ext:cart_209 .
+ext:cart_209 ext:hasYield ext:yield_209 .
+ext:lx_pr_209 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_210 a ext:LaserPrinter .
+ext:lx_pr_210 rdfs:label "Lex-210" .
+
+ext:cart_210 a ext:Cartridge .
+ext:cart_210 rdfs:label "E210A11E" .
+
+ext:yield_210 a ext:Yield .
+ext:yield_210 rdfs:label "1500 pages" .
+
+ext:lx_pr_210 ext:usesCartridge ext:cart_210 .
+ext:cart_210 ext:hasYield ext:yield_210 .
+ext:lx_pr_210 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_211 a ext:LaserPrinter .
+ext:lx_pr_211 rdfs:label "Lex-211" .
+
+ext:cart_211 a ext:Cartridge .
+ext:cart_211 rdfs:label "E211A11E" .
+
+ext:yield_211 a ext:Yield .
+ext:yield_211 rdfs:label "2500 pages" .
+
+ext:lx_pr_211 ext:usesCartridge ext:cart_211 .
+ext:cart_211 ext:hasYield ext:yield_211 .
+ext:lx_pr_211 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_212 a ext:LaserPrinter .
+ext:lx_pr_212 rdfs:label "Lex-212" .
+
+ext:cart_212 a ext:Cartridge .
+ext:cart_212 rdfs:label "E212A11E" .
+
+ext:yield_212 a ext:Yield .
+ext:yield_212 rdfs:label "3500 pages" .
+
+ext:lx_pr_212 ext:usesCartridge ext:cart_212 .
+ext:cart_212 ext:hasYield ext:yield_212 .
+ext:lx_pr_212 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_213 a ext:LaserPrinter .
+ext:lx_pr_213 rdfs:label "Lex-213" .
+
+ext:cart_213 a ext:Cartridge .
+ext:cart_213 rdfs:label "E213A11E" .
+
+ext:yield_213 a ext:Yield .
+ext:yield_213 rdfs:label "6000 pages" .
+
+ext:lx_pr_213 ext:usesCartridge ext:cart_213 .
+ext:cart_213 ext:hasYield ext:yield_213 .
+ext:lx_pr_213 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_214 a ext:LaserPrinter .
+ext:lx_pr_214 rdfs:label "Lex-214" .
+
+ext:cart_214 a ext:Cartridge .
+ext:cart_214 rdfs:label "E214A11E" .
+
+ext:yield_214 a ext:Yield .
+ext:yield_214 rdfs:label "9000 pages" .
+
+ext:lx_pr_214 ext:usesCartridge ext:cart_214 .
+ext:cart_214 ext:hasYield ext:yield_214 .
+ext:lx_pr_214 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_215 a ext:LaserPrinter .
+ext:lx_pr_215 rdfs:label "Lex-215" .
+
+ext:cart_215 a ext:Cartridge .
+ext:cart_215 rdfs:label "E215A11E" .
+
+ext:yield_215 a ext:Yield .
+ext:yield_215 rdfs:label "1500 pages" .
+
+ext:lx_pr_215 ext:usesCartridge ext:cart_215 .
+ext:cart_215 ext:hasYield ext:yield_215 .
+ext:lx_pr_215 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_216 a ext:LaserPrinter .
+ext:lx_pr_216 rdfs:label "Lex-216" .
+
+ext:cart_216 a ext:Cartridge .
+ext:cart_216 rdfs:label "E216A11E" .
+
+ext:yield_216 a ext:Yield .
+ext:yield_216 rdfs:label "2500 pages" .
+
+ext:lx_pr_216 ext:usesCartridge ext:cart_216 .
+ext:cart_216 ext:hasYield ext:yield_216 .
+ext:lx_pr_216 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_217 a ext:LaserPrinter .
+ext:lx_pr_217 rdfs:label "Lex-217" .
+
+ext:cart_217 a ext:Cartridge .
+ext:cart_217 rdfs:label "E217A11E" .
+
+ext:yield_217 a ext:Yield .
+ext:yield_217 rdfs:label "3500 pages" .
+
+ext:lx_pr_217 ext:usesCartridge ext:cart_217 .
+ext:cart_217 ext:hasYield ext:yield_217 .
+ext:lx_pr_217 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_218 a ext:LaserPrinter .
+ext:lx_pr_218 rdfs:label "Lex-218" .
+
+ext:cart_218 a ext:Cartridge .
+ext:cart_218 rdfs:label "E218A11E" .
+
+ext:yield_218 a ext:Yield .
+ext:yield_218 rdfs:label "6000 pages" .
+
+ext:lx_pr_218 ext:usesCartridge ext:cart_218 .
+ext:cart_218 ext:hasYield ext:yield_218 .
+ext:lx_pr_218 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_219 a ext:LaserPrinter .
+ext:lx_pr_219 rdfs:label "Lex-219" .
+
+ext:cart_219 a ext:Cartridge .
+ext:cart_219 rdfs:label "E219A11E" .
+
+ext:yield_219 a ext:Yield .
+ext:yield_219 rdfs:label "9000 pages" .
+
+ext:lx_pr_219 ext:usesCartridge ext:cart_219 .
+ext:cart_219 ext:hasYield ext:yield_219 .
+ext:lx_pr_219 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_220 a ext:LaserPrinter .
+ext:lx_pr_220 rdfs:label "Lex-220" .
+
+ext:cart_220 a ext:Cartridge .
+ext:cart_220 rdfs:label "E220A11E" .
+
+ext:yield_220 a ext:Yield .
+ext:yield_220 rdfs:label "1500 pages" .
+
+ext:lx_pr_220 ext:usesCartridge ext:cart_220 .
+ext:cart_220 ext:hasYield ext:yield_220 .
+ext:lx_pr_220 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_221 a ext:LaserPrinter .
+ext:lx_pr_221 rdfs:label "Lex-221" .
+
+ext:cart_221 a ext:Cartridge .
+ext:cart_221 rdfs:label "E221A11E" .
+
+ext:yield_221 a ext:Yield .
+ext:yield_221 rdfs:label "2500 pages" .
+
+ext:lx_pr_221 ext:usesCartridge ext:cart_221 .
+ext:cart_221 ext:hasYield ext:yield_221 .
+ext:lx_pr_221 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_222 a ext:LaserPrinter .
+ext:lx_pr_222 rdfs:label "Lex-222" .
+
+ext:cart_222 a ext:Cartridge .
+ext:cart_222 rdfs:label "E222A11E" .
+
+ext:yield_222 a ext:Yield .
+ext:yield_222 rdfs:label "3500 pages" .
+
+ext:lx_pr_222 ext:usesCartridge ext:cart_222 .
+ext:cart_222 ext:hasYield ext:yield_222 .
+ext:lx_pr_222 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_223 a ext:LaserPrinter .
+ext:lx_pr_223 rdfs:label "Lex-223" .
+
+ext:cart_223 a ext:Cartridge .
+ext:cart_223 rdfs:label "E223A11E" .
+
+ext:yield_223 a ext:Yield .
+ext:yield_223 rdfs:label "6000 pages" .
+
+ext:lx_pr_223 ext:usesCartridge ext:cart_223 .
+ext:cart_223 ext:hasYield ext:yield_223 .
+ext:lx_pr_223 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_224 a ext:LaserPrinter .
+ext:lx_pr_224 rdfs:label "Lex-224" .
+
+ext:cart_224 a ext:Cartridge .
+ext:cart_224 rdfs:label "E224A11E" .
+
+ext:yield_224 a ext:Yield .
+ext:yield_224 rdfs:label "9000 pages" .
+
+ext:lx_pr_224 ext:usesCartridge ext:cart_224 .
+ext:cart_224 ext:hasYield ext:yield_224 .
+ext:lx_pr_224 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_225 a ext:LaserPrinter .
+ext:lx_pr_225 rdfs:label "Lex-225" .
+
+ext:cart_225 a ext:Cartridge .
+ext:cart_225 rdfs:label "E225A11E" .
+
+ext:yield_225 a ext:Yield .
+ext:yield_225 rdfs:label "1500 pages" .
+
+ext:lx_pr_225 ext:usesCartridge ext:cart_225 .
+ext:cart_225 ext:hasYield ext:yield_225 .
+ext:lx_pr_225 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_226 a ext:LaserPrinter .
+ext:lx_pr_226 rdfs:label "Lex-226" .
+
+ext:cart_226 a ext:Cartridge .
+ext:cart_226 rdfs:label "E226A11E" .
+
+ext:yield_226 a ext:Yield .
+ext:yield_226 rdfs:label "2500 pages" .
+
+ext:lx_pr_226 ext:usesCartridge ext:cart_226 .
+ext:cart_226 ext:hasYield ext:yield_226 .
+ext:lx_pr_226 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_227 a ext:LaserPrinter .
+ext:lx_pr_227 rdfs:label "Lex-227" .
+
+ext:cart_227 a ext:Cartridge .
+ext:cart_227 rdfs:label "E227A11E" .
+
+ext:yield_227 a ext:Yield .
+ext:yield_227 rdfs:label "3500 pages" .
+
+ext:lx_pr_227 ext:usesCartridge ext:cart_227 .
+ext:cart_227 ext:hasYield ext:yield_227 .
+ext:lx_pr_227 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_228 a ext:LaserPrinter .
+ext:lx_pr_228 rdfs:label "Lex-228" .
+
+ext:cart_228 a ext:Cartridge .
+ext:cart_228 rdfs:label "E228A11E" .
+
+ext:yield_228 a ext:Yield .
+ext:yield_228 rdfs:label "6000 pages" .
+
+ext:lx_pr_228 ext:usesCartridge ext:cart_228 .
+ext:cart_228 ext:hasYield ext:yield_228 .
+ext:lx_pr_228 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_229 a ext:LaserPrinter .
+ext:lx_pr_229 rdfs:label "Lex-229" .
+
+ext:cart_229 a ext:Cartridge .
+ext:cart_229 rdfs:label "E229A11E" .
+
+ext:yield_229 a ext:Yield .
+ext:yield_229 rdfs:label "9000 pages" .
+
+ext:lx_pr_229 ext:usesCartridge ext:cart_229 .
+ext:cart_229 ext:hasYield ext:yield_229 .
+ext:lx_pr_229 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_230 a ext:LaserPrinter .
+ext:lx_pr_230 rdfs:label "Lex-230" .
+
+ext:cart_230 a ext:Cartridge .
+ext:cart_230 rdfs:label "E230A11E" .
+
+ext:yield_230 a ext:Yield .
+ext:yield_230 rdfs:label "1500 pages" .
+
+ext:lx_pr_230 ext:usesCartridge ext:cart_230 .
+ext:cart_230 ext:hasYield ext:yield_230 .
+ext:lx_pr_230 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_231 a ext:LaserPrinter .
+ext:lx_pr_231 rdfs:label "Lex-231" .
+
+ext:cart_231 a ext:Cartridge .
+ext:cart_231 rdfs:label "E231A11E" .
+
+ext:yield_231 a ext:Yield .
+ext:yield_231 rdfs:label "2500 pages" .
+
+ext:lx_pr_231 ext:usesCartridge ext:cart_231 .
+ext:cart_231 ext:hasYield ext:yield_231 .
+ext:lx_pr_231 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_232 a ext:LaserPrinter .
+ext:lx_pr_232 rdfs:label "Lex-232" .
+
+ext:cart_232 a ext:Cartridge .
+ext:cart_232 rdfs:label "E232A11E" .
+
+ext:yield_232 a ext:Yield .
+ext:yield_232 rdfs:label "3500 pages" .
+
+ext:lx_pr_232 ext:usesCartridge ext:cart_232 .
+ext:cart_232 ext:hasYield ext:yield_232 .
+ext:lx_pr_232 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_233 a ext:LaserPrinter .
+ext:lx_pr_233 rdfs:label "Lex-233" .
+
+ext:cart_233 a ext:Cartridge .
+ext:cart_233 rdfs:label "E233A11E" .
+
+ext:yield_233 a ext:Yield .
+ext:yield_233 rdfs:label "6000 pages" .
+
+ext:lx_pr_233 ext:usesCartridge ext:cart_233 .
+ext:cart_233 ext:hasYield ext:yield_233 .
+ext:lx_pr_233 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_234 a ext:LaserPrinter .
+ext:lx_pr_234 rdfs:label "Lex-234" .
+
+ext:cart_234 a ext:Cartridge .
+ext:cart_234 rdfs:label "E234A11E" .
+
+ext:yield_234 a ext:Yield .
+ext:yield_234 rdfs:label "9000 pages" .
+
+ext:lx_pr_234 ext:usesCartridge ext:cart_234 .
+ext:cart_234 ext:hasYield ext:yield_234 .
+ext:lx_pr_234 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_235 a ext:LaserPrinter .
+ext:lx_pr_235 rdfs:label "Lex-235" .
+
+ext:cart_235 a ext:Cartridge .
+ext:cart_235 rdfs:label "E235A11E" .
+
+ext:yield_235 a ext:Yield .
+ext:yield_235 rdfs:label "1500 pages" .
+
+ext:lx_pr_235 ext:usesCartridge ext:cart_235 .
+ext:cart_235 ext:hasYield ext:yield_235 .
+ext:lx_pr_235 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_236 a ext:LaserPrinter .
+ext:lx_pr_236 rdfs:label "Lex-236" .
+
+ext:cart_236 a ext:Cartridge .
+ext:cart_236 rdfs:label "E236A11E" .
+
+ext:yield_236 a ext:Yield .
+ext:yield_236 rdfs:label "2500 pages" .
+
+ext:lx_pr_236 ext:usesCartridge ext:cart_236 .
+ext:cart_236 ext:hasYield ext:yield_236 .
+ext:lx_pr_236 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_237 a ext:LaserPrinter .
+ext:lx_pr_237 rdfs:label "Lex-237" .
+
+ext:cart_237 a ext:Cartridge .
+ext:cart_237 rdfs:label "E237A11E" .
+
+ext:yield_237 a ext:Yield .
+ext:yield_237 rdfs:label "3500 pages" .
+
+ext:lx_pr_237 ext:usesCartridge ext:cart_237 .
+ext:cart_237 ext:hasYield ext:yield_237 .
+ext:lx_pr_237 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_238 a ext:LaserPrinter .
+ext:lx_pr_238 rdfs:label "Lex-238" .
+
+ext:cart_238 a ext:Cartridge .
+ext:cart_238 rdfs:label "E238A11E" .
+
+ext:yield_238 a ext:Yield .
+ext:yield_238 rdfs:label "6000 pages" .
+
+ext:lx_pr_238 ext:usesCartridge ext:cart_238 .
+ext:cart_238 ext:hasYield ext:yield_238 .
+ext:lx_pr_238 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_239 a ext:LaserPrinter .
+ext:lx_pr_239 rdfs:label "Lex-239" .
+
+ext:cart_239 a ext:Cartridge .
+ext:cart_239 rdfs:label "E239A11E" .
+
+ext:yield_239 a ext:Yield .
+ext:yield_239 rdfs:label "9000 pages" .
+
+ext:lx_pr_239 ext:usesCartridge ext:cart_239 .
+ext:cart_239 ext:hasYield ext:yield_239 .
+ext:lx_pr_239 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_240 a ext:LaserPrinter .
+ext:lx_pr_240 rdfs:label "Lex-240" .
+
+ext:cart_240 a ext:Cartridge .
+ext:cart_240 rdfs:label "E240A11E" .
+
+ext:yield_240 a ext:Yield .
+ext:yield_240 rdfs:label "1500 pages" .
+
+ext:lx_pr_240 ext:usesCartridge ext:cart_240 .
+ext:cart_240 ext:hasYield ext:yield_240 .
+ext:lx_pr_240 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_241 a ext:LaserPrinter .
+ext:lx_pr_241 rdfs:label "Lex-241" .
+
+ext:cart_241 a ext:Cartridge .
+ext:cart_241 rdfs:label "E241A11E" .
+
+ext:yield_241 a ext:Yield .
+ext:yield_241 rdfs:label "2500 pages" .
+
+ext:lx_pr_241 ext:usesCartridge ext:cart_241 .
+ext:cart_241 ext:hasYield ext:yield_241 .
+ext:lx_pr_241 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_242 a ext:LaserPrinter .
+ext:lx_pr_242 rdfs:label "Lex-242" .
+
+ext:cart_242 a ext:Cartridge .
+ext:cart_242 rdfs:label "E242A11E" .
+
+ext:yield_242 a ext:Yield .
+ext:yield_242 rdfs:label "3500 pages" .
+
+ext:lx_pr_242 ext:usesCartridge ext:cart_242 .
+ext:cart_242 ext:hasYield ext:yield_242 .
+ext:lx_pr_242 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_243 a ext:LaserPrinter .
+ext:lx_pr_243 rdfs:label "Lex-243" .
+
+ext:cart_243 a ext:Cartridge .
+ext:cart_243 rdfs:label "E243A11E" .
+
+ext:yield_243 a ext:Yield .
+ext:yield_243 rdfs:label "6000 pages" .
+
+ext:lx_pr_243 ext:usesCartridge ext:cart_243 .
+ext:cart_243 ext:hasYield ext:yield_243 .
+ext:lx_pr_243 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_244 a ext:LaserPrinter .
+ext:lx_pr_244 rdfs:label "Lex-244" .
+
+ext:cart_244 a ext:Cartridge .
+ext:cart_244 rdfs:label "E244A11E" .
+
+ext:yield_244 a ext:Yield .
+ext:yield_244 rdfs:label "9000 pages" .
+
+ext:lx_pr_244 ext:usesCartridge ext:cart_244 .
+ext:cart_244 ext:hasYield ext:yield_244 .
+ext:lx_pr_244 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_245 a ext:LaserPrinter .
+ext:lx_pr_245 rdfs:label "Lex-245" .
+
+ext:cart_245 a ext:Cartridge .
+ext:cart_245 rdfs:label "E245A11E" .
+
+ext:yield_245 a ext:Yield .
+ext:yield_245 rdfs:label "1500 pages" .
+
+ext:lx_pr_245 ext:usesCartridge ext:cart_245 .
+ext:cart_245 ext:hasYield ext:yield_245 .
+ext:lx_pr_245 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_246 a ext:LaserPrinter .
+ext:lx_pr_246 rdfs:label "Lex-246" .
+
+ext:cart_246 a ext:Cartridge .
+ext:cart_246 rdfs:label "E246A11E" .
+
+ext:yield_246 a ext:Yield .
+ext:yield_246 rdfs:label "2500 pages" .
+
+ext:lx_pr_246 ext:usesCartridge ext:cart_246 .
+ext:cart_246 ext:hasYield ext:yield_246 .
+ext:lx_pr_246 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_247 a ext:LaserPrinter .
+ext:lx_pr_247 rdfs:label "Lex-247" .
+
+ext:cart_247 a ext:Cartridge .
+ext:cart_247 rdfs:label "E247A11E" .
+
+ext:yield_247 a ext:Yield .
+ext:yield_247 rdfs:label "3500 pages" .
+
+ext:lx_pr_247 ext:usesCartridge ext:cart_247 .
+ext:cart_247 ext:hasYield ext:yield_247 .
+ext:lx_pr_247 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_248 a ext:LaserPrinter .
+ext:lx_pr_248 rdfs:label "Lex-248" .
+
+ext:cart_248 a ext:Cartridge .
+ext:cart_248 rdfs:label "E248A11E" .
+
+ext:yield_248 a ext:Yield .
+ext:yield_248 rdfs:label "6000 pages" .
+
+ext:lx_pr_248 ext:usesCartridge ext:cart_248 .
+ext:cart_248 ext:hasYield ext:yield_248 .
+ext:lx_pr_248 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_249 a ext:LaserPrinter .
+ext:lx_pr_249 rdfs:label "Lex-249" .
+
+ext:cart_249 a ext:Cartridge .
+ext:cart_249 rdfs:label "E249A11E" .
+
+ext:yield_249 a ext:Yield .
+ext:yield_249 rdfs:label "9000 pages" .
+
+ext:lx_pr_249 ext:usesCartridge ext:cart_249 .
+ext:cart_249 ext:hasYield ext:yield_249 .
+ext:lx_pr_249 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_250 a ext:LaserPrinter .
+ext:lx_pr_250 rdfs:label "Lex-250" .
+
+ext:cart_250 a ext:Cartridge .
+ext:cart_250 rdfs:label "E250A11E" .
+
+ext:yield_250 a ext:Yield .
+ext:yield_250 rdfs:label "1500 pages" .
+
+ext:lx_pr_250 ext:usesCartridge ext:cart_250 .
+ext:cart_250 ext:hasYield ext:yield_250 .
+ext:lx_pr_250 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_251 a ext:LaserPrinter .
+ext:lx_pr_251 rdfs:label "Lex-251" .
+
+ext:cart_251 a ext:Cartridge .
+ext:cart_251 rdfs:label "E251A11E" .
+
+ext:yield_251 a ext:Yield .
+ext:yield_251 rdfs:label "2500 pages" .
+
+ext:lx_pr_251 ext:usesCartridge ext:cart_251 .
+ext:cart_251 ext:hasYield ext:yield_251 .
+ext:lx_pr_251 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_252 a ext:LaserPrinter .
+ext:lx_pr_252 rdfs:label "Lex-252" .
+
+ext:cart_252 a ext:Cartridge .
+ext:cart_252 rdfs:label "E252A11E" .
+
+ext:yield_252 a ext:Yield .
+ext:yield_252 rdfs:label "3500 pages" .
+
+ext:lx_pr_252 ext:usesCartridge ext:cart_252 .
+ext:cart_252 ext:hasYield ext:yield_252 .
+ext:lx_pr_252 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_253 a ext:LaserPrinter .
+ext:lx_pr_253 rdfs:label "Lex-253" .
+
+ext:cart_253 a ext:Cartridge .
+ext:cart_253 rdfs:label "E253A11E" .
+
+ext:yield_253 a ext:Yield .
+ext:yield_253 rdfs:label "6000 pages" .
+
+ext:lx_pr_253 ext:usesCartridge ext:cart_253 .
+ext:cart_253 ext:hasYield ext:yield_253 .
+ext:lx_pr_253 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_254 a ext:LaserPrinter .
+ext:lx_pr_254 rdfs:label "Lex-254" .
+
+ext:cart_254 a ext:Cartridge .
+ext:cart_254 rdfs:label "E254A11E" .
+
+ext:yield_254 a ext:Yield .
+ext:yield_254 rdfs:label "9000 pages" .
+
+ext:lx_pr_254 ext:usesCartridge ext:cart_254 .
+ext:cart_254 ext:hasYield ext:yield_254 .
+ext:lx_pr_254 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_255 a ext:LaserPrinter .
+ext:lx_pr_255 rdfs:label "Lex-255" .
+
+ext:cart_255 a ext:Cartridge .
+ext:cart_255 rdfs:label "E255A11E" .
+
+ext:yield_255 a ext:Yield .
+ext:yield_255 rdfs:label "1500 pages" .
+
+ext:lx_pr_255 ext:usesCartridge ext:cart_255 .
+ext:cart_255 ext:hasYield ext:yield_255 .
+ext:lx_pr_255 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_256 a ext:LaserPrinter .
+ext:lx_pr_256 rdfs:label "Lex-256" .
+
+ext:cart_256 a ext:Cartridge .
+ext:cart_256 rdfs:label "E256A11E" .
+
+ext:yield_256 a ext:Yield .
+ext:yield_256 rdfs:label "2500 pages" .
+
+ext:lx_pr_256 ext:usesCartridge ext:cart_256 .
+ext:cart_256 ext:hasYield ext:yield_256 .
+ext:lx_pr_256 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_257 a ext:LaserPrinter .
+ext:lx_pr_257 rdfs:label "Lex-257" .
+
+ext:cart_257 a ext:Cartridge .
+ext:cart_257 rdfs:label "E257A11E" .
+
+ext:yield_257 a ext:Yield .
+ext:yield_257 rdfs:label "3500 pages" .
+
+ext:lx_pr_257 ext:usesCartridge ext:cart_257 .
+ext:cart_257 ext:hasYield ext:yield_257 .
+ext:lx_pr_257 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_258 a ext:LaserPrinter .
+ext:lx_pr_258 rdfs:label "Lex-258" .
+
+ext:cart_258 a ext:Cartridge .
+ext:cart_258 rdfs:label "E258A11E" .
+
+ext:yield_258 a ext:Yield .
+ext:yield_258 rdfs:label "6000 pages" .
+
+ext:lx_pr_258 ext:usesCartridge ext:cart_258 .
+ext:cart_258 ext:hasYield ext:yield_258 .
+ext:lx_pr_258 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_259 a ext:LaserPrinter .
+ext:lx_pr_259 rdfs:label "Lex-259" .
+
+ext:cart_259 a ext:Cartridge .
+ext:cart_259 rdfs:label "E259A11E" .
+
+ext:yield_259 a ext:Yield .
+ext:yield_259 rdfs:label "9000 pages" .
+
+ext:lx_pr_259 ext:usesCartridge ext:cart_259 .
+ext:cart_259 ext:hasYield ext:yield_259 .
+ext:lx_pr_259 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_260 a ext:LaserPrinter .
+ext:lx_pr_260 rdfs:label "Lex-260" .
+
+ext:cart_260 a ext:Cartridge .
+ext:cart_260 rdfs:label "E260A11E" .
+
+ext:yield_260 a ext:Yield .
+ext:yield_260 rdfs:label "1500 pages" .
+
+ext:lx_pr_260 ext:usesCartridge ext:cart_260 .
+ext:cart_260 ext:hasYield ext:yield_260 .
+ext:lx_pr_260 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_261 a ext:LaserPrinter .
+ext:lx_pr_261 rdfs:label "Lex-261" .
+
+ext:cart_261 a ext:Cartridge .
+ext:cart_261 rdfs:label "E261A11E" .
+
+ext:yield_261 a ext:Yield .
+ext:yield_261 rdfs:label "2500 pages" .
+
+ext:lx_pr_261 ext:usesCartridge ext:cart_261 .
+ext:cart_261 ext:hasYield ext:yield_261 .
+ext:lx_pr_261 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_262 a ext:LaserPrinter .
+ext:lx_pr_262 rdfs:label "Lex-262" .
+
+ext:cart_262 a ext:Cartridge .
+ext:cart_262 rdfs:label "E262A11E" .
+
+ext:yield_262 a ext:Yield .
+ext:yield_262 rdfs:label "3500 pages" .
+
+ext:lx_pr_262 ext:usesCartridge ext:cart_262 .
+ext:cart_262 ext:hasYield ext:yield_262 .
+ext:lx_pr_262 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_263 a ext:LaserPrinter .
+ext:lx_pr_263 rdfs:label "Lex-263" .
+
+ext:cart_263 a ext:Cartridge .
+ext:cart_263 rdfs:label "E263A11E" .
+
+ext:yield_263 a ext:Yield .
+ext:yield_263 rdfs:label "6000 pages" .
+
+ext:lx_pr_263 ext:usesCartridge ext:cart_263 .
+ext:cart_263 ext:hasYield ext:yield_263 .
+ext:lx_pr_263 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_264 a ext:LaserPrinter .
+ext:lx_pr_264 rdfs:label "Lex-264" .
+
+ext:cart_264 a ext:Cartridge .
+ext:cart_264 rdfs:label "E264A11E" .
+
+ext:yield_264 a ext:Yield .
+ext:yield_264 rdfs:label "9000 pages" .
+
+ext:lx_pr_264 ext:usesCartridge ext:cart_264 .
+ext:cart_264 ext:hasYield ext:yield_264 .
+ext:lx_pr_264 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_265 a ext:LaserPrinter .
+ext:lx_pr_265 rdfs:label "Lex-265" .
+
+ext:cart_265 a ext:Cartridge .
+ext:cart_265 rdfs:label "E265A11E" .
+
+ext:yield_265 a ext:Yield .
+ext:yield_265 rdfs:label "1500 pages" .
+
+ext:lx_pr_265 ext:usesCartridge ext:cart_265 .
+ext:cart_265 ext:hasYield ext:yield_265 .
+ext:lx_pr_265 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_266 a ext:LaserPrinter .
+ext:lx_pr_266 rdfs:label "Lex-266" .
+
+ext:cart_266 a ext:Cartridge .
+ext:cart_266 rdfs:label "E266A11E" .
+
+ext:yield_266 a ext:Yield .
+ext:yield_266 rdfs:label "2500 pages" .
+
+ext:lx_pr_266 ext:usesCartridge ext:cart_266 .
+ext:cart_266 ext:hasYield ext:yield_266 .
+ext:lx_pr_266 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_267 a ext:LaserPrinter .
+ext:lx_pr_267 rdfs:label "Lex-267" .
+
+ext:cart_267 a ext:Cartridge .
+ext:cart_267 rdfs:label "E267A11E" .
+
+ext:yield_267 a ext:Yield .
+ext:yield_267 rdfs:label "3500 pages" .
+
+ext:lx_pr_267 ext:usesCartridge ext:cart_267 .
+ext:cart_267 ext:hasYield ext:yield_267 .
+ext:lx_pr_267 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_268 a ext:LaserPrinter .
+ext:lx_pr_268 rdfs:label "Lex-268" .
+
+ext:cart_268 a ext:Cartridge .
+ext:cart_268 rdfs:label "E268A11E" .
+
+ext:yield_268 a ext:Yield .
+ext:yield_268 rdfs:label "6000 pages" .
+
+ext:lx_pr_268 ext:usesCartridge ext:cart_268 .
+ext:cart_268 ext:hasYield ext:yield_268 .
+ext:lx_pr_268 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_269 a ext:LaserPrinter .
+ext:lx_pr_269 rdfs:label "Lex-269" .
+
+ext:cart_269 a ext:Cartridge .
+ext:cart_269 rdfs:label "E269A11E" .
+
+ext:yield_269 a ext:Yield .
+ext:yield_269 rdfs:label "9000 pages" .
+
+ext:lx_pr_269 ext:usesCartridge ext:cart_269 .
+ext:cart_269 ext:hasYield ext:yield_269 .
+ext:lx_pr_269 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_270 a ext:LaserPrinter .
+ext:lx_pr_270 rdfs:label "Lex-270" .
+
+ext:cart_270 a ext:Cartridge .
+ext:cart_270 rdfs:label "E270A11E" .
+
+ext:yield_270 a ext:Yield .
+ext:yield_270 rdfs:label "1500 pages" .
+
+ext:lx_pr_270 ext:usesCartridge ext:cart_270 .
+ext:cart_270 ext:hasYield ext:yield_270 .
+ext:lx_pr_270 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_271 a ext:LaserPrinter .
+ext:lx_pr_271 rdfs:label "Lex-271" .
+
+ext:cart_271 a ext:Cartridge .
+ext:cart_271 rdfs:label "E271A11E" .
+
+ext:yield_271 a ext:Yield .
+ext:yield_271 rdfs:label "2500 pages" .
+
+ext:lx_pr_271 ext:usesCartridge ext:cart_271 .
+ext:cart_271 ext:hasYield ext:yield_271 .
+ext:lx_pr_271 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_272 a ext:LaserPrinter .
+ext:lx_pr_272 rdfs:label "Lex-272" .
+
+ext:cart_272 a ext:Cartridge .
+ext:cart_272 rdfs:label "E272A11E" .
+
+ext:yield_272 a ext:Yield .
+ext:yield_272 rdfs:label "3500 pages" .
+
+ext:lx_pr_272 ext:usesCartridge ext:cart_272 .
+ext:cart_272 ext:hasYield ext:yield_272 .
+ext:lx_pr_272 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_273 a ext:LaserPrinter .
+ext:lx_pr_273 rdfs:label "Lex-273" .
+
+ext:cart_273 a ext:Cartridge .
+ext:cart_273 rdfs:label "E273A11E" .
+
+ext:yield_273 a ext:Yield .
+ext:yield_273 rdfs:label "6000 pages" .
+
+ext:lx_pr_273 ext:usesCartridge ext:cart_273 .
+ext:cart_273 ext:hasYield ext:yield_273 .
+ext:lx_pr_273 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_274 a ext:LaserPrinter .
+ext:lx_pr_274 rdfs:label "Lex-274" .
+
+ext:cart_274 a ext:Cartridge .
+ext:cart_274 rdfs:label "E274A11E" .
+
+ext:yield_274 a ext:Yield .
+ext:yield_274 rdfs:label "9000 pages" .
+
+ext:lx_pr_274 ext:usesCartridge ext:cart_274 .
+ext:cart_274 ext:hasYield ext:yield_274 .
+ext:lx_pr_274 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_275 a ext:LaserPrinter .
+ext:lx_pr_275 rdfs:label "Lex-275" .
+
+ext:cart_275 a ext:Cartridge .
+ext:cart_275 rdfs:label "E275A11E" .
+
+ext:yield_275 a ext:Yield .
+ext:yield_275 rdfs:label "1500 pages" .
+
+ext:lx_pr_275 ext:usesCartridge ext:cart_275 .
+ext:cart_275 ext:hasYield ext:yield_275 .
+ext:lx_pr_275 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_276 a ext:LaserPrinter .
+ext:lx_pr_276 rdfs:label "Lex-276" .
+
+ext:cart_276 a ext:Cartridge .
+ext:cart_276 rdfs:label "E276A11E" .
+
+ext:yield_276 a ext:Yield .
+ext:yield_276 rdfs:label "2500 pages" .
+
+ext:lx_pr_276 ext:usesCartridge ext:cart_276 .
+ext:cart_276 ext:hasYield ext:yield_276 .
+ext:lx_pr_276 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_277 a ext:LaserPrinter .
+ext:lx_pr_277 rdfs:label "Lex-277" .
+
+ext:cart_277 a ext:Cartridge .
+ext:cart_277 rdfs:label "E277A11E" .
+
+ext:yield_277 a ext:Yield .
+ext:yield_277 rdfs:label "3500 pages" .
+
+ext:lx_pr_277 ext:usesCartridge ext:cart_277 .
+ext:cart_277 ext:hasYield ext:yield_277 .
+ext:lx_pr_277 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_278 a ext:LaserPrinter .
+ext:lx_pr_278 rdfs:label "Lex-278" .
+
+ext:cart_278 a ext:Cartridge .
+ext:cart_278 rdfs:label "E278A11E" .
+
+ext:yield_278 a ext:Yield .
+ext:yield_278 rdfs:label "6000 pages" .
+
+ext:lx_pr_278 ext:usesCartridge ext:cart_278 .
+ext:cart_278 ext:hasYield ext:yield_278 .
+ext:lx_pr_278 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_279 a ext:LaserPrinter .
+ext:lx_pr_279 rdfs:label "Lex-279" .
+
+ext:cart_279 a ext:Cartridge .
+ext:cart_279 rdfs:label "E279A11E" .
+
+ext:yield_279 a ext:Yield .
+ext:yield_279 rdfs:label "9000 pages" .
+
+ext:lx_pr_279 ext:usesCartridge ext:cart_279 .
+ext:cart_279 ext:hasYield ext:yield_279 .
+ext:lx_pr_279 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_280 a ext:LaserPrinter .
+ext:lx_pr_280 rdfs:label "Lex-280" .
+
+ext:cart_280 a ext:Cartridge .
+ext:cart_280 rdfs:label "E280A11E" .
+
+ext:yield_280 a ext:Yield .
+ext:yield_280 rdfs:label "1500 pages" .
+
+ext:lx_pr_280 ext:usesCartridge ext:cart_280 .
+ext:cart_280 ext:hasYield ext:yield_280 .
+ext:lx_pr_280 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_281 a ext:LaserPrinter .
+ext:lx_pr_281 rdfs:label "Lex-281" .
+
+ext:cart_281 a ext:Cartridge .
+ext:cart_281 rdfs:label "E281A11E" .
+
+ext:yield_281 a ext:Yield .
+ext:yield_281 rdfs:label "2500 pages" .
+
+ext:lx_pr_281 ext:usesCartridge ext:cart_281 .
+ext:cart_281 ext:hasYield ext:yield_281 .
+ext:lx_pr_281 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_282 a ext:LaserPrinter .
+ext:lx_pr_282 rdfs:label "Lex-282" .
+
+ext:cart_282 a ext:Cartridge .
+ext:cart_282 rdfs:label "E282A11E" .
+
+ext:yield_282 a ext:Yield .
+ext:yield_282 rdfs:label "3500 pages" .
+
+ext:lx_pr_282 ext:usesCartridge ext:cart_282 .
+ext:cart_282 ext:hasYield ext:yield_282 .
+ext:lx_pr_282 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_283 a ext:LaserPrinter .
+ext:lx_pr_283 rdfs:label "Lex-283" .
+
+ext:cart_283 a ext:Cartridge .
+ext:cart_283 rdfs:label "E283A11E" .
+
+ext:yield_283 a ext:Yield .
+ext:yield_283 rdfs:label "6000 pages" .
+
+ext:lx_pr_283 ext:usesCartridge ext:cart_283 .
+ext:cart_283 ext:hasYield ext:yield_283 .
+ext:lx_pr_283 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_284 a ext:LaserPrinter .
+ext:lx_pr_284 rdfs:label "Lex-284" .
+
+ext:cart_284 a ext:Cartridge .
+ext:cart_284 rdfs:label "E284A11E" .
+
+ext:yield_284 a ext:Yield .
+ext:yield_284 rdfs:label "9000 pages" .
+
+ext:lx_pr_284 ext:usesCartridge ext:cart_284 .
+ext:cart_284 ext:hasYield ext:yield_284 .
+ext:lx_pr_284 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_285 a ext:LaserPrinter .
+ext:lx_pr_285 rdfs:label "Lex-285" .
+
+ext:cart_285 a ext:Cartridge .
+ext:cart_285 rdfs:label "E285A11E" .
+
+ext:yield_285 a ext:Yield .
+ext:yield_285 rdfs:label "1500 pages" .
+
+ext:lx_pr_285 ext:usesCartridge ext:cart_285 .
+ext:cart_285 ext:hasYield ext:yield_285 .
+ext:lx_pr_285 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_286 a ext:LaserPrinter .
+ext:lx_pr_286 rdfs:label "Lex-286" .
+
+ext:cart_286 a ext:Cartridge .
+ext:cart_286 rdfs:label "E286A11E" .
+
+ext:yield_286 a ext:Yield .
+ext:yield_286 rdfs:label "2500 pages" .
+
+ext:lx_pr_286 ext:usesCartridge ext:cart_286 .
+ext:cart_286 ext:hasYield ext:yield_286 .
+ext:lx_pr_286 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_287 a ext:LaserPrinter .
+ext:lx_pr_287 rdfs:label "Lex-287" .
+
+ext:cart_287 a ext:Cartridge .
+ext:cart_287 rdfs:label "E287A11E" .
+
+ext:yield_287 a ext:Yield .
+ext:yield_287 rdfs:label "3500 pages" .
+
+ext:lx_pr_287 ext:usesCartridge ext:cart_287 .
+ext:cart_287 ext:hasYield ext:yield_287 .
+ext:lx_pr_287 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_288 a ext:LaserPrinter .
+ext:lx_pr_288 rdfs:label "Lex-288" .
+
+ext:cart_288 a ext:Cartridge .
+ext:cart_288 rdfs:label "E288A11E" .
+
+ext:yield_288 a ext:Yield .
+ext:yield_288 rdfs:label "6000 pages" .
+
+ext:lx_pr_288 ext:usesCartridge ext:cart_288 .
+ext:cart_288 ext:hasYield ext:yield_288 .
+ext:lx_pr_288 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_289 a ext:LaserPrinter .
+ext:lx_pr_289 rdfs:label "Lex-289" .
+
+ext:cart_289 a ext:Cartridge .
+ext:cart_289 rdfs:label "E289A11E" .
+
+ext:yield_289 a ext:Yield .
+ext:yield_289 rdfs:label "9000 pages" .
+
+ext:lx_pr_289 ext:usesCartridge ext:cart_289 .
+ext:cart_289 ext:hasYield ext:yield_289 .
+ext:lx_pr_289 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_290 a ext:LaserPrinter .
+ext:lx_pr_290 rdfs:label "Lex-290" .
+
+ext:cart_290 a ext:Cartridge .
+ext:cart_290 rdfs:label "E290A11E" .
+
+ext:yield_290 a ext:Yield .
+ext:yield_290 rdfs:label "1500 pages" .
+
+ext:lx_pr_290 ext:usesCartridge ext:cart_290 .
+ext:cart_290 ext:hasYield ext:yield_290 .
+ext:lx_pr_290 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_291 a ext:LaserPrinter .
+ext:lx_pr_291 rdfs:label "Lex-291" .
+
+ext:cart_291 a ext:Cartridge .
+ext:cart_291 rdfs:label "E291A11E" .
+
+ext:yield_291 a ext:Yield .
+ext:yield_291 rdfs:label "2500 pages" .
+
+ext:lx_pr_291 ext:usesCartridge ext:cart_291 .
+ext:cart_291 ext:hasYield ext:yield_291 .
+ext:lx_pr_291 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_292 a ext:LaserPrinter .
+ext:lx_pr_292 rdfs:label "Lex-292" .
+
+ext:cart_292 a ext:Cartridge .
+ext:cart_292 rdfs:label "E292A11E" .
+
+ext:yield_292 a ext:Yield .
+ext:yield_292 rdfs:label "3500 pages" .
+
+ext:lx_pr_292 ext:usesCartridge ext:cart_292 .
+ext:cart_292 ext:hasYield ext:yield_292 .
+ext:lx_pr_292 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_293 a ext:LaserPrinter .
+ext:lx_pr_293 rdfs:label "Lex-293" .
+
+ext:cart_293 a ext:Cartridge .
+ext:cart_293 rdfs:label "E293A11E" .
+
+ext:yield_293 a ext:Yield .
+ext:yield_293 rdfs:label "6000 pages" .
+
+ext:lx_pr_293 ext:usesCartridge ext:cart_293 .
+ext:cart_293 ext:hasYield ext:yield_293 .
+ext:lx_pr_293 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_294 a ext:LaserPrinter .
+ext:lx_pr_294 rdfs:label "Lex-294" .
+
+ext:cart_294 a ext:Cartridge .
+ext:cart_294 rdfs:label "E294A11E" .
+
+ext:yield_294 a ext:Yield .
+ext:yield_294 rdfs:label "9000 pages" .
+
+ext:lx_pr_294 ext:usesCartridge ext:cart_294 .
+ext:cart_294 ext:hasYield ext:yield_294 .
+ext:lx_pr_294 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_295 a ext:LaserPrinter .
+ext:lx_pr_295 rdfs:label "Lex-295" .
+
+ext:cart_295 a ext:Cartridge .
+ext:cart_295 rdfs:label "E295A11E" .
+
+ext:yield_295 a ext:Yield .
+ext:yield_295 rdfs:label "1500 pages" .
+
+ext:lx_pr_295 ext:usesCartridge ext:cart_295 .
+ext:cart_295 ext:hasYield ext:yield_295 .
+ext:lx_pr_295 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_296 a ext:LaserPrinter .
+ext:lx_pr_296 rdfs:label "Lex-296" .
+
+ext:cart_296 a ext:Cartridge .
+ext:cart_296 rdfs:label "E296A11E" .
+
+ext:yield_296 a ext:Yield .
+ext:yield_296 rdfs:label "2500 pages" .
+
+ext:lx_pr_296 ext:usesCartridge ext:cart_296 .
+ext:cart_296 ext:hasYield ext:yield_296 .
+ext:lx_pr_296 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_297 a ext:LaserPrinter .
+ext:lx_pr_297 rdfs:label "Lex-297" .
+
+ext:cart_297 a ext:Cartridge .
+ext:cart_297 rdfs:label "E297A11E" .
+
+ext:yield_297 a ext:Yield .
+ext:yield_297 rdfs:label "3500 pages" .
+
+ext:lx_pr_297 ext:usesCartridge ext:cart_297 .
+ext:cart_297 ext:hasYield ext:yield_297 .
+ext:lx_pr_297 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_298 a ext:LaserPrinter .
+ext:lx_pr_298 rdfs:label "Lex-298" .
+
+ext:cart_298 a ext:Cartridge .
+ext:cart_298 rdfs:label "E298A11E" .
+
+ext:yield_298 a ext:Yield .
+ext:yield_298 rdfs:label "6000 pages" .
+
+ext:lx_pr_298 ext:usesCartridge ext:cart_298 .
+ext:cart_298 ext:hasYield ext:yield_298 .
+ext:lx_pr_298 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_299 a ext:LaserPrinter .
+ext:lx_pr_299 rdfs:label "Lex-299" .
+
+ext:cart_299 a ext:Cartridge .
+ext:cart_299 rdfs:label "E299A11E" .
+
+ext:yield_299 a ext:Yield .
+ext:yield_299 rdfs:label "9000 pages" .
+
+ext:lx_pr_299 ext:usesCartridge ext:cart_299 .
+ext:cart_299 ext:hasYield ext:yield_299 .
+ext:lx_pr_299 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_300 a ext:LaserPrinter .
+ext:lx_pr_300 rdfs:label "Lex-300" .
+
+ext:cart_300 a ext:Cartridge .
+ext:cart_300 rdfs:label "E300A11E" .
+
+ext:yield_300 a ext:Yield .
+ext:yield_300 rdfs:label "1500 pages" .
+
+ext:lx_pr_300 ext:usesCartridge ext:cart_300 .
+ext:cart_300 ext:hasYield ext:yield_300 .
+ext:lx_pr_300 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_301 a ext:LaserPrinter .
+ext:lx_pr_301 rdfs:label "Lex-301" .
+
+ext:cart_301 a ext:Cartridge .
+ext:cart_301 rdfs:label "E301A11E" .
+
+ext:yield_301 a ext:Yield .
+ext:yield_301 rdfs:label "2500 pages" .
+
+ext:lx_pr_301 ext:usesCartridge ext:cart_301 .
+ext:cart_301 ext:hasYield ext:yield_301 .
+ext:lx_pr_301 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_302 a ext:LaserPrinter .
+ext:lx_pr_302 rdfs:label "Lex-302" .
+
+ext:cart_302 a ext:Cartridge .
+ext:cart_302 rdfs:label "E302A11E" .
+
+ext:yield_302 a ext:Yield .
+ext:yield_302 rdfs:label "3500 pages" .
+
+ext:lx_pr_302 ext:usesCartridge ext:cart_302 .
+ext:cart_302 ext:hasYield ext:yield_302 .
+ext:lx_pr_302 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_303 a ext:LaserPrinter .
+ext:lx_pr_303 rdfs:label "Lex-303" .
+
+ext:cart_303 a ext:Cartridge .
+ext:cart_303 rdfs:label "E303A11E" .
+
+ext:yield_303 a ext:Yield .
+ext:yield_303 rdfs:label "6000 pages" .
+
+ext:lx_pr_303 ext:usesCartridge ext:cart_303 .
+ext:cart_303 ext:hasYield ext:yield_303 .
+ext:lx_pr_303 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_304 a ext:LaserPrinter .
+ext:lx_pr_304 rdfs:label "Lex-304" .
+
+ext:cart_304 a ext:Cartridge .
+ext:cart_304 rdfs:label "E304A11E" .
+
+ext:yield_304 a ext:Yield .
+ext:yield_304 rdfs:label "9000 pages" .
+
+ext:lx_pr_304 ext:usesCartridge ext:cart_304 .
+ext:cart_304 ext:hasYield ext:yield_304 .
+ext:lx_pr_304 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_305 a ext:LaserPrinter .
+ext:lx_pr_305 rdfs:label "Lex-305" .
+
+ext:cart_305 a ext:Cartridge .
+ext:cart_305 rdfs:label "E305A11E" .
+
+ext:yield_305 a ext:Yield .
+ext:yield_305 rdfs:label "1500 pages" .
+
+ext:lx_pr_305 ext:usesCartridge ext:cart_305 .
+ext:cart_305 ext:hasYield ext:yield_305 .
+ext:lx_pr_305 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_306 a ext:LaserPrinter .
+ext:lx_pr_306 rdfs:label "Lex-306" .
+
+ext:cart_306 a ext:Cartridge .
+ext:cart_306 rdfs:label "E306A11E" .
+
+ext:yield_306 a ext:Yield .
+ext:yield_306 rdfs:label "2500 pages" .
+
+ext:lx_pr_306 ext:usesCartridge ext:cart_306 .
+ext:cart_306 ext:hasYield ext:yield_306 .
+ext:lx_pr_306 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_307 a ext:LaserPrinter .
+ext:lx_pr_307 rdfs:label "Lex-307" .
+
+ext:cart_307 a ext:Cartridge .
+ext:cart_307 rdfs:label "E307A11E" .
+
+ext:yield_307 a ext:Yield .
+ext:yield_307 rdfs:label "3500 pages" .
+
+ext:lx_pr_307 ext:usesCartridge ext:cart_307 .
+ext:cart_307 ext:hasYield ext:yield_307 .
+ext:lx_pr_307 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_308 a ext:LaserPrinter .
+ext:lx_pr_308 rdfs:label "Lex-308" .
+
+ext:cart_308 a ext:Cartridge .
+ext:cart_308 rdfs:label "E308A11E" .
+
+ext:yield_308 a ext:Yield .
+ext:yield_308 rdfs:label "6000 pages" .
+
+ext:lx_pr_308 ext:usesCartridge ext:cart_308 .
+ext:cart_308 ext:hasYield ext:yield_308 .
+ext:lx_pr_308 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_309 a ext:LaserPrinter .
+ext:lx_pr_309 rdfs:label "Lex-309" .
+
+ext:cart_309 a ext:Cartridge .
+ext:cart_309 rdfs:label "E309A11E" .
+
+ext:yield_309 a ext:Yield .
+ext:yield_309 rdfs:label "9000 pages" .
+
+ext:lx_pr_309 ext:usesCartridge ext:cart_309 .
+ext:cart_309 ext:hasYield ext:yield_309 .
+ext:lx_pr_309 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_310 a ext:LaserPrinter .
+ext:lx_pr_310 rdfs:label "Lex-310" .
+
+ext:cart_310 a ext:Cartridge .
+ext:cart_310 rdfs:label "E310A11E" .
+
+ext:yield_310 a ext:Yield .
+ext:yield_310 rdfs:label "1500 pages" .
+
+ext:lx_pr_310 ext:usesCartridge ext:cart_310 .
+ext:cart_310 ext:hasYield ext:yield_310 .
+ext:lx_pr_310 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_311 a ext:LaserPrinter .
+ext:lx_pr_311 rdfs:label "Lex-311" .
+
+ext:cart_311 a ext:Cartridge .
+ext:cart_311 rdfs:label "E311A11E" .
+
+ext:yield_311 a ext:Yield .
+ext:yield_311 rdfs:label "2500 pages" .
+
+ext:lx_pr_311 ext:usesCartridge ext:cart_311 .
+ext:cart_311 ext:hasYield ext:yield_311 .
+ext:lx_pr_311 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_312 a ext:LaserPrinter .
+ext:lx_pr_312 rdfs:label "Lex-312" .
+
+ext:cart_312 a ext:Cartridge .
+ext:cart_312 rdfs:label "E312A11E" .
+
+ext:yield_312 a ext:Yield .
+ext:yield_312 rdfs:label "3500 pages" .
+
+ext:lx_pr_312 ext:usesCartridge ext:cart_312 .
+ext:cart_312 ext:hasYield ext:yield_312 .
+ext:lx_pr_312 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_313 a ext:LaserPrinter .
+ext:lx_pr_313 rdfs:label "Lex-313" .
+
+ext:cart_313 a ext:Cartridge .
+ext:cart_313 rdfs:label "E313A11E" .
+
+ext:yield_313 a ext:Yield .
+ext:yield_313 rdfs:label "6000 pages" .
+
+ext:lx_pr_313 ext:usesCartridge ext:cart_313 .
+ext:cart_313 ext:hasYield ext:yield_313 .
+ext:lx_pr_313 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_314 a ext:LaserPrinter .
+ext:lx_pr_314 rdfs:label "Lex-314" .
+
+ext:cart_314 a ext:Cartridge .
+ext:cart_314 rdfs:label "E314A11E" .
+
+ext:yield_314 a ext:Yield .
+ext:yield_314 rdfs:label "9000 pages" .
+
+ext:lx_pr_314 ext:usesCartridge ext:cart_314 .
+ext:cart_314 ext:hasYield ext:yield_314 .
+ext:lx_pr_314 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_315 a ext:LaserPrinter .
+ext:lx_pr_315 rdfs:label "Lex-315" .
+
+ext:cart_315 a ext:Cartridge .
+ext:cart_315 rdfs:label "E315A11E" .
+
+ext:yield_315 a ext:Yield .
+ext:yield_315 rdfs:label "1500 pages" .
+
+ext:lx_pr_315 ext:usesCartridge ext:cart_315 .
+ext:cart_315 ext:hasYield ext:yield_315 .
+ext:lx_pr_315 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_316 a ext:LaserPrinter .
+ext:lx_pr_316 rdfs:label "Lex-316" .
+
+ext:cart_316 a ext:Cartridge .
+ext:cart_316 rdfs:label "E316A11E" .
+
+ext:yield_316 a ext:Yield .
+ext:yield_316 rdfs:label "2500 pages" .
+
+ext:lx_pr_316 ext:usesCartridge ext:cart_316 .
+ext:cart_316 ext:hasYield ext:yield_316 .
+ext:lx_pr_316 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_317 a ext:LaserPrinter .
+ext:lx_pr_317 rdfs:label "Lex-317" .
+
+ext:cart_317 a ext:Cartridge .
+ext:cart_317 rdfs:label "E317A11E" .
+
+ext:yield_317 a ext:Yield .
+ext:yield_317 rdfs:label "3500 pages" .
+
+ext:lx_pr_317 ext:usesCartridge ext:cart_317 .
+ext:cart_317 ext:hasYield ext:yield_317 .
+ext:lx_pr_317 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_318 a ext:LaserPrinter .
+ext:lx_pr_318 rdfs:label "Lex-318" .
+
+ext:cart_318 a ext:Cartridge .
+ext:cart_318 rdfs:label "E318A11E" .
+
+ext:yield_318 a ext:Yield .
+ext:yield_318 rdfs:label "6000 pages" .
+
+ext:lx_pr_318 ext:usesCartridge ext:cart_318 .
+ext:cart_318 ext:hasYield ext:yield_318 .
+ext:lx_pr_318 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_319 a ext:LaserPrinter .
+ext:lx_pr_319 rdfs:label "Lex-319" .
+
+ext:cart_319 a ext:Cartridge .
+ext:cart_319 rdfs:label "E319A11E" .
+
+ext:yield_319 a ext:Yield .
+ext:yield_319 rdfs:label "9000 pages" .
+
+ext:lx_pr_319 ext:usesCartridge ext:cart_319 .
+ext:cart_319 ext:hasYield ext:yield_319 .
+ext:lx_pr_319 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_320 a ext:LaserPrinter .
+ext:lx_pr_320 rdfs:label "Lex-320" .
+
+ext:cart_320 a ext:Cartridge .
+ext:cart_320 rdfs:label "E320A11E" .
+
+ext:yield_320 a ext:Yield .
+ext:yield_320 rdfs:label "1500 pages" .
+
+ext:lx_pr_320 ext:usesCartridge ext:cart_320 .
+ext:cart_320 ext:hasYield ext:yield_320 .
+ext:lx_pr_320 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_321 a ext:LaserPrinter .
+ext:lx_pr_321 rdfs:label "Lex-321" .
+
+ext:cart_321 a ext:Cartridge .
+ext:cart_321 rdfs:label "E321A11E" .
+
+ext:yield_321 a ext:Yield .
+ext:yield_321 rdfs:label "2500 pages" .
+
+ext:lx_pr_321 ext:usesCartridge ext:cart_321 .
+ext:cart_321 ext:hasYield ext:yield_321 .
+ext:lx_pr_321 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_322 a ext:LaserPrinter .
+ext:lx_pr_322 rdfs:label "Lex-322" .
+
+ext:cart_322 a ext:Cartridge .
+ext:cart_322 rdfs:label "E322A11E" .
+
+ext:yield_322 a ext:Yield .
+ext:yield_322 rdfs:label "3500 pages" .
+
+ext:lx_pr_322 ext:usesCartridge ext:cart_322 .
+ext:cart_322 ext:hasYield ext:yield_322 .
+ext:lx_pr_322 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_323 a ext:LaserPrinter .
+ext:lx_pr_323 rdfs:label "Lex-323" .
+
+ext:cart_323 a ext:Cartridge .
+ext:cart_323 rdfs:label "E323A11E" .
+
+ext:yield_323 a ext:Yield .
+ext:yield_323 rdfs:label "6000 pages" .
+
+ext:lx_pr_323 ext:usesCartridge ext:cart_323 .
+ext:cart_323 ext:hasYield ext:yield_323 .
+ext:lx_pr_323 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_324 a ext:LaserPrinter .
+ext:lx_pr_324 rdfs:label "Lex-324" .
+
+ext:cart_324 a ext:Cartridge .
+ext:cart_324 rdfs:label "E324A11E" .
+
+ext:yield_324 a ext:Yield .
+ext:yield_324 rdfs:label "9000 pages" .
+
+ext:lx_pr_324 ext:usesCartridge ext:cart_324 .
+ext:cart_324 ext:hasYield ext:yield_324 .
+ext:lx_pr_324 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_325 a ext:LaserPrinter .
+ext:lx_pr_325 rdfs:label "Lex-325" .
+
+ext:cart_325 a ext:Cartridge .
+ext:cart_325 rdfs:label "E325A11E" .
+
+ext:yield_325 a ext:Yield .
+ext:yield_325 rdfs:label "1500 pages" .
+
+ext:lx_pr_325 ext:usesCartridge ext:cart_325 .
+ext:cart_325 ext:hasYield ext:yield_325 .
+ext:lx_pr_325 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_326 a ext:LaserPrinter .
+ext:lx_pr_326 rdfs:label "Lex-326" .
+
+ext:cart_326 a ext:Cartridge .
+ext:cart_326 rdfs:label "E326A11E" .
+
+ext:yield_326 a ext:Yield .
+ext:yield_326 rdfs:label "2500 pages" .
+
+ext:lx_pr_326 ext:usesCartridge ext:cart_326 .
+ext:cart_326 ext:hasYield ext:yield_326 .
+ext:lx_pr_326 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_327 a ext:LaserPrinter .
+ext:lx_pr_327 rdfs:label "Lex-327" .
+
+ext:cart_327 a ext:Cartridge .
+ext:cart_327 rdfs:label "E327A11E" .
+
+ext:yield_327 a ext:Yield .
+ext:yield_327 rdfs:label "3500 pages" .
+
+ext:lx_pr_327 ext:usesCartridge ext:cart_327 .
+ext:cart_327 ext:hasYield ext:yield_327 .
+ext:lx_pr_327 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_328 a ext:LaserPrinter .
+ext:lx_pr_328 rdfs:label "Lex-328" .
+
+ext:cart_328 a ext:Cartridge .
+ext:cart_328 rdfs:label "E328A11E" .
+
+ext:yield_328 a ext:Yield .
+ext:yield_328 rdfs:label "6000 pages" .
+
+ext:lx_pr_328 ext:usesCartridge ext:cart_328 .
+ext:cart_328 ext:hasYield ext:yield_328 .
+ext:lx_pr_328 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_329 a ext:LaserPrinter .
+ext:lx_pr_329 rdfs:label "Lex-329" .
+
+ext:cart_329 a ext:Cartridge .
+ext:cart_329 rdfs:label "E329A11E" .
+
+ext:yield_329 a ext:Yield .
+ext:yield_329 rdfs:label "9000 pages" .
+
+ext:lx_pr_329 ext:usesCartridge ext:cart_329 .
+ext:cart_329 ext:hasYield ext:yield_329 .
+ext:lx_pr_329 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_330 a ext:LaserPrinter .
+ext:lx_pr_330 rdfs:label "Lex-330" .
+
+ext:cart_330 a ext:Cartridge .
+ext:cart_330 rdfs:label "E330A11E" .
+
+ext:yield_330 a ext:Yield .
+ext:yield_330 rdfs:label "1500 pages" .
+
+ext:lx_pr_330 ext:usesCartridge ext:cart_330 .
+ext:cart_330 ext:hasYield ext:yield_330 .
+ext:lx_pr_330 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_331 a ext:LaserPrinter .
+ext:lx_pr_331 rdfs:label "Lex-331" .
+
+ext:cart_331 a ext:Cartridge .
+ext:cart_331 rdfs:label "E331A11E" .
+
+ext:yield_331 a ext:Yield .
+ext:yield_331 rdfs:label "2500 pages" .
+
+ext:lx_pr_331 ext:usesCartridge ext:cart_331 .
+ext:cart_331 ext:hasYield ext:yield_331 .
+ext:lx_pr_331 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_332 a ext:LaserPrinter .
+ext:lx_pr_332 rdfs:label "Lex-332" .
+
+ext:cart_332 a ext:Cartridge .
+ext:cart_332 rdfs:label "E332A11E" .
+
+ext:yield_332 a ext:Yield .
+ext:yield_332 rdfs:label "3500 pages" .
+
+ext:lx_pr_332 ext:usesCartridge ext:cart_332 .
+ext:cart_332 ext:hasYield ext:yield_332 .
+ext:lx_pr_332 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_333 a ext:LaserPrinter .
+ext:lx_pr_333 rdfs:label "Lex-333" .
+
+ext:cart_333 a ext:Cartridge .
+ext:cart_333 rdfs:label "E333A11E" .
+
+ext:yield_333 a ext:Yield .
+ext:yield_333 rdfs:label "6000 pages" .
+
+ext:lx_pr_333 ext:usesCartridge ext:cart_333 .
+ext:cart_333 ext:hasYield ext:yield_333 .
+ext:lx_pr_333 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_334 a ext:LaserPrinter .
+ext:lx_pr_334 rdfs:label "Lex-334" .
+
+ext:cart_334 a ext:Cartridge .
+ext:cart_334 rdfs:label "E334A11E" .
+
+ext:yield_334 a ext:Yield .
+ext:yield_334 rdfs:label "9000 pages" .
+
+ext:lx_pr_334 ext:usesCartridge ext:cart_334 .
+ext:cart_334 ext:hasYield ext:yield_334 .
+ext:lx_pr_334 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_335 a ext:LaserPrinter .
+ext:lx_pr_335 rdfs:label "Lex-335" .
+
+ext:cart_335 a ext:Cartridge .
+ext:cart_335 rdfs:label "E335A11E" .
+
+ext:yield_335 a ext:Yield .
+ext:yield_335 rdfs:label "1500 pages" .
+
+ext:lx_pr_335 ext:usesCartridge ext:cart_335 .
+ext:cart_335 ext:hasYield ext:yield_335 .
+ext:lx_pr_335 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_336 a ext:LaserPrinter .
+ext:lx_pr_336 rdfs:label "Lex-336" .
+
+ext:cart_336 a ext:Cartridge .
+ext:cart_336 rdfs:label "E336A11E" .
+
+ext:yield_336 a ext:Yield .
+ext:yield_336 rdfs:label "2500 pages" .
+
+ext:lx_pr_336 ext:usesCartridge ext:cart_336 .
+ext:cart_336 ext:hasYield ext:yield_336 .
+ext:lx_pr_336 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_337 a ext:LaserPrinter .
+ext:lx_pr_337 rdfs:label "Lex-337" .
+
+ext:cart_337 a ext:Cartridge .
+ext:cart_337 rdfs:label "E337A11E" .
+
+ext:yield_337 a ext:Yield .
+ext:yield_337 rdfs:label "3500 pages" .
+
+ext:lx_pr_337 ext:usesCartridge ext:cart_337 .
+ext:cart_337 ext:hasYield ext:yield_337 .
+ext:lx_pr_337 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_338 a ext:LaserPrinter .
+ext:lx_pr_338 rdfs:label "Lex-338" .
+
+ext:cart_338 a ext:Cartridge .
+ext:cart_338 rdfs:label "E338A11E" .
+
+ext:yield_338 a ext:Yield .
+ext:yield_338 rdfs:label "6000 pages" .
+
+ext:lx_pr_338 ext:usesCartridge ext:cart_338 .
+ext:cart_338 ext:hasYield ext:yield_338 .
+ext:lx_pr_338 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_339 a ext:LaserPrinter .
+ext:lx_pr_339 rdfs:label "Lex-339" .
+
+ext:cart_339 a ext:Cartridge .
+ext:cart_339 rdfs:label "E339A11E" .
+
+ext:yield_339 a ext:Yield .
+ext:yield_339 rdfs:label "9000 pages" .
+
+ext:lx_pr_339 ext:usesCartridge ext:cart_339 .
+ext:cart_339 ext:hasYield ext:yield_339 .
+ext:lx_pr_339 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_340 a ext:LaserPrinter .
+ext:lx_pr_340 rdfs:label "Lex-340" .
+
+ext:cart_340 a ext:Cartridge .
+ext:cart_340 rdfs:label "E340A11E" .
+
+ext:yield_340 a ext:Yield .
+ext:yield_340 rdfs:label "1500 pages" .
+
+ext:lx_pr_340 ext:usesCartridge ext:cart_340 .
+ext:cart_340 ext:hasYield ext:yield_340 .
+ext:lx_pr_340 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_341 a ext:LaserPrinter .
+ext:lx_pr_341 rdfs:label "Lex-341" .
+
+ext:cart_341 a ext:Cartridge .
+ext:cart_341 rdfs:label "E341A11E" .
+
+ext:yield_341 a ext:Yield .
+ext:yield_341 rdfs:label "2500 pages" .
+
+ext:lx_pr_341 ext:usesCartridge ext:cart_341 .
+ext:cart_341 ext:hasYield ext:yield_341 .
+ext:lx_pr_341 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_342 a ext:LaserPrinter .
+ext:lx_pr_342 rdfs:label "Lex-342" .
+
+ext:cart_342 a ext:Cartridge .
+ext:cart_342 rdfs:label "E342A11E" .
+
+ext:yield_342 a ext:Yield .
+ext:yield_342 rdfs:label "3500 pages" .
+
+ext:lx_pr_342 ext:usesCartridge ext:cart_342 .
+ext:cart_342 ext:hasYield ext:yield_342 .
+ext:lx_pr_342 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_343 a ext:LaserPrinter .
+ext:lx_pr_343 rdfs:label "Lex-343" .
+
+ext:cart_343 a ext:Cartridge .
+ext:cart_343 rdfs:label "E343A11E" .
+
+ext:yield_343 a ext:Yield .
+ext:yield_343 rdfs:label "6000 pages" .
+
+ext:lx_pr_343 ext:usesCartridge ext:cart_343 .
+ext:cart_343 ext:hasYield ext:yield_343 .
+ext:lx_pr_343 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_344 a ext:LaserPrinter .
+ext:lx_pr_344 rdfs:label "Lex-344" .
+
+ext:cart_344 a ext:Cartridge .
+ext:cart_344 rdfs:label "E344A11E" .
+
+ext:yield_344 a ext:Yield .
+ext:yield_344 rdfs:label "9000 pages" .
+
+ext:lx_pr_344 ext:usesCartridge ext:cart_344 .
+ext:cart_344 ext:hasYield ext:yield_344 .
+ext:lx_pr_344 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_345 a ext:LaserPrinter .
+ext:lx_pr_345 rdfs:label "Lex-345" .
+
+ext:cart_345 a ext:Cartridge .
+ext:cart_345 rdfs:label "E345A11E" .
+
+ext:yield_345 a ext:Yield .
+ext:yield_345 rdfs:label "1500 pages" .
+
+ext:lx_pr_345 ext:usesCartridge ext:cart_345 .
+ext:cart_345 ext:hasYield ext:yield_345 .
+ext:lx_pr_345 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_346 a ext:LaserPrinter .
+ext:lx_pr_346 rdfs:label "Lex-346" .
+
+ext:cart_346 a ext:Cartridge .
+ext:cart_346 rdfs:label "E346A11E" .
+
+ext:yield_346 a ext:Yield .
+ext:yield_346 rdfs:label "2500 pages" .
+
+ext:lx_pr_346 ext:usesCartridge ext:cart_346 .
+ext:cart_346 ext:hasYield ext:yield_346 .
+ext:lx_pr_346 ext:supportsDuplex ext:acc_Tray500 .
+ext:lx_pr_347 a ext:LaserPrinter .
+ext:lx_pr_347 rdfs:label "Lex-347" .
+
+ext:cart_347 a ext:Cartridge .
+ext:cart_347 rdfs:label "E347A11E" .
+
+ext:yield_347 a ext:Yield .
+ext:yield_347 rdfs:label "3500 pages" .
+
+ext:lx_pr_347 ext:usesCartridge ext:cart_347 .
+ext:cart_347 ext:hasYield ext:yield_347 .
+ext:lx_pr_347 ext:supportsDuplex ext:acc_WiFiModule .
+ext:lx_pr_348 a ext:LaserPrinter .
+ext:lx_pr_348 rdfs:label "Lex-348" .
+
+ext:cart_348 a ext:Cartridge .
+ext:cart_348 rdfs:label "E348A11E" .
+
+ext:yield_348 a ext:Yield .
+ext:yield_348 rdfs:label "6000 pages" .
+
+ext:lx_pr_348 ext:usesCartridge ext:cart_348 .
+ext:cart_348 ext:hasYield ext:yield_348 .
+ext:lx_pr_348 ext:supportsDuplex ext:acc_DuplexUnit .
+ext:lx_pr_349 a ext:LaserPrinter .
+ext:lx_pr_349 rdfs:label "Lex-349" .
+
+ext:cart_349 a ext:Cartridge .
+ext:cart_349 rdfs:label "E349A11E" .
+
+ext:yield_349 a ext:Yield .
+ext:yield_349 rdfs:label "9000 pages" .
+
+ext:lx_pr_349 ext:usesCartridge ext:cart_349 .
+ext:cart_349 ext:hasYield ext:yield_349 .
+ext:lx_pr_349 ext:supportsDuplex ext:acc_Tray500 .

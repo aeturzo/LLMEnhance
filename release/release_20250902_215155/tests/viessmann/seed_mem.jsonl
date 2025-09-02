@@ -1,0 +1,6 @@
+{"id": "mem-000000", "text": "ProductV1 standard (conforms to) is EU F-Gas Regulation.", "tags": ["standard (conforms to)", "ProductV1"]}
+{"id": "mem-000001", "text": "ProductV1 component is Comp1.", "tags": ["component", "ProductV1"]}
+{"id": "mem-000002", "text": "ProductV1 component is Board1.", "tags": ["component", "ProductV1"]}
+{"id": "mem-000003", "text": "ProductV1 component is Radio1.", "tags": ["component", "ProductV1"]}
+{"id": "mem-000004", "text": "ProductV2 component is Comp2.", "tags": ["component", "ProductV2"]}
+{"id": "mem-000005", "text": "ProductV2 component is Board2.", "tags": ["component", "ProductV2"]}

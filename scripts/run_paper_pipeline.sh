@@ -108,6 +108,7 @@ echo ">> Figures, ablations, calibration, qualitative, checks"
 python backend/eval/figures.py           --in artifacts --out artifacts || true
 python backend/eval/ablate.py            --in artifacts --out artifacts || true
 python backend/eval/calibration_sweep.py --in artifacts --out artifacts || true
+python backend/eval/calibration.py       --artifacts artifacts --tables tables || true
 python backend/eval/trace_digest.py      --in artifacts --out artifacts/qualitative.md --k 3 || true
 python backend/eval/publication_checks.py || true
 

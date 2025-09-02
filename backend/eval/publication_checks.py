@@ -7,7 +7,7 @@ publication_checks.py (tabulate-free, robust)
 - Deduplicates by (id,mode,query,product,session)
 - Accuracies overall & by type
 - Counts (per-domain if present)
-- McNemar exact p-values vs BASE (requires scipy; if missing, install scipy)
+- McNemar exact p-values vs BASE (requires scipy; if missing, installs? no — we fail soft)
 
 Writes:
   tables/pub_summary.md
@@ -15,10 +15,10 @@ Writes:
   tables/acc_by_type.csv
   tables/counts.csv
   tables/mcnemar.csv
-  tables/calibration.csv (placeholder)
+  tables/calibration.csv   (now real ECE if confidence exists; otherwise placeholder)
 """
 from __future__ import annotations
-import glob
+import glob, math
 from pathlib import Path
 import numpy as np
 import pandas as pd
@@ -44,11 +44,18 @@ def df_to_md(df: pd.DataFrame) -> str:
         lines.append("| " + " | ".join(vals) + " |")
     return "\n".join(lines)
 
-# ---------- helpers ----------
-def _to_str(x):
-    return "" if pd.isna(x) else str(x)
+# ---------- success repair (substring contains) ----------
+def _to_str(x): return "" if x is None else str(x)
 
-def _derive_success_literal(answer: str, expected) -> int:
+def repair_success(row) -> int:
+    # if success exists, keep it
+    if "success" in row and pd.notna(row["success"]):
+        try:
+            return int(row["success"])
+        except Exception:
+            pass
+    expected = row.get("expected_contains")
+    answer = row.get("answer", "")
     a = _to_str(answer).lower()
     if isinstance(expected, (list, tuple, set)):
         toks = [_to_str(t).lower() for t in expected if _to_str(t) != ""]
@@ -77,28 +84,19 @@ def load_all_eval() -> pd.DataFrame:
         dfs.append(df)
     big = pd.concat(dfs, ignore_index=True)
 
-    # success repair/compute
+    # ensure success present
     if "success" not in big.columns:
-        big["success"] = np.nan
-    mask = ~pd.to_numeric(big["success"], errors="coerce").apply(np.isfinite)
-    if mask.any():
-        sub = big.loc[mask, ["answer", "expected_contains"]]
-        derived_vals = [_derive_success_literal(a, e) for a, e in zip(sub["answer"], sub["expected_contains"])]
-        big.loc[mask, "success"] = derived_vals
-    big["success"] = (
-        pd.to_numeric(big["success"], errors="coerce")
-          .replace([np.inf, -np.inf], 0)
-          .fillna(0)
-          .astype(int)
-    )
+        big["success"] = big.apply(repair_success, axis=1)
+    else:
+        # coerce to 0/1 ints; if NaN, repair
+        base_success = pd.to_numeric(big["success"], errors="coerce")
+        need = base_success.isna()
+        big.loc[need, "success"] = big[need].apply(repair_success, axis=1)
+        big["success"] = pd.to_numeric(big["success"], errors="coerce").fillna(0).astype(int)
 
-    big["mode"] = big["mode"].astype(str)
-    big["type"] = big["type"].fillna("open").astype(str)
-    return big
-
-def dedup(df: pd.DataFrame) -> pd.DataFrame:
+    # dedup, prefer later sources
     keys = ["id","mode","query","product","session"]
-    return df.sort_values("__source").drop_duplicates(subset=keys, keep="last")
+    return big.sort_values("__source").drop_duplicates(subset=keys, keep="last")
 
 def accuracy_tables(df: pd.DataFrame):
     acc_overall = df.groupby("mode", as_index=False)["success"].mean().rename(columns={"success":"accuracy"})
@@ -127,38 +125,94 @@ def mcnemar_exact(df: pd.DataFrame) -> pd.DataFrame:
     key = ["id","query","product","session"]
     base = df[df["mode"]=="BASE"].set_index(key)["success"]
     rows = []
-    for m in sorted(df["mode"].unique()):
-        if m == "BASE":
+    for mode in sorted(df["mode"].unique()):
+        if mode == "BASE": continue
+        cur = df[df["mode"]==mode].set_index(key)["success"]
+        both = base.index.intersection(cur.index)
+        if len(both) == 0:
+            rows.append({"mode": mode, "n": 0, "p_two_sided": np.nan, "note": "no overlap"})
             continue
-        alt = df[df["mode"]==m].set_index(key)["success"]
-        paired = pd.concat([base, alt], axis=1, keys=["base","alt"]).dropna()
-        if paired.empty:
-            rows.append({"mode": m, "b":0, "c":0, "n_paired":0, "p_value":1.0, "note":"no pairs"})
+        b = base.loc[both].astype(int); c = cur.loc[both].astype(int)
+        n01 = int(((b==0) & (c==1)).sum())
+        n10 = int(((b==1) & (c==0)).sum())
+        n = n01 + n10
+        if not have_scipy or n == 0:
+            rows.append({"mode": mode, "n": n, "p_two_sided": np.nan, "note": "scipy missing or no discordant pairs"})
             continue
-        b = int(((paired["base"]==1) & (paired["alt"]==0)).sum())
-        c = int(((paired["base"]==0) & (paired["alt"]==1)).sum())
-        n = b + c
-        if n == 0:
-            p = 1.0
-        elif have_scipy:
-            p = float(binomtest(min(b,c), n=n, p=0.5, alternative="two-sided").pvalue)
-        else:
-            # symmetric exact two-sided for p=0.5 using tail sum
-            from math import comb
-            tail = min(b, c)
-            denom = 2.0 ** n
-            p = 2.0 * sum(comb(n, i) / denom for i in range(0, tail + 1))
-            p = float(min(1.0, p))
-        rows.append({"mode": m, "b": b, "c": c, "n_paired": n, "p_value": round(p, 6)})
-    out = pd.DataFrame(rows).sort_values("mode")
+        p = float(binomtest(k=min(n01,n10), n=n, p=0.5, alternative="two-sided").pvalue)
+        rows.append({"mode": mode, "n": n, "p_two_sided": p})
+    out = pd.DataFrame(rows)
     out.to_csv(OUTDIR/"mcnemar.csv", index=False)
     return out
 
-def simple_calibration_placeholder(df: pd.DataFrame) -> pd.DataFrame:
-    rows = [{"mode": m, "ece": np.nan, "note": "No confidence logged; run backend/eval/calibration.py for real ECE"}
-            for m in sorted(df["mode"].unique())]
-    out = pd.DataFrame(rows)
-    out.to_csv(OUTDIR/"calibration.csv", index=False)
+# -------- Calibration (new) --------
+_CONF_CANDS = ["confidence","prob","p_correct","router_conf","score","conf"]
+
+def _choose_conf_col(df: pd.DataFrame) -> str | None:
+    for c in _CONF_CANDS:
+        if c in df.columns:
+            s = pd.to_numeric(df[c], errors="coerce")
+            if s.notna().any():
+                return c
+    return None
+
+def _ece_quantile(scores: np.ndarray, labels: np.ndarray, k: int = 10) -> float:
+    n = len(scores)
+    if n == 0:
+        return float("nan")
+    order = np.argsort(scores)
+    s = scores[order]; y = labels[order]
+    k_eff = int(min(k, n))
+    edges = np.floor(np.linspace(0, n, k_eff + 1)).astype(int)
+    ece = 0.0
+    for i in range(k_eff):
+        lo, hi = edges[i], edges[i+1]
+        if hi <= lo: 
+            continue
+        sb = s[lo:hi]; yb = y[lo:hi]
+        acc = float(np.mean(yb)) if len(yb) else 0.0
+        conf = float(np.mean(sb)) if len(sb) else 0.0
+        ece += abs(acc - conf) * (len(sb) / n)
+    return float(ece)
+
+def calibration_table(df: pd.DataFrame) -> pd.DataFrame:
+    # If an existing tables/calibration.csv already has numeric ece, don't overwrite
+    out_path = OUTDIR / "calibration.csv"
+    if out_path.exists():
+        try:
+            tmp = pd.read_csv(out_path)
+            if "ece" in tmp.columns and pd.to_numeric(tmp["ece"], errors="coerce").notna().any():
+                return tmp
+        except Exception:
+            pass
+
+    conf_col = _choose_conf_col(df)
+    if conf_col is None:
+        rows = [{"mode": m, "ece": np.nan, "note": "No confidence logged; run backend/eval/calibration.py for real ECE"}
+                for m in sorted(df["mode"].unique())]
+        out = pd.DataFrame(rows)
+        out.to_csv(out_path, index=False)
+        return out
+
+    d = df.copy()
+    d["success"] = pd.to_numeric(d["success"], errors="coerce").fillna(0.0).astype(float)
+    d["__conf__"] = pd.to_numeric(d[conf_col], errors="coerce")
+    d = d.dropna(subset=["__conf__"])
+    d["__conf__"] = d["__conf__"].clip(0.0, 1.0)
+
+    rows = []
+    for mode, grp in d.groupby("mode", dropna=False):
+        s = grp["__conf__"].to_numpy(dtype=float)
+        y = grp["success"].to_numpy(dtype=float)
+        n = len(s)
+        if n == 0:
+            rows.append({"mode": str(mode), "ece": np.nan, "n": 0, "bins": 0, "k": 10})
+            continue
+        val = _ece_quantile(s, y, k=10)
+        rows.append({"mode": str(mode), "ece": round(float(val), 6), "n": int(n), "bins": int(min(10, n)), "k": 10})
+
+    out = pd.DataFrame(rows).sort_values("mode")
+    out.to_csv(out_path, index=False)
     return out
 
 def write_md(acc_overall, acc_by_type, counts, mcnemar_df):
@@ -183,11 +237,10 @@ def write_md(acc_overall, acc_by_type, counts, mcnemar_df):
 
 def main():
     df = load_all_eval()
-    df = dedup(df)
     acc_overall, acc_by_type = accuracy_tables(df)
     counts = counts_table(df)
     mcn = mcnemar_exact(df)
-    simple_calibration_placeholder(df)
+    calibration_table(df)  # <— compute real ECE if possible (or write placeholder)
     write_md(acc_overall, acc_by_type, counts, mcn)
     print("Wrote:",
           OUTDIR/"acc_overall.csv",

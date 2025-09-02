@@ -1,0 +1,4490 @@
+@prefix ex:   <http://example.com/viessmann#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+### Classes
+ex:Product     a rdfs:Class .
+ex:Component   a rdfs:Class .
+ex:Standard    a rdfs:Class .
+ex:ProcessStep a rdfs:Class .
+ex:Material    a rdfs:Class .
+ex:Refrigerant a rdfs:Class .
+
+### Subclasses
+ex:Compressor       rdfs:subClassOf ex:Component .
+ex:ElectricalModule rdfs:subClassOf ex:Component .
+ex:WirelessModule   rdfs:subClassOf ex:Component .
+
+### Properties
+ex:hasComponent        a rdf:Property ; rdfs:domain ex:Product ;  rdfs:range ex:Component .
+ex:requiresCompliance  a rdf:Property ; rdfs:domain ex:Product ;  rdfs:range ex:Standard .
+ex:requiresStep        a rdf:Property ; rdfs:domain ex:Product ;  rdfs:range ex:ProcessStep .
+ex:usesMaterial        a rdf:Property ; rdfs:domain ex:Component ; rdfs:range ex:Material .
+ex:usesRefrigerant     a rdf:Property ; rdfs:domain ex:Component ; rdfs:range ex:Refrigerant .
+ex:conformsTo          a rdf:Property ; rdfs:domain ex:Product ;  rdfs:range ex:Standard .
+
+### Standards (with labels)
+ex:FGasStandard              a ex:Standard ; rdfs:label "EU F-Gas Regulation" .
+ex:ElectricalSafetyStandard  a ex:Standard ; rdfs:label "Electrical Safety Check" .
+ex:RoHSStandard              a ex:Standard ; rdfs:label "RoHS" .
+ex:WirelessComplianceStandard a ex:Standard ; rdfs:label "Wireless Compliance" .
+
+### Steps (with labels)
+ex:PressureTestStep     a ex:ProcessStep ; rdfs:label "Pressure Test" .
+ex:LeakCheckStep        a ex:ProcessStep ; rdfs:label "Leak Check" .
+ex:ElectricalSafetyTest a ex:ProcessStep ; rdfs:label "Electrical Safety Test" .
+ex:WirelessTestStep     a ex:ProcessStep ; rdfs:label "Wireless Test" .
+
+### Materials / Refrigerants
+ex:LeadMaterial a ex:Material .
+ex:R32          a ex:Refrigerant .
+
+### Products
+ex:ProductV1 a ex:Product ;
+  ex:hasComponent ex:Comp1, ex:Board1, ex:Radio1 ;
+  ex:conformsTo ex:FGasStandard .
+
+ex:Comp1   a ex:Compressor ;      ex:usesRefrigerant ex:R32 .
+ex:Board1  a ex:ElectricalModule ; ex:usesMaterial    ex:LeadMaterial .
+ex:Radio1  a ex:WirelessModule .
+
+# Another product with fewer parts
+ex:ProductV2 a ex:Product ;
+  ex:hasComponent ex:Comp2, ex:Board2 .
+
+ex:Comp2  a ex:Compressor .
+ex:Board2 a ex:ElectricalModule .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix ext:  <http://example.org/ext#> .
+
+# KG booster generated 20250830
+ext:Appliance a owl:Class .
+ext:Boiler a owl:Class ; rdfs:subClassOf ext:Appliance .
+ext:HeatPump a owl:Class ; rdfs:subClassOf ext:Appliance .
+ext:PowerRating a owl:Class .
+ext:FuelType a owl:Class .
+ext:Accessory a owl:Class .
+ext:hasOutput a owl:ObjectProperty ; rdfs:domain ext:Appliance ; rdfs:range ext:PowerRating .
+ext:supportsFuel a owl:ObjectProperty ; rdfs:domain ext:Appliance ; rdfs:range ext:FuelType .
+ext:compatibleWith a owl:ObjectProperty ; rdfs:domain ext:Appliance ; rdfs:range ext:Accessory .
+ext:Appliance rdfs:label "appliance" .
+
+ext:Boiler rdfs:label "boiler" .
+
+ext:HeatPump rdfs:label "heat pump" .
+
+ext:PowerRating rdfs:label "power output" .
+
+ext:FuelType rdfs:label "fuel type" .
+
+ext:Accessory rdfs:label "accessory" .
+
+ext:hasOutput rdfs:label "output" .
+
+ext:supportsFuel rdfs:label "fuel" .
+
+ext:compatibleWith rdfs:label "compatible accessory" .
+
+ext:fuel_Gas a ext:FuelType .
+ext:fuel_Gas rdfs:label "Gas" .
+
+ext:fuel_Oil a ext:FuelType .
+ext:fuel_Oil rdfs:label "Oil" .
+
+ext:fuel_Propane a ext:FuelType .
+ext:fuel_Propane rdfs:label "Propane" .
+
+ext:fuel_Electric a ext:FuelType .
+ext:fuel_Electric rdfs:label "Electric" .
+
+ext:acc_Vitotrol a ext:Accessory .
+ext:acc_Vitotrol rdfs:label "Vitotrol" .
+
+ext:acc_HydroKit a ext:Accessory .
+ext:acc_HydroKit rdfs:label "HydroKit" .
+
+ext:acc_BufferTank a ext:Accessory .
+ext:acc_BufferTank rdfs:label "BufferTank" .
+
+ext:acc_OutdoorSensor a ext:Accessory .
+ext:acc_OutdoorSensor rdfs:label "OutdoorSensor" .
+
+ext:v_ap_000 a ext:Boiler .
+ext:v_ap_000 rdfs:label "Vies-000" .
+
+ext:pr_000 a ext:PowerRating .
+ext:pr_000 rdfs:label "12 kW" .
+
+ext:v_ap_000 ext:hasOutput ext:pr_000 .
+ext:v_ap_000 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_000 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_001 a ext:HeatPump .
+ext:v_ap_001 rdfs:label "Vies-001" .
+
+ext:pr_001 a ext:PowerRating .
+ext:pr_001 rdfs:label "18 kW" .
+
+ext:v_ap_001 ext:hasOutput ext:pr_001 .
+ext:v_ap_001 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_001 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_002 a ext:Boiler .
+ext:v_ap_002 rdfs:label "Vies-002" .
+
+ext:pr_002 a ext:PowerRating .
+ext:pr_002 rdfs:label "24 kW" .
+
+ext:v_ap_002 ext:hasOutput ext:pr_002 .
+ext:v_ap_002 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_002 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_003 a ext:HeatPump .
+ext:v_ap_003 rdfs:label "Vies-003" .
+
+ext:pr_003 a ext:PowerRating .
+ext:pr_003 rdfs:label "30 kW" .
+
+ext:v_ap_003 ext:hasOutput ext:pr_003 .
+ext:v_ap_003 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_003 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_004 a ext:Boiler .
+ext:v_ap_004 rdfs:label "Vies-004" .
+
+ext:pr_004 a ext:PowerRating .
+ext:pr_004 rdfs:label "35 kW" .
+
+ext:v_ap_004 ext:hasOutput ext:pr_004 .
+ext:v_ap_004 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_004 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_005 a ext:HeatPump .
+ext:v_ap_005 rdfs:label "Vies-005" .
+
+ext:pr_005 a ext:PowerRating .
+ext:pr_005 rdfs:label "12 kW" .
+
+ext:v_ap_005 ext:hasOutput ext:pr_005 .
+ext:v_ap_005 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_005 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_006 a ext:Boiler .
+ext:v_ap_006 rdfs:label "Vies-006" .
+
+ext:pr_006 a ext:PowerRating .
+ext:pr_006 rdfs:label "18 kW" .
+
+ext:v_ap_006 ext:hasOutput ext:pr_006 .
+ext:v_ap_006 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_006 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_007 a ext:HeatPump .
+ext:v_ap_007 rdfs:label "Vies-007" .
+
+ext:pr_007 a ext:PowerRating .
+ext:pr_007 rdfs:label "24 kW" .
+
+ext:v_ap_007 ext:hasOutput ext:pr_007 .
+ext:v_ap_007 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_007 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_008 a ext:Boiler .
+ext:v_ap_008 rdfs:label "Vies-008" .
+
+ext:pr_008 a ext:PowerRating .
+ext:pr_008 rdfs:label "30 kW" .
+
+ext:v_ap_008 ext:hasOutput ext:pr_008 .
+ext:v_ap_008 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_008 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_009 a ext:HeatPump .
+ext:v_ap_009 rdfs:label "Vies-009" .
+
+ext:pr_009 a ext:PowerRating .
+ext:pr_009 rdfs:label "35 kW" .
+
+ext:v_ap_009 ext:hasOutput ext:pr_009 .
+ext:v_ap_009 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_009 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_010 a ext:Boiler .
+ext:v_ap_010 rdfs:label "Vies-010" .
+
+ext:pr_010 a ext:PowerRating .
+ext:pr_010 rdfs:label "12 kW" .
+
+ext:v_ap_010 ext:hasOutput ext:pr_010 .
+ext:v_ap_010 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_010 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_011 a ext:HeatPump .
+ext:v_ap_011 rdfs:label "Vies-011" .
+
+ext:pr_011 a ext:PowerRating .
+ext:pr_011 rdfs:label "18 kW" .
+
+ext:v_ap_011 ext:hasOutput ext:pr_011 .
+ext:v_ap_011 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_011 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_012 a ext:Boiler .
+ext:v_ap_012 rdfs:label "Vies-012" .
+
+ext:pr_012 a ext:PowerRating .
+ext:pr_012 rdfs:label "24 kW" .
+
+ext:v_ap_012 ext:hasOutput ext:pr_012 .
+ext:v_ap_012 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_012 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_013 a ext:HeatPump .
+ext:v_ap_013 rdfs:label "Vies-013" .
+
+ext:pr_013 a ext:PowerRating .
+ext:pr_013 rdfs:label "30 kW" .
+
+ext:v_ap_013 ext:hasOutput ext:pr_013 .
+ext:v_ap_013 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_013 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_014 a ext:Boiler .
+ext:v_ap_014 rdfs:label "Vies-014" .
+
+ext:pr_014 a ext:PowerRating .
+ext:pr_014 rdfs:label "35 kW" .
+
+ext:v_ap_014 ext:hasOutput ext:pr_014 .
+ext:v_ap_014 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_014 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_015 a ext:HeatPump .
+ext:v_ap_015 rdfs:label "Vies-015" .
+
+ext:pr_015 a ext:PowerRating .
+ext:pr_015 rdfs:label "12 kW" .
+
+ext:v_ap_015 ext:hasOutput ext:pr_015 .
+ext:v_ap_015 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_015 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_016 a ext:Boiler .
+ext:v_ap_016 rdfs:label "Vies-016" .
+
+ext:pr_016 a ext:PowerRating .
+ext:pr_016 rdfs:label "18 kW" .
+
+ext:v_ap_016 ext:hasOutput ext:pr_016 .
+ext:v_ap_016 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_016 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_017 a ext:HeatPump .
+ext:v_ap_017 rdfs:label "Vies-017" .
+
+ext:pr_017 a ext:PowerRating .
+ext:pr_017 rdfs:label "24 kW" .
+
+ext:v_ap_017 ext:hasOutput ext:pr_017 .
+ext:v_ap_017 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_017 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_018 a ext:Boiler .
+ext:v_ap_018 rdfs:label "Vies-018" .
+
+ext:pr_018 a ext:PowerRating .
+ext:pr_018 rdfs:label "30 kW" .
+
+ext:v_ap_018 ext:hasOutput ext:pr_018 .
+ext:v_ap_018 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_018 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_019 a ext:HeatPump .
+ext:v_ap_019 rdfs:label "Vies-019" .
+
+ext:pr_019 a ext:PowerRating .
+ext:pr_019 rdfs:label "35 kW" .
+
+ext:v_ap_019 ext:hasOutput ext:pr_019 .
+ext:v_ap_019 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_019 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_020 a ext:Boiler .
+ext:v_ap_020 rdfs:label "Vies-020" .
+
+ext:pr_020 a ext:PowerRating .
+ext:pr_020 rdfs:label "12 kW" .
+
+ext:v_ap_020 ext:hasOutput ext:pr_020 .
+ext:v_ap_020 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_020 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_021 a ext:HeatPump .
+ext:v_ap_021 rdfs:label "Vies-021" .
+
+ext:pr_021 a ext:PowerRating .
+ext:pr_021 rdfs:label "18 kW" .
+
+ext:v_ap_021 ext:hasOutput ext:pr_021 .
+ext:v_ap_021 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_021 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_022 a ext:Boiler .
+ext:v_ap_022 rdfs:label "Vies-022" .
+
+ext:pr_022 a ext:PowerRating .
+ext:pr_022 rdfs:label "24 kW" .
+
+ext:v_ap_022 ext:hasOutput ext:pr_022 .
+ext:v_ap_022 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_022 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_023 a ext:HeatPump .
+ext:v_ap_023 rdfs:label "Vies-023" .
+
+ext:pr_023 a ext:PowerRating .
+ext:pr_023 rdfs:label "30 kW" .
+
+ext:v_ap_023 ext:hasOutput ext:pr_023 .
+ext:v_ap_023 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_023 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_024 a ext:Boiler .
+ext:v_ap_024 rdfs:label "Vies-024" .
+
+ext:pr_024 a ext:PowerRating .
+ext:pr_024 rdfs:label "35 kW" .
+
+ext:v_ap_024 ext:hasOutput ext:pr_024 .
+ext:v_ap_024 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_024 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_025 a ext:HeatPump .
+ext:v_ap_025 rdfs:label "Vies-025" .
+
+ext:pr_025 a ext:PowerRating .
+ext:pr_025 rdfs:label "12 kW" .
+
+ext:v_ap_025 ext:hasOutput ext:pr_025 .
+ext:v_ap_025 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_025 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_026 a ext:Boiler .
+ext:v_ap_026 rdfs:label "Vies-026" .
+
+ext:pr_026 a ext:PowerRating .
+ext:pr_026 rdfs:label "18 kW" .
+
+ext:v_ap_026 ext:hasOutput ext:pr_026 .
+ext:v_ap_026 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_026 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_027 a ext:HeatPump .
+ext:v_ap_027 rdfs:label "Vies-027" .
+
+ext:pr_027 a ext:PowerRating .
+ext:pr_027 rdfs:label "24 kW" .
+
+ext:v_ap_027 ext:hasOutput ext:pr_027 .
+ext:v_ap_027 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_027 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_028 a ext:Boiler .
+ext:v_ap_028 rdfs:label "Vies-028" .
+
+ext:pr_028 a ext:PowerRating .
+ext:pr_028 rdfs:label "30 kW" .
+
+ext:v_ap_028 ext:hasOutput ext:pr_028 .
+ext:v_ap_028 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_028 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_029 a ext:HeatPump .
+ext:v_ap_029 rdfs:label "Vies-029" .
+
+ext:pr_029 a ext:PowerRating .
+ext:pr_029 rdfs:label "35 kW" .
+
+ext:v_ap_029 ext:hasOutput ext:pr_029 .
+ext:v_ap_029 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_029 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_030 a ext:Boiler .
+ext:v_ap_030 rdfs:label "Vies-030" .
+
+ext:pr_030 a ext:PowerRating .
+ext:pr_030 rdfs:label "12 kW" .
+
+ext:v_ap_030 ext:hasOutput ext:pr_030 .
+ext:v_ap_030 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_030 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_031 a ext:HeatPump .
+ext:v_ap_031 rdfs:label "Vies-031" .
+
+ext:pr_031 a ext:PowerRating .
+ext:pr_031 rdfs:label "18 kW" .
+
+ext:v_ap_031 ext:hasOutput ext:pr_031 .
+ext:v_ap_031 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_031 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_032 a ext:Boiler .
+ext:v_ap_032 rdfs:label "Vies-032" .
+
+ext:pr_032 a ext:PowerRating .
+ext:pr_032 rdfs:label "24 kW" .
+
+ext:v_ap_032 ext:hasOutput ext:pr_032 .
+ext:v_ap_032 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_032 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_033 a ext:HeatPump .
+ext:v_ap_033 rdfs:label "Vies-033" .
+
+ext:pr_033 a ext:PowerRating .
+ext:pr_033 rdfs:label "30 kW" .
+
+ext:v_ap_033 ext:hasOutput ext:pr_033 .
+ext:v_ap_033 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_033 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_034 a ext:Boiler .
+ext:v_ap_034 rdfs:label "Vies-034" .
+
+ext:pr_034 a ext:PowerRating .
+ext:pr_034 rdfs:label "35 kW" .
+
+ext:v_ap_034 ext:hasOutput ext:pr_034 .
+ext:v_ap_034 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_034 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_035 a ext:HeatPump .
+ext:v_ap_035 rdfs:label "Vies-035" .
+
+ext:pr_035 a ext:PowerRating .
+ext:pr_035 rdfs:label "12 kW" .
+
+ext:v_ap_035 ext:hasOutput ext:pr_035 .
+ext:v_ap_035 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_035 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_036 a ext:Boiler .
+ext:v_ap_036 rdfs:label "Vies-036" .
+
+ext:pr_036 a ext:PowerRating .
+ext:pr_036 rdfs:label "18 kW" .
+
+ext:v_ap_036 ext:hasOutput ext:pr_036 .
+ext:v_ap_036 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_036 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_037 a ext:HeatPump .
+ext:v_ap_037 rdfs:label "Vies-037" .
+
+ext:pr_037 a ext:PowerRating .
+ext:pr_037 rdfs:label "24 kW" .
+
+ext:v_ap_037 ext:hasOutput ext:pr_037 .
+ext:v_ap_037 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_037 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_038 a ext:Boiler .
+ext:v_ap_038 rdfs:label "Vies-038" .
+
+ext:pr_038 a ext:PowerRating .
+ext:pr_038 rdfs:label "30 kW" .
+
+ext:v_ap_038 ext:hasOutput ext:pr_038 .
+ext:v_ap_038 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_038 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_039 a ext:HeatPump .
+ext:v_ap_039 rdfs:label "Vies-039" .
+
+ext:pr_039 a ext:PowerRating .
+ext:pr_039 rdfs:label "35 kW" .
+
+ext:v_ap_039 ext:hasOutput ext:pr_039 .
+ext:v_ap_039 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_039 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_040 a ext:Boiler .
+ext:v_ap_040 rdfs:label "Vies-040" .
+
+ext:pr_040 a ext:PowerRating .
+ext:pr_040 rdfs:label "12 kW" .
+
+ext:v_ap_040 ext:hasOutput ext:pr_040 .
+ext:v_ap_040 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_040 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_041 a ext:HeatPump .
+ext:v_ap_041 rdfs:label "Vies-041" .
+
+ext:pr_041 a ext:PowerRating .
+ext:pr_041 rdfs:label "18 kW" .
+
+ext:v_ap_041 ext:hasOutput ext:pr_041 .
+ext:v_ap_041 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_041 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_042 a ext:Boiler .
+ext:v_ap_042 rdfs:label "Vies-042" .
+
+ext:pr_042 a ext:PowerRating .
+ext:pr_042 rdfs:label "24 kW" .
+
+ext:v_ap_042 ext:hasOutput ext:pr_042 .
+ext:v_ap_042 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_042 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_043 a ext:HeatPump .
+ext:v_ap_043 rdfs:label "Vies-043" .
+
+ext:pr_043 a ext:PowerRating .
+ext:pr_043 rdfs:label "30 kW" .
+
+ext:v_ap_043 ext:hasOutput ext:pr_043 .
+ext:v_ap_043 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_043 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_044 a ext:Boiler .
+ext:v_ap_044 rdfs:label "Vies-044" .
+
+ext:pr_044 a ext:PowerRating .
+ext:pr_044 rdfs:label "35 kW" .
+
+ext:v_ap_044 ext:hasOutput ext:pr_044 .
+ext:v_ap_044 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_044 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_045 a ext:HeatPump .
+ext:v_ap_045 rdfs:label "Vies-045" .
+
+ext:pr_045 a ext:PowerRating .
+ext:pr_045 rdfs:label "12 kW" .
+
+ext:v_ap_045 ext:hasOutput ext:pr_045 .
+ext:v_ap_045 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_045 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_046 a ext:Boiler .
+ext:v_ap_046 rdfs:label "Vies-046" .
+
+ext:pr_046 a ext:PowerRating .
+ext:pr_046 rdfs:label "18 kW" .
+
+ext:v_ap_046 ext:hasOutput ext:pr_046 .
+ext:v_ap_046 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_046 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_047 a ext:HeatPump .
+ext:v_ap_047 rdfs:label "Vies-047" .
+
+ext:pr_047 a ext:PowerRating .
+ext:pr_047 rdfs:label "24 kW" .
+
+ext:v_ap_047 ext:hasOutput ext:pr_047 .
+ext:v_ap_047 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_047 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_048 a ext:Boiler .
+ext:v_ap_048 rdfs:label "Vies-048" .
+
+ext:pr_048 a ext:PowerRating .
+ext:pr_048 rdfs:label "30 kW" .
+
+ext:v_ap_048 ext:hasOutput ext:pr_048 .
+ext:v_ap_048 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_048 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_049 a ext:HeatPump .
+ext:v_ap_049 rdfs:label "Vies-049" .
+
+ext:pr_049 a ext:PowerRating .
+ext:pr_049 rdfs:label "35 kW" .
+
+ext:v_ap_049 ext:hasOutput ext:pr_049 .
+ext:v_ap_049 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_049 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_050 a ext:Boiler .
+ext:v_ap_050 rdfs:label "Vies-050" .
+
+ext:pr_050 a ext:PowerRating .
+ext:pr_050 rdfs:label "12 kW" .
+
+ext:v_ap_050 ext:hasOutput ext:pr_050 .
+ext:v_ap_050 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_050 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_051 a ext:HeatPump .
+ext:v_ap_051 rdfs:label "Vies-051" .
+
+ext:pr_051 a ext:PowerRating .
+ext:pr_051 rdfs:label "18 kW" .
+
+ext:v_ap_051 ext:hasOutput ext:pr_051 .
+ext:v_ap_051 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_051 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_052 a ext:Boiler .
+ext:v_ap_052 rdfs:label "Vies-052" .
+
+ext:pr_052 a ext:PowerRating .
+ext:pr_052 rdfs:label "24 kW" .
+
+ext:v_ap_052 ext:hasOutput ext:pr_052 .
+ext:v_ap_052 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_052 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_053 a ext:HeatPump .
+ext:v_ap_053 rdfs:label "Vies-053" .
+
+ext:pr_053 a ext:PowerRating .
+ext:pr_053 rdfs:label "30 kW" .
+
+ext:v_ap_053 ext:hasOutput ext:pr_053 .
+ext:v_ap_053 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_053 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_054 a ext:Boiler .
+ext:v_ap_054 rdfs:label "Vies-054" .
+
+ext:pr_054 a ext:PowerRating .
+ext:pr_054 rdfs:label "35 kW" .
+
+ext:v_ap_054 ext:hasOutput ext:pr_054 .
+ext:v_ap_054 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_054 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_055 a ext:HeatPump .
+ext:v_ap_055 rdfs:label "Vies-055" .
+
+ext:pr_055 a ext:PowerRating .
+ext:pr_055 rdfs:label "12 kW" .
+
+ext:v_ap_055 ext:hasOutput ext:pr_055 .
+ext:v_ap_055 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_055 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_056 a ext:Boiler .
+ext:v_ap_056 rdfs:label "Vies-056" .
+
+ext:pr_056 a ext:PowerRating .
+ext:pr_056 rdfs:label "18 kW" .
+
+ext:v_ap_056 ext:hasOutput ext:pr_056 .
+ext:v_ap_056 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_056 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_057 a ext:HeatPump .
+ext:v_ap_057 rdfs:label "Vies-057" .
+
+ext:pr_057 a ext:PowerRating .
+ext:pr_057 rdfs:label "24 kW" .
+
+ext:v_ap_057 ext:hasOutput ext:pr_057 .
+ext:v_ap_057 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_057 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_058 a ext:Boiler .
+ext:v_ap_058 rdfs:label "Vies-058" .
+
+ext:pr_058 a ext:PowerRating .
+ext:pr_058 rdfs:label "30 kW" .
+
+ext:v_ap_058 ext:hasOutput ext:pr_058 .
+ext:v_ap_058 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_058 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_059 a ext:HeatPump .
+ext:v_ap_059 rdfs:label "Vies-059" .
+
+ext:pr_059 a ext:PowerRating .
+ext:pr_059 rdfs:label "35 kW" .
+
+ext:v_ap_059 ext:hasOutput ext:pr_059 .
+ext:v_ap_059 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_059 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_060 a ext:Boiler .
+ext:v_ap_060 rdfs:label "Vies-060" .
+
+ext:pr_060 a ext:PowerRating .
+ext:pr_060 rdfs:label "12 kW" .
+
+ext:v_ap_060 ext:hasOutput ext:pr_060 .
+ext:v_ap_060 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_060 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_061 a ext:HeatPump .
+ext:v_ap_061 rdfs:label "Vies-061" .
+
+ext:pr_061 a ext:PowerRating .
+ext:pr_061 rdfs:label "18 kW" .
+
+ext:v_ap_061 ext:hasOutput ext:pr_061 .
+ext:v_ap_061 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_061 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_062 a ext:Boiler .
+ext:v_ap_062 rdfs:label "Vies-062" .
+
+ext:pr_062 a ext:PowerRating .
+ext:pr_062 rdfs:label "24 kW" .
+
+ext:v_ap_062 ext:hasOutput ext:pr_062 .
+ext:v_ap_062 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_062 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_063 a ext:HeatPump .
+ext:v_ap_063 rdfs:label "Vies-063" .
+
+ext:pr_063 a ext:PowerRating .
+ext:pr_063 rdfs:label "30 kW" .
+
+ext:v_ap_063 ext:hasOutput ext:pr_063 .
+ext:v_ap_063 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_063 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_064 a ext:Boiler .
+ext:v_ap_064 rdfs:label "Vies-064" .
+
+ext:pr_064 a ext:PowerRating .
+ext:pr_064 rdfs:label "35 kW" .
+
+ext:v_ap_064 ext:hasOutput ext:pr_064 .
+ext:v_ap_064 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_064 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_065 a ext:HeatPump .
+ext:v_ap_065 rdfs:label "Vies-065" .
+
+ext:pr_065 a ext:PowerRating .
+ext:pr_065 rdfs:label "12 kW" .
+
+ext:v_ap_065 ext:hasOutput ext:pr_065 .
+ext:v_ap_065 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_065 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_066 a ext:Boiler .
+ext:v_ap_066 rdfs:label "Vies-066" .
+
+ext:pr_066 a ext:PowerRating .
+ext:pr_066 rdfs:label "18 kW" .
+
+ext:v_ap_066 ext:hasOutput ext:pr_066 .
+ext:v_ap_066 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_066 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_067 a ext:HeatPump .
+ext:v_ap_067 rdfs:label "Vies-067" .
+
+ext:pr_067 a ext:PowerRating .
+ext:pr_067 rdfs:label "24 kW" .
+
+ext:v_ap_067 ext:hasOutput ext:pr_067 .
+ext:v_ap_067 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_067 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_068 a ext:Boiler .
+ext:v_ap_068 rdfs:label "Vies-068" .
+
+ext:pr_068 a ext:PowerRating .
+ext:pr_068 rdfs:label "30 kW" .
+
+ext:v_ap_068 ext:hasOutput ext:pr_068 .
+ext:v_ap_068 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_068 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_069 a ext:HeatPump .
+ext:v_ap_069 rdfs:label "Vies-069" .
+
+ext:pr_069 a ext:PowerRating .
+ext:pr_069 rdfs:label "35 kW" .
+
+ext:v_ap_069 ext:hasOutput ext:pr_069 .
+ext:v_ap_069 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_069 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_070 a ext:Boiler .
+ext:v_ap_070 rdfs:label "Vies-070" .
+
+ext:pr_070 a ext:PowerRating .
+ext:pr_070 rdfs:label "12 kW" .
+
+ext:v_ap_070 ext:hasOutput ext:pr_070 .
+ext:v_ap_070 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_070 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_071 a ext:HeatPump .
+ext:v_ap_071 rdfs:label "Vies-071" .
+
+ext:pr_071 a ext:PowerRating .
+ext:pr_071 rdfs:label "18 kW" .
+
+ext:v_ap_071 ext:hasOutput ext:pr_071 .
+ext:v_ap_071 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_071 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_072 a ext:Boiler .
+ext:v_ap_072 rdfs:label "Vies-072" .
+
+ext:pr_072 a ext:PowerRating .
+ext:pr_072 rdfs:label "24 kW" .
+
+ext:v_ap_072 ext:hasOutput ext:pr_072 .
+ext:v_ap_072 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_072 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_073 a ext:HeatPump .
+ext:v_ap_073 rdfs:label "Vies-073" .
+
+ext:pr_073 a ext:PowerRating .
+ext:pr_073 rdfs:label "30 kW" .
+
+ext:v_ap_073 ext:hasOutput ext:pr_073 .
+ext:v_ap_073 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_073 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_074 a ext:Boiler .
+ext:v_ap_074 rdfs:label "Vies-074" .
+
+ext:pr_074 a ext:PowerRating .
+ext:pr_074 rdfs:label "35 kW" .
+
+ext:v_ap_074 ext:hasOutput ext:pr_074 .
+ext:v_ap_074 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_074 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_075 a ext:HeatPump .
+ext:v_ap_075 rdfs:label "Vies-075" .
+
+ext:pr_075 a ext:PowerRating .
+ext:pr_075 rdfs:label "12 kW" .
+
+ext:v_ap_075 ext:hasOutput ext:pr_075 .
+ext:v_ap_075 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_075 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_076 a ext:Boiler .
+ext:v_ap_076 rdfs:label "Vies-076" .
+
+ext:pr_076 a ext:PowerRating .
+ext:pr_076 rdfs:label "18 kW" .
+
+ext:v_ap_076 ext:hasOutput ext:pr_076 .
+ext:v_ap_076 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_076 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_077 a ext:HeatPump .
+ext:v_ap_077 rdfs:label "Vies-077" .
+
+ext:pr_077 a ext:PowerRating .
+ext:pr_077 rdfs:label "24 kW" .
+
+ext:v_ap_077 ext:hasOutput ext:pr_077 .
+ext:v_ap_077 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_077 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_078 a ext:Boiler .
+ext:v_ap_078 rdfs:label "Vies-078" .
+
+ext:pr_078 a ext:PowerRating .
+ext:pr_078 rdfs:label "30 kW" .
+
+ext:v_ap_078 ext:hasOutput ext:pr_078 .
+ext:v_ap_078 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_078 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_079 a ext:HeatPump .
+ext:v_ap_079 rdfs:label "Vies-079" .
+
+ext:pr_079 a ext:PowerRating .
+ext:pr_079 rdfs:label "35 kW" .
+
+ext:v_ap_079 ext:hasOutput ext:pr_079 .
+ext:v_ap_079 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_079 ext:compatibleWith ext:acc_OutdoorSensor .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix ext:  <http://example.org/ext#> .
+
+# KG booster generated 20250831
+ext:Appliance a owl:Class .
+ext:Boiler a owl:Class ; rdfs:subClassOf ext:Appliance .
+ext:HeatPump a owl:Class ; rdfs:subClassOf ext:Appliance .
+ext:PowerRating a owl:Class .
+ext:FuelType a owl:Class .
+ext:Accessory a owl:Class .
+ext:hasOutput a owl:ObjectProperty ; rdfs:domain ext:Appliance ; rdfs:range ext:PowerRating .
+ext:supportsFuel a owl:ObjectProperty ; rdfs:domain ext:Appliance ; rdfs:range ext:FuelType .
+ext:compatibleWith a owl:ObjectProperty ; rdfs:domain ext:Appliance ; rdfs:range ext:Accessory .
+ext:Appliance rdfs:label "appliance" .
+
+ext:Boiler rdfs:label "boiler" .
+
+ext:HeatPump rdfs:label "heat pump" .
+
+ext:PowerRating rdfs:label "power output" .
+
+ext:FuelType rdfs:label "fuel type" .
+
+ext:Accessory rdfs:label "accessory" .
+
+ext:hasOutput rdfs:label "output" .
+
+ext:supportsFuel rdfs:label "fuel" .
+
+ext:compatibleWith rdfs:label "compatible accessory" .
+
+ext:fuel_Gas a ext:FuelType .
+ext:fuel_Gas rdfs:label "Gas" .
+
+ext:fuel_Oil a ext:FuelType .
+ext:fuel_Oil rdfs:label "Oil" .
+
+ext:fuel_Propane a ext:FuelType .
+ext:fuel_Propane rdfs:label "Propane" .
+
+ext:fuel_Electric a ext:FuelType .
+ext:fuel_Electric rdfs:label "Electric" .
+
+ext:acc_Vitotrol a ext:Accessory .
+ext:acc_Vitotrol rdfs:label "Vitotrol" .
+
+ext:acc_HydroKit a ext:Accessory .
+ext:acc_HydroKit rdfs:label "HydroKit" .
+
+ext:acc_BufferTank a ext:Accessory .
+ext:acc_BufferTank rdfs:label "BufferTank" .
+
+ext:acc_OutdoorSensor a ext:Accessory .
+ext:acc_OutdoorSensor rdfs:label "OutdoorSensor" .
+
+ext:v_ap_000 a ext:Boiler .
+ext:v_ap_000 rdfs:label "Vies-000" .
+
+ext:pr_000 a ext:PowerRating .
+ext:pr_000 rdfs:label "12 kW" .
+
+ext:v_ap_000 ext:hasOutput ext:pr_000 .
+ext:v_ap_000 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_000 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_001 a ext:HeatPump .
+ext:v_ap_001 rdfs:label "Vies-001" .
+
+ext:pr_001 a ext:PowerRating .
+ext:pr_001 rdfs:label "18 kW" .
+
+ext:v_ap_001 ext:hasOutput ext:pr_001 .
+ext:v_ap_001 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_001 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_002 a ext:Boiler .
+ext:v_ap_002 rdfs:label "Vies-002" .
+
+ext:pr_002 a ext:PowerRating .
+ext:pr_002 rdfs:label "24 kW" .
+
+ext:v_ap_002 ext:hasOutput ext:pr_002 .
+ext:v_ap_002 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_002 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_003 a ext:HeatPump .
+ext:v_ap_003 rdfs:label "Vies-003" .
+
+ext:pr_003 a ext:PowerRating .
+ext:pr_003 rdfs:label "30 kW" .
+
+ext:v_ap_003 ext:hasOutput ext:pr_003 .
+ext:v_ap_003 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_003 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_004 a ext:Boiler .
+ext:v_ap_004 rdfs:label "Vies-004" .
+
+ext:pr_004 a ext:PowerRating .
+ext:pr_004 rdfs:label "35 kW" .
+
+ext:v_ap_004 ext:hasOutput ext:pr_004 .
+ext:v_ap_004 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_004 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_005 a ext:HeatPump .
+ext:v_ap_005 rdfs:label "Vies-005" .
+
+ext:pr_005 a ext:PowerRating .
+ext:pr_005 rdfs:label "12 kW" .
+
+ext:v_ap_005 ext:hasOutput ext:pr_005 .
+ext:v_ap_005 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_005 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_006 a ext:Boiler .
+ext:v_ap_006 rdfs:label "Vies-006" .
+
+ext:pr_006 a ext:PowerRating .
+ext:pr_006 rdfs:label "18 kW" .
+
+ext:v_ap_006 ext:hasOutput ext:pr_006 .
+ext:v_ap_006 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_006 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_007 a ext:HeatPump .
+ext:v_ap_007 rdfs:label "Vies-007" .
+
+ext:pr_007 a ext:PowerRating .
+ext:pr_007 rdfs:label "24 kW" .
+
+ext:v_ap_007 ext:hasOutput ext:pr_007 .
+ext:v_ap_007 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_007 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_008 a ext:Boiler .
+ext:v_ap_008 rdfs:label "Vies-008" .
+
+ext:pr_008 a ext:PowerRating .
+ext:pr_008 rdfs:label "30 kW" .
+
+ext:v_ap_008 ext:hasOutput ext:pr_008 .
+ext:v_ap_008 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_008 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_009 a ext:HeatPump .
+ext:v_ap_009 rdfs:label "Vies-009" .
+
+ext:pr_009 a ext:PowerRating .
+ext:pr_009 rdfs:label "35 kW" .
+
+ext:v_ap_009 ext:hasOutput ext:pr_009 .
+ext:v_ap_009 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_009 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_010 a ext:Boiler .
+ext:v_ap_010 rdfs:label "Vies-010" .
+
+ext:pr_010 a ext:PowerRating .
+ext:pr_010 rdfs:label "12 kW" .
+
+ext:v_ap_010 ext:hasOutput ext:pr_010 .
+ext:v_ap_010 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_010 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_011 a ext:HeatPump .
+ext:v_ap_011 rdfs:label "Vies-011" .
+
+ext:pr_011 a ext:PowerRating .
+ext:pr_011 rdfs:label "18 kW" .
+
+ext:v_ap_011 ext:hasOutput ext:pr_011 .
+ext:v_ap_011 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_011 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_012 a ext:Boiler .
+ext:v_ap_012 rdfs:label "Vies-012" .
+
+ext:pr_012 a ext:PowerRating .
+ext:pr_012 rdfs:label "24 kW" .
+
+ext:v_ap_012 ext:hasOutput ext:pr_012 .
+ext:v_ap_012 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_012 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_013 a ext:HeatPump .
+ext:v_ap_013 rdfs:label "Vies-013" .
+
+ext:pr_013 a ext:PowerRating .
+ext:pr_013 rdfs:label "30 kW" .
+
+ext:v_ap_013 ext:hasOutput ext:pr_013 .
+ext:v_ap_013 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_013 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_014 a ext:Boiler .
+ext:v_ap_014 rdfs:label "Vies-014" .
+
+ext:pr_014 a ext:PowerRating .
+ext:pr_014 rdfs:label "35 kW" .
+
+ext:v_ap_014 ext:hasOutput ext:pr_014 .
+ext:v_ap_014 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_014 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_015 a ext:HeatPump .
+ext:v_ap_015 rdfs:label "Vies-015" .
+
+ext:pr_015 a ext:PowerRating .
+ext:pr_015 rdfs:label "12 kW" .
+
+ext:v_ap_015 ext:hasOutput ext:pr_015 .
+ext:v_ap_015 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_015 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_016 a ext:Boiler .
+ext:v_ap_016 rdfs:label "Vies-016" .
+
+ext:pr_016 a ext:PowerRating .
+ext:pr_016 rdfs:label "18 kW" .
+
+ext:v_ap_016 ext:hasOutput ext:pr_016 .
+ext:v_ap_016 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_016 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_017 a ext:HeatPump .
+ext:v_ap_017 rdfs:label "Vies-017" .
+
+ext:pr_017 a ext:PowerRating .
+ext:pr_017 rdfs:label "24 kW" .
+
+ext:v_ap_017 ext:hasOutput ext:pr_017 .
+ext:v_ap_017 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_017 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_018 a ext:Boiler .
+ext:v_ap_018 rdfs:label "Vies-018" .
+
+ext:pr_018 a ext:PowerRating .
+ext:pr_018 rdfs:label "30 kW" .
+
+ext:v_ap_018 ext:hasOutput ext:pr_018 .
+ext:v_ap_018 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_018 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_019 a ext:HeatPump .
+ext:v_ap_019 rdfs:label "Vies-019" .
+
+ext:pr_019 a ext:PowerRating .
+ext:pr_019 rdfs:label "35 kW" .
+
+ext:v_ap_019 ext:hasOutput ext:pr_019 .
+ext:v_ap_019 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_019 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_020 a ext:Boiler .
+ext:v_ap_020 rdfs:label "Vies-020" .
+
+ext:pr_020 a ext:PowerRating .
+ext:pr_020 rdfs:label "12 kW" .
+
+ext:v_ap_020 ext:hasOutput ext:pr_020 .
+ext:v_ap_020 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_020 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_021 a ext:HeatPump .
+ext:v_ap_021 rdfs:label "Vies-021" .
+
+ext:pr_021 a ext:PowerRating .
+ext:pr_021 rdfs:label "18 kW" .
+
+ext:v_ap_021 ext:hasOutput ext:pr_021 .
+ext:v_ap_021 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_021 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_022 a ext:Boiler .
+ext:v_ap_022 rdfs:label "Vies-022" .
+
+ext:pr_022 a ext:PowerRating .
+ext:pr_022 rdfs:label "24 kW" .
+
+ext:v_ap_022 ext:hasOutput ext:pr_022 .
+ext:v_ap_022 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_022 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_023 a ext:HeatPump .
+ext:v_ap_023 rdfs:label "Vies-023" .
+
+ext:pr_023 a ext:PowerRating .
+ext:pr_023 rdfs:label "30 kW" .
+
+ext:v_ap_023 ext:hasOutput ext:pr_023 .
+ext:v_ap_023 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_023 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_024 a ext:Boiler .
+ext:v_ap_024 rdfs:label "Vies-024" .
+
+ext:pr_024 a ext:PowerRating .
+ext:pr_024 rdfs:label "35 kW" .
+
+ext:v_ap_024 ext:hasOutput ext:pr_024 .
+ext:v_ap_024 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_024 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_025 a ext:HeatPump .
+ext:v_ap_025 rdfs:label "Vies-025" .
+
+ext:pr_025 a ext:PowerRating .
+ext:pr_025 rdfs:label "12 kW" .
+
+ext:v_ap_025 ext:hasOutput ext:pr_025 .
+ext:v_ap_025 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_025 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_026 a ext:Boiler .
+ext:v_ap_026 rdfs:label "Vies-026" .
+
+ext:pr_026 a ext:PowerRating .
+ext:pr_026 rdfs:label "18 kW" .
+
+ext:v_ap_026 ext:hasOutput ext:pr_026 .
+ext:v_ap_026 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_026 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_027 a ext:HeatPump .
+ext:v_ap_027 rdfs:label "Vies-027" .
+
+ext:pr_027 a ext:PowerRating .
+ext:pr_027 rdfs:label "24 kW" .
+
+ext:v_ap_027 ext:hasOutput ext:pr_027 .
+ext:v_ap_027 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_027 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_028 a ext:Boiler .
+ext:v_ap_028 rdfs:label "Vies-028" .
+
+ext:pr_028 a ext:PowerRating .
+ext:pr_028 rdfs:label "30 kW" .
+
+ext:v_ap_028 ext:hasOutput ext:pr_028 .
+ext:v_ap_028 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_028 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_029 a ext:HeatPump .
+ext:v_ap_029 rdfs:label "Vies-029" .
+
+ext:pr_029 a ext:PowerRating .
+ext:pr_029 rdfs:label "35 kW" .
+
+ext:v_ap_029 ext:hasOutput ext:pr_029 .
+ext:v_ap_029 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_029 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_030 a ext:Boiler .
+ext:v_ap_030 rdfs:label "Vies-030" .
+
+ext:pr_030 a ext:PowerRating .
+ext:pr_030 rdfs:label "12 kW" .
+
+ext:v_ap_030 ext:hasOutput ext:pr_030 .
+ext:v_ap_030 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_030 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_031 a ext:HeatPump .
+ext:v_ap_031 rdfs:label "Vies-031" .
+
+ext:pr_031 a ext:PowerRating .
+ext:pr_031 rdfs:label "18 kW" .
+
+ext:v_ap_031 ext:hasOutput ext:pr_031 .
+ext:v_ap_031 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_031 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_032 a ext:Boiler .
+ext:v_ap_032 rdfs:label "Vies-032" .
+
+ext:pr_032 a ext:PowerRating .
+ext:pr_032 rdfs:label "24 kW" .
+
+ext:v_ap_032 ext:hasOutput ext:pr_032 .
+ext:v_ap_032 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_032 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_033 a ext:HeatPump .
+ext:v_ap_033 rdfs:label "Vies-033" .
+
+ext:pr_033 a ext:PowerRating .
+ext:pr_033 rdfs:label "30 kW" .
+
+ext:v_ap_033 ext:hasOutput ext:pr_033 .
+ext:v_ap_033 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_033 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_034 a ext:Boiler .
+ext:v_ap_034 rdfs:label "Vies-034" .
+
+ext:pr_034 a ext:PowerRating .
+ext:pr_034 rdfs:label "35 kW" .
+
+ext:v_ap_034 ext:hasOutput ext:pr_034 .
+ext:v_ap_034 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_034 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_035 a ext:HeatPump .
+ext:v_ap_035 rdfs:label "Vies-035" .
+
+ext:pr_035 a ext:PowerRating .
+ext:pr_035 rdfs:label "12 kW" .
+
+ext:v_ap_035 ext:hasOutput ext:pr_035 .
+ext:v_ap_035 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_035 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_036 a ext:Boiler .
+ext:v_ap_036 rdfs:label "Vies-036" .
+
+ext:pr_036 a ext:PowerRating .
+ext:pr_036 rdfs:label "18 kW" .
+
+ext:v_ap_036 ext:hasOutput ext:pr_036 .
+ext:v_ap_036 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_036 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_037 a ext:HeatPump .
+ext:v_ap_037 rdfs:label "Vies-037" .
+
+ext:pr_037 a ext:PowerRating .
+ext:pr_037 rdfs:label "24 kW" .
+
+ext:v_ap_037 ext:hasOutput ext:pr_037 .
+ext:v_ap_037 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_037 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_038 a ext:Boiler .
+ext:v_ap_038 rdfs:label "Vies-038" .
+
+ext:pr_038 a ext:PowerRating .
+ext:pr_038 rdfs:label "30 kW" .
+
+ext:v_ap_038 ext:hasOutput ext:pr_038 .
+ext:v_ap_038 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_038 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_039 a ext:HeatPump .
+ext:v_ap_039 rdfs:label "Vies-039" .
+
+ext:pr_039 a ext:PowerRating .
+ext:pr_039 rdfs:label "35 kW" .
+
+ext:v_ap_039 ext:hasOutput ext:pr_039 .
+ext:v_ap_039 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_039 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_040 a ext:Boiler .
+ext:v_ap_040 rdfs:label "Vies-040" .
+
+ext:pr_040 a ext:PowerRating .
+ext:pr_040 rdfs:label "12 kW" .
+
+ext:v_ap_040 ext:hasOutput ext:pr_040 .
+ext:v_ap_040 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_040 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_041 a ext:HeatPump .
+ext:v_ap_041 rdfs:label "Vies-041" .
+
+ext:pr_041 a ext:PowerRating .
+ext:pr_041 rdfs:label "18 kW" .
+
+ext:v_ap_041 ext:hasOutput ext:pr_041 .
+ext:v_ap_041 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_041 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_042 a ext:Boiler .
+ext:v_ap_042 rdfs:label "Vies-042" .
+
+ext:pr_042 a ext:PowerRating .
+ext:pr_042 rdfs:label "24 kW" .
+
+ext:v_ap_042 ext:hasOutput ext:pr_042 .
+ext:v_ap_042 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_042 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_043 a ext:HeatPump .
+ext:v_ap_043 rdfs:label "Vies-043" .
+
+ext:pr_043 a ext:PowerRating .
+ext:pr_043 rdfs:label "30 kW" .
+
+ext:v_ap_043 ext:hasOutput ext:pr_043 .
+ext:v_ap_043 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_043 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_044 a ext:Boiler .
+ext:v_ap_044 rdfs:label "Vies-044" .
+
+ext:pr_044 a ext:PowerRating .
+ext:pr_044 rdfs:label "35 kW" .
+
+ext:v_ap_044 ext:hasOutput ext:pr_044 .
+ext:v_ap_044 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_044 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_045 a ext:HeatPump .
+ext:v_ap_045 rdfs:label "Vies-045" .
+
+ext:pr_045 a ext:PowerRating .
+ext:pr_045 rdfs:label "12 kW" .
+
+ext:v_ap_045 ext:hasOutput ext:pr_045 .
+ext:v_ap_045 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_045 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_046 a ext:Boiler .
+ext:v_ap_046 rdfs:label "Vies-046" .
+
+ext:pr_046 a ext:PowerRating .
+ext:pr_046 rdfs:label "18 kW" .
+
+ext:v_ap_046 ext:hasOutput ext:pr_046 .
+ext:v_ap_046 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_046 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_047 a ext:HeatPump .
+ext:v_ap_047 rdfs:label "Vies-047" .
+
+ext:pr_047 a ext:PowerRating .
+ext:pr_047 rdfs:label "24 kW" .
+
+ext:v_ap_047 ext:hasOutput ext:pr_047 .
+ext:v_ap_047 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_047 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_048 a ext:Boiler .
+ext:v_ap_048 rdfs:label "Vies-048" .
+
+ext:pr_048 a ext:PowerRating .
+ext:pr_048 rdfs:label "30 kW" .
+
+ext:v_ap_048 ext:hasOutput ext:pr_048 .
+ext:v_ap_048 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_048 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_049 a ext:HeatPump .
+ext:v_ap_049 rdfs:label "Vies-049" .
+
+ext:pr_049 a ext:PowerRating .
+ext:pr_049 rdfs:label "35 kW" .
+
+ext:v_ap_049 ext:hasOutput ext:pr_049 .
+ext:v_ap_049 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_049 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_050 a ext:Boiler .
+ext:v_ap_050 rdfs:label "Vies-050" .
+
+ext:pr_050 a ext:PowerRating .
+ext:pr_050 rdfs:label "12 kW" .
+
+ext:v_ap_050 ext:hasOutput ext:pr_050 .
+ext:v_ap_050 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_050 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_051 a ext:HeatPump .
+ext:v_ap_051 rdfs:label "Vies-051" .
+
+ext:pr_051 a ext:PowerRating .
+ext:pr_051 rdfs:label "18 kW" .
+
+ext:v_ap_051 ext:hasOutput ext:pr_051 .
+ext:v_ap_051 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_051 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_052 a ext:Boiler .
+ext:v_ap_052 rdfs:label "Vies-052" .
+
+ext:pr_052 a ext:PowerRating .
+ext:pr_052 rdfs:label "24 kW" .
+
+ext:v_ap_052 ext:hasOutput ext:pr_052 .
+ext:v_ap_052 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_052 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_053 a ext:HeatPump .
+ext:v_ap_053 rdfs:label "Vies-053" .
+
+ext:pr_053 a ext:PowerRating .
+ext:pr_053 rdfs:label "30 kW" .
+
+ext:v_ap_053 ext:hasOutput ext:pr_053 .
+ext:v_ap_053 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_053 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_054 a ext:Boiler .
+ext:v_ap_054 rdfs:label "Vies-054" .
+
+ext:pr_054 a ext:PowerRating .
+ext:pr_054 rdfs:label "35 kW" .
+
+ext:v_ap_054 ext:hasOutput ext:pr_054 .
+ext:v_ap_054 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_054 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_055 a ext:HeatPump .
+ext:v_ap_055 rdfs:label "Vies-055" .
+
+ext:pr_055 a ext:PowerRating .
+ext:pr_055 rdfs:label "12 kW" .
+
+ext:v_ap_055 ext:hasOutput ext:pr_055 .
+ext:v_ap_055 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_055 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_056 a ext:Boiler .
+ext:v_ap_056 rdfs:label "Vies-056" .
+
+ext:pr_056 a ext:PowerRating .
+ext:pr_056 rdfs:label "18 kW" .
+
+ext:v_ap_056 ext:hasOutput ext:pr_056 .
+ext:v_ap_056 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_056 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_057 a ext:HeatPump .
+ext:v_ap_057 rdfs:label "Vies-057" .
+
+ext:pr_057 a ext:PowerRating .
+ext:pr_057 rdfs:label "24 kW" .
+
+ext:v_ap_057 ext:hasOutput ext:pr_057 .
+ext:v_ap_057 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_057 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_058 a ext:Boiler .
+ext:v_ap_058 rdfs:label "Vies-058" .
+
+ext:pr_058 a ext:PowerRating .
+ext:pr_058 rdfs:label "30 kW" .
+
+ext:v_ap_058 ext:hasOutput ext:pr_058 .
+ext:v_ap_058 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_058 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_059 a ext:HeatPump .
+ext:v_ap_059 rdfs:label "Vies-059" .
+
+ext:pr_059 a ext:PowerRating .
+ext:pr_059 rdfs:label "35 kW" .
+
+ext:v_ap_059 ext:hasOutput ext:pr_059 .
+ext:v_ap_059 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_059 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_060 a ext:Boiler .
+ext:v_ap_060 rdfs:label "Vies-060" .
+
+ext:pr_060 a ext:PowerRating .
+ext:pr_060 rdfs:label "12 kW" .
+
+ext:v_ap_060 ext:hasOutput ext:pr_060 .
+ext:v_ap_060 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_060 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_061 a ext:HeatPump .
+ext:v_ap_061 rdfs:label "Vies-061" .
+
+ext:pr_061 a ext:PowerRating .
+ext:pr_061 rdfs:label "18 kW" .
+
+ext:v_ap_061 ext:hasOutput ext:pr_061 .
+ext:v_ap_061 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_061 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_062 a ext:Boiler .
+ext:v_ap_062 rdfs:label "Vies-062" .
+
+ext:pr_062 a ext:PowerRating .
+ext:pr_062 rdfs:label "24 kW" .
+
+ext:v_ap_062 ext:hasOutput ext:pr_062 .
+ext:v_ap_062 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_062 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_063 a ext:HeatPump .
+ext:v_ap_063 rdfs:label "Vies-063" .
+
+ext:pr_063 a ext:PowerRating .
+ext:pr_063 rdfs:label "30 kW" .
+
+ext:v_ap_063 ext:hasOutput ext:pr_063 .
+ext:v_ap_063 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_063 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_064 a ext:Boiler .
+ext:v_ap_064 rdfs:label "Vies-064" .
+
+ext:pr_064 a ext:PowerRating .
+ext:pr_064 rdfs:label "35 kW" .
+
+ext:v_ap_064 ext:hasOutput ext:pr_064 .
+ext:v_ap_064 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_064 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_065 a ext:HeatPump .
+ext:v_ap_065 rdfs:label "Vies-065" .
+
+ext:pr_065 a ext:PowerRating .
+ext:pr_065 rdfs:label "12 kW" .
+
+ext:v_ap_065 ext:hasOutput ext:pr_065 .
+ext:v_ap_065 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_065 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_066 a ext:Boiler .
+ext:v_ap_066 rdfs:label "Vies-066" .
+
+ext:pr_066 a ext:PowerRating .
+ext:pr_066 rdfs:label "18 kW" .
+
+ext:v_ap_066 ext:hasOutput ext:pr_066 .
+ext:v_ap_066 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_066 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_067 a ext:HeatPump .
+ext:v_ap_067 rdfs:label "Vies-067" .
+
+ext:pr_067 a ext:PowerRating .
+ext:pr_067 rdfs:label "24 kW" .
+
+ext:v_ap_067 ext:hasOutput ext:pr_067 .
+ext:v_ap_067 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_067 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_068 a ext:Boiler .
+ext:v_ap_068 rdfs:label "Vies-068" .
+
+ext:pr_068 a ext:PowerRating .
+ext:pr_068 rdfs:label "30 kW" .
+
+ext:v_ap_068 ext:hasOutput ext:pr_068 .
+ext:v_ap_068 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_068 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_069 a ext:HeatPump .
+ext:v_ap_069 rdfs:label "Vies-069" .
+
+ext:pr_069 a ext:PowerRating .
+ext:pr_069 rdfs:label "35 kW" .
+
+ext:v_ap_069 ext:hasOutput ext:pr_069 .
+ext:v_ap_069 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_069 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_070 a ext:Boiler .
+ext:v_ap_070 rdfs:label "Vies-070" .
+
+ext:pr_070 a ext:PowerRating .
+ext:pr_070 rdfs:label "12 kW" .
+
+ext:v_ap_070 ext:hasOutput ext:pr_070 .
+ext:v_ap_070 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_070 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_071 a ext:HeatPump .
+ext:v_ap_071 rdfs:label "Vies-071" .
+
+ext:pr_071 a ext:PowerRating .
+ext:pr_071 rdfs:label "18 kW" .
+
+ext:v_ap_071 ext:hasOutput ext:pr_071 .
+ext:v_ap_071 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_071 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_072 a ext:Boiler .
+ext:v_ap_072 rdfs:label "Vies-072" .
+
+ext:pr_072 a ext:PowerRating .
+ext:pr_072 rdfs:label "24 kW" .
+
+ext:v_ap_072 ext:hasOutput ext:pr_072 .
+ext:v_ap_072 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_072 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_073 a ext:HeatPump .
+ext:v_ap_073 rdfs:label "Vies-073" .
+
+ext:pr_073 a ext:PowerRating .
+ext:pr_073 rdfs:label "30 kW" .
+
+ext:v_ap_073 ext:hasOutput ext:pr_073 .
+ext:v_ap_073 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_073 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_074 a ext:Boiler .
+ext:v_ap_074 rdfs:label "Vies-074" .
+
+ext:pr_074 a ext:PowerRating .
+ext:pr_074 rdfs:label "35 kW" .
+
+ext:v_ap_074 ext:hasOutput ext:pr_074 .
+ext:v_ap_074 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_074 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_075 a ext:HeatPump .
+ext:v_ap_075 rdfs:label "Vies-075" .
+
+ext:pr_075 a ext:PowerRating .
+ext:pr_075 rdfs:label "12 kW" .
+
+ext:v_ap_075 ext:hasOutput ext:pr_075 .
+ext:v_ap_075 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_075 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_076 a ext:Boiler .
+ext:v_ap_076 rdfs:label "Vies-076" .
+
+ext:pr_076 a ext:PowerRating .
+ext:pr_076 rdfs:label "18 kW" .
+
+ext:v_ap_076 ext:hasOutput ext:pr_076 .
+ext:v_ap_076 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_076 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_077 a ext:HeatPump .
+ext:v_ap_077 rdfs:label "Vies-077" .
+
+ext:pr_077 a ext:PowerRating .
+ext:pr_077 rdfs:label "24 kW" .
+
+ext:v_ap_077 ext:hasOutput ext:pr_077 .
+ext:v_ap_077 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_077 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_078 a ext:Boiler .
+ext:v_ap_078 rdfs:label "Vies-078" .
+
+ext:pr_078 a ext:PowerRating .
+ext:pr_078 rdfs:label "30 kW" .
+
+ext:v_ap_078 ext:hasOutput ext:pr_078 .
+ext:v_ap_078 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_078 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_079 a ext:HeatPump .
+ext:v_ap_079 rdfs:label "Vies-079" .
+
+ext:pr_079 a ext:PowerRating .
+ext:pr_079 rdfs:label "35 kW" .
+
+ext:v_ap_079 ext:hasOutput ext:pr_079 .
+ext:v_ap_079 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_079 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_080 a ext:Boiler .
+ext:v_ap_080 rdfs:label "Vies-080" .
+
+ext:pr_080 a ext:PowerRating .
+ext:pr_080 rdfs:label "12 kW" .
+
+ext:v_ap_080 ext:hasOutput ext:pr_080 .
+ext:v_ap_080 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_080 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_081 a ext:HeatPump .
+ext:v_ap_081 rdfs:label "Vies-081" .
+
+ext:pr_081 a ext:PowerRating .
+ext:pr_081 rdfs:label "18 kW" .
+
+ext:v_ap_081 ext:hasOutput ext:pr_081 .
+ext:v_ap_081 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_081 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_082 a ext:Boiler .
+ext:v_ap_082 rdfs:label "Vies-082" .
+
+ext:pr_082 a ext:PowerRating .
+ext:pr_082 rdfs:label "24 kW" .
+
+ext:v_ap_082 ext:hasOutput ext:pr_082 .
+ext:v_ap_082 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_082 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_083 a ext:HeatPump .
+ext:v_ap_083 rdfs:label "Vies-083" .
+
+ext:pr_083 a ext:PowerRating .
+ext:pr_083 rdfs:label "30 kW" .
+
+ext:v_ap_083 ext:hasOutput ext:pr_083 .
+ext:v_ap_083 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_083 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_084 a ext:Boiler .
+ext:v_ap_084 rdfs:label "Vies-084" .
+
+ext:pr_084 a ext:PowerRating .
+ext:pr_084 rdfs:label "35 kW" .
+
+ext:v_ap_084 ext:hasOutput ext:pr_084 .
+ext:v_ap_084 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_084 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_085 a ext:HeatPump .
+ext:v_ap_085 rdfs:label "Vies-085" .
+
+ext:pr_085 a ext:PowerRating .
+ext:pr_085 rdfs:label "12 kW" .
+
+ext:v_ap_085 ext:hasOutput ext:pr_085 .
+ext:v_ap_085 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_085 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_086 a ext:Boiler .
+ext:v_ap_086 rdfs:label "Vies-086" .
+
+ext:pr_086 a ext:PowerRating .
+ext:pr_086 rdfs:label "18 kW" .
+
+ext:v_ap_086 ext:hasOutput ext:pr_086 .
+ext:v_ap_086 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_086 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_087 a ext:HeatPump .
+ext:v_ap_087 rdfs:label "Vies-087" .
+
+ext:pr_087 a ext:PowerRating .
+ext:pr_087 rdfs:label "24 kW" .
+
+ext:v_ap_087 ext:hasOutput ext:pr_087 .
+ext:v_ap_087 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_087 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_088 a ext:Boiler .
+ext:v_ap_088 rdfs:label "Vies-088" .
+
+ext:pr_088 a ext:PowerRating .
+ext:pr_088 rdfs:label "30 kW" .
+
+ext:v_ap_088 ext:hasOutput ext:pr_088 .
+ext:v_ap_088 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_088 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_089 a ext:HeatPump .
+ext:v_ap_089 rdfs:label "Vies-089" .
+
+ext:pr_089 a ext:PowerRating .
+ext:pr_089 rdfs:label "35 kW" .
+
+ext:v_ap_089 ext:hasOutput ext:pr_089 .
+ext:v_ap_089 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_089 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_090 a ext:Boiler .
+ext:v_ap_090 rdfs:label "Vies-090" .
+
+ext:pr_090 a ext:PowerRating .
+ext:pr_090 rdfs:label "12 kW" .
+
+ext:v_ap_090 ext:hasOutput ext:pr_090 .
+ext:v_ap_090 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_090 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_091 a ext:HeatPump .
+ext:v_ap_091 rdfs:label "Vies-091" .
+
+ext:pr_091 a ext:PowerRating .
+ext:pr_091 rdfs:label "18 kW" .
+
+ext:v_ap_091 ext:hasOutput ext:pr_091 .
+ext:v_ap_091 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_091 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_092 a ext:Boiler .
+ext:v_ap_092 rdfs:label "Vies-092" .
+
+ext:pr_092 a ext:PowerRating .
+ext:pr_092 rdfs:label "24 kW" .
+
+ext:v_ap_092 ext:hasOutput ext:pr_092 .
+ext:v_ap_092 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_092 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_093 a ext:HeatPump .
+ext:v_ap_093 rdfs:label "Vies-093" .
+
+ext:pr_093 a ext:PowerRating .
+ext:pr_093 rdfs:label "30 kW" .
+
+ext:v_ap_093 ext:hasOutput ext:pr_093 .
+ext:v_ap_093 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_093 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_094 a ext:Boiler .
+ext:v_ap_094 rdfs:label "Vies-094" .
+
+ext:pr_094 a ext:PowerRating .
+ext:pr_094 rdfs:label "35 kW" .
+
+ext:v_ap_094 ext:hasOutput ext:pr_094 .
+ext:v_ap_094 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_094 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_095 a ext:HeatPump .
+ext:v_ap_095 rdfs:label "Vies-095" .
+
+ext:pr_095 a ext:PowerRating .
+ext:pr_095 rdfs:label "12 kW" .
+
+ext:v_ap_095 ext:hasOutput ext:pr_095 .
+ext:v_ap_095 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_095 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_096 a ext:Boiler .
+ext:v_ap_096 rdfs:label "Vies-096" .
+
+ext:pr_096 a ext:PowerRating .
+ext:pr_096 rdfs:label "18 kW" .
+
+ext:v_ap_096 ext:hasOutput ext:pr_096 .
+ext:v_ap_096 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_096 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_097 a ext:HeatPump .
+ext:v_ap_097 rdfs:label "Vies-097" .
+
+ext:pr_097 a ext:PowerRating .
+ext:pr_097 rdfs:label "24 kW" .
+
+ext:v_ap_097 ext:hasOutput ext:pr_097 .
+ext:v_ap_097 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_097 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_098 a ext:Boiler .
+ext:v_ap_098 rdfs:label "Vies-098" .
+
+ext:pr_098 a ext:PowerRating .
+ext:pr_098 rdfs:label "30 kW" .
+
+ext:v_ap_098 ext:hasOutput ext:pr_098 .
+ext:v_ap_098 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_098 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_099 a ext:HeatPump .
+ext:v_ap_099 rdfs:label "Vies-099" .
+
+ext:pr_099 a ext:PowerRating .
+ext:pr_099 rdfs:label "35 kW" .
+
+ext:v_ap_099 ext:hasOutput ext:pr_099 .
+ext:v_ap_099 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_099 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_100 a ext:Boiler .
+ext:v_ap_100 rdfs:label "Vies-100" .
+
+ext:pr_100 a ext:PowerRating .
+ext:pr_100 rdfs:label "12 kW" .
+
+ext:v_ap_100 ext:hasOutput ext:pr_100 .
+ext:v_ap_100 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_100 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_101 a ext:HeatPump .
+ext:v_ap_101 rdfs:label "Vies-101" .
+
+ext:pr_101 a ext:PowerRating .
+ext:pr_101 rdfs:label "18 kW" .
+
+ext:v_ap_101 ext:hasOutput ext:pr_101 .
+ext:v_ap_101 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_101 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_102 a ext:Boiler .
+ext:v_ap_102 rdfs:label "Vies-102" .
+
+ext:pr_102 a ext:PowerRating .
+ext:pr_102 rdfs:label "24 kW" .
+
+ext:v_ap_102 ext:hasOutput ext:pr_102 .
+ext:v_ap_102 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_102 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_103 a ext:HeatPump .
+ext:v_ap_103 rdfs:label "Vies-103" .
+
+ext:pr_103 a ext:PowerRating .
+ext:pr_103 rdfs:label "30 kW" .
+
+ext:v_ap_103 ext:hasOutput ext:pr_103 .
+ext:v_ap_103 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_103 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_104 a ext:Boiler .
+ext:v_ap_104 rdfs:label "Vies-104" .
+
+ext:pr_104 a ext:PowerRating .
+ext:pr_104 rdfs:label "35 kW" .
+
+ext:v_ap_104 ext:hasOutput ext:pr_104 .
+ext:v_ap_104 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_104 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_105 a ext:HeatPump .
+ext:v_ap_105 rdfs:label "Vies-105" .
+
+ext:pr_105 a ext:PowerRating .
+ext:pr_105 rdfs:label "12 kW" .
+
+ext:v_ap_105 ext:hasOutput ext:pr_105 .
+ext:v_ap_105 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_105 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_106 a ext:Boiler .
+ext:v_ap_106 rdfs:label "Vies-106" .
+
+ext:pr_106 a ext:PowerRating .
+ext:pr_106 rdfs:label "18 kW" .
+
+ext:v_ap_106 ext:hasOutput ext:pr_106 .
+ext:v_ap_106 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_106 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_107 a ext:HeatPump .
+ext:v_ap_107 rdfs:label "Vies-107" .
+
+ext:pr_107 a ext:PowerRating .
+ext:pr_107 rdfs:label "24 kW" .
+
+ext:v_ap_107 ext:hasOutput ext:pr_107 .
+ext:v_ap_107 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_107 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_108 a ext:Boiler .
+ext:v_ap_108 rdfs:label "Vies-108" .
+
+ext:pr_108 a ext:PowerRating .
+ext:pr_108 rdfs:label "30 kW" .
+
+ext:v_ap_108 ext:hasOutput ext:pr_108 .
+ext:v_ap_108 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_108 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_109 a ext:HeatPump .
+ext:v_ap_109 rdfs:label "Vies-109" .
+
+ext:pr_109 a ext:PowerRating .
+ext:pr_109 rdfs:label "35 kW" .
+
+ext:v_ap_109 ext:hasOutput ext:pr_109 .
+ext:v_ap_109 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_109 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_110 a ext:Boiler .
+ext:v_ap_110 rdfs:label "Vies-110" .
+
+ext:pr_110 a ext:PowerRating .
+ext:pr_110 rdfs:label "12 kW" .
+
+ext:v_ap_110 ext:hasOutput ext:pr_110 .
+ext:v_ap_110 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_110 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_111 a ext:HeatPump .
+ext:v_ap_111 rdfs:label "Vies-111" .
+
+ext:pr_111 a ext:PowerRating .
+ext:pr_111 rdfs:label "18 kW" .
+
+ext:v_ap_111 ext:hasOutput ext:pr_111 .
+ext:v_ap_111 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_111 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_112 a ext:Boiler .
+ext:v_ap_112 rdfs:label "Vies-112" .
+
+ext:pr_112 a ext:PowerRating .
+ext:pr_112 rdfs:label "24 kW" .
+
+ext:v_ap_112 ext:hasOutput ext:pr_112 .
+ext:v_ap_112 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_112 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_113 a ext:HeatPump .
+ext:v_ap_113 rdfs:label "Vies-113" .
+
+ext:pr_113 a ext:PowerRating .
+ext:pr_113 rdfs:label "30 kW" .
+
+ext:v_ap_113 ext:hasOutput ext:pr_113 .
+ext:v_ap_113 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_113 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_114 a ext:Boiler .
+ext:v_ap_114 rdfs:label "Vies-114" .
+
+ext:pr_114 a ext:PowerRating .
+ext:pr_114 rdfs:label "35 kW" .
+
+ext:v_ap_114 ext:hasOutput ext:pr_114 .
+ext:v_ap_114 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_114 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_115 a ext:HeatPump .
+ext:v_ap_115 rdfs:label "Vies-115" .
+
+ext:pr_115 a ext:PowerRating .
+ext:pr_115 rdfs:label "12 kW" .
+
+ext:v_ap_115 ext:hasOutput ext:pr_115 .
+ext:v_ap_115 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_115 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_116 a ext:Boiler .
+ext:v_ap_116 rdfs:label "Vies-116" .
+
+ext:pr_116 a ext:PowerRating .
+ext:pr_116 rdfs:label "18 kW" .
+
+ext:v_ap_116 ext:hasOutput ext:pr_116 .
+ext:v_ap_116 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_116 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_117 a ext:HeatPump .
+ext:v_ap_117 rdfs:label "Vies-117" .
+
+ext:pr_117 a ext:PowerRating .
+ext:pr_117 rdfs:label "24 kW" .
+
+ext:v_ap_117 ext:hasOutput ext:pr_117 .
+ext:v_ap_117 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_117 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_118 a ext:Boiler .
+ext:v_ap_118 rdfs:label "Vies-118" .
+
+ext:pr_118 a ext:PowerRating .
+ext:pr_118 rdfs:label "30 kW" .
+
+ext:v_ap_118 ext:hasOutput ext:pr_118 .
+ext:v_ap_118 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_118 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_119 a ext:HeatPump .
+ext:v_ap_119 rdfs:label "Vies-119" .
+
+ext:pr_119 a ext:PowerRating .
+ext:pr_119 rdfs:label "35 kW" .
+
+ext:v_ap_119 ext:hasOutput ext:pr_119 .
+ext:v_ap_119 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_119 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_120 a ext:Boiler .
+ext:v_ap_120 rdfs:label "Vies-120" .
+
+ext:pr_120 a ext:PowerRating .
+ext:pr_120 rdfs:label "12 kW" .
+
+ext:v_ap_120 ext:hasOutput ext:pr_120 .
+ext:v_ap_120 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_120 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_121 a ext:HeatPump .
+ext:v_ap_121 rdfs:label "Vies-121" .
+
+ext:pr_121 a ext:PowerRating .
+ext:pr_121 rdfs:label "18 kW" .
+
+ext:v_ap_121 ext:hasOutput ext:pr_121 .
+ext:v_ap_121 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_121 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_122 a ext:Boiler .
+ext:v_ap_122 rdfs:label "Vies-122" .
+
+ext:pr_122 a ext:PowerRating .
+ext:pr_122 rdfs:label "24 kW" .
+
+ext:v_ap_122 ext:hasOutput ext:pr_122 .
+ext:v_ap_122 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_122 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_123 a ext:HeatPump .
+ext:v_ap_123 rdfs:label "Vies-123" .
+
+ext:pr_123 a ext:PowerRating .
+ext:pr_123 rdfs:label "30 kW" .
+
+ext:v_ap_123 ext:hasOutput ext:pr_123 .
+ext:v_ap_123 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_123 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_124 a ext:Boiler .
+ext:v_ap_124 rdfs:label "Vies-124" .
+
+ext:pr_124 a ext:PowerRating .
+ext:pr_124 rdfs:label "35 kW" .
+
+ext:v_ap_124 ext:hasOutput ext:pr_124 .
+ext:v_ap_124 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_124 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_125 a ext:HeatPump .
+ext:v_ap_125 rdfs:label "Vies-125" .
+
+ext:pr_125 a ext:PowerRating .
+ext:pr_125 rdfs:label "12 kW" .
+
+ext:v_ap_125 ext:hasOutput ext:pr_125 .
+ext:v_ap_125 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_125 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_126 a ext:Boiler .
+ext:v_ap_126 rdfs:label "Vies-126" .
+
+ext:pr_126 a ext:PowerRating .
+ext:pr_126 rdfs:label "18 kW" .
+
+ext:v_ap_126 ext:hasOutput ext:pr_126 .
+ext:v_ap_126 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_126 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_127 a ext:HeatPump .
+ext:v_ap_127 rdfs:label "Vies-127" .
+
+ext:pr_127 a ext:PowerRating .
+ext:pr_127 rdfs:label "24 kW" .
+
+ext:v_ap_127 ext:hasOutput ext:pr_127 .
+ext:v_ap_127 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_127 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_128 a ext:Boiler .
+ext:v_ap_128 rdfs:label "Vies-128" .
+
+ext:pr_128 a ext:PowerRating .
+ext:pr_128 rdfs:label "30 kW" .
+
+ext:v_ap_128 ext:hasOutput ext:pr_128 .
+ext:v_ap_128 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_128 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_129 a ext:HeatPump .
+ext:v_ap_129 rdfs:label "Vies-129" .
+
+ext:pr_129 a ext:PowerRating .
+ext:pr_129 rdfs:label "35 kW" .
+
+ext:v_ap_129 ext:hasOutput ext:pr_129 .
+ext:v_ap_129 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_129 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_130 a ext:Boiler .
+ext:v_ap_130 rdfs:label "Vies-130" .
+
+ext:pr_130 a ext:PowerRating .
+ext:pr_130 rdfs:label "12 kW" .
+
+ext:v_ap_130 ext:hasOutput ext:pr_130 .
+ext:v_ap_130 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_130 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_131 a ext:HeatPump .
+ext:v_ap_131 rdfs:label "Vies-131" .
+
+ext:pr_131 a ext:PowerRating .
+ext:pr_131 rdfs:label "18 kW" .
+
+ext:v_ap_131 ext:hasOutput ext:pr_131 .
+ext:v_ap_131 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_131 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_132 a ext:Boiler .
+ext:v_ap_132 rdfs:label "Vies-132" .
+
+ext:pr_132 a ext:PowerRating .
+ext:pr_132 rdfs:label "24 kW" .
+
+ext:v_ap_132 ext:hasOutput ext:pr_132 .
+ext:v_ap_132 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_132 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_133 a ext:HeatPump .
+ext:v_ap_133 rdfs:label "Vies-133" .
+
+ext:pr_133 a ext:PowerRating .
+ext:pr_133 rdfs:label "30 kW" .
+
+ext:v_ap_133 ext:hasOutput ext:pr_133 .
+ext:v_ap_133 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_133 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_134 a ext:Boiler .
+ext:v_ap_134 rdfs:label "Vies-134" .
+
+ext:pr_134 a ext:PowerRating .
+ext:pr_134 rdfs:label "35 kW" .
+
+ext:v_ap_134 ext:hasOutput ext:pr_134 .
+ext:v_ap_134 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_134 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_135 a ext:HeatPump .
+ext:v_ap_135 rdfs:label "Vies-135" .
+
+ext:pr_135 a ext:PowerRating .
+ext:pr_135 rdfs:label "12 kW" .
+
+ext:v_ap_135 ext:hasOutput ext:pr_135 .
+ext:v_ap_135 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_135 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_136 a ext:Boiler .
+ext:v_ap_136 rdfs:label "Vies-136" .
+
+ext:pr_136 a ext:PowerRating .
+ext:pr_136 rdfs:label "18 kW" .
+
+ext:v_ap_136 ext:hasOutput ext:pr_136 .
+ext:v_ap_136 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_136 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_137 a ext:HeatPump .
+ext:v_ap_137 rdfs:label "Vies-137" .
+
+ext:pr_137 a ext:PowerRating .
+ext:pr_137 rdfs:label "24 kW" .
+
+ext:v_ap_137 ext:hasOutput ext:pr_137 .
+ext:v_ap_137 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_137 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_138 a ext:Boiler .
+ext:v_ap_138 rdfs:label "Vies-138" .
+
+ext:pr_138 a ext:PowerRating .
+ext:pr_138 rdfs:label "30 kW" .
+
+ext:v_ap_138 ext:hasOutput ext:pr_138 .
+ext:v_ap_138 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_138 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_139 a ext:HeatPump .
+ext:v_ap_139 rdfs:label "Vies-139" .
+
+ext:pr_139 a ext:PowerRating .
+ext:pr_139 rdfs:label "35 kW" .
+
+ext:v_ap_139 ext:hasOutput ext:pr_139 .
+ext:v_ap_139 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_139 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_140 a ext:Boiler .
+ext:v_ap_140 rdfs:label "Vies-140" .
+
+ext:pr_140 a ext:PowerRating .
+ext:pr_140 rdfs:label "12 kW" .
+
+ext:v_ap_140 ext:hasOutput ext:pr_140 .
+ext:v_ap_140 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_140 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_141 a ext:HeatPump .
+ext:v_ap_141 rdfs:label "Vies-141" .
+
+ext:pr_141 a ext:PowerRating .
+ext:pr_141 rdfs:label "18 kW" .
+
+ext:v_ap_141 ext:hasOutput ext:pr_141 .
+ext:v_ap_141 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_141 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_142 a ext:Boiler .
+ext:v_ap_142 rdfs:label "Vies-142" .
+
+ext:pr_142 a ext:PowerRating .
+ext:pr_142 rdfs:label "24 kW" .
+
+ext:v_ap_142 ext:hasOutput ext:pr_142 .
+ext:v_ap_142 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_142 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_143 a ext:HeatPump .
+ext:v_ap_143 rdfs:label "Vies-143" .
+
+ext:pr_143 a ext:PowerRating .
+ext:pr_143 rdfs:label "30 kW" .
+
+ext:v_ap_143 ext:hasOutput ext:pr_143 .
+ext:v_ap_143 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_143 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_144 a ext:Boiler .
+ext:v_ap_144 rdfs:label "Vies-144" .
+
+ext:pr_144 a ext:PowerRating .
+ext:pr_144 rdfs:label "35 kW" .
+
+ext:v_ap_144 ext:hasOutput ext:pr_144 .
+ext:v_ap_144 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_144 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_145 a ext:HeatPump .
+ext:v_ap_145 rdfs:label "Vies-145" .
+
+ext:pr_145 a ext:PowerRating .
+ext:pr_145 rdfs:label "12 kW" .
+
+ext:v_ap_145 ext:hasOutput ext:pr_145 .
+ext:v_ap_145 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_145 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_146 a ext:Boiler .
+ext:v_ap_146 rdfs:label "Vies-146" .
+
+ext:pr_146 a ext:PowerRating .
+ext:pr_146 rdfs:label "18 kW" .
+
+ext:v_ap_146 ext:hasOutput ext:pr_146 .
+ext:v_ap_146 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_146 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_147 a ext:HeatPump .
+ext:v_ap_147 rdfs:label "Vies-147" .
+
+ext:pr_147 a ext:PowerRating .
+ext:pr_147 rdfs:label "24 kW" .
+
+ext:v_ap_147 ext:hasOutput ext:pr_147 .
+ext:v_ap_147 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_147 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_148 a ext:Boiler .
+ext:v_ap_148 rdfs:label "Vies-148" .
+
+ext:pr_148 a ext:PowerRating .
+ext:pr_148 rdfs:label "30 kW" .
+
+ext:v_ap_148 ext:hasOutput ext:pr_148 .
+ext:v_ap_148 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_148 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_149 a ext:HeatPump .
+ext:v_ap_149 rdfs:label "Vies-149" .
+
+ext:pr_149 a ext:PowerRating .
+ext:pr_149 rdfs:label "35 kW" .
+
+ext:v_ap_149 ext:hasOutput ext:pr_149 .
+ext:v_ap_149 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_149 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_150 a ext:Boiler .
+ext:v_ap_150 rdfs:label "Vies-150" .
+
+ext:pr_150 a ext:PowerRating .
+ext:pr_150 rdfs:label "12 kW" .
+
+ext:v_ap_150 ext:hasOutput ext:pr_150 .
+ext:v_ap_150 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_150 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_151 a ext:HeatPump .
+ext:v_ap_151 rdfs:label "Vies-151" .
+
+ext:pr_151 a ext:PowerRating .
+ext:pr_151 rdfs:label "18 kW" .
+
+ext:v_ap_151 ext:hasOutput ext:pr_151 .
+ext:v_ap_151 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_151 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_152 a ext:Boiler .
+ext:v_ap_152 rdfs:label "Vies-152" .
+
+ext:pr_152 a ext:PowerRating .
+ext:pr_152 rdfs:label "24 kW" .
+
+ext:v_ap_152 ext:hasOutput ext:pr_152 .
+ext:v_ap_152 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_152 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_153 a ext:HeatPump .
+ext:v_ap_153 rdfs:label "Vies-153" .
+
+ext:pr_153 a ext:PowerRating .
+ext:pr_153 rdfs:label "30 kW" .
+
+ext:v_ap_153 ext:hasOutput ext:pr_153 .
+ext:v_ap_153 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_153 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_154 a ext:Boiler .
+ext:v_ap_154 rdfs:label "Vies-154" .
+
+ext:pr_154 a ext:PowerRating .
+ext:pr_154 rdfs:label "35 kW" .
+
+ext:v_ap_154 ext:hasOutput ext:pr_154 .
+ext:v_ap_154 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_154 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_155 a ext:HeatPump .
+ext:v_ap_155 rdfs:label "Vies-155" .
+
+ext:pr_155 a ext:PowerRating .
+ext:pr_155 rdfs:label "12 kW" .
+
+ext:v_ap_155 ext:hasOutput ext:pr_155 .
+ext:v_ap_155 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_155 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_156 a ext:Boiler .
+ext:v_ap_156 rdfs:label "Vies-156" .
+
+ext:pr_156 a ext:PowerRating .
+ext:pr_156 rdfs:label "18 kW" .
+
+ext:v_ap_156 ext:hasOutput ext:pr_156 .
+ext:v_ap_156 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_156 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_157 a ext:HeatPump .
+ext:v_ap_157 rdfs:label "Vies-157" .
+
+ext:pr_157 a ext:PowerRating .
+ext:pr_157 rdfs:label "24 kW" .
+
+ext:v_ap_157 ext:hasOutput ext:pr_157 .
+ext:v_ap_157 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_157 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_158 a ext:Boiler .
+ext:v_ap_158 rdfs:label "Vies-158" .
+
+ext:pr_158 a ext:PowerRating .
+ext:pr_158 rdfs:label "30 kW" .
+
+ext:v_ap_158 ext:hasOutput ext:pr_158 .
+ext:v_ap_158 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_158 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_159 a ext:HeatPump .
+ext:v_ap_159 rdfs:label "Vies-159" .
+
+ext:pr_159 a ext:PowerRating .
+ext:pr_159 rdfs:label "35 kW" .
+
+ext:v_ap_159 ext:hasOutput ext:pr_159 .
+ext:v_ap_159 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_159 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_160 a ext:Boiler .
+ext:v_ap_160 rdfs:label "Vies-160" .
+
+ext:pr_160 a ext:PowerRating .
+ext:pr_160 rdfs:label "12 kW" .
+
+ext:v_ap_160 ext:hasOutput ext:pr_160 .
+ext:v_ap_160 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_160 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_161 a ext:HeatPump .
+ext:v_ap_161 rdfs:label "Vies-161" .
+
+ext:pr_161 a ext:PowerRating .
+ext:pr_161 rdfs:label "18 kW" .
+
+ext:v_ap_161 ext:hasOutput ext:pr_161 .
+ext:v_ap_161 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_161 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_162 a ext:Boiler .
+ext:v_ap_162 rdfs:label "Vies-162" .
+
+ext:pr_162 a ext:PowerRating .
+ext:pr_162 rdfs:label "24 kW" .
+
+ext:v_ap_162 ext:hasOutput ext:pr_162 .
+ext:v_ap_162 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_162 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_163 a ext:HeatPump .
+ext:v_ap_163 rdfs:label "Vies-163" .
+
+ext:pr_163 a ext:PowerRating .
+ext:pr_163 rdfs:label "30 kW" .
+
+ext:v_ap_163 ext:hasOutput ext:pr_163 .
+ext:v_ap_163 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_163 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_164 a ext:Boiler .
+ext:v_ap_164 rdfs:label "Vies-164" .
+
+ext:pr_164 a ext:PowerRating .
+ext:pr_164 rdfs:label "35 kW" .
+
+ext:v_ap_164 ext:hasOutput ext:pr_164 .
+ext:v_ap_164 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_164 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_165 a ext:HeatPump .
+ext:v_ap_165 rdfs:label "Vies-165" .
+
+ext:pr_165 a ext:PowerRating .
+ext:pr_165 rdfs:label "12 kW" .
+
+ext:v_ap_165 ext:hasOutput ext:pr_165 .
+ext:v_ap_165 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_165 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_166 a ext:Boiler .
+ext:v_ap_166 rdfs:label "Vies-166" .
+
+ext:pr_166 a ext:PowerRating .
+ext:pr_166 rdfs:label "18 kW" .
+
+ext:v_ap_166 ext:hasOutput ext:pr_166 .
+ext:v_ap_166 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_166 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_167 a ext:HeatPump .
+ext:v_ap_167 rdfs:label "Vies-167" .
+
+ext:pr_167 a ext:PowerRating .
+ext:pr_167 rdfs:label "24 kW" .
+
+ext:v_ap_167 ext:hasOutput ext:pr_167 .
+ext:v_ap_167 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_167 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_168 a ext:Boiler .
+ext:v_ap_168 rdfs:label "Vies-168" .
+
+ext:pr_168 a ext:PowerRating .
+ext:pr_168 rdfs:label "30 kW" .
+
+ext:v_ap_168 ext:hasOutput ext:pr_168 .
+ext:v_ap_168 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_168 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_169 a ext:HeatPump .
+ext:v_ap_169 rdfs:label "Vies-169" .
+
+ext:pr_169 a ext:PowerRating .
+ext:pr_169 rdfs:label "35 kW" .
+
+ext:v_ap_169 ext:hasOutput ext:pr_169 .
+ext:v_ap_169 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_169 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_170 a ext:Boiler .
+ext:v_ap_170 rdfs:label "Vies-170" .
+
+ext:pr_170 a ext:PowerRating .
+ext:pr_170 rdfs:label "12 kW" .
+
+ext:v_ap_170 ext:hasOutput ext:pr_170 .
+ext:v_ap_170 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_170 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_171 a ext:HeatPump .
+ext:v_ap_171 rdfs:label "Vies-171" .
+
+ext:pr_171 a ext:PowerRating .
+ext:pr_171 rdfs:label "18 kW" .
+
+ext:v_ap_171 ext:hasOutput ext:pr_171 .
+ext:v_ap_171 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_171 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_172 a ext:Boiler .
+ext:v_ap_172 rdfs:label "Vies-172" .
+
+ext:pr_172 a ext:PowerRating .
+ext:pr_172 rdfs:label "24 kW" .
+
+ext:v_ap_172 ext:hasOutput ext:pr_172 .
+ext:v_ap_172 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_172 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_173 a ext:HeatPump .
+ext:v_ap_173 rdfs:label "Vies-173" .
+
+ext:pr_173 a ext:PowerRating .
+ext:pr_173 rdfs:label "30 kW" .
+
+ext:v_ap_173 ext:hasOutput ext:pr_173 .
+ext:v_ap_173 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_173 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_174 a ext:Boiler .
+ext:v_ap_174 rdfs:label "Vies-174" .
+
+ext:pr_174 a ext:PowerRating .
+ext:pr_174 rdfs:label "35 kW" .
+
+ext:v_ap_174 ext:hasOutput ext:pr_174 .
+ext:v_ap_174 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_174 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_175 a ext:HeatPump .
+ext:v_ap_175 rdfs:label "Vies-175" .
+
+ext:pr_175 a ext:PowerRating .
+ext:pr_175 rdfs:label "12 kW" .
+
+ext:v_ap_175 ext:hasOutput ext:pr_175 .
+ext:v_ap_175 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_175 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_176 a ext:Boiler .
+ext:v_ap_176 rdfs:label "Vies-176" .
+
+ext:pr_176 a ext:PowerRating .
+ext:pr_176 rdfs:label "18 kW" .
+
+ext:v_ap_176 ext:hasOutput ext:pr_176 .
+ext:v_ap_176 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_176 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_177 a ext:HeatPump .
+ext:v_ap_177 rdfs:label "Vies-177" .
+
+ext:pr_177 a ext:PowerRating .
+ext:pr_177 rdfs:label "24 kW" .
+
+ext:v_ap_177 ext:hasOutput ext:pr_177 .
+ext:v_ap_177 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_177 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_178 a ext:Boiler .
+ext:v_ap_178 rdfs:label "Vies-178" .
+
+ext:pr_178 a ext:PowerRating .
+ext:pr_178 rdfs:label "30 kW" .
+
+ext:v_ap_178 ext:hasOutput ext:pr_178 .
+ext:v_ap_178 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_178 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_179 a ext:HeatPump .
+ext:v_ap_179 rdfs:label "Vies-179" .
+
+ext:pr_179 a ext:PowerRating .
+ext:pr_179 rdfs:label "35 kW" .
+
+ext:v_ap_179 ext:hasOutput ext:pr_179 .
+ext:v_ap_179 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_179 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_180 a ext:Boiler .
+ext:v_ap_180 rdfs:label "Vies-180" .
+
+ext:pr_180 a ext:PowerRating .
+ext:pr_180 rdfs:label "12 kW" .
+
+ext:v_ap_180 ext:hasOutput ext:pr_180 .
+ext:v_ap_180 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_180 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_181 a ext:HeatPump .
+ext:v_ap_181 rdfs:label "Vies-181" .
+
+ext:pr_181 a ext:PowerRating .
+ext:pr_181 rdfs:label "18 kW" .
+
+ext:v_ap_181 ext:hasOutput ext:pr_181 .
+ext:v_ap_181 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_181 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_182 a ext:Boiler .
+ext:v_ap_182 rdfs:label "Vies-182" .
+
+ext:pr_182 a ext:PowerRating .
+ext:pr_182 rdfs:label "24 kW" .
+
+ext:v_ap_182 ext:hasOutput ext:pr_182 .
+ext:v_ap_182 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_182 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_183 a ext:HeatPump .
+ext:v_ap_183 rdfs:label "Vies-183" .
+
+ext:pr_183 a ext:PowerRating .
+ext:pr_183 rdfs:label "30 kW" .
+
+ext:v_ap_183 ext:hasOutput ext:pr_183 .
+ext:v_ap_183 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_183 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_184 a ext:Boiler .
+ext:v_ap_184 rdfs:label "Vies-184" .
+
+ext:pr_184 a ext:PowerRating .
+ext:pr_184 rdfs:label "35 kW" .
+
+ext:v_ap_184 ext:hasOutput ext:pr_184 .
+ext:v_ap_184 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_184 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_185 a ext:HeatPump .
+ext:v_ap_185 rdfs:label "Vies-185" .
+
+ext:pr_185 a ext:PowerRating .
+ext:pr_185 rdfs:label "12 kW" .
+
+ext:v_ap_185 ext:hasOutput ext:pr_185 .
+ext:v_ap_185 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_185 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_186 a ext:Boiler .
+ext:v_ap_186 rdfs:label "Vies-186" .
+
+ext:pr_186 a ext:PowerRating .
+ext:pr_186 rdfs:label "18 kW" .
+
+ext:v_ap_186 ext:hasOutput ext:pr_186 .
+ext:v_ap_186 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_186 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_187 a ext:HeatPump .
+ext:v_ap_187 rdfs:label "Vies-187" .
+
+ext:pr_187 a ext:PowerRating .
+ext:pr_187 rdfs:label "24 kW" .
+
+ext:v_ap_187 ext:hasOutput ext:pr_187 .
+ext:v_ap_187 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_187 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_188 a ext:Boiler .
+ext:v_ap_188 rdfs:label "Vies-188" .
+
+ext:pr_188 a ext:PowerRating .
+ext:pr_188 rdfs:label "30 kW" .
+
+ext:v_ap_188 ext:hasOutput ext:pr_188 .
+ext:v_ap_188 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_188 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_189 a ext:HeatPump .
+ext:v_ap_189 rdfs:label "Vies-189" .
+
+ext:pr_189 a ext:PowerRating .
+ext:pr_189 rdfs:label "35 kW" .
+
+ext:v_ap_189 ext:hasOutput ext:pr_189 .
+ext:v_ap_189 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_189 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_190 a ext:Boiler .
+ext:v_ap_190 rdfs:label "Vies-190" .
+
+ext:pr_190 a ext:PowerRating .
+ext:pr_190 rdfs:label "12 kW" .
+
+ext:v_ap_190 ext:hasOutput ext:pr_190 .
+ext:v_ap_190 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_190 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_191 a ext:HeatPump .
+ext:v_ap_191 rdfs:label "Vies-191" .
+
+ext:pr_191 a ext:PowerRating .
+ext:pr_191 rdfs:label "18 kW" .
+
+ext:v_ap_191 ext:hasOutput ext:pr_191 .
+ext:v_ap_191 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_191 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_192 a ext:Boiler .
+ext:v_ap_192 rdfs:label "Vies-192" .
+
+ext:pr_192 a ext:PowerRating .
+ext:pr_192 rdfs:label "24 kW" .
+
+ext:v_ap_192 ext:hasOutput ext:pr_192 .
+ext:v_ap_192 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_192 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_193 a ext:HeatPump .
+ext:v_ap_193 rdfs:label "Vies-193" .
+
+ext:pr_193 a ext:PowerRating .
+ext:pr_193 rdfs:label "30 kW" .
+
+ext:v_ap_193 ext:hasOutput ext:pr_193 .
+ext:v_ap_193 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_193 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_194 a ext:Boiler .
+ext:v_ap_194 rdfs:label "Vies-194" .
+
+ext:pr_194 a ext:PowerRating .
+ext:pr_194 rdfs:label "35 kW" .
+
+ext:v_ap_194 ext:hasOutput ext:pr_194 .
+ext:v_ap_194 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_194 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_195 a ext:HeatPump .
+ext:v_ap_195 rdfs:label "Vies-195" .
+
+ext:pr_195 a ext:PowerRating .
+ext:pr_195 rdfs:label "12 kW" .
+
+ext:v_ap_195 ext:hasOutput ext:pr_195 .
+ext:v_ap_195 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_195 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_196 a ext:Boiler .
+ext:v_ap_196 rdfs:label "Vies-196" .
+
+ext:pr_196 a ext:PowerRating .
+ext:pr_196 rdfs:label "18 kW" .
+
+ext:v_ap_196 ext:hasOutput ext:pr_196 .
+ext:v_ap_196 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_196 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_197 a ext:HeatPump .
+ext:v_ap_197 rdfs:label "Vies-197" .
+
+ext:pr_197 a ext:PowerRating .
+ext:pr_197 rdfs:label "24 kW" .
+
+ext:v_ap_197 ext:hasOutput ext:pr_197 .
+ext:v_ap_197 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_197 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_198 a ext:Boiler .
+ext:v_ap_198 rdfs:label "Vies-198" .
+
+ext:pr_198 a ext:PowerRating .
+ext:pr_198 rdfs:label "30 kW" .
+
+ext:v_ap_198 ext:hasOutput ext:pr_198 .
+ext:v_ap_198 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_198 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_199 a ext:HeatPump .
+ext:v_ap_199 rdfs:label "Vies-199" .
+
+ext:pr_199 a ext:PowerRating .
+ext:pr_199 rdfs:label "35 kW" .
+
+ext:v_ap_199 ext:hasOutput ext:pr_199 .
+ext:v_ap_199 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_199 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_200 a ext:Boiler .
+ext:v_ap_200 rdfs:label "Vies-200" .
+
+ext:pr_200 a ext:PowerRating .
+ext:pr_200 rdfs:label "12 kW" .
+
+ext:v_ap_200 ext:hasOutput ext:pr_200 .
+ext:v_ap_200 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_200 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_201 a ext:HeatPump .
+ext:v_ap_201 rdfs:label "Vies-201" .
+
+ext:pr_201 a ext:PowerRating .
+ext:pr_201 rdfs:label "18 kW" .
+
+ext:v_ap_201 ext:hasOutput ext:pr_201 .
+ext:v_ap_201 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_201 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_202 a ext:Boiler .
+ext:v_ap_202 rdfs:label "Vies-202" .
+
+ext:pr_202 a ext:PowerRating .
+ext:pr_202 rdfs:label "24 kW" .
+
+ext:v_ap_202 ext:hasOutput ext:pr_202 .
+ext:v_ap_202 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_202 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_203 a ext:HeatPump .
+ext:v_ap_203 rdfs:label "Vies-203" .
+
+ext:pr_203 a ext:PowerRating .
+ext:pr_203 rdfs:label "30 kW" .
+
+ext:v_ap_203 ext:hasOutput ext:pr_203 .
+ext:v_ap_203 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_203 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_204 a ext:Boiler .
+ext:v_ap_204 rdfs:label "Vies-204" .
+
+ext:pr_204 a ext:PowerRating .
+ext:pr_204 rdfs:label "35 kW" .
+
+ext:v_ap_204 ext:hasOutput ext:pr_204 .
+ext:v_ap_204 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_204 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_205 a ext:HeatPump .
+ext:v_ap_205 rdfs:label "Vies-205" .
+
+ext:pr_205 a ext:PowerRating .
+ext:pr_205 rdfs:label "12 kW" .
+
+ext:v_ap_205 ext:hasOutput ext:pr_205 .
+ext:v_ap_205 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_205 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_206 a ext:Boiler .
+ext:v_ap_206 rdfs:label "Vies-206" .
+
+ext:pr_206 a ext:PowerRating .
+ext:pr_206 rdfs:label "18 kW" .
+
+ext:v_ap_206 ext:hasOutput ext:pr_206 .
+ext:v_ap_206 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_206 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_207 a ext:HeatPump .
+ext:v_ap_207 rdfs:label "Vies-207" .
+
+ext:pr_207 a ext:PowerRating .
+ext:pr_207 rdfs:label "24 kW" .
+
+ext:v_ap_207 ext:hasOutput ext:pr_207 .
+ext:v_ap_207 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_207 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_208 a ext:Boiler .
+ext:v_ap_208 rdfs:label "Vies-208" .
+
+ext:pr_208 a ext:PowerRating .
+ext:pr_208 rdfs:label "30 kW" .
+
+ext:v_ap_208 ext:hasOutput ext:pr_208 .
+ext:v_ap_208 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_208 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_209 a ext:HeatPump .
+ext:v_ap_209 rdfs:label "Vies-209" .
+
+ext:pr_209 a ext:PowerRating .
+ext:pr_209 rdfs:label "35 kW" .
+
+ext:v_ap_209 ext:hasOutput ext:pr_209 .
+ext:v_ap_209 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_209 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_210 a ext:Boiler .
+ext:v_ap_210 rdfs:label "Vies-210" .
+
+ext:pr_210 a ext:PowerRating .
+ext:pr_210 rdfs:label "12 kW" .
+
+ext:v_ap_210 ext:hasOutput ext:pr_210 .
+ext:v_ap_210 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_210 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_211 a ext:HeatPump .
+ext:v_ap_211 rdfs:label "Vies-211" .
+
+ext:pr_211 a ext:PowerRating .
+ext:pr_211 rdfs:label "18 kW" .
+
+ext:v_ap_211 ext:hasOutput ext:pr_211 .
+ext:v_ap_211 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_211 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_212 a ext:Boiler .
+ext:v_ap_212 rdfs:label "Vies-212" .
+
+ext:pr_212 a ext:PowerRating .
+ext:pr_212 rdfs:label "24 kW" .
+
+ext:v_ap_212 ext:hasOutput ext:pr_212 .
+ext:v_ap_212 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_212 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_213 a ext:HeatPump .
+ext:v_ap_213 rdfs:label "Vies-213" .
+
+ext:pr_213 a ext:PowerRating .
+ext:pr_213 rdfs:label "30 kW" .
+
+ext:v_ap_213 ext:hasOutput ext:pr_213 .
+ext:v_ap_213 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_213 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_214 a ext:Boiler .
+ext:v_ap_214 rdfs:label "Vies-214" .
+
+ext:pr_214 a ext:PowerRating .
+ext:pr_214 rdfs:label "35 kW" .
+
+ext:v_ap_214 ext:hasOutput ext:pr_214 .
+ext:v_ap_214 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_214 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_215 a ext:HeatPump .
+ext:v_ap_215 rdfs:label "Vies-215" .
+
+ext:pr_215 a ext:PowerRating .
+ext:pr_215 rdfs:label "12 kW" .
+
+ext:v_ap_215 ext:hasOutput ext:pr_215 .
+ext:v_ap_215 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_215 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_216 a ext:Boiler .
+ext:v_ap_216 rdfs:label "Vies-216" .
+
+ext:pr_216 a ext:PowerRating .
+ext:pr_216 rdfs:label "18 kW" .
+
+ext:v_ap_216 ext:hasOutput ext:pr_216 .
+ext:v_ap_216 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_216 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_217 a ext:HeatPump .
+ext:v_ap_217 rdfs:label "Vies-217" .
+
+ext:pr_217 a ext:PowerRating .
+ext:pr_217 rdfs:label "24 kW" .
+
+ext:v_ap_217 ext:hasOutput ext:pr_217 .
+ext:v_ap_217 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_217 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_218 a ext:Boiler .
+ext:v_ap_218 rdfs:label "Vies-218" .
+
+ext:pr_218 a ext:PowerRating .
+ext:pr_218 rdfs:label "30 kW" .
+
+ext:v_ap_218 ext:hasOutput ext:pr_218 .
+ext:v_ap_218 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_218 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_219 a ext:HeatPump .
+ext:v_ap_219 rdfs:label "Vies-219" .
+
+ext:pr_219 a ext:PowerRating .
+ext:pr_219 rdfs:label "35 kW" .
+
+ext:v_ap_219 ext:hasOutput ext:pr_219 .
+ext:v_ap_219 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_219 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_220 a ext:Boiler .
+ext:v_ap_220 rdfs:label "Vies-220" .
+
+ext:pr_220 a ext:PowerRating .
+ext:pr_220 rdfs:label "12 kW" .
+
+ext:v_ap_220 ext:hasOutput ext:pr_220 .
+ext:v_ap_220 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_220 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_221 a ext:HeatPump .
+ext:v_ap_221 rdfs:label "Vies-221" .
+
+ext:pr_221 a ext:PowerRating .
+ext:pr_221 rdfs:label "18 kW" .
+
+ext:v_ap_221 ext:hasOutput ext:pr_221 .
+ext:v_ap_221 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_221 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_222 a ext:Boiler .
+ext:v_ap_222 rdfs:label "Vies-222" .
+
+ext:pr_222 a ext:PowerRating .
+ext:pr_222 rdfs:label "24 kW" .
+
+ext:v_ap_222 ext:hasOutput ext:pr_222 .
+ext:v_ap_222 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_222 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_223 a ext:HeatPump .
+ext:v_ap_223 rdfs:label "Vies-223" .
+
+ext:pr_223 a ext:PowerRating .
+ext:pr_223 rdfs:label "30 kW" .
+
+ext:v_ap_223 ext:hasOutput ext:pr_223 .
+ext:v_ap_223 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_223 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_224 a ext:Boiler .
+ext:v_ap_224 rdfs:label "Vies-224" .
+
+ext:pr_224 a ext:PowerRating .
+ext:pr_224 rdfs:label "35 kW" .
+
+ext:v_ap_224 ext:hasOutput ext:pr_224 .
+ext:v_ap_224 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_224 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_225 a ext:HeatPump .
+ext:v_ap_225 rdfs:label "Vies-225" .
+
+ext:pr_225 a ext:PowerRating .
+ext:pr_225 rdfs:label "12 kW" .
+
+ext:v_ap_225 ext:hasOutput ext:pr_225 .
+ext:v_ap_225 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_225 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_226 a ext:Boiler .
+ext:v_ap_226 rdfs:label "Vies-226" .
+
+ext:pr_226 a ext:PowerRating .
+ext:pr_226 rdfs:label "18 kW" .
+
+ext:v_ap_226 ext:hasOutput ext:pr_226 .
+ext:v_ap_226 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_226 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_227 a ext:HeatPump .
+ext:v_ap_227 rdfs:label "Vies-227" .
+
+ext:pr_227 a ext:PowerRating .
+ext:pr_227 rdfs:label "24 kW" .
+
+ext:v_ap_227 ext:hasOutput ext:pr_227 .
+ext:v_ap_227 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_227 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_228 a ext:Boiler .
+ext:v_ap_228 rdfs:label "Vies-228" .
+
+ext:pr_228 a ext:PowerRating .
+ext:pr_228 rdfs:label "30 kW" .
+
+ext:v_ap_228 ext:hasOutput ext:pr_228 .
+ext:v_ap_228 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_228 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_229 a ext:HeatPump .
+ext:v_ap_229 rdfs:label "Vies-229" .
+
+ext:pr_229 a ext:PowerRating .
+ext:pr_229 rdfs:label "35 kW" .
+
+ext:v_ap_229 ext:hasOutput ext:pr_229 .
+ext:v_ap_229 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_229 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_230 a ext:Boiler .
+ext:v_ap_230 rdfs:label "Vies-230" .
+
+ext:pr_230 a ext:PowerRating .
+ext:pr_230 rdfs:label "12 kW" .
+
+ext:v_ap_230 ext:hasOutput ext:pr_230 .
+ext:v_ap_230 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_230 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_231 a ext:HeatPump .
+ext:v_ap_231 rdfs:label "Vies-231" .
+
+ext:pr_231 a ext:PowerRating .
+ext:pr_231 rdfs:label "18 kW" .
+
+ext:v_ap_231 ext:hasOutput ext:pr_231 .
+ext:v_ap_231 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_231 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_232 a ext:Boiler .
+ext:v_ap_232 rdfs:label "Vies-232" .
+
+ext:pr_232 a ext:PowerRating .
+ext:pr_232 rdfs:label "24 kW" .
+
+ext:v_ap_232 ext:hasOutput ext:pr_232 .
+ext:v_ap_232 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_232 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_233 a ext:HeatPump .
+ext:v_ap_233 rdfs:label "Vies-233" .
+
+ext:pr_233 a ext:PowerRating .
+ext:pr_233 rdfs:label "30 kW" .
+
+ext:v_ap_233 ext:hasOutput ext:pr_233 .
+ext:v_ap_233 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_233 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_234 a ext:Boiler .
+ext:v_ap_234 rdfs:label "Vies-234" .
+
+ext:pr_234 a ext:PowerRating .
+ext:pr_234 rdfs:label "35 kW" .
+
+ext:v_ap_234 ext:hasOutput ext:pr_234 .
+ext:v_ap_234 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_234 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_235 a ext:HeatPump .
+ext:v_ap_235 rdfs:label "Vies-235" .
+
+ext:pr_235 a ext:PowerRating .
+ext:pr_235 rdfs:label "12 kW" .
+
+ext:v_ap_235 ext:hasOutput ext:pr_235 .
+ext:v_ap_235 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_235 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_236 a ext:Boiler .
+ext:v_ap_236 rdfs:label "Vies-236" .
+
+ext:pr_236 a ext:PowerRating .
+ext:pr_236 rdfs:label "18 kW" .
+
+ext:v_ap_236 ext:hasOutput ext:pr_236 .
+ext:v_ap_236 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_236 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_237 a ext:HeatPump .
+ext:v_ap_237 rdfs:label "Vies-237" .
+
+ext:pr_237 a ext:PowerRating .
+ext:pr_237 rdfs:label "24 kW" .
+
+ext:v_ap_237 ext:hasOutput ext:pr_237 .
+ext:v_ap_237 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_237 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_238 a ext:Boiler .
+ext:v_ap_238 rdfs:label "Vies-238" .
+
+ext:pr_238 a ext:PowerRating .
+ext:pr_238 rdfs:label "30 kW" .
+
+ext:v_ap_238 ext:hasOutput ext:pr_238 .
+ext:v_ap_238 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_238 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_239 a ext:HeatPump .
+ext:v_ap_239 rdfs:label "Vies-239" .
+
+ext:pr_239 a ext:PowerRating .
+ext:pr_239 rdfs:label "35 kW" .
+
+ext:v_ap_239 ext:hasOutput ext:pr_239 .
+ext:v_ap_239 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_239 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_240 a ext:Boiler .
+ext:v_ap_240 rdfs:label "Vies-240" .
+
+ext:pr_240 a ext:PowerRating .
+ext:pr_240 rdfs:label "12 kW" .
+
+ext:v_ap_240 ext:hasOutput ext:pr_240 .
+ext:v_ap_240 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_240 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_241 a ext:HeatPump .
+ext:v_ap_241 rdfs:label "Vies-241" .
+
+ext:pr_241 a ext:PowerRating .
+ext:pr_241 rdfs:label "18 kW" .
+
+ext:v_ap_241 ext:hasOutput ext:pr_241 .
+ext:v_ap_241 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_241 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_242 a ext:Boiler .
+ext:v_ap_242 rdfs:label "Vies-242" .
+
+ext:pr_242 a ext:PowerRating .
+ext:pr_242 rdfs:label "24 kW" .
+
+ext:v_ap_242 ext:hasOutput ext:pr_242 .
+ext:v_ap_242 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_242 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_243 a ext:HeatPump .
+ext:v_ap_243 rdfs:label "Vies-243" .
+
+ext:pr_243 a ext:PowerRating .
+ext:pr_243 rdfs:label "30 kW" .
+
+ext:v_ap_243 ext:hasOutput ext:pr_243 .
+ext:v_ap_243 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_243 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_244 a ext:Boiler .
+ext:v_ap_244 rdfs:label "Vies-244" .
+
+ext:pr_244 a ext:PowerRating .
+ext:pr_244 rdfs:label "35 kW" .
+
+ext:v_ap_244 ext:hasOutput ext:pr_244 .
+ext:v_ap_244 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_244 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_245 a ext:HeatPump .
+ext:v_ap_245 rdfs:label "Vies-245" .
+
+ext:pr_245 a ext:PowerRating .
+ext:pr_245 rdfs:label "12 kW" .
+
+ext:v_ap_245 ext:hasOutput ext:pr_245 .
+ext:v_ap_245 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_245 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_246 a ext:Boiler .
+ext:v_ap_246 rdfs:label "Vies-246" .
+
+ext:pr_246 a ext:PowerRating .
+ext:pr_246 rdfs:label "18 kW" .
+
+ext:v_ap_246 ext:hasOutput ext:pr_246 .
+ext:v_ap_246 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_246 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_247 a ext:HeatPump .
+ext:v_ap_247 rdfs:label "Vies-247" .
+
+ext:pr_247 a ext:PowerRating .
+ext:pr_247 rdfs:label "24 kW" .
+
+ext:v_ap_247 ext:hasOutput ext:pr_247 .
+ext:v_ap_247 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_247 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_248 a ext:Boiler .
+ext:v_ap_248 rdfs:label "Vies-248" .
+
+ext:pr_248 a ext:PowerRating .
+ext:pr_248 rdfs:label "30 kW" .
+
+ext:v_ap_248 ext:hasOutput ext:pr_248 .
+ext:v_ap_248 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_248 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_249 a ext:HeatPump .
+ext:v_ap_249 rdfs:label "Vies-249" .
+
+ext:pr_249 a ext:PowerRating .
+ext:pr_249 rdfs:label "35 kW" .
+
+ext:v_ap_249 ext:hasOutput ext:pr_249 .
+ext:v_ap_249 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_249 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_250 a ext:Boiler .
+ext:v_ap_250 rdfs:label "Vies-250" .
+
+ext:pr_250 a ext:PowerRating .
+ext:pr_250 rdfs:label "12 kW" .
+
+ext:v_ap_250 ext:hasOutput ext:pr_250 .
+ext:v_ap_250 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_250 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_251 a ext:HeatPump .
+ext:v_ap_251 rdfs:label "Vies-251" .
+
+ext:pr_251 a ext:PowerRating .
+ext:pr_251 rdfs:label "18 kW" .
+
+ext:v_ap_251 ext:hasOutput ext:pr_251 .
+ext:v_ap_251 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_251 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_252 a ext:Boiler .
+ext:v_ap_252 rdfs:label "Vies-252" .
+
+ext:pr_252 a ext:PowerRating .
+ext:pr_252 rdfs:label "24 kW" .
+
+ext:v_ap_252 ext:hasOutput ext:pr_252 .
+ext:v_ap_252 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_252 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_253 a ext:HeatPump .
+ext:v_ap_253 rdfs:label "Vies-253" .
+
+ext:pr_253 a ext:PowerRating .
+ext:pr_253 rdfs:label "30 kW" .
+
+ext:v_ap_253 ext:hasOutput ext:pr_253 .
+ext:v_ap_253 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_253 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_254 a ext:Boiler .
+ext:v_ap_254 rdfs:label "Vies-254" .
+
+ext:pr_254 a ext:PowerRating .
+ext:pr_254 rdfs:label "35 kW" .
+
+ext:v_ap_254 ext:hasOutput ext:pr_254 .
+ext:v_ap_254 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_254 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_255 a ext:HeatPump .
+ext:v_ap_255 rdfs:label "Vies-255" .
+
+ext:pr_255 a ext:PowerRating .
+ext:pr_255 rdfs:label "12 kW" .
+
+ext:v_ap_255 ext:hasOutput ext:pr_255 .
+ext:v_ap_255 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_255 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_256 a ext:Boiler .
+ext:v_ap_256 rdfs:label "Vies-256" .
+
+ext:pr_256 a ext:PowerRating .
+ext:pr_256 rdfs:label "18 kW" .
+
+ext:v_ap_256 ext:hasOutput ext:pr_256 .
+ext:v_ap_256 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_256 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_257 a ext:HeatPump .
+ext:v_ap_257 rdfs:label "Vies-257" .
+
+ext:pr_257 a ext:PowerRating .
+ext:pr_257 rdfs:label "24 kW" .
+
+ext:v_ap_257 ext:hasOutput ext:pr_257 .
+ext:v_ap_257 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_257 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_258 a ext:Boiler .
+ext:v_ap_258 rdfs:label "Vies-258" .
+
+ext:pr_258 a ext:PowerRating .
+ext:pr_258 rdfs:label "30 kW" .
+
+ext:v_ap_258 ext:hasOutput ext:pr_258 .
+ext:v_ap_258 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_258 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_259 a ext:HeatPump .
+ext:v_ap_259 rdfs:label "Vies-259" .
+
+ext:pr_259 a ext:PowerRating .
+ext:pr_259 rdfs:label "35 kW" .
+
+ext:v_ap_259 ext:hasOutput ext:pr_259 .
+ext:v_ap_259 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_259 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_260 a ext:Boiler .
+ext:v_ap_260 rdfs:label "Vies-260" .
+
+ext:pr_260 a ext:PowerRating .
+ext:pr_260 rdfs:label "12 kW" .
+
+ext:v_ap_260 ext:hasOutput ext:pr_260 .
+ext:v_ap_260 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_260 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_261 a ext:HeatPump .
+ext:v_ap_261 rdfs:label "Vies-261" .
+
+ext:pr_261 a ext:PowerRating .
+ext:pr_261 rdfs:label "18 kW" .
+
+ext:v_ap_261 ext:hasOutput ext:pr_261 .
+ext:v_ap_261 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_261 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_262 a ext:Boiler .
+ext:v_ap_262 rdfs:label "Vies-262" .
+
+ext:pr_262 a ext:PowerRating .
+ext:pr_262 rdfs:label "24 kW" .
+
+ext:v_ap_262 ext:hasOutput ext:pr_262 .
+ext:v_ap_262 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_262 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_263 a ext:HeatPump .
+ext:v_ap_263 rdfs:label "Vies-263" .
+
+ext:pr_263 a ext:PowerRating .
+ext:pr_263 rdfs:label "30 kW" .
+
+ext:v_ap_263 ext:hasOutput ext:pr_263 .
+ext:v_ap_263 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_263 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_264 a ext:Boiler .
+ext:v_ap_264 rdfs:label "Vies-264" .
+
+ext:pr_264 a ext:PowerRating .
+ext:pr_264 rdfs:label "35 kW" .
+
+ext:v_ap_264 ext:hasOutput ext:pr_264 .
+ext:v_ap_264 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_264 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_265 a ext:HeatPump .
+ext:v_ap_265 rdfs:label "Vies-265" .
+
+ext:pr_265 a ext:PowerRating .
+ext:pr_265 rdfs:label "12 kW" .
+
+ext:v_ap_265 ext:hasOutput ext:pr_265 .
+ext:v_ap_265 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_265 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_266 a ext:Boiler .
+ext:v_ap_266 rdfs:label "Vies-266" .
+
+ext:pr_266 a ext:PowerRating .
+ext:pr_266 rdfs:label "18 kW" .
+
+ext:v_ap_266 ext:hasOutput ext:pr_266 .
+ext:v_ap_266 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_266 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_267 a ext:HeatPump .
+ext:v_ap_267 rdfs:label "Vies-267" .
+
+ext:pr_267 a ext:PowerRating .
+ext:pr_267 rdfs:label "24 kW" .
+
+ext:v_ap_267 ext:hasOutput ext:pr_267 .
+ext:v_ap_267 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_267 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_268 a ext:Boiler .
+ext:v_ap_268 rdfs:label "Vies-268" .
+
+ext:pr_268 a ext:PowerRating .
+ext:pr_268 rdfs:label "30 kW" .
+
+ext:v_ap_268 ext:hasOutput ext:pr_268 .
+ext:v_ap_268 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_268 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_269 a ext:HeatPump .
+ext:v_ap_269 rdfs:label "Vies-269" .
+
+ext:pr_269 a ext:PowerRating .
+ext:pr_269 rdfs:label "35 kW" .
+
+ext:v_ap_269 ext:hasOutput ext:pr_269 .
+ext:v_ap_269 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_269 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_270 a ext:Boiler .
+ext:v_ap_270 rdfs:label "Vies-270" .
+
+ext:pr_270 a ext:PowerRating .
+ext:pr_270 rdfs:label "12 kW" .
+
+ext:v_ap_270 ext:hasOutput ext:pr_270 .
+ext:v_ap_270 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_270 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_271 a ext:HeatPump .
+ext:v_ap_271 rdfs:label "Vies-271" .
+
+ext:pr_271 a ext:PowerRating .
+ext:pr_271 rdfs:label "18 kW" .
+
+ext:v_ap_271 ext:hasOutput ext:pr_271 .
+ext:v_ap_271 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_271 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_272 a ext:Boiler .
+ext:v_ap_272 rdfs:label "Vies-272" .
+
+ext:pr_272 a ext:PowerRating .
+ext:pr_272 rdfs:label "24 kW" .
+
+ext:v_ap_272 ext:hasOutput ext:pr_272 .
+ext:v_ap_272 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_272 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_273 a ext:HeatPump .
+ext:v_ap_273 rdfs:label "Vies-273" .
+
+ext:pr_273 a ext:PowerRating .
+ext:pr_273 rdfs:label "30 kW" .
+
+ext:v_ap_273 ext:hasOutput ext:pr_273 .
+ext:v_ap_273 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_273 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_274 a ext:Boiler .
+ext:v_ap_274 rdfs:label "Vies-274" .
+
+ext:pr_274 a ext:PowerRating .
+ext:pr_274 rdfs:label "35 kW" .
+
+ext:v_ap_274 ext:hasOutput ext:pr_274 .
+ext:v_ap_274 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_274 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_275 a ext:HeatPump .
+ext:v_ap_275 rdfs:label "Vies-275" .
+
+ext:pr_275 a ext:PowerRating .
+ext:pr_275 rdfs:label "12 kW" .
+
+ext:v_ap_275 ext:hasOutput ext:pr_275 .
+ext:v_ap_275 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_275 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_276 a ext:Boiler .
+ext:v_ap_276 rdfs:label "Vies-276" .
+
+ext:pr_276 a ext:PowerRating .
+ext:pr_276 rdfs:label "18 kW" .
+
+ext:v_ap_276 ext:hasOutput ext:pr_276 .
+ext:v_ap_276 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_276 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_277 a ext:HeatPump .
+ext:v_ap_277 rdfs:label "Vies-277" .
+
+ext:pr_277 a ext:PowerRating .
+ext:pr_277 rdfs:label "24 kW" .
+
+ext:v_ap_277 ext:hasOutput ext:pr_277 .
+ext:v_ap_277 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_277 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_278 a ext:Boiler .
+ext:v_ap_278 rdfs:label "Vies-278" .
+
+ext:pr_278 a ext:PowerRating .
+ext:pr_278 rdfs:label "30 kW" .
+
+ext:v_ap_278 ext:hasOutput ext:pr_278 .
+ext:v_ap_278 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_278 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_279 a ext:HeatPump .
+ext:v_ap_279 rdfs:label "Vies-279" .
+
+ext:pr_279 a ext:PowerRating .
+ext:pr_279 rdfs:label "35 kW" .
+
+ext:v_ap_279 ext:hasOutput ext:pr_279 .
+ext:v_ap_279 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_279 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_280 a ext:Boiler .
+ext:v_ap_280 rdfs:label "Vies-280" .
+
+ext:pr_280 a ext:PowerRating .
+ext:pr_280 rdfs:label "12 kW" .
+
+ext:v_ap_280 ext:hasOutput ext:pr_280 .
+ext:v_ap_280 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_280 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_281 a ext:HeatPump .
+ext:v_ap_281 rdfs:label "Vies-281" .
+
+ext:pr_281 a ext:PowerRating .
+ext:pr_281 rdfs:label "18 kW" .
+
+ext:v_ap_281 ext:hasOutput ext:pr_281 .
+ext:v_ap_281 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_281 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_282 a ext:Boiler .
+ext:v_ap_282 rdfs:label "Vies-282" .
+
+ext:pr_282 a ext:PowerRating .
+ext:pr_282 rdfs:label "24 kW" .
+
+ext:v_ap_282 ext:hasOutput ext:pr_282 .
+ext:v_ap_282 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_282 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_283 a ext:HeatPump .
+ext:v_ap_283 rdfs:label "Vies-283" .
+
+ext:pr_283 a ext:PowerRating .
+ext:pr_283 rdfs:label "30 kW" .
+
+ext:v_ap_283 ext:hasOutput ext:pr_283 .
+ext:v_ap_283 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_283 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_284 a ext:Boiler .
+ext:v_ap_284 rdfs:label "Vies-284" .
+
+ext:pr_284 a ext:PowerRating .
+ext:pr_284 rdfs:label "35 kW" .
+
+ext:v_ap_284 ext:hasOutput ext:pr_284 .
+ext:v_ap_284 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_284 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_285 a ext:HeatPump .
+ext:v_ap_285 rdfs:label "Vies-285" .
+
+ext:pr_285 a ext:PowerRating .
+ext:pr_285 rdfs:label "12 kW" .
+
+ext:v_ap_285 ext:hasOutput ext:pr_285 .
+ext:v_ap_285 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_285 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_286 a ext:Boiler .
+ext:v_ap_286 rdfs:label "Vies-286" .
+
+ext:pr_286 a ext:PowerRating .
+ext:pr_286 rdfs:label "18 kW" .
+
+ext:v_ap_286 ext:hasOutput ext:pr_286 .
+ext:v_ap_286 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_286 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_287 a ext:HeatPump .
+ext:v_ap_287 rdfs:label "Vies-287" .
+
+ext:pr_287 a ext:PowerRating .
+ext:pr_287 rdfs:label "24 kW" .
+
+ext:v_ap_287 ext:hasOutput ext:pr_287 .
+ext:v_ap_287 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_287 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_288 a ext:Boiler .
+ext:v_ap_288 rdfs:label "Vies-288" .
+
+ext:pr_288 a ext:PowerRating .
+ext:pr_288 rdfs:label "30 kW" .
+
+ext:v_ap_288 ext:hasOutput ext:pr_288 .
+ext:v_ap_288 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_288 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_289 a ext:HeatPump .
+ext:v_ap_289 rdfs:label "Vies-289" .
+
+ext:pr_289 a ext:PowerRating .
+ext:pr_289 rdfs:label "35 kW" .
+
+ext:v_ap_289 ext:hasOutput ext:pr_289 .
+ext:v_ap_289 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_289 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_290 a ext:Boiler .
+ext:v_ap_290 rdfs:label "Vies-290" .
+
+ext:pr_290 a ext:PowerRating .
+ext:pr_290 rdfs:label "12 kW" .
+
+ext:v_ap_290 ext:hasOutput ext:pr_290 .
+ext:v_ap_290 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_290 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_291 a ext:HeatPump .
+ext:v_ap_291 rdfs:label "Vies-291" .
+
+ext:pr_291 a ext:PowerRating .
+ext:pr_291 rdfs:label "18 kW" .
+
+ext:v_ap_291 ext:hasOutput ext:pr_291 .
+ext:v_ap_291 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_291 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_292 a ext:Boiler .
+ext:v_ap_292 rdfs:label "Vies-292" .
+
+ext:pr_292 a ext:PowerRating .
+ext:pr_292 rdfs:label "24 kW" .
+
+ext:v_ap_292 ext:hasOutput ext:pr_292 .
+ext:v_ap_292 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_292 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_293 a ext:HeatPump .
+ext:v_ap_293 rdfs:label "Vies-293" .
+
+ext:pr_293 a ext:PowerRating .
+ext:pr_293 rdfs:label "30 kW" .
+
+ext:v_ap_293 ext:hasOutput ext:pr_293 .
+ext:v_ap_293 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_293 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_294 a ext:Boiler .
+ext:v_ap_294 rdfs:label "Vies-294" .
+
+ext:pr_294 a ext:PowerRating .
+ext:pr_294 rdfs:label "35 kW" .
+
+ext:v_ap_294 ext:hasOutput ext:pr_294 .
+ext:v_ap_294 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_294 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_295 a ext:HeatPump .
+ext:v_ap_295 rdfs:label "Vies-295" .
+
+ext:pr_295 a ext:PowerRating .
+ext:pr_295 rdfs:label "12 kW" .
+
+ext:v_ap_295 ext:hasOutput ext:pr_295 .
+ext:v_ap_295 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_295 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_296 a ext:Boiler .
+ext:v_ap_296 rdfs:label "Vies-296" .
+
+ext:pr_296 a ext:PowerRating .
+ext:pr_296 rdfs:label "18 kW" .
+
+ext:v_ap_296 ext:hasOutput ext:pr_296 .
+ext:v_ap_296 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_296 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_297 a ext:HeatPump .
+ext:v_ap_297 rdfs:label "Vies-297" .
+
+ext:pr_297 a ext:PowerRating .
+ext:pr_297 rdfs:label "24 kW" .
+
+ext:v_ap_297 ext:hasOutput ext:pr_297 .
+ext:v_ap_297 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_297 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_298 a ext:Boiler .
+ext:v_ap_298 rdfs:label "Vies-298" .
+
+ext:pr_298 a ext:PowerRating .
+ext:pr_298 rdfs:label "30 kW" .
+
+ext:v_ap_298 ext:hasOutput ext:pr_298 .
+ext:v_ap_298 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_298 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_299 a ext:HeatPump .
+ext:v_ap_299 rdfs:label "Vies-299" .
+
+ext:pr_299 a ext:PowerRating .
+ext:pr_299 rdfs:label "35 kW" .
+
+ext:v_ap_299 ext:hasOutput ext:pr_299 .
+ext:v_ap_299 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_299 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_300 a ext:Boiler .
+ext:v_ap_300 rdfs:label "Vies-300" .
+
+ext:pr_300 a ext:PowerRating .
+ext:pr_300 rdfs:label "12 kW" .
+
+ext:v_ap_300 ext:hasOutput ext:pr_300 .
+ext:v_ap_300 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_300 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_301 a ext:HeatPump .
+ext:v_ap_301 rdfs:label "Vies-301" .
+
+ext:pr_301 a ext:PowerRating .
+ext:pr_301 rdfs:label "18 kW" .
+
+ext:v_ap_301 ext:hasOutput ext:pr_301 .
+ext:v_ap_301 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_301 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_302 a ext:Boiler .
+ext:v_ap_302 rdfs:label "Vies-302" .
+
+ext:pr_302 a ext:PowerRating .
+ext:pr_302 rdfs:label "24 kW" .
+
+ext:v_ap_302 ext:hasOutput ext:pr_302 .
+ext:v_ap_302 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_302 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_303 a ext:HeatPump .
+ext:v_ap_303 rdfs:label "Vies-303" .
+
+ext:pr_303 a ext:PowerRating .
+ext:pr_303 rdfs:label "30 kW" .
+
+ext:v_ap_303 ext:hasOutput ext:pr_303 .
+ext:v_ap_303 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_303 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_304 a ext:Boiler .
+ext:v_ap_304 rdfs:label "Vies-304" .
+
+ext:pr_304 a ext:PowerRating .
+ext:pr_304 rdfs:label "35 kW" .
+
+ext:v_ap_304 ext:hasOutput ext:pr_304 .
+ext:v_ap_304 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_304 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_305 a ext:HeatPump .
+ext:v_ap_305 rdfs:label "Vies-305" .
+
+ext:pr_305 a ext:PowerRating .
+ext:pr_305 rdfs:label "12 kW" .
+
+ext:v_ap_305 ext:hasOutput ext:pr_305 .
+ext:v_ap_305 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_305 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_306 a ext:Boiler .
+ext:v_ap_306 rdfs:label "Vies-306" .
+
+ext:pr_306 a ext:PowerRating .
+ext:pr_306 rdfs:label "18 kW" .
+
+ext:v_ap_306 ext:hasOutput ext:pr_306 .
+ext:v_ap_306 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_306 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_307 a ext:HeatPump .
+ext:v_ap_307 rdfs:label "Vies-307" .
+
+ext:pr_307 a ext:PowerRating .
+ext:pr_307 rdfs:label "24 kW" .
+
+ext:v_ap_307 ext:hasOutput ext:pr_307 .
+ext:v_ap_307 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_307 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_308 a ext:Boiler .
+ext:v_ap_308 rdfs:label "Vies-308" .
+
+ext:pr_308 a ext:PowerRating .
+ext:pr_308 rdfs:label "30 kW" .
+
+ext:v_ap_308 ext:hasOutput ext:pr_308 .
+ext:v_ap_308 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_308 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_309 a ext:HeatPump .
+ext:v_ap_309 rdfs:label "Vies-309" .
+
+ext:pr_309 a ext:PowerRating .
+ext:pr_309 rdfs:label "35 kW" .
+
+ext:v_ap_309 ext:hasOutput ext:pr_309 .
+ext:v_ap_309 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_309 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_310 a ext:Boiler .
+ext:v_ap_310 rdfs:label "Vies-310" .
+
+ext:pr_310 a ext:PowerRating .
+ext:pr_310 rdfs:label "12 kW" .
+
+ext:v_ap_310 ext:hasOutput ext:pr_310 .
+ext:v_ap_310 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_310 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_311 a ext:HeatPump .
+ext:v_ap_311 rdfs:label "Vies-311" .
+
+ext:pr_311 a ext:PowerRating .
+ext:pr_311 rdfs:label "18 kW" .
+
+ext:v_ap_311 ext:hasOutput ext:pr_311 .
+ext:v_ap_311 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_311 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_312 a ext:Boiler .
+ext:v_ap_312 rdfs:label "Vies-312" .
+
+ext:pr_312 a ext:PowerRating .
+ext:pr_312 rdfs:label "24 kW" .
+
+ext:v_ap_312 ext:hasOutput ext:pr_312 .
+ext:v_ap_312 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_312 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_313 a ext:HeatPump .
+ext:v_ap_313 rdfs:label "Vies-313" .
+
+ext:pr_313 a ext:PowerRating .
+ext:pr_313 rdfs:label "30 kW" .
+
+ext:v_ap_313 ext:hasOutput ext:pr_313 .
+ext:v_ap_313 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_313 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_314 a ext:Boiler .
+ext:v_ap_314 rdfs:label "Vies-314" .
+
+ext:pr_314 a ext:PowerRating .
+ext:pr_314 rdfs:label "35 kW" .
+
+ext:v_ap_314 ext:hasOutput ext:pr_314 .
+ext:v_ap_314 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_314 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_315 a ext:HeatPump .
+ext:v_ap_315 rdfs:label "Vies-315" .
+
+ext:pr_315 a ext:PowerRating .
+ext:pr_315 rdfs:label "12 kW" .
+
+ext:v_ap_315 ext:hasOutput ext:pr_315 .
+ext:v_ap_315 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_315 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_316 a ext:Boiler .
+ext:v_ap_316 rdfs:label "Vies-316" .
+
+ext:pr_316 a ext:PowerRating .
+ext:pr_316 rdfs:label "18 kW" .
+
+ext:v_ap_316 ext:hasOutput ext:pr_316 .
+ext:v_ap_316 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_316 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_317 a ext:HeatPump .
+ext:v_ap_317 rdfs:label "Vies-317" .
+
+ext:pr_317 a ext:PowerRating .
+ext:pr_317 rdfs:label "24 kW" .
+
+ext:v_ap_317 ext:hasOutput ext:pr_317 .
+ext:v_ap_317 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_317 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_318 a ext:Boiler .
+ext:v_ap_318 rdfs:label "Vies-318" .
+
+ext:pr_318 a ext:PowerRating .
+ext:pr_318 rdfs:label "30 kW" .
+
+ext:v_ap_318 ext:hasOutput ext:pr_318 .
+ext:v_ap_318 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_318 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_319 a ext:HeatPump .
+ext:v_ap_319 rdfs:label "Vies-319" .
+
+ext:pr_319 a ext:PowerRating .
+ext:pr_319 rdfs:label "35 kW" .
+
+ext:v_ap_319 ext:hasOutput ext:pr_319 .
+ext:v_ap_319 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_319 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_320 a ext:Boiler .
+ext:v_ap_320 rdfs:label "Vies-320" .
+
+ext:pr_320 a ext:PowerRating .
+ext:pr_320 rdfs:label "12 kW" .
+
+ext:v_ap_320 ext:hasOutput ext:pr_320 .
+ext:v_ap_320 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_320 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_321 a ext:HeatPump .
+ext:v_ap_321 rdfs:label "Vies-321" .
+
+ext:pr_321 a ext:PowerRating .
+ext:pr_321 rdfs:label "18 kW" .
+
+ext:v_ap_321 ext:hasOutput ext:pr_321 .
+ext:v_ap_321 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_321 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_322 a ext:Boiler .
+ext:v_ap_322 rdfs:label "Vies-322" .
+
+ext:pr_322 a ext:PowerRating .
+ext:pr_322 rdfs:label "24 kW" .
+
+ext:v_ap_322 ext:hasOutput ext:pr_322 .
+ext:v_ap_322 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_322 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_323 a ext:HeatPump .
+ext:v_ap_323 rdfs:label "Vies-323" .
+
+ext:pr_323 a ext:PowerRating .
+ext:pr_323 rdfs:label "30 kW" .
+
+ext:v_ap_323 ext:hasOutput ext:pr_323 .
+ext:v_ap_323 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_323 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_324 a ext:Boiler .
+ext:v_ap_324 rdfs:label "Vies-324" .
+
+ext:pr_324 a ext:PowerRating .
+ext:pr_324 rdfs:label "35 kW" .
+
+ext:v_ap_324 ext:hasOutput ext:pr_324 .
+ext:v_ap_324 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_324 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_325 a ext:HeatPump .
+ext:v_ap_325 rdfs:label "Vies-325" .
+
+ext:pr_325 a ext:PowerRating .
+ext:pr_325 rdfs:label "12 kW" .
+
+ext:v_ap_325 ext:hasOutput ext:pr_325 .
+ext:v_ap_325 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_325 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_326 a ext:Boiler .
+ext:v_ap_326 rdfs:label "Vies-326" .
+
+ext:pr_326 a ext:PowerRating .
+ext:pr_326 rdfs:label "18 kW" .
+
+ext:v_ap_326 ext:hasOutput ext:pr_326 .
+ext:v_ap_326 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_326 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_327 a ext:HeatPump .
+ext:v_ap_327 rdfs:label "Vies-327" .
+
+ext:pr_327 a ext:PowerRating .
+ext:pr_327 rdfs:label "24 kW" .
+
+ext:v_ap_327 ext:hasOutput ext:pr_327 .
+ext:v_ap_327 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_327 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_328 a ext:Boiler .
+ext:v_ap_328 rdfs:label "Vies-328" .
+
+ext:pr_328 a ext:PowerRating .
+ext:pr_328 rdfs:label "30 kW" .
+
+ext:v_ap_328 ext:hasOutput ext:pr_328 .
+ext:v_ap_328 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_328 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_329 a ext:HeatPump .
+ext:v_ap_329 rdfs:label "Vies-329" .
+
+ext:pr_329 a ext:PowerRating .
+ext:pr_329 rdfs:label "35 kW" .
+
+ext:v_ap_329 ext:hasOutput ext:pr_329 .
+ext:v_ap_329 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_329 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_330 a ext:Boiler .
+ext:v_ap_330 rdfs:label "Vies-330" .
+
+ext:pr_330 a ext:PowerRating .
+ext:pr_330 rdfs:label "12 kW" .
+
+ext:v_ap_330 ext:hasOutput ext:pr_330 .
+ext:v_ap_330 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_330 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_331 a ext:HeatPump .
+ext:v_ap_331 rdfs:label "Vies-331" .
+
+ext:pr_331 a ext:PowerRating .
+ext:pr_331 rdfs:label "18 kW" .
+
+ext:v_ap_331 ext:hasOutput ext:pr_331 .
+ext:v_ap_331 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_331 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_332 a ext:Boiler .
+ext:v_ap_332 rdfs:label "Vies-332" .
+
+ext:pr_332 a ext:PowerRating .
+ext:pr_332 rdfs:label "24 kW" .
+
+ext:v_ap_332 ext:hasOutput ext:pr_332 .
+ext:v_ap_332 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_332 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_333 a ext:HeatPump .
+ext:v_ap_333 rdfs:label "Vies-333" .
+
+ext:pr_333 a ext:PowerRating .
+ext:pr_333 rdfs:label "30 kW" .
+
+ext:v_ap_333 ext:hasOutput ext:pr_333 .
+ext:v_ap_333 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_333 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_334 a ext:Boiler .
+ext:v_ap_334 rdfs:label "Vies-334" .
+
+ext:pr_334 a ext:PowerRating .
+ext:pr_334 rdfs:label "35 kW" .
+
+ext:v_ap_334 ext:hasOutput ext:pr_334 .
+ext:v_ap_334 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_334 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_335 a ext:HeatPump .
+ext:v_ap_335 rdfs:label "Vies-335" .
+
+ext:pr_335 a ext:PowerRating .
+ext:pr_335 rdfs:label "12 kW" .
+
+ext:v_ap_335 ext:hasOutput ext:pr_335 .
+ext:v_ap_335 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_335 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_336 a ext:Boiler .
+ext:v_ap_336 rdfs:label "Vies-336" .
+
+ext:pr_336 a ext:PowerRating .
+ext:pr_336 rdfs:label "18 kW" .
+
+ext:v_ap_336 ext:hasOutput ext:pr_336 .
+ext:v_ap_336 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_336 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_337 a ext:HeatPump .
+ext:v_ap_337 rdfs:label "Vies-337" .
+
+ext:pr_337 a ext:PowerRating .
+ext:pr_337 rdfs:label "24 kW" .
+
+ext:v_ap_337 ext:hasOutput ext:pr_337 .
+ext:v_ap_337 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_337 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_338 a ext:Boiler .
+ext:v_ap_338 rdfs:label "Vies-338" .
+
+ext:pr_338 a ext:PowerRating .
+ext:pr_338 rdfs:label "30 kW" .
+
+ext:v_ap_338 ext:hasOutput ext:pr_338 .
+ext:v_ap_338 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_338 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_339 a ext:HeatPump .
+ext:v_ap_339 rdfs:label "Vies-339" .
+
+ext:pr_339 a ext:PowerRating .
+ext:pr_339 rdfs:label "35 kW" .
+
+ext:v_ap_339 ext:hasOutput ext:pr_339 .
+ext:v_ap_339 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_339 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_340 a ext:Boiler .
+ext:v_ap_340 rdfs:label "Vies-340" .
+
+ext:pr_340 a ext:PowerRating .
+ext:pr_340 rdfs:label "12 kW" .
+
+ext:v_ap_340 ext:hasOutput ext:pr_340 .
+ext:v_ap_340 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_340 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_341 a ext:HeatPump .
+ext:v_ap_341 rdfs:label "Vies-341" .
+
+ext:pr_341 a ext:PowerRating .
+ext:pr_341 rdfs:label "18 kW" .
+
+ext:v_ap_341 ext:hasOutput ext:pr_341 .
+ext:v_ap_341 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_341 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_342 a ext:Boiler .
+ext:v_ap_342 rdfs:label "Vies-342" .
+
+ext:pr_342 a ext:PowerRating .
+ext:pr_342 rdfs:label "24 kW" .
+
+ext:v_ap_342 ext:hasOutput ext:pr_342 .
+ext:v_ap_342 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_342 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_343 a ext:HeatPump .
+ext:v_ap_343 rdfs:label "Vies-343" .
+
+ext:pr_343 a ext:PowerRating .
+ext:pr_343 rdfs:label "30 kW" .
+
+ext:v_ap_343 ext:hasOutput ext:pr_343 .
+ext:v_ap_343 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_343 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_344 a ext:Boiler .
+ext:v_ap_344 rdfs:label "Vies-344" .
+
+ext:pr_344 a ext:PowerRating .
+ext:pr_344 rdfs:label "35 kW" .
+
+ext:v_ap_344 ext:hasOutput ext:pr_344 .
+ext:v_ap_344 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_344 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_345 a ext:HeatPump .
+ext:v_ap_345 rdfs:label "Vies-345" .
+
+ext:pr_345 a ext:PowerRating .
+ext:pr_345 rdfs:label "12 kW" .
+
+ext:v_ap_345 ext:hasOutput ext:pr_345 .
+ext:v_ap_345 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_345 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_346 a ext:Boiler .
+ext:v_ap_346 rdfs:label "Vies-346" .
+
+ext:pr_346 a ext:PowerRating .
+ext:pr_346 rdfs:label "18 kW" .
+
+ext:v_ap_346 ext:hasOutput ext:pr_346 .
+ext:v_ap_346 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_346 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_347 a ext:HeatPump .
+ext:v_ap_347 rdfs:label "Vies-347" .
+
+ext:pr_347 a ext:PowerRating .
+ext:pr_347 rdfs:label "24 kW" .
+
+ext:v_ap_347 ext:hasOutput ext:pr_347 .
+ext:v_ap_347 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_347 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_348 a ext:Boiler .
+ext:v_ap_348 rdfs:label "Vies-348" .
+
+ext:pr_348 a ext:PowerRating .
+ext:pr_348 rdfs:label "30 kW" .
+
+ext:v_ap_348 ext:hasOutput ext:pr_348 .
+ext:v_ap_348 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_348 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_349 a ext:HeatPump .
+ext:v_ap_349 rdfs:label "Vies-349" .
+
+ext:pr_349 a ext:PowerRating .
+ext:pr_349 rdfs:label "35 kW" .
+
+ext:v_ap_349 ext:hasOutput ext:pr_349 .
+ext:v_ap_349 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_349 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_350 a ext:Boiler .
+ext:v_ap_350 rdfs:label "Vies-350" .
+
+ext:pr_350 a ext:PowerRating .
+ext:pr_350 rdfs:label "12 kW" .
+
+ext:v_ap_350 ext:hasOutput ext:pr_350 .
+ext:v_ap_350 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_350 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_351 a ext:HeatPump .
+ext:v_ap_351 rdfs:label "Vies-351" .
+
+ext:pr_351 a ext:PowerRating .
+ext:pr_351 rdfs:label "18 kW" .
+
+ext:v_ap_351 ext:hasOutput ext:pr_351 .
+ext:v_ap_351 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_351 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_352 a ext:Boiler .
+ext:v_ap_352 rdfs:label "Vies-352" .
+
+ext:pr_352 a ext:PowerRating .
+ext:pr_352 rdfs:label "24 kW" .
+
+ext:v_ap_352 ext:hasOutput ext:pr_352 .
+ext:v_ap_352 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_352 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_353 a ext:HeatPump .
+ext:v_ap_353 rdfs:label "Vies-353" .
+
+ext:pr_353 a ext:PowerRating .
+ext:pr_353 rdfs:label "30 kW" .
+
+ext:v_ap_353 ext:hasOutput ext:pr_353 .
+ext:v_ap_353 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_353 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_354 a ext:Boiler .
+ext:v_ap_354 rdfs:label "Vies-354" .
+
+ext:pr_354 a ext:PowerRating .
+ext:pr_354 rdfs:label "35 kW" .
+
+ext:v_ap_354 ext:hasOutput ext:pr_354 .
+ext:v_ap_354 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_354 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_355 a ext:HeatPump .
+ext:v_ap_355 rdfs:label "Vies-355" .
+
+ext:pr_355 a ext:PowerRating .
+ext:pr_355 rdfs:label "12 kW" .
+
+ext:v_ap_355 ext:hasOutput ext:pr_355 .
+ext:v_ap_355 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_355 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_356 a ext:Boiler .
+ext:v_ap_356 rdfs:label "Vies-356" .
+
+ext:pr_356 a ext:PowerRating .
+ext:pr_356 rdfs:label "18 kW" .
+
+ext:v_ap_356 ext:hasOutput ext:pr_356 .
+ext:v_ap_356 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_356 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_357 a ext:HeatPump .
+ext:v_ap_357 rdfs:label "Vies-357" .
+
+ext:pr_357 a ext:PowerRating .
+ext:pr_357 rdfs:label "24 kW" .
+
+ext:v_ap_357 ext:hasOutput ext:pr_357 .
+ext:v_ap_357 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_357 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_358 a ext:Boiler .
+ext:v_ap_358 rdfs:label "Vies-358" .
+
+ext:pr_358 a ext:PowerRating .
+ext:pr_358 rdfs:label "30 kW" .
+
+ext:v_ap_358 ext:hasOutput ext:pr_358 .
+ext:v_ap_358 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_358 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_359 a ext:HeatPump .
+ext:v_ap_359 rdfs:label "Vies-359" .
+
+ext:pr_359 a ext:PowerRating .
+ext:pr_359 rdfs:label "35 kW" .
+
+ext:v_ap_359 ext:hasOutput ext:pr_359 .
+ext:v_ap_359 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_359 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_360 a ext:Boiler .
+ext:v_ap_360 rdfs:label "Vies-360" .
+
+ext:pr_360 a ext:PowerRating .
+ext:pr_360 rdfs:label "12 kW" .
+
+ext:v_ap_360 ext:hasOutput ext:pr_360 .
+ext:v_ap_360 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_360 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_361 a ext:HeatPump .
+ext:v_ap_361 rdfs:label "Vies-361" .
+
+ext:pr_361 a ext:PowerRating .
+ext:pr_361 rdfs:label "18 kW" .
+
+ext:v_ap_361 ext:hasOutput ext:pr_361 .
+ext:v_ap_361 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_361 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_362 a ext:Boiler .
+ext:v_ap_362 rdfs:label "Vies-362" .
+
+ext:pr_362 a ext:PowerRating .
+ext:pr_362 rdfs:label "24 kW" .
+
+ext:v_ap_362 ext:hasOutput ext:pr_362 .
+ext:v_ap_362 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_362 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_363 a ext:HeatPump .
+ext:v_ap_363 rdfs:label "Vies-363" .
+
+ext:pr_363 a ext:PowerRating .
+ext:pr_363 rdfs:label "30 kW" .
+
+ext:v_ap_363 ext:hasOutput ext:pr_363 .
+ext:v_ap_363 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_363 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_364 a ext:Boiler .
+ext:v_ap_364 rdfs:label "Vies-364" .
+
+ext:pr_364 a ext:PowerRating .
+ext:pr_364 rdfs:label "35 kW" .
+
+ext:v_ap_364 ext:hasOutput ext:pr_364 .
+ext:v_ap_364 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_364 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_365 a ext:HeatPump .
+ext:v_ap_365 rdfs:label "Vies-365" .
+
+ext:pr_365 a ext:PowerRating .
+ext:pr_365 rdfs:label "12 kW" .
+
+ext:v_ap_365 ext:hasOutput ext:pr_365 .
+ext:v_ap_365 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_365 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_366 a ext:Boiler .
+ext:v_ap_366 rdfs:label "Vies-366" .
+
+ext:pr_366 a ext:PowerRating .
+ext:pr_366 rdfs:label "18 kW" .
+
+ext:v_ap_366 ext:hasOutput ext:pr_366 .
+ext:v_ap_366 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_366 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_367 a ext:HeatPump .
+ext:v_ap_367 rdfs:label "Vies-367" .
+
+ext:pr_367 a ext:PowerRating .
+ext:pr_367 rdfs:label "24 kW" .
+
+ext:v_ap_367 ext:hasOutput ext:pr_367 .
+ext:v_ap_367 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_367 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_368 a ext:Boiler .
+ext:v_ap_368 rdfs:label "Vies-368" .
+
+ext:pr_368 a ext:PowerRating .
+ext:pr_368 rdfs:label "30 kW" .
+
+ext:v_ap_368 ext:hasOutput ext:pr_368 .
+ext:v_ap_368 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_368 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_369 a ext:HeatPump .
+ext:v_ap_369 rdfs:label "Vies-369" .
+
+ext:pr_369 a ext:PowerRating .
+ext:pr_369 rdfs:label "35 kW" .
+
+ext:v_ap_369 ext:hasOutput ext:pr_369 .
+ext:v_ap_369 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_369 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_370 a ext:Boiler .
+ext:v_ap_370 rdfs:label "Vies-370" .
+
+ext:pr_370 a ext:PowerRating .
+ext:pr_370 rdfs:label "12 kW" .
+
+ext:v_ap_370 ext:hasOutput ext:pr_370 .
+ext:v_ap_370 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_370 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_371 a ext:HeatPump .
+ext:v_ap_371 rdfs:label "Vies-371" .
+
+ext:pr_371 a ext:PowerRating .
+ext:pr_371 rdfs:label "18 kW" .
+
+ext:v_ap_371 ext:hasOutput ext:pr_371 .
+ext:v_ap_371 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_371 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_372 a ext:Boiler .
+ext:v_ap_372 rdfs:label "Vies-372" .
+
+ext:pr_372 a ext:PowerRating .
+ext:pr_372 rdfs:label "24 kW" .
+
+ext:v_ap_372 ext:hasOutput ext:pr_372 .
+ext:v_ap_372 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_372 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_373 a ext:HeatPump .
+ext:v_ap_373 rdfs:label "Vies-373" .
+
+ext:pr_373 a ext:PowerRating .
+ext:pr_373 rdfs:label "30 kW" .
+
+ext:v_ap_373 ext:hasOutput ext:pr_373 .
+ext:v_ap_373 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_373 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_374 a ext:Boiler .
+ext:v_ap_374 rdfs:label "Vies-374" .
+
+ext:pr_374 a ext:PowerRating .
+ext:pr_374 rdfs:label "35 kW" .
+
+ext:v_ap_374 ext:hasOutput ext:pr_374 .
+ext:v_ap_374 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_374 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_375 a ext:HeatPump .
+ext:v_ap_375 rdfs:label "Vies-375" .
+
+ext:pr_375 a ext:PowerRating .
+ext:pr_375 rdfs:label "12 kW" .
+
+ext:v_ap_375 ext:hasOutput ext:pr_375 .
+ext:v_ap_375 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_375 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_376 a ext:Boiler .
+ext:v_ap_376 rdfs:label "Vies-376" .
+
+ext:pr_376 a ext:PowerRating .
+ext:pr_376 rdfs:label "18 kW" .
+
+ext:v_ap_376 ext:hasOutput ext:pr_376 .
+ext:v_ap_376 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_376 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_377 a ext:HeatPump .
+ext:v_ap_377 rdfs:label "Vies-377" .
+
+ext:pr_377 a ext:PowerRating .
+ext:pr_377 rdfs:label "24 kW" .
+
+ext:v_ap_377 ext:hasOutput ext:pr_377 .
+ext:v_ap_377 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_377 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_378 a ext:Boiler .
+ext:v_ap_378 rdfs:label "Vies-378" .
+
+ext:pr_378 a ext:PowerRating .
+ext:pr_378 rdfs:label "30 kW" .
+
+ext:v_ap_378 ext:hasOutput ext:pr_378 .
+ext:v_ap_378 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_378 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_379 a ext:HeatPump .
+ext:v_ap_379 rdfs:label "Vies-379" .
+
+ext:pr_379 a ext:PowerRating .
+ext:pr_379 rdfs:label "35 kW" .
+
+ext:v_ap_379 ext:hasOutput ext:pr_379 .
+ext:v_ap_379 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_379 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_380 a ext:Boiler .
+ext:v_ap_380 rdfs:label "Vies-380" .
+
+ext:pr_380 a ext:PowerRating .
+ext:pr_380 rdfs:label "12 kW" .
+
+ext:v_ap_380 ext:hasOutput ext:pr_380 .
+ext:v_ap_380 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_380 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_381 a ext:HeatPump .
+ext:v_ap_381 rdfs:label "Vies-381" .
+
+ext:pr_381 a ext:PowerRating .
+ext:pr_381 rdfs:label "18 kW" .
+
+ext:v_ap_381 ext:hasOutput ext:pr_381 .
+ext:v_ap_381 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_381 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_382 a ext:Boiler .
+ext:v_ap_382 rdfs:label "Vies-382" .
+
+ext:pr_382 a ext:PowerRating .
+ext:pr_382 rdfs:label "24 kW" .
+
+ext:v_ap_382 ext:hasOutput ext:pr_382 .
+ext:v_ap_382 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_382 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_383 a ext:HeatPump .
+ext:v_ap_383 rdfs:label "Vies-383" .
+
+ext:pr_383 a ext:PowerRating .
+ext:pr_383 rdfs:label "30 kW" .
+
+ext:v_ap_383 ext:hasOutput ext:pr_383 .
+ext:v_ap_383 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_383 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_384 a ext:Boiler .
+ext:v_ap_384 rdfs:label "Vies-384" .
+
+ext:pr_384 a ext:PowerRating .
+ext:pr_384 rdfs:label "35 kW" .
+
+ext:v_ap_384 ext:hasOutput ext:pr_384 .
+ext:v_ap_384 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_384 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_385 a ext:HeatPump .
+ext:v_ap_385 rdfs:label "Vies-385" .
+
+ext:pr_385 a ext:PowerRating .
+ext:pr_385 rdfs:label "12 kW" .
+
+ext:v_ap_385 ext:hasOutput ext:pr_385 .
+ext:v_ap_385 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_385 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_386 a ext:Boiler .
+ext:v_ap_386 rdfs:label "Vies-386" .
+
+ext:pr_386 a ext:PowerRating .
+ext:pr_386 rdfs:label "18 kW" .
+
+ext:v_ap_386 ext:hasOutput ext:pr_386 .
+ext:v_ap_386 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_386 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_387 a ext:HeatPump .
+ext:v_ap_387 rdfs:label "Vies-387" .
+
+ext:pr_387 a ext:PowerRating .
+ext:pr_387 rdfs:label "24 kW" .
+
+ext:v_ap_387 ext:hasOutput ext:pr_387 .
+ext:v_ap_387 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_387 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_388 a ext:Boiler .
+ext:v_ap_388 rdfs:label "Vies-388" .
+
+ext:pr_388 a ext:PowerRating .
+ext:pr_388 rdfs:label "30 kW" .
+
+ext:v_ap_388 ext:hasOutput ext:pr_388 .
+ext:v_ap_388 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_388 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_389 a ext:HeatPump .
+ext:v_ap_389 rdfs:label "Vies-389" .
+
+ext:pr_389 a ext:PowerRating .
+ext:pr_389 rdfs:label "35 kW" .
+
+ext:v_ap_389 ext:hasOutput ext:pr_389 .
+ext:v_ap_389 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_389 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_390 a ext:Boiler .
+ext:v_ap_390 rdfs:label "Vies-390" .
+
+ext:pr_390 a ext:PowerRating .
+ext:pr_390 rdfs:label "12 kW" .
+
+ext:v_ap_390 ext:hasOutput ext:pr_390 .
+ext:v_ap_390 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_390 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_391 a ext:HeatPump .
+ext:v_ap_391 rdfs:label "Vies-391" .
+
+ext:pr_391 a ext:PowerRating .
+ext:pr_391 rdfs:label "18 kW" .
+
+ext:v_ap_391 ext:hasOutput ext:pr_391 .
+ext:v_ap_391 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_391 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_392 a ext:Boiler .
+ext:v_ap_392 rdfs:label "Vies-392" .
+
+ext:pr_392 a ext:PowerRating .
+ext:pr_392 rdfs:label "24 kW" .
+
+ext:v_ap_392 ext:hasOutput ext:pr_392 .
+ext:v_ap_392 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_392 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_393 a ext:HeatPump .
+ext:v_ap_393 rdfs:label "Vies-393" .
+
+ext:pr_393 a ext:PowerRating .
+ext:pr_393 rdfs:label "30 kW" .
+
+ext:v_ap_393 ext:hasOutput ext:pr_393 .
+ext:v_ap_393 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_393 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_394 a ext:Boiler .
+ext:v_ap_394 rdfs:label "Vies-394" .
+
+ext:pr_394 a ext:PowerRating .
+ext:pr_394 rdfs:label "35 kW" .
+
+ext:v_ap_394 ext:hasOutput ext:pr_394 .
+ext:v_ap_394 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_394 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_395 a ext:HeatPump .
+ext:v_ap_395 rdfs:label "Vies-395" .
+
+ext:pr_395 a ext:PowerRating .
+ext:pr_395 rdfs:label "12 kW" .
+
+ext:v_ap_395 ext:hasOutput ext:pr_395 .
+ext:v_ap_395 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_395 ext:compatibleWith ext:acc_OutdoorSensor .
+ext:v_ap_396 a ext:Boiler .
+ext:v_ap_396 rdfs:label "Vies-396" .
+
+ext:pr_396 a ext:PowerRating .
+ext:pr_396 rdfs:label "18 kW" .
+
+ext:v_ap_396 ext:hasOutput ext:pr_396 .
+ext:v_ap_396 ext:supportsFuel ext:fuel_Gas .
+ext:v_ap_396 ext:compatibleWith ext:acc_Vitotrol .
+ext:v_ap_397 a ext:HeatPump .
+ext:v_ap_397 rdfs:label "Vies-397" .
+
+ext:pr_397 a ext:PowerRating .
+ext:pr_397 rdfs:label "24 kW" .
+
+ext:v_ap_397 ext:hasOutput ext:pr_397 .
+ext:v_ap_397 ext:supportsFuel ext:fuel_Oil .
+ext:v_ap_397 ext:compatibleWith ext:acc_HydroKit .
+ext:v_ap_398 a ext:Boiler .
+ext:v_ap_398 rdfs:label "Vies-398" .
+
+ext:pr_398 a ext:PowerRating .
+ext:pr_398 rdfs:label "30 kW" .
+
+ext:v_ap_398 ext:hasOutput ext:pr_398 .
+ext:v_ap_398 ext:supportsFuel ext:fuel_Propane .
+ext:v_ap_398 ext:compatibleWith ext:acc_BufferTank .
+ext:v_ap_399 a ext:HeatPump .
+ext:v_ap_399 rdfs:label "Vies-399" .
+
+ext:pr_399 a ext:PowerRating .
+ext:pr_399 rdfs:label "35 kW" .
+
+ext:v_ap_399 ext:hasOutput ext:pr_399 .
+ext:v_ap_399 ext:supportsFuel ext:fuel_Electric .
+ext:v_ap_399 ext:compatibleWith ext:acc_OutdoorSensor .

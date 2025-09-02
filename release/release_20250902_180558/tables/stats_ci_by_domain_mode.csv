@@ -1,8 +1,0 @@
-domain,mode,n,acc,ci_lo,ci_hi
-viessmann,ADAPTIVERAG,3234,0.0383,0.0322,0.0448
-viessmann,BASE,3234,0.0009,0.0,0.0022
-viessmann,MEM,3234,0.0383,0.0322,0.0448
-viessmann,MEMSYM,3234,0.0387,0.0325,0.0455
-viessmann,RL,3234,0.0179,0.0133,0.0223
-viessmann,ROUTER,3234,0.0383,0.0322,0.0448
-viessmann,SYM,3234,0.0006,0.0,0.0015

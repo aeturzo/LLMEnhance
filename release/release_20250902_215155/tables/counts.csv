@@ -1,0 +1,10 @@
+domain,type,n
+battery,logic,696
+battery,open,269
+battery,recall,1143
+lexmark,logic,1118
+lexmark,open,253
+lexmark,recall,1380
+viessmann,logic,871
+viessmann,open,523
+viessmann,recall,1840

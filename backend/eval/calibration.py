@@ -1,81 +1,120 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Calibration utility:
-- Scans a directory for eval_*.csv and trace_*.jsonl
-- Computes ECE (Expected Calibration Error) and draws reliability diagrams
-- Writes:
-    artifacts/fig_calibration_<basename>.png           (one per input file)
-    artifacts/calibration_metrics.json                 (file-level metrics)
-    artifacts/calibration_by_mode.json                 (mode-level metrics from traces, if available)
+Compute Expected Calibration Error (ECE) per mode from eval_joined_*.csv files.
+
+Outputs:
+  - tables/calibration.csv                    (mode,ece,n,bins,k)
+  - artifacts/fig_calibration_<mode>.png      (per-mode reliability diagrams)
+  - artifacts/fig_calibration_overall.png     (all modes overlay)
 
 Usage:
-  python backend/eval/calibration.py --in artifacts --out artifacts
+  python backend/eval/calibration.py --artifacts artifacts --tables tables --bins 10
 """
 from __future__ import annotations
 
 import argparse
 import glob
 import json
-import math
 import os
 from pathlib import Path
-from typing import List, Dict, Tuple, Any
+from typing import List, Dict, Any, Optional
 
+import numpy as np
+import pandas as pd
+
+# Headless plotting
 import matplotlib
-matplotlib.use("Agg")  # headless save
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-import pandas as pd
-import numpy as np
+
+def _load_all_joined(artifacts_dir: Path) -> pd.DataFrame:
+    files = sorted(artifacts_dir.glob("eval_joined_*.csv"))
+    if not files:
+        raise SystemExit("No artifacts/eval_joined_*.csv found. Run eval first.")
+    dfs = []
+    for f in files:
+        try:
+            dfs.append(pd.read_csv(f))
+        except Exception:
+            pass
+    if not dfs:
+        raise SystemExit("Could not read any eval_joined_*.csv files.")
+    df = pd.concat(dfs, ignore_index=True)
+    return df
 
 
-# ------------------------ helpers ------------------------
-
-CONF_COLS = [
-    "confidence", "prob", "p_correct", "router_conf", "score", "conf"
-]
-
-def clip01(x: np.ndarray) -> np.ndarray:
-    return np.clip(x.astype(float), 0.0, 1.0)
-
-def ece(scores: np.ndarray, labels: np.ndarray, n_bins: int = 10) -> float:
-    """Simple ECE with equal-width bins."""
-    bins = np.linspace(0.0, 1.0, n_bins + 1)
-    idx = np.digitize(scores, bins) - 1
-    e = 0.0
-    n = len(scores)
-    for b in range(n_bins):
-        m = idx == b
-        if not np.any(m):
-            continue
-        acc = labels[m].mean()
-        conf = scores[m].mean()
-        e += (m.sum() / n) * abs(acc - conf)
-    return float(e)
-
-def reliability_points(scores: np.ndarray, labels: np.ndarray, n_bins: int = 10) -> Tuple[List[float], List[float]]:
-    bins = np.linspace(0.0, 1.0, n_bins + 1)
-    idx = np.digitize(scores, bins) - 1
-    xs, ys = [], []
-    for b in range(n_bins):
-        m = idx == b
-        if np.any(m):
-            xs.append(float(scores[m].mean()))
-            ys.append(float(labels[m].mean()))
-    return xs, ys
-
-def find_conf_col(df: pd.DataFrame) -> str | None:
-    for c in CONF_COLS:
-        if c in df.columns and pd.api.types.is_numeric_dtype(df[c]):
-            return c
+def _choose_conf_column(df: pd.DataFrame) -> Optional[str]:
+    """Pick the numeric confidence-like column to use."""
+    candidates = ["confidence", "prob", "p_correct", "router_conf", "score", "conf"]
+    for c in candidates:
+        if c in df.columns:
+            s = pd.to_numeric(df[c], errors="coerce")
+            if s.notna().any():
+                return c
     return None
 
-def draw_reliability(scores: np.ndarray, labels: np.ndarray, title: str, out_png: Path, n_bins: int = 10) -> None:
-    xs, ys = reliability_points(scores, labels, n_bins=n_bins)
+
+def _ece_quantile(scores: np.ndarray, labels: np.ndarray, k: int = 10) -> float:
+    """
+    Quantile-binned ECE (avoids empty bins).
+    scores ∈ [0,1], labels ∈ {0,1}.
+    """
+    n = len(scores)
+    if n == 0:
+        return float("nan")
+    # sort by confidence
+    order = np.argsort(scores)
+    s = scores[order]
+    y = labels[order]
+    # assign quantile bins
+    k_eff = int(min(k, n))
+    bins = np.floor(np.linspace(0, n, num=k_eff + 1)).astype(int)
+    ece = 0.0
+    for i in range(k_eff):
+        lo, hi = bins[i], bins[i + 1]
+        if hi <= lo:
+            continue
+        sb = s[lo:hi]
+        yb = y[lo:hi]
+        acc = float(np.mean(yb)) if len(yb) else 0.0
+        conf = float(np.mean(sb)) if len(sb) else 0.0
+        ece += abs(acc - conf) * (len(sb) / n)
+    return float(ece)
+
+
+def _reliability_points(scores: np.ndarray, labels: np.ndarray, k: int = 10):
+    """Return (bin_confidence, bin_accuracy) points for plotting."""
+    n = len(scores)
+    if n == 0:
+        return [], []
+    order = np.argsort(scores)
+    s = scores[order]
+    y = labels[order]
+    k_eff = int(min(k, n))
+    bins = np.floor(np.linspace(0, n, num=k_eff + 1)).astype(int)
+    xs, ys = [], []
+    for i in range(k_eff):
+        lo, hi = bins[i], bins[i + 1]
+        if hi <= lo:
+            continue
+        sb = s[lo:hi]
+        yb = y[lo:hi]
+        if len(sb):
+            xs.append(float(np.mean(sb)))
+            ys.append(float(np.mean(yb)))
+    return xs, ys
+
+
+def _draw_reliability(scores: np.ndarray, labels: np.ndarray, title: str, out_png: Path, k: int = 10):
+    xs, ys = _reliability_points(scores, labels, k)
     plt.figure(figsize=(5, 5))
-    plt.plot([0,1],[0,1], linestyle="--", label="ideal")
-    plt.plot(xs, ys, marker="o", label="empirical")
+    plt.plot([0, 1], [0, 1], "--", label="ideal")
+    if xs:
+        plt.plot(xs, ys, marker="o", label="empirical")
+    plt.xlim(0, 1)
+    plt.ylim(0, 1)
     plt.xlabel("Confidence")
     plt.ylabel("Empirical accuracy")
     plt.title(title)
@@ -84,169 +123,101 @@ def draw_reliability(scores: np.ndarray, labels: np.ndarray, title: str, out_png
     plt.savefig(out_png.as_posix(), bbox_inches="tight")
     plt.close()
 
-# ------------------------ traces support ------------------------
-
-def _proxy_conf_from_trace(row: Dict[str, Any]) -> float:
-    """
-    Derive a reasonable confidence proxy from a trace row when no explicit confidence is present.
-    Priority:
-      1) row["confidence"] if present
-      2) max(features.mem_top, features.search_top) if present
-      3) transform of 'cost' (lower cost -> higher confidence)
-      4) fallback 0.5
-    """
-    # 1) direct
-    val = row.get("confidence")
-    if isinstance(val, (int, float)):
-        return float(np.clip(val, 0.0, 1.0))
-    # 2) features
-    feats = row.get("features") or {}
-    mt = feats.get("mem_top")
-    st = feats.get("search_top")
-    cand = [v for v in [mt, st] if isinstance(v, (int, float))]
-    if cand:
-        return float(np.clip(max(cand), 0.0, 1.0))
-    # 3) from cost (monotone decreasing)
-    cost = row.get("cost")
-    if isinstance(cost, (int, float)):
-        # Smooth monotone map: conf = 1 / (1 + exp((cost - 2.0)))
-        try:
-            conf = 1.0 / (1.0 + math.e ** (float(cost) - 2.0))
-        except Exception:
-            conf = 1.0 / (1.0 + float(cost))
-        return float(np.clip(conf, 0.0, 1.0))
-    # 4) fallback
-    return 0.5
-
-def load_trace_points(path: Path) -> List[Tuple[float, float, str]]:
-    """
-    Returns list of (confidence, success, mode) from a trace_*.jsonl file.
-    """
-    out: List[Tuple[float, float, str]] = []
-    with path.open("r", encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
-            if not line:
-                continue
-            row = json.loads(line)
-            success = row.get("success")
-            if success is None:
-                # Try: derive success if expected info exists (rare for traces)
-                continue
-            try:
-                s = float(success)
-            except Exception:
-                continue
-            conf = _proxy_conf_from_trace(row)
-            mode = str(row.get("mode", "") or "")
-            out.append((conf, s, mode))
-    return out
-
-# ------------------------ main ------------------------
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--in",  dest="indir",  default="artifacts", help="input folder with eval_*.csv / trace_*.jsonl")
-    ap.add_argument("--out", dest="outdir", default="artifacts", help="output folder for figs/metrics")
-    ap.add_argument("--bins", type=int, default=10, help="number of bins for reliability/ECE")
+    ap.add_argument("--artifacts", default="artifacts", help="folder containing eval_joined_*.csv")
+    ap.add_argument("--tables", default="tables", help="folder to write calibration.csv")
+    ap.add_argument("--bins", type=int, default=10, help="number of bins (quantile ECE)")
     args = ap.parse_args()
 
-    indir = Path(args.indir)
-    outdir = Path(args.outdir)
-    outdir.mkdir(parents=True, exist_ok=True)
+    artifacts = Path(args.artifacts)
+    tables = Path(args.tables)
+    tables.mkdir(parents=True, exist_ok=True)
 
-    metrics_files: Dict[str, Dict[str, Any]] = {}
-    by_mode_accum: Dict[str, Dict[str, List[float]]] = {}  # mode -> {"scores":[...], "labels":[...]}
+    df = _load_all_joined(artifacts)
 
-    # -------- eval_*.csv (only if a confidence-like column exists) --------
-    for p_str in sorted(glob.glob(os.path.join(indir.as_posix(), "eval_*.csv"))):
-        p = Path(p_str)
+    # Ensure required columns
+    if "mode" not in df.columns or "success" not in df.columns:
+        raise SystemExit("Joined CSV missing required columns ('mode','success').")
+
+    conf_col = _choose_conf_column(df)
+    if conf_col is None:
+        # Write placeholder consistent with pipeline expectations
+        out = pd.DataFrame(
+            [{"mode": m, "ece": None, "n": 0, "bins": 0, "k": args.bins, "note": "No confidence logged"}]
+            for m in sorted(df["mode"].astype(str).unique())
+        )
+        out.to_csv(tables / "calibration.csv", index=False)
+        print(f"Wrote {tables / 'calibration.csv'} (no confidence column found)")
+        return
+
+    # Clean & clip
+    d = df.copy()
+    d["success"] = pd.to_numeric(d["success"], errors="coerce").fillna(0.0).astype(float)
+    d["confidence"] = pd.to_numeric(d[conf_col], errors="coerce")
+    d = d.dropna(subset=["confidence"])
+    d["confidence"] = d["confidence"].clip(0.0, 1.0)
+
+    if d.empty:
+        out = pd.DataFrame(
+            [{"mode": m, "ece": None, "n": 0, "bins": 0, "k": args.bins, "note": "No confidence logged"}]
+            for m in sorted(df["mode"].astype(str).unique())
+        )
+        out.to_csv(tables / "calibration.csv", index=False)
+        print(f"Wrote {tables / 'calibration.csv'} (no numeric confidence values)")
+        return
+
+    rows: List[Dict[str, Any]] = []
+    all_scores, all_labels = [], []
+
+    for mode, grp in d.groupby("mode", dropna=False):
+        scores = grp["confidence"].to_numpy(dtype=float)
+        labels = grp["success"].to_numpy(dtype=float)
+        n = len(scores)
+        if n == 0:
+            rows.append({"mode": str(mode), "ece": None, "n": 0, "bins": 0, "k": args.bins})
+            continue
+
+        val_ece = _ece_quantile(scores, labels, k=args.bins)
+        rows.append({
+            "mode": str(mode),
+            "ece": round(float(val_ece), 6),
+            "n": int(n),
+            "bins": int(min(args.bins, n)),
+            "k": int(args.bins),
+        })
+
+        # Per-mode reliability plot
+        _draw_reliability(scores, labels, f"{mode} reliability", artifacts / f"fig_calibration_{mode}.png", k=args.bins)
+
+        # Accumulate for overall
+        all_scores.append(scores)
+        all_labels.append(labels)
+
+    # Overall overlay (optional)
+    if all_scores:
         try:
-            df = pd.read_csv(p)
-        except Exception as e:
-            metrics_files[p.name] = {"error": f"read-failed: {e}"}
-            continue
+            s_all = np.concatenate(all_scores)
+            y_all = np.concatenate(all_labels)
+            _draw_reliability(s_all, y_all, "All modes (overlay)", artifacts / "fig_calibration_overall.png", k=args.bins)
+        except Exception:
+            pass
 
-        conf_col = find_conf_col(df)
-        if conf_col is None:
-            metrics_files[p.name] = {"skipped": "no-confidence-column", "n": int(len(df))}
-            continue
+    out_df = pd.DataFrame(rows).sort_values("mode")
+    out_df.to_csv(tables / "calibration.csv", index=False)
+    print(f"Wrote {tables / 'calibration.csv'} rows={len(out_df)}")
 
-        if "success" not in df.columns:
-            metrics_files[p.name] = {"skipped": "no-success-column", "n": int(len(df))}
-            continue
+    # Optional: dump a small JSON for debugging provenance
+    meta = {
+        "artifacts_used": sorted([p.name for p in artifacts.glob("eval_joined_*.csv")]),
+        "confidence_column": conf_col,
+        "bins": int(args.bins),
+    }
+    with (artifacts / "calibration_meta.json").open("w", encoding="utf-8") as f:
+        json.dump(meta, f, indent=2)
+    print(f"Wrote {(artifacts / 'calibration_meta.json').as_posix()}")
 
-        scores = clip01(df[conf_col].to_numpy())
-        labels = df["success"].astype(float).to_numpy()
-        val_ece = ece(scores, labels, n_bins=args.bins)
-
-        fig_path = outdir / f"fig_calibration_{p.stem}.png"
-        draw_reliability(scores, labels, title=p.name, out_png=fig_path, n_bins=args.bins)
-
-        metrics_files[p.name] = {
-            "type": "eval_csv",
-            "n": int(len(df)),
-            "ece": float(val_ece),
-            "conf_col": conf_col,
-            "figure": fig_path.name,
-        }
-
-    # -------- trace_*.jsonl (derive proxy confidence) --------
-    for p_str in sorted(glob.glob(os.path.join(indir.as_posix(), "trace_*.jsonl"))):
-        p = Path(p_str)
-        try:
-            pts = load_trace_points(p)
-        except Exception as e:
-            metrics_files[p.name] = {"error": f"read-failed: {e}"}
-            continue
-
-        if not pts:
-            metrics_files[p.name] = {"skipped": "empty-or-no-success"}
-            continue
-
-        scores = clip01(np.array([c for (c, s, m) in pts], dtype=float))
-        labels = np.array([s for (c, s, m) in pts], dtype=float)
-        val_ece = ece(scores, labels, n_bins=args.bins)
-
-        fig_path = outdir / f"fig_calibration_{p.stem}.png"
-        draw_reliability(scores, labels, title=p.name + " (proxy)", out_png=fig_path, n_bins=args.bins)
-
-        metrics_files[p.name] = {
-            "type": "trace_jsonl",
-            "n": int(len(scores)),
-            "ece": float(val_ece),
-            "conf_col": "proxy(features.mem_top/search_top|cost)",
-            "figure": fig_path.name,
-        }
-
-        # accumulate per mode as well
-        for c, s, m in pts:
-            if not m:
-                continue
-            acc = by_mode_accum.setdefault(m, {"scores": [], "labels": []})
-            acc["scores"].append(float(np.clip(c, 0.0, 1.0)))
-            acc["labels"].append(float(s))
-
-    # -------- write metrics --------
-    metrics_path = outdir / "calibration_metrics.json"
-    with metrics_path.open("w", encoding="utf-8") as f:
-        json.dump(metrics_files, f, indent=2)
-    print(f"Wrote {metrics_path.as_posix()}")
-
-    # mode-level aggregation (if we had traces)
-    if by_mode_accum:
-        by_mode_out: Dict[str, Dict[str, Any]] = {}
-        for mode, acc in by_mode_accum.items():
-            s = np.array(acc["scores"], dtype=float)
-            y = np.array(acc["labels"], dtype=float)
-            by_mode_out[mode] = {
-                "n": int(len(s)),
-                "ece": float(ece(s, y, n_bins=args.bins)),
-            }
-        by_mode_path = outdir / "calibration_by_mode.json"
-        with by_mode_path.open("w", encoding="utf-8") as f:
-            json.dump(by_mode_out, f, indent=2)
-        print(f"Wrote {by_mode_path.as_posix()}")
 
 if __name__ == "__main__":
     main()

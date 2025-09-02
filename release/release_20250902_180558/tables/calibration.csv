@@ -1,8 +1,0 @@
-mode,ece,note
-ADAPTIVERAG,,No confidence logged; run backend/eval/calibration.py for real ECE
-BASE,,No confidence logged; run backend/eval/calibration.py for real ECE
-MEM,,No confidence logged; run backend/eval/calibration.py for real ECE
-MEMSYM,,No confidence logged; run backend/eval/calibration.py for real ECE
-RL,,No confidence logged; run backend/eval/calibration.py for real ECE
-ROUTER,,No confidence logged; run backend/eval/calibration.py for real ECE
-SYM,,No confidence logged; run backend/eval/calibration.py for real ECE

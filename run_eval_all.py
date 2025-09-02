@@ -20,7 +20,7 @@ import time
 import random
 import argparse
 from statistics import median
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from pathlib import Path
 import pathlib
 
@@ -31,6 +31,33 @@ from backend.services.symbolic_reasoning_service import build_reasoner
 from backend.services import memory_service
 from backend.services.policy_costs import episode_cost
 from backend.main import app
+
+# --- Strict validators (optional; fall back if missing) ---
+try:
+    from backend.eval.validators import recall_canonical, open_with_citation, logic_yesno  # type: ignore
+    def _score_success(ex: Dict[str, Any], answer: str) -> int:
+        t = (ex.get("type") or "").lower()
+        exp = ex.get("expected_contains") or ""
+        meta = ex.get("meta") or {}
+        aliases = meta.get("aliases") or []
+        if t == "recall":
+            return 1 if recall_canonical(answer or "", exp, aliases) else 0
+        if t == "open":
+            return 1 if open_with_citation(answer or "", exp) else 0
+        if t == "logic":
+            # If your logic is yes/no, use strict; else fallback to substring contains
+            gold = (meta.get("gold_label") or exp or "").strip().lower()
+            if gold in {"yes", "no"}:
+                return 1 if logic_yesno(answer or "", gold) else 0
+            return 1 if (exp and exp.lower() in (answer or "").lower()) else 0
+        return 0
+except Exception:
+    # Fallback to legacy substring contains
+    def _score_success(ex: Dict[str, Any], answer: str) -> int:
+        exp = ex.get("expected_contains")
+        if not exp:
+            return 0
+        return 1 if str(exp).lower() in (answer or "").lower() else 0
 
 ROOT = pathlib.Path(__file__).parent
 ART = ROOT / "artifacts"
@@ -70,8 +97,18 @@ def write_csv(path: pathlib.Path, rows: List[Dict[str, Any]]) -> None:
         with path.open("w", newline="", encoding="utf-8") as f:
             f.write("")  # keep empty but present
         return
+    # Ensure 'confidence' survives even if the first row missed it
+    # (we add it everywhere below, but this is defensive)
+    fieldnames = set()
+    for r in rows:
+        fieldnames.update(r.keys())
+    fieldnames = list(fieldnames)
+    # Keep a stable-ish order: common columns first
+    common_order = ["id","domain","mode","type","session","product","query","expected_contains",
+                    "answer","success","confidence","latency_ms","steps"]
+    ordered = common_order + [k for k in fieldnames if k not in common_order]
     with path.open("w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+        w = csv.DictWriter(f, fieldnames=ordered)
         w.writeheader()
         w.writerows(rows)
 
@@ -209,12 +246,6 @@ def load_tests(domain: str) -> List[Dict[str, Any]]:
     return out
 
 
-def success_contains(expected: str | None, answer: str | None) -> int:
-    if not expected:
-        return 0
-    return 1 if str(expected).lower() in (answer or "").lower() else 0
-
-
 # ---- Day-2 features (robust if feature module missing) ----
 def extract_features_safe(query: str, product: str | None, session: str) -> Dict[str, float | int]:
     try:
@@ -329,8 +360,13 @@ if __name__ == "__main__":
             t1 = time.time()
 
             ans = out.get("answer", "") or ""
-            succ = success_contains(ex.get("expected_contains"), ans)
+            succ = _score_success(ex, ans)
             steps = out.get("steps", []) or []
+            conf = out.get("confidence", None)
+            try:
+                conf = float(conf) if conf is not None and not isinstance(conf, bool) else None
+            except Exception:
+                conf = None
 
             feats = extract_features_safe(ex["query"], ex.get("product"), ex["session"])
             sym_step = next((s for s in steps if isinstance(s, dict) and s.get("source") == "SYM"), None)
@@ -355,6 +391,7 @@ if __name__ == "__main__":
                 "steps": steps,
                 "sources": out.get("sources", []),
                 "sym_trace": (sym_step or {}).get("sym_trace"),
+                "confidence": conf,
             }
             with trace_fp.open("a", encoding="utf-8") as f:
                 f.write(json.dumps(trace_row) + "\n")
@@ -372,6 +409,7 @@ if __name__ == "__main__":
                 "steps": len(steps),
                 "success": int(succ),
                 "answer": ans,
+                "confidence": conf,
             })
 
         fp = ART / f"eval_{mode.value}_{rid}.csv"
@@ -386,21 +424,41 @@ if __name__ == "__main__":
             "query": ex["query"],
             "product": ex.get("product"),
             "session": ex.get("session", "default"),
+            # we can optionally pass success once computed to get reward server-side
+            # "success": bool(_score_success(ex, ???)),
         }
         t0 = time.time()
         out = post_solve_rl(client, payload)
         t1 = time.time()
 
         ans = out.get("answer", "") or ""
-        succ = success_contains(ex.get("expected_contains"), ans)
+        succ = _score_success(ex, ans)
         steps = out.get("steps", []) or []
+        conf = out.get("confidence", None)
+        try:
+            conf = float(conf) if conf is not None and not isinstance(conf, bool) else None
+        except Exception:
+            conf = None
 
         feats = extract_features_safe(ex["query"], ex.get("product"), ex.get("session", "default"))
         action_guess = guess_action_from_steps(steps) or guess_action_from_answer(ans)
 
-        alpha = float(os.getenv("RL_ALPHA", "0.0"))
-        cost = episode_cost(steps)
-        reward = float(succ) - alpha * (cost / 2.0)  # simple normalization
+        # Prefer RL service outputs; fallback to local computation if absent
+        alpha = out.get("alpha")
+        try:
+            alpha = float(alpha) if alpha is not None else float(os.getenv("RL_ALPHA", "0.3"))
+        except Exception:
+            alpha = float(os.getenv("RL_ALPHA", "0.3"))
+
+        cost_norm: Optional[float] = out.get("cost_norm")
+        if cost_norm is None:
+            # fallback: normalize episode cost by a budget
+            budget = float(os.getenv("RL_STEPS_BUDGET", "6"))
+            cost_norm = min(1.0, episode_cost(steps) / max(budget, 1e-9))
+
+        reward = out.get("reward")
+        if reward is None:
+            reward = (1.0 if succ else 0.0) - alpha * float(cost_norm)
 
         sym_step = next((s for s in steps if isinstance(s, dict) and s.get("source") == "SYM"), None)
 
@@ -414,14 +472,15 @@ if __name__ == "__main__":
             "features": feats,
             "chosen_action": action_guess,
             "success": int(succ),
-            "reward": round(reward, 4),
-            "cost": round(cost, 4),
-            "alpha": alpha,
+            "reward": round(float(reward), 4),
+            "cost_norm": round(float(cost_norm), 4),
+            "alpha": float(alpha),
             "latency_ms": round((t1 - t0) * 1000.0, 2),
             "answer": ans,
             "steps": steps,
             "sources": out.get("sources", []),
             "sym_trace": (sym_step or {}).get("sym_trace"),
+            "confidence": conf,
         }
         with trace_fp.open("a", encoding="utf-8") as f:
             f.write(json.dumps(trace_row) + "\n")
@@ -439,6 +498,11 @@ if __name__ == "__main__":
             "steps": len(steps),
             "success": int(succ),
             "answer": ans,
+            "confidence": conf,
+            # optional RL metadata for downstream analyses
+            "alpha": float(alpha),
+            "cost_norm": round(float(cost_norm), 4),
+            "reward": round(float(reward), 4),
         })
 
     fp_rl = ART / f"eval_RL_{rid}.csv"
@@ -453,9 +517,26 @@ if __name__ == "__main__":
             r = csv.DictReader(f)
             for row in r:
                 # normalize types
-                row["latency_ms"] = float(row.get("latency_ms", 0.0) or 0.0)
-                row["steps"] = int(float(row.get("steps", 0) or 0))
-                row["success"] = int(float(row.get("success", 0) or 0))
+                try:
+                    row["latency_ms"] = float(row.get("latency_ms", 0.0) or 0.0)
+                except Exception:
+                    row["latency_ms"] = 0.0
+                try:
+                    row["steps"] = int(float(row.get("steps", 0) or 0))
+                except Exception:
+                    row["steps"] = 0
+                try:
+                    row["success"] = int(float(row.get("success", 0) or 0))
+                except Exception:
+                    row["success"] = 0
+                # ensure confidence column is present
+                if "confidence" in row:
+                    try:
+                        row["confidence"] = float(row.get("confidence")) if row.get("confidence") not in (None, "", "None") else ""
+                    except Exception:
+                        row["confidence"] = ""
+                else:
+                    row["confidence"] = ""
                 joined_rows.append(row)
 
     joined_fp = ART / f"eval_joined_{rid}.csv"
@@ -469,9 +550,9 @@ if __name__ == "__main__":
     summary_rows = []
     for mode, rs in by_mode.items():
         n = len(rs)
-        lats = [float(r["latency_ms"]) for r in rs]
-        steps_ct = [int(r["steps"]) for r in rs]
-        acc = sum(int(r["success"]) for r in rs) / max(n, 1)
+        lats = [float(r.get("latency_ms", 0.0)) for r in rs]
+        steps_ct = [int(r.get("steps", 0)) for r in rs]
+        acc = sum(int(r.get("success", 0)) for r in rs) / max(n, 1)
         summary_rows.append({
             "mode": mode,
             "n": n,
