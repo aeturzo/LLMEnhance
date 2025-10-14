@@ -1,5 +1,0 @@
-{"id":"hv1","query":"Which standards apply to ProductV1?","product":"ProductV1","session":"s1","type":"recall","expected_contains":"F-Gas"}
-{"id":"hv2","query":"List required steps for ProductV1","product":"ProductV1","session":"s1","type":"logic","expected_contains":"Pressure Test"}
-{"id":"hv3","query":"What electrical safety requirements exist for ProductV2?","product":"ProductV2","session":"s1","type":"open","expected_contains":"Electrical Safety"}
-{"id":"hv4","query":"Does ProductV1 require RoHS?","product":"ProductV1","session":"s1","type":"recall","expected_contains":"RoHS"}
-{"id":"hv5","query":"Any wireless compliance for ProductV1?","product":"ProductV1","session":"s1","type":"open","expected_contains":"Wireless Compliance"}

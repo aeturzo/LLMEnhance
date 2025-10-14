@@ -1,8 +1,1 @@
-{"id": "mem-000000", "text": "ProductA standard (conforms to) is EN 62133-2.", "tags": ["standard (conforms to)", "ProductA"]}
-{"id": "mem-000001", "text": "ProductA required standard is EN 62133-2.", "tags": ["required standard", "ProductA"]}
-{"id": "mem-000002", "text": "ProductA required standard is capacity.", "tags": ["required standard", "ProductA"]}
-{"id": "mem-000003", "text": "ProductA component is Battery1.", "tags": ["component", "ProductA"]}
-{"id": "mem-000004", "text": "ProductA component is WirelessModule1.", "tags": ["component", "ProductA"]}
-{"id": "mem-000005", "text": "ProductA component is Board1.", "tags": ["component", "ProductA"]}
-{"id": "mem-000006", "text": "ProductB component is Board2.", "tags": ["component", "ProductB"]}
-{"id": "mem-000007", "text": "ProductC component is WirelessModule2.", "tags": ["component", "ProductC"]}
+{"domain": "battery", "type": "profile", "question": "User printer model?", "answer": "MS821"}

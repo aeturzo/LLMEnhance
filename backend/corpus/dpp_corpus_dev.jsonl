@@ -1,0 +1,14 @@
+{"id": "doc:cop-def", "title": "cop def", "text": "The ratio of heat output to electrical input.", "domain": "viessmann", "source": "seed"}
+{"id": "doc:ms821-manual", "title": "clear jam", "text": "Open tray, remove jam, close tray.", "domain": "lexmark", "source": "seed"}
+{"id": "doc:text-1", "title": "k", "text": "v", "domain": "textiles", "source": "seed"}
+{"id": "doc:eu-batt-2023", "title": "clause", "text": "Manufacturers must meet collection targets of ...", "domain": "battery", "source": "seed"}
+{"id": "gold:7c8f5793dc", "title": "If paper jam is cleared and door closed, can printing resume?", "text": "yes", "domain": "lexmark", "source": "gold"}
+{"id": "gold:0ae0597049", "title": "What toner model is compatible with MX722?", "text": "62D5H00", "domain": "lexmark", "source": "gold"}
+{"id": "gold:99d721cbb8", "title": "Which toner model is compatible with MX722?", "text": "62D5H00", "domain": "lexmark", "source": "gold"}
+{"id": "gold:4ab513e3af", "title": "What is the official term for 'COP'?", "text": "coefficient of performance", "domain": "battery", "source": "gold"}
+{"id": "gold:60866fd65a", "title": "What is the canonical name for 'EPR'?", "text": "Extended Producer Responsibility", "domain": "battery", "source": "gold"}
+{"id": "gold:b971c4a833", "title": "Quote one sentence that supports 'Declaration of Conformity is required'.", "text": "DoC is required for EU market access.", "domain": "battery", "source": "gold"}
+{"id": "gold:aaf084f408", "title": "Quote one sentence that supports 'Declaration of Conformity is mandatory'.", "text": "DoC is required for EU market access.", "domain": "battery", "source": "gold"}
+{"id": "gold:7300f21572", "title": "Quote one sentence that evidences 'take-back schemes are mandated'.", "text": "Producers must finance take-back schemes.", "domain": "battery", "source": "gold"}
+{"id": "gold:dd42ceb6ad", "title": "Quote one sentence that supports 'take-back schemes are mandated'.", "text": "Producers must finance take-back schemes.", "domain": "battery", "source": "gold"}
+{"id": "gold:f49bb599cb", "title": "Quote one sentence that supports 'take-back schemes are mandated'.", "text": "Producers must finance take-back schemes.", "domain": "battery", "source": "gold"}

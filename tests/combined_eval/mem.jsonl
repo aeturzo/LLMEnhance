@@ -1,2 +1,1 @@
-{"session":"s2","memory":"Operator John replaced coolant pump #2 on 1 July 2025."}
-{"session":"s2","memory":"Assembly completed; no battery tests logged yet."}
+{"id": "m-1", "domain": "battery", "type": "mem", "question": "k", "answer": "v"}

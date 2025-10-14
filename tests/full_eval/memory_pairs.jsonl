@@ -1,2 +1,1 @@
-{"session":"s1","memory":"Operator John replaced coolant pump #2 on **1 July 2025**."}
-{"session":"s1","memory":"The client prefers **metric units** in all reports."}
+{"id": "mp-1", "domain": "battery", "type": "pair", "question": "support email", "answer": "support@example.com"}

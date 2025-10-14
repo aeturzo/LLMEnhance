@@ -1,8 +1,2 @@
-{"id":"tx1","query":"Which standard applies to ProductT1?", "product":"ProductT1","session":"s1","type":"recall","expected_contains":"Wool"}
-{"id":"tx2","query":"List applicable standards for ProductT2","product":"ProductT2","session":"s1","type":"open","expected_contains":"Care Label"}
-{"id":"tx3","query":"What steps are required for ProductT2?","product":"ProductT2","session":"s1","type":"logic","expected_contains":"LabelCheck"}
-{"id":"tx4","query":"Which care standard applies to ProductT3?","product":"ProductT3","session":"s1","type":"open","expected_contains":"Care Label"}
-{"id":"tx5","query":"What wool-specific tests apply?","product":"ProductT1","session":"s1","type":"logic","expected_contains":"WoolWash"}
-{"id":"tx6","query":"Does ProductT2 conform to any standard?","product":"ProductT2","session":"s1","type":"recall","expected_contains":"Care Label"}
-{"id":"tx7","query":"standards for ProductT3 please","product":"ProductT3","session":"s1","type":"open","expected_contains":"Care Label"}
-{"id":"tx8","query":"Required process steps for ProductT1?","product":"ProductT1","session":"s1","type":"logic","expected_contains":"LabelCheck"}
+{"id": "13aed88d42", "type": "recall", "domain": "textiles", "question": "What is the canonical name for 'DoC'?", "answer": "Declaration of Conformity"}
+{"id": "6d6f8ff6e3", "type": "logic", "domain": "textiles", "question": "If fiber content label is missing, is EU labeling compliant?", "answer": "no"}

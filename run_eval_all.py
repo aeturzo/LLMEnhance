@@ -85,165 +85,128 @@ def set_global_seed(seed: int = 42) -> None:
 
 
 # ---------------- IO helpers ----------------
-def load_jsonl(path: pathlib.Path) -> List[dict]:
+def load_jsonl(path: Path) -> List[Dict[str, Any]]:
+    rows: List[Dict[str, Any]] = []
     if not path.exists():
-        return []
+        return rows
     with path.open("r", encoding="utf-8") as f:
-        return [json.loads(l) for l in f if l.strip()]
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                rows.append(json.loads(line))
+            except Exception:
+                continue
+    return rows
 
 
-def write_csv(path: pathlib.Path, rows: List[Dict[str, Any]]) -> None:
+def write_csv(path: Path, rows: List[Dict[str, Any]]) -> None:
     if not rows:
-        with path.open("w", newline="", encoding="utf-8") as f:
-            f.write("")  # keep empty but present
+        with path.open("w", encoding="utf-8", newline="") as f:
+            f.write("")
         return
-    # Ensure 'confidence' survives even if the first row missed it
-    # (we add it everywhere below, but this is defensive)
-    fieldnames = set()
-    for r in rows:
-        fieldnames.update(r.keys())
-    fieldnames = list(fieldnames)
-    # Keep a stable-ish order: common columns first
-    common_order = ["id","domain","mode","type","session","product","query","expected_contains",
-                    "answer","success","confidence","latency_ms","steps"]
-    ordered = common_order + [k for k in fieldnames if k not in common_order]
-    with path.open("w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=ordered)
+    cols = sorted({k for r in rows for k in r.keys()})
+    with path.open("w", encoding="utf-8", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=cols)
         w.writeheader()
         w.writerows(rows)
 
 
-# ---------------- Paths (domain-aware) ----------------
-def tests_path_for_domain(domain: str) -> pathlib.Path:
+# ---------------- Test discovery ----------------
+def tests_path_for_domain(domain: str) -> Path:
     """
-    Prefer the scaled dataset: tests/<domain>/tests.jsonl
-    Fallback to legacy dpp_* paths if missing.
+    New layout: tests/{domain}/tests.jsonl
+    Legacy (fallback): tests/{domain}/eval/tests.jsonl
     """
-    preferred = ROOT / "tests" / domain / "tests.jsonl"
-    if preferred.exists():
-        return preferred
-    legacy_map = {
-        "battery":   ROOT / "tests" / "dpp_rl" / "tests.jsonl",
-        "textiles":  ROOT / "tests" / "dpp_textiles" / "tests.jsonl",
-        "viessmann": ROOT / "tests" / "dpp_viessmann" / "tests.jsonl",
-        "lexmark":   ROOT / "tests" / "dpp_lexmark" / "tests.jsonl",
-    }
-    return legacy_map.get(domain, preferred)
+    p = ROOT / "tests" / domain / "tests.jsonl"
+    if p.exists():
+        return p
+    p2 = ROOT / "tests" / domain / "eval" / "tests.jsonl"
+    if p2.exists():
+        return p2
+    return p  # default
 
 
-def seed_path_for_domain(domain: str) -> pathlib.Path:
+def seed_path_for_domain(domain: str) -> Path:
     """
-    Prefer seeds next to the scaled dataset: tests/<domain>/{seed_docs.jsonl,seed_mem.jsonl}
-    Then try legacy dpp_* folders; finally return a non-existing preferred path.
+    New layout: tests/{domain}/seed_docs.jsonl
+    Legacy (fallback): tests/{domain}/seed/seed_docs.jsonl
     """
-    folder = ROOT / "tests" / domain
-    for name in ("seed_docs.jsonl", "seed_mem.jsonl"):
-        p = folder / name
-        if p.exists():
-            return p
-
-    legacy_folder = {
-        "battery":   ROOT / "tests" / "dpp_rl",
-        "textiles":  ROOT / "tests" / "dpp_textiles",
-        "viessmann": ROOT / "tests" / "dpp_viessmann",
-        "lexmark":   ROOT / "tests" / "dpp_lexmark",
-    }.get(domain, ROOT / "tests" / "dpp_rl")
-
-    for name in ("seed_docs.jsonl", "seed_mem.jsonl"):
-        p = legacy_folder / name
-        if p.exists():
-            return p
-
-    return folder / "seed_mem.jsonl"  # non-existing → caller prints skip
+    p = ROOT / "tests" / domain / "seed_docs.jsonl"
+    if p.exists():
+        return p
+    p2 = ROOT / "tests" / domain / "seed" / "seed_docs.jsonl"
+    if p2.exists():
+        return p2
+    return p  # default
 
 
-# ---------------- Memory seeding (robust to schema) ----------------
-def seed_memory(seed_file: str | None = None, domain: str | None = None, session: str = "s1"):
+# ---------------- Memory seeding ----------------
+def seed_memory(seed_file: Path, domain: str) -> None:
     """
-    Accept multiple schemas:
-      {"text": ...} or {"memory": ...} or {"content": ...} or {"doc": ...}
+    Seed memory from docs in tests/... (if any).
     """
-    def _extract_text(row: dict) -> str:
-        return row.get("text") or row.get("memory") or row.get("content") or row.get("doc") or ""
-
-    # resolve path
-    candidates = []
-    if seed_file:
-        candidates.append(Path(seed_file))
-    if domain:
-        candidates += [
-            Path(f"tests/{domain}/seed_mem.jsonl"),
-            Path(f"tests/{domain}/seed_docs.jsonl"),
-        ]
-    candidates += [
-        Path("tests/dpp_rl/seed_mem.jsonl"),
-        Path("tests/dpp_rl/seed_docs.jsonl"),
-    ]
-    path = next((p for p in candidates if p.exists()), None)
-    if not path:
-        print("[seed_memory] no seed file found; skipping.")
-        return
-
-    n = 0
-    with path.open("r", encoding="utf-8") as f:
-        for line in f:
-            t = line.strip()
-            if not t:
+    try:
+        docs = load_jsonl(seed_file)
+        added = 0
+        for d in docs:
+            if not isinstance(d, dict):
                 continue
-            row = json.loads(t)
-            txt = _extract_text(row)
-            if not txt:
-                continue
-            if hasattr(memory_service, "add_memory"):
-                memory_service.add_memory(session, txt)
-            elif hasattr(memory_service, "add"):
-                memory_service.add(session_id=session, content=txt, metadata={})
-            elif hasattr(memory_service, "insert"):
-                memory_service.insert(session_id=session, content=txt, metadata={})
-            elif hasattr(memory_service, "index_texts"):
-                memory_service.index_texts(session_id=session, texts=[txt])
-            else:
-                raise RuntimeError("memory_service has no add/insert/index_texts method")
-            n += 1
-    print(f"[seed_memory] Added {n} memories from {path}")
+            t = (d.get("type") or "").lower()
+            if t in {"doc", "document"}:
+                txt = d.get("text") or d.get("content") or d.get("answer") or ""
+                if txt.strip():
+                    try:
+                        memory_service.index_texts([txt], session_id="seed_"+domain)
+                        added += 1
+                    except Exception:
+                        pass
+        print(f"[seed_memory] Added {added} memories from {seed_file}")
+    except Exception as e:
+        print(f"[seed_memory] Skipped seeding due to: {e}")
 
-
-# ---------------- Test loading ----------------
+# ---------------- Test loader (robust to schema variants) ----------------
 def load_tests(domain: str) -> List[Dict[str, Any]]:
     """
-    Canonical schema (enforced):
-      {"id","query","product","session","type","expected_contains"}
-    Fallback: tests/combined_eval/combined.jsonl with gold.contains
+    Canonical schema per row:
+      id, query, product, session, type, expected_contains, meta
+    Accepts legacy variants:
+      - 'question' as alias for 'query'
+      - fallbacks for expected gold: expected_contains -> meta.* -> answer
     """
-    canonical = tests_path_for_domain(domain)
-    if canonical.exists():
-        rows = load_jsonl(canonical)
-        for i, ex in enumerate(rows, 1):
-            for k in ("id", "query", "session", "type", "expected_contains"):
-                if k not in ex:
-                    raise KeyError(f"Missing '{k}' in tests on line {i}")
-        return rows
+    path = tests_path_for_domain(domain)
+    raw = load_jsonl(path)
+    tests: List[Dict[str, Any]] = []
 
-    # Fallback legacy
-    combined = ROOT / "tests" / "combined_eval" / "combined.jsonl"
-    out: List[Dict[str, Any]] = []
-    for ex in load_jsonl(combined):
-        gold = ex.get("gold") or {}
-        contains = gold.get("contains")
-        if not contains:
+    for i, ex in enumerate(raw, start=1):
+        if not isinstance(ex, dict):
             continue
-        out.append({
-            "id": ex.get("id") or f"c_{len(out)+1}",
-            "query": ex["query"],
-            "product": ex.get("product"),
-            "session": ex.get("session", "s1"),
-            "type": ex.get("type", "open"),
-            "expected_contains": contains,
-        })
-    if not out:
-        raise SystemExit("No usable tests found.")
-    print(f"[WARN] Using fallback combined.jsonl → {len(out)} tests")
-    return out
+
+        # accept 'question'
+        if not ex.get("query") and ex.get("question"):
+            ex["query"] = ex["question"]
+
+        if "query" not in ex or not (ex["query"] or "").strip():
+            raise KeyError(f"Missing 'query' in tests on line {i}")
+
+        ex["id"] = ex.get("id", f"{domain}_{i}")
+        ex["session"] = ex.get("session") or "s1"
+        ex["product"] = ex.get("product") or None
+        ex["type"] = (ex.get("type") or "open").lower()
+        meta = ex.get("meta") or {}
+
+        # NEW: robust gold extraction
+        gold = ex.get("expected_contains")
+        if not gold:
+            gold = meta.get("gold") or meta.get("answer") or meta.get("contains") or ex.get("answer")
+        ex["expected_contains"] = gold
+
+        tests.append(ex)
+
+    if not tests:
+        raise RuntimeError(f"No tests found at {path}")
+    return tests
 
 
 # ---- Day-2 features (robust if feature module missing) ----
@@ -341,6 +304,9 @@ if __name__ == "__main__":
         RunMode.MEMSYM,
         RunMode.ROUTER,
         RunMode.ADAPTIVERAG,
+        RunMode.RAG_BASE, 
+        RunMode.SYM_ONLY
+    
     )
     per_mode_paths: List[pathlib.Path] = []
 
@@ -372,6 +338,9 @@ if __name__ == "__main__":
             sym_step = next((s for s in steps if isinstance(s, dict) and s.get("source") == "SYM"), None)
             cost = episode_cost(steps)
 
+            # === CHANGE: keep router/adaptive's actual chosen action if provided ===
+            chosen_action = out.get("chosen_action", mode.value)
+
             # Trace row
             trace_row = {
                 "id": ex["id"],
@@ -381,7 +350,7 @@ if __name__ == "__main__":
                 "product": ex.get("product"),
                 "session": ex["session"],
                 "features": feats,
-                "chosen_action": mode.value,
+                "chosen_action": chosen_action,
                 "success": int(succ),
                 "reward": float(succ),   # classic: no alpha penalty
                 "cost": round(cost, 4),
@@ -567,7 +536,7 @@ if __name__ == "__main__":
     print(f"Wrote {summary_fp}")
 
     # ----- Acceptance -----
-    expected_rows = len(tests) * 7  # 6 classic/baselines + RL
+    expected_rows = len(tests) * (len(CLASSIC) + 1) # 6 classic/baselines + RL
     actual_rows = len(joined_rows)
     if actual_rows != expected_rows:
         raise SystemExit(f"❌ Acceptance failed: expected {expected_rows} joined rows, got {actual_rows}")

@@ -1,2 +1,1 @@
-{"session":"s1","memory":"Care labels must be readable and durable through washing cycles."}
-{"session":"s1","memory":"Wool garments often require gentle wash tests."}
+{"id": "doc:text-1", "domain": "textiles", "type": "doc", "question": "k", "answer": "v"}

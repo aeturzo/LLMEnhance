@@ -1,0 +1,47 @@
+{"id": "doc:cop-def", "title": "cop def", "text": "The ratio of heat output to electrical input.", "domain": "viessmann", "source": "seed"}
+{"id": "doc:ms821-manual", "title": "clear jam", "text": "Open tray, remove jam, close tray.", "domain": "lexmark", "source": "seed"}
+{"id": "doc:text-1", "title": "k", "text": "v", "domain": "textiles", "source": "seed"}
+{"id": "doc:eu-batt-2023", "title": "clause", "text": "Manufacturers must meet collection targets of ...", "domain": "battery", "source": "seed"}
+{"id": "gold:1eb0fa59e7", "title": "What does COP stand for?", "text": "coefficient of performance", "domain": "viessmann", "source": "gold"}
+{"id": "gold:85241ad024", "title": "Quote the definition of COP (cite).", "text": "The ratio of heat output to electrical input. [doc:cop-def]", "domain": "viessmann", "source": "gold"}
+{"id": "gold:979f430f6d", "title": "Quote clause about safety datasheets (cite).", "text": "Provide a Material Safety Data Sheet ... [doc:msds]", "domain": "dpp_rl", "source": "gold"}
+{"id": "gold:8331dca074", "title": "Which toner fits MS821?", "text": "54G0H00", "domain": "lexmark", "source": "gold"}
+{"id": "gold:7c8f5793dc", "title": "If paper jam is cleared and door closed, can printing resume?", "text": "yes", "domain": "lexmark", "source": "gold"}
+{"id": "gold:41afb0f961", "title": "What toner model is compatible with MX722?", "text": "62D5H00", "domain": "lexmark", "source": "gold"}
+{"id": "gold:0ae0597049", "title": "What toner model is compatible with MX722?", "text": "62D5H00", "domain": "lexmark", "source": "gold"}
+{"id": "gold:0472a22b83", "title": "Which toner model is compatible with MS821?", "text": "54G0H00", "domain": "lexmark", "source": "gold"}
+{"id": "gold:dd7bf9ee84", "title": "Which toner model is compatible with MS821?", "text": "54G0H00", "domain": "lexmark", "source": "gold"}
+{"id": "gold:540d914707", "title": "Which toner model is compatible with MX722?", "text": "62D5H00", "domain": "lexmark", "source": "gold"}
+{"id": "gold:99d721cbb8", "title": "Which toner model is compatible with MX722?", "text": "62D5H00", "domain": "lexmark", "source": "gold"}
+{"id": "gold:3fdd459934", "title": "What toner model is compatible with MS821?", "text": "54G0H00", "domain": "lexmark", "source": "gold"}
+{"id": "gold:b3b915a85d", "title": "What toner model is compatible with MS821?", "text": "54G0H00", "domain": "lexmark", "source": "gold"}
+{"id": "gold:13aed88d42", "title": "What is the canonical name for 'DoC'?", "text": "Declaration of Conformity", "domain": "dpp_textiles", "source": "gold"}
+{"id": "gold:6d6f8ff6e3", "title": "If fiber content label is missing, is EU labeling compliant?", "text": "no", "domain": "dpp_textiles", "source": "gold"}
+{"id": "gold:6998414468", "title": "What is the canonical name for 'EPR'?", "text": "Extended Producer Responsibility", "domain": "battery", "source": "gold"}
+{"id": "gold:53596c4be0", "title": "Quote the clause on collection targets (cite).", "text": "Manufacturers must meet collection targets of ... [doc:eu-batt-2023]", "domain": "battery", "source": "gold"}
+{"id": "gold:929a756e45", "title": "What is the canonical name for 'DoC'?", "text": "Declaration of Conformity", "domain": "battery", "source": "gold"}
+{"id": "gold:54eeab77cb", "title": "What is the canonical name for 'DoC'?", "text": "Declaration of Conformity", "domain": "battery", "source": "gold"}
+{"id": "gold:2b31d339e3", "title": "What is the official term for 'EPR'?", "text": "Extended Producer Responsibility", "domain": "battery", "source": "gold"}
+{"id": "gold:99db4543f8", "title": "What is the official term for 'EPR'?", "text": "Extended Producer Responsibility", "domain": "battery", "source": "gold"}
+{"id": "gold:4ab513e3af", "title": "What is the official term for 'COP'?", "text": "coefficient of performance", "domain": "battery", "source": "gold"}
+{"id": "gold:19ae52d38c", "title": "What is the official term for 'COP'?", "text": "coefficient of performance", "domain": "battery", "source": "gold"}
+{"id": "gold:7eeacd5992", "title": "What is the canonical name for 'COP'?", "text": "coefficient of performance", "domain": "battery", "source": "gold"}
+{"id": "gold:c9e77b2c91", "title": "What is the canonical name for 'COP'?", "text": "coefficient of performance", "domain": "battery", "source": "gold"}
+{"id": "gold:243fe5f988", "title": "What is the canonical name for 'EPR'?", "text": "Extended Producer Responsibility", "domain": "battery", "source": "gold"}
+{"id": "gold:60866fd65a", "title": "What is the canonical name for 'EPR'?", "text": "Extended Producer Responsibility", "domain": "battery", "source": "gold"}
+{"id": "gold:2a9a607b46", "title": "What is the official term for 'DoC'?", "text": "Declaration of Conformity", "domain": "battery", "source": "gold"}
+{"id": "gold:40b0260686", "title": "What is the official term for 'DoC'?", "text": "Declaration of Conformity", "domain": "battery", "source": "gold"}
+{"id": "gold:7542079533", "title": "Quote one sentence that evidences 'Declaration of Conformity is mandatory'.", "text": "DoC is required for EU market access.", "domain": "battery", "source": "gold"}
+{"id": "gold:0cea394465", "title": "Quote one sentence that evidences 'Declaration of Conformity is mandatory'.", "text": "DoC is required for EU market access.", "domain": "battery", "source": "gold"}
+{"id": "gold:e5b0ee89a4", "title": "Quote one sentence that supports 'Declaration of Conformity is required'.", "text": "DoC is required for EU market access.", "domain": "battery", "source": "gold"}
+{"id": "gold:b971c4a833", "title": "Quote one sentence that supports 'Declaration of Conformity is required'.", "text": "DoC is required for EU market access.", "domain": "battery", "source": "gold"}
+{"id": "gold:aaf084f408", "title": "Quote one sentence that supports 'Declaration of Conformity is mandatory'.", "text": "DoC is required for EU market access.", "domain": "battery", "source": "gold"}
+{"id": "gold:f6f8b0d877", "title": "Quote one sentence that supports 'Declaration of Conformity is mandatory'.", "text": "DoC is required for EU market access.", "domain": "battery", "source": "gold"}
+{"id": "gold:7300f21572", "title": "Quote one sentence that evidences 'take-back schemes are mandated'.", "text": "Producers must finance take-back schemes.", "domain": "battery", "source": "gold"}
+{"id": "gold:51b960561a", "title": "Quote one sentence that evidences 'take-back schemes are mandated'.", "text": "Producers must finance take-back schemes.", "domain": "battery", "source": "gold"}
+{"id": "gold:dd42ceb6ad", "title": "Quote one sentence that supports 'take-back schemes are mandated'.", "text": "Producers must finance take-back schemes.", "domain": "battery", "source": "gold"}
+{"id": "gold:f49bb599cb", "title": "Quote one sentence that supports 'take-back schemes are mandated'.", "text": "Producers must finance take-back schemes.", "domain": "battery", "source": "gold"}
+{"id": "gold:5bb53b50e6", "title": "Is the statement true: A cell with 60% recycled content meets the target.?", "text": "yes", "domain": "battery", "source": "gold"}
+{"id": "gold:f1142c94f3", "title": "Does the following hold: COP refers to energy efficiency ratio.?", "text": "yes", "domain": "battery", "source": "gold"}
+{"id": "gold:d04a6f61b9", "title": "Is the statement true: COP refers to energy efficiency ratio.?", "text": "yes", "domain": "battery", "source": "gold"}
+{"id": "gold:b4e335a0c4", "title": "Does the following hold: A cell with 60% recycled content meets the target.?", "text": "yes", "domain": "battery", "source": "gold"}

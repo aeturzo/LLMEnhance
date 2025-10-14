@@ -52,6 +52,8 @@ def fig_pareto():
 def fig_selective():
     p = _latest("selective_*.csv")
     df = _read_csv(p)
+    if "risk" not in df.columns and "accuracy" in df.columns:
+        df["risk"] = 1.0 - df["accuracy"]
     if df.empty or plt is None:
         return None
     plt.figure()

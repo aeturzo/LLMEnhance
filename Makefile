@@ -1,86 +1,131 @@
-# ===========
-# Makefile (repo root)
-# Orchestrates the full pipeline in correct order:
-# seed → eval → router → pareto → faithful → figures → stats → report → release
-# ===========
+# ================================
+# Project-wide Makefile (paper-ready)
+# ================================
 
-# ---- Config (override on the command line, e.g., make camera_ready DOMAIN=lexmark RL_ALPHA=0.6) ----
-DOMAIN ?= dpp_rl
-RL_ALPHA ?= 0.4
-PY ?= python
+# ---- Variables ----
+PY          ?= python
+DOMAINS     ?= battery textiles viessmann lexmark
+DOMAIN      ?= battery
+TESTS_DIR   ?= tests
+ART         ?= artifacts
+TABLES      ?= tables
+CORPUS      ?= backend/corpus/dpp_corpus.jsonl
+COV         ?= 0.50
 
-# ---- Phony targets ----
-.PHONY: seed eval router pareto faithful robustness selective stats figures report release all camera_ready clean
+LATEST_JOINED   = $(shell ls -t $(ART)/eval_joined_*.csv 2>/dev/null | head -n1)
+LATEST_SELECTIVE= $(shell ls -t $(ART)/selective_*.csv 2>/dev/null | head -n1)
 
-# Seed episodic memory from tests/<domain>/seed_mem.jsonl
-seed:
-	@echo ">> Seeding memory from tests/..."
-	$(PY) scripts/seed_memory.py
+# For portability on macOS: ensure head exists
+SHELL := /bin/bash
 
-# Run the full evaluation to produce eval_joined_*.csv (needed before router training)
+.PHONY: help
+help:
+	@echo "Targets:"
+	@echo "  lint-tests         Validate tests JSONL format"
+	@echo "  build-corpus       Build retrieval corpus from tests"
+	@echo "  retriever-warm     (Optional) warm retriever index (skips if module missing)"
+	@echo "  eval               Run full eval spine for a domain (use: make eval DOMAIN=battery)"
+	@echo "  calibrate          Calibrate confidences -> *_calibrated.csv"
+	@echo "  selective          Build selective risk/coverage curves"
+	@echo "  fig-selective      Plot selective curve(s)"
+	@echo "  thresholds         Pick abstention thresholds near coverage COV (default $(COV))"
+	@echo "  aurc               Compute AURC per mode"
+	@echo "  ci                 95% Wilson CIs per mode/type"
+	@echo "  sym-stats          Symbolic coverage stats"
+	@echo "  mcnemar            McNemar test ADAPTIVERAG vs RAG_BASE"
+	@echo "  export-tables      Emit CSV+LaTeX tables under docs/paper/tables"
+	@echo "  paper-pipeline     ONE COMMAND: everything for DOMAIN=$(DOMAIN)"
+	@echo "  paper-pipeline-all Run pipeline for all DOMAINS='$(DOMAINS)'"
+	@echo "  clean-artifacts    Remove artifacts & tables"
+
+# ---- Basic hygiene ----
+.PHONY: lint-tests
+lint-tests:
+	$(PY) -m backend.eval.lint_tests --root $(TESTS_DIR)
+
+# ---- Corpus / Retrieval ----
+.PHONY: build-corpus
+build-corpus:
+	$(PY) -m scripts.build_corpus --tests $(TESTS_DIR) --out $(CORPUS)
+
+# This target is optional. It will NO-OP if the retriever module is absent.
+.PHONY: retriever-warm
+retriever-warm:
+	@set -e; \
+	if $(PY) - <<'PY' >/dev/null 2>&1; then \
+	    print("ok"); \
+	else \
+	    pass; \
+	end
+	import importlib.util, sys
+	spec = importlib.util.find_spec("backend.retrieval.hybrid")
+	if spec is None:
+	    print("[retriever-warm] backend.retrieval.hybrid not found; skipping.")
+	else:
+	    from backend.retrieval.hybrid import HybridRetriever
+	    HybridRetriever("$(CORPUS)")
+	PY
+	@true
+
+# ---- Evaluation ----
+.PHONY: eval
 eval:
-	@echo ">> Running evaluation (classic + router/adaptiverag + RL)"
+	@echo ">> Running evaluation (classic + router/adaptiverag + RL) for DOMAIN=$(DOMAIN)"
 	$(PY) run_eval_all.py --domain $(DOMAIN)
 
-# Train the supervised router AFTER eval so labels exist
-router: eval
-	@echo ">> Training supervised router"
-	PYTHONPATH=. $(PY) scripts/train_router.py
+# ---- Calibration / Selective ----
+.PHONY: calibrate
+calibrate:
+	$(PY) -m backend.eval.calibrate --joined $(LATEST_JOINED) --out $(ART)
 
-# RL Pareto sweep (alpha passed from env/var)
-pareto:
-	@echo ">> RL Pareto sweep (alpha = $(RL_ALPHA))"
-	RL_ALPHA=$(RL_ALPHA) $(PY) run_pareto.py --domain $(DOMAIN) || true
-
-# Faithfulness (memory knockout + rule ablations)
-faithful:
-	@echo ">> Running faithfulness (knockouts + rule ablations)"
-	$(PY) run_faithfulness.py --domain $(DOMAIN)
-
-# Optional: robustness sweeps (paraphrase/noise + memory scale)
-robustness:
-	@echo ">> Running robustness sweeps"
-	$(PY) run_robustness.py --domain $(DOMAIN)
-
-# Optional: selective risk curve (uncertainty/abstain)
+.PHONY: selective
 selective:
-	@echo ">> Building selective risk curve"
-	$(PY) run_selective.py --domain $(DOMAIN)
+	$(PY) -m backend.eval.selective --artifacts $(ART) --out $(ART)
 
-# Statistical testing & effect sizes (Day 11)
-stats:
-	@echo ">> Statistical tests (Day 11)"
-	$(PY) -m backend.eval.stats_eval
-
-# Figures & tables (Day 12/14)
-figures:
-	@echo ">> Building figures & tables (Day 12/14)"
+.PHONY: fig-selective
+fig-selective:
 	$(PY) -m backend.eval.figures
 
-# HTML report (uses latest artifacts & traces)
-report:
-	@echo ">> Building HTML report"
-	$(PY) -m backend.eval.report --artifacts artifacts
+.PHONY: thresholds
+thresholds:
+	$(PY) -m backend.eval.thresholds --csv $(LATEST_SELECTIVE) --out $(TABLES) --cov $(COV)
 
-# Reproducible release pack (code+data+env+artifacts)
-release:
-	@echo ">> Making reproducible release pack (Day 13)"
-	bash scripts/make_release.sh
+.PHONY: aurc
+aurc:
+	$(PY) -m backend.eval.aurc --csv $(LATEST_SELECTIVE) --out $(TABLES)
 
-# Convenience bundles
-all: seed eval router pareto faithful
-	@echo "✅ make all complete."
+.PHONY: ci
+ci:
+	$(PY) -m backend.eval.conf_intervals --joined $(LATEST_JOINED) --out $(TABLES)
 
-camera_ready: seed eval router pareto faithful figures stats report release
-	@echo "✅ Camera-ready assets generated."
+.PHONY: sym-stats
+sym-stats:
+	$(PY) -m backend.eval.sym_coverage --joined $(LATEST_JOINED) --out $(TABLES)
 
-# Clean convenience
-clean:
-	@echo ">> Cleaning transient files"
-	rm -f artifacts/eval_*.csv artifacts/eval_joined_*.csv artifacts/eval_summary_*.csv
-	rm -f artifacts/pareto_*.csv artifacts/pareto_*.png
-	rm -f artifacts/selective_*.csv artifacts/selective_*.png
-	rm -f artifacts/faithfulness_*.csv
-	rm -f artifacts/fig_*.png
-	rm -f artifacts/trace_*.jsonl
-	rm -f tables/*.csv || true
+.PHONY: mcnemar
+mcnemar:
+	$(PY) -m backend.eval.mcnemar --joined $(LATEST_JOINED) --out $(TABLES)/mcnemar.csv --A ADAPTIVERAG --B RAG_BASE
+
+.PHONY: export-tables
+export-tables:
+	$(PY) scripts/export_tables.py
+
+# ---- One-command pipelines ----
+.PHONY: paper-pipeline
+paper-pipeline: lint-tests build-corpus retriever-warm eval calibrate selective fig-selective thresholds aurc ci sym-stats mcnemar export-tables
+	@echo ">> Pipeline complete for DOMAIN=$(DOMAIN)"
+	@echo "Artifacts under $(ART); tables under $(TABLES) and docs/paper/tables"
+
+.PHONY: paper-pipeline-all
+paper-pipeline-all:
+	@set -e; \
+	for D in $(DOMAINS); do \
+	  echo "===== PIPELINE $$D ====="; \
+	  $(MAKE) paper-pipeline DOMAIN=$$D || exit $$?; \
+	done
+
+# ---- Clean ----
+.PHONY: clean-artifacts
+clean-artifacts:
+	rm -rf $(ART) $(TABLES) docs/paper/tables
+	mkdir -p $(ART) $(TABLES)

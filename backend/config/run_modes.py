@@ -3,13 +3,16 @@ from __future__ import annotations
 from enum import Enum
 
 class RunMode(str, Enum):
-    BASE = "BASE"          # LLM/search only
-    MEM = "MEM"            # Memory only
-    SYM = "SYM"            # Symbolic only
-    MEMSYM = "MEMSYM"      # Memory + Symbolic
-    ROUTER = "ROUTER"      # Supervised policy router (Day 6)
-    ADAPTIVERAG = "ADAPTIVERAG"  # Heuristic adaptive RAG (Day 6)
-    RL = "RL"              # RL controller (Day 4+)
+    BASE="BASE"; 
+    MEM="MEM"; 
+    SEARCH="SEARCH"; 
+    SYM="SYM"; 
+    MEMSYM="MEMSYM"
+    ROUTER="ROUTER"; 
+    ADAPTIVERAG="ADAPTIVERAG"; 
+    RL="RL"
+    RAG_BASE="RAG_BASE"; 
+    SYM_ONLY="SYM_ONLY"
 
 def parse_modes_csv(csv_string: str) -> tuple[RunMode, ...]:
     """

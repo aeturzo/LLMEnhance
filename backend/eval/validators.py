@@ -1,5 +1,27 @@
 # backend/eval/validators.py
 import re
+import yaml, os
+ALIASES = {}
+
+try:
+    with open("backend/eval/aliases.yaml", "r", encoding="utf-8") as f:
+        ALIASES = yaml.safe_load(f) or {}
+except FileNotFoundError:
+    ALIASES = {}
+
+def _normalize(s: str) -> str:
+    return (s or "").strip().lower()
+
+def recall_canonical(pred: str, gold: str) -> bool:
+    p = _normalize(pred); g = _normalize(gold)
+    if p == g: return True
+    # check aliases of gold
+    for k, vals in ALIASES.items():
+        if _normalize(k) == g:
+            if p in {_normalize(v) for v in vals}:
+                return True
+    return False
+
 _WS = re.compile(r"\s+")
 _PUNC = re.compile(r"[^\w\s]")
 

@@ -1,2 +1,2 @@
-{"id":"c1","session":"s2","product":"ProductA","query":"What do I still need to do for ProductA battery compliance?"}
-{"id":"c2","session":"s2","product":"ProductA","query":"When was coolant pump #2 last replaced?"}
+{"id": "979f430f6d", "type": "logic", "domain": "battery", "question": "Does a cell with 60% recycled content comply?", "answer": "yes"}
+{"id": "7c8f5793dc", "type": "recall", "domain": "lexmark", "question": "MS821 compatible toner?", "answer": "54G0H00"}

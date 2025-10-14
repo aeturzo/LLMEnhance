@@ -1,4 +1,1 @@
-{"session":"s1","query":"When was coolant pump #2 last replaced?","expected":"mem"}
-{"session":"s1","query":"What is the max operating pressure for loop 1?","expected":"doc"}
-{"session":"s1","query":"Which background colour do schematics use?","expected":"doc"}
-{"session":"s1","query":"Does the client want imperial units?","expected":"mem"}
+{"id": "q-1", "domain": "battery", "type": "query", "question": "What is support email?", "answer": "support@example.com"}

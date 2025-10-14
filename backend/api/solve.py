@@ -2,28 +2,39 @@
 from __future__ import annotations
 
 import os
+import math
 from typing import Optional, Literal, List, Dict, Any, Tuple
 from pydantic import BaseModel, Field
 from fastapi import APIRouter, HTTPException, Header
 
-from backend.services import memory_service, search_service
+from backend.services import memory_service, search_service  # search_service is used as a fallback
 from backend.services.policy_router import RouterModel, MODEL_PATH
 from backend.services.symbolic_reasoning_service import answer_symbolic, sym_fire_flags
 
+# NEW: hybrid retriever + context-bound answerer
+from backend.retrieval.hybrid import HybridRetriever
+from backend.api.answerer_ctx import answer_with_context
+
 router = APIRouter()
 
+# -------------------------
+# Request model
+# -------------------------
 
 class SolveRequest(BaseModel):
     query: Optional[str] = Field(default=None)
     q: Optional[str] = Field(default=None)
     product: Optional[str] = None
     session: Optional[str] = "s1"
-    mode: Optional[Literal["BASE", "MEM", "SEARCH", "SYM", "MEMSYM", "ROUTER", "ADAPTIVERAG"]] = "BASE"
+    mode: Optional[Literal["BASE", "MEM", "SEARCH", "SYM", "MEMSYM", "ROUTER", "ADAPTIVERAG","RAG_BASE","SYM_ONLY"]] = "BASE"
 
 
 def _pick_query(req: SolveRequest) -> str:
     return (req.query or req.q or "").strip()
 
+# -------------------------
+# Router model loader
+# -------------------------
 
 _ROUTER: RouterModel | None = None
 
@@ -37,6 +48,22 @@ def _get_router() -> RouterModel | None:
         _ROUTER = None
     return _ROUTER
 
+# -------------------------
+# Canonicalize step sources for costing
+# -------------------------
+
+_CANON_SOURCES = {"BASE","MEM","SEARCH","SYM","COMPOSE"}
+_ALIASES = {"RAG":"SEARCH","ADAPTIVERAG":"SEARCH","ROUTER":"COMPOSE","RL":"COMPOSE"}
+
+def _canon_source(s: str | None) -> str:
+    s = (s or "").upper()
+    if s in _CANON_SOURCES:
+        return s
+    return _ALIASES.get(s, "COMPOSE")
+
+# -------------------------
+# Feature extraction for routing
+# -------------------------
 
 def _safe_features(query: str, product: Optional[str], session: str) -> Dict[str, float | int]:
     """
@@ -72,10 +99,8 @@ def _safe_features(query: str, product: Optional[str], session: str) -> Dict[str
 
 def _sigmoid(x: float) -> float:
     try:
-        import math
         return 1.0 / (1.0 + math.exp(-x))
     except Exception:
-        # Very defensive fallback
         return 0.5 if x == 0 else (0.0 if x < 0 else 1.0)
 
 def _extract_top_score(steps: List[Dict[str, Any]], source_name: str) -> Optional[float]:
@@ -84,7 +109,7 @@ def _extract_top_score(steps: List[Dict[str, Any]], source_name: str) -> Optiona
     """
     best = None
     for st in steps:
-        if (st.get("source") or "").upper() == source_name.upper():
+        if _canon_source(st.get("source")) == source_name.upper():
             sc = st.get("score")
             if sc is None:
                 continue
@@ -105,11 +130,11 @@ def _conf_from_mem(score: Optional[float]) -> Optional[float]:
 def _conf_from_search(score: Optional[float]) -> Optional[float]:
     if score is None:
         return None
-    # Search score may be unbounded; squash with sigmoid.
+    # Cross-encoder scores are roughly logit-ish; squash to 0..1
     return _sigmoid(float(score) / 2.0)
 
 def _conf_from_sym(step: Dict[str, Any]) -> Optional[float]:
-    if (step.get("source") or "").upper() != "SYM":
+    if _canon_source(step.get("source")) != "SYM":
         return None
     proved = step.get("proved")
     refuted = step.get("refuted")
@@ -137,7 +162,7 @@ def _attach_confidence(mode: str, out: Dict[str, Any]) -> float:
 
     sym_conf: Optional[float] = None
     for st in steps:
-        if (st.get("source") or "").upper() == "SYM":
+        if _canon_source(st.get("source")) == "SYM":
             sym_conf = _conf_from_sym(st)
             break
 
@@ -150,15 +175,98 @@ def _attach_confidence(mode: str, out: Dict[str, Any]) -> float:
     if m == "SYM":
         return sym_conf if sym_conf is not None else 0.5
     if m == "MEMSYM":
-        # Prefer the strongest available signal
         cands = [c for c in (mem_conf, search_conf, sym_conf) if c is not None]
         return max(cands) if cands else 0.5
     if m in ("ROUTER", "ADAPTIVERAG"):
-        # Steps reflect the chosen action already; take best available
         cands = [c for c in (mem_conf, search_conf, sym_conf) if c is not None]
         return max(cands) if cands else 0.5
 
     return 0.5
+
+# -------------------------
+# Retrieval + Answerer glue
+# -------------------------
+
+_RETRIEVER: HybridRetriever | None = None
+
+def _get_retriever() -> HybridRetriever | None:
+    """
+    Lazy-load the hybrid retriever. If corpus is missing or model errors,
+    return None and we'll fall back to search_service.
+    """
+    global _RETRIEVER
+    if _RETRIEVER is not None:
+        return _RETRIEVER
+    corpus_path = os.getenv("CORPUS_PATH", "backend/corpus/dpp_corpus.jsonl")
+    try:
+        _RETRIEVER = HybridRetriever(corpus_jsonl=corpus_path)
+    except Exception:
+        _RETRIEVER = None
+    return _RETRIEVER
+
+def _retrieve_context(query: str, product: Optional[str], top_k: int) -> List[Dict[str, Any]]:
+    """
+    Try hybrid retrieval first; fallback to existing search_service if available.
+    Always return a list of dicts with at least: id, title, text, score.
+    """
+    fused_q = f"{(product or '').strip()} {query}".strip() if product else query
+    ret = _get_retriever()
+    if ret is not None:
+        try:
+            hits = ret.search(fused_q)[:top_k]
+            # Ensure uniform keys
+            out = []
+            for h in hits:
+                out.append({
+                    "id": h.get("id"),
+                    "title": h.get("title") or h.get("id"),
+                    "text": h.get("text") or "",
+                    "score": h.get("score"),
+                    "domain": h.get("domain", ""),
+                    "source": "retriever"
+                })
+            return out
+        except Exception:
+            pass
+
+    # Fallback: search_service (if implemented)
+    try:
+        raw = search_service.search(query_text=fused_q, top_k=top_k) or []
+        out = []
+        for r in raw:
+            out.append({
+                "id": getattr(r, "id", None) or getattr(r, "doc_id", None) or "doc",
+                "title": getattr(r, "title", None) or getattr(r, "id", None) or "doc",
+                "text": getattr(r, "text", None) or getattr(r, "content", "") or "",
+                "score": getattr(r, "score", None),
+                "domain": getattr(r, "domain", None) or "",
+                "source": "search_service"
+            })
+        return out
+    except Exception:
+        return []
+
+def _answer_with_fallback(question: str, passages: List[Dict[str, Any]]) -> str:
+    """
+    Prefer the LLM answerer with citations; if it's not wired, fall back to
+    echoing a high-scoring snippet with a citation.
+    """
+    try:
+        return answer_with_context(question, passages)
+    except NotImplementedError:
+        pass
+    except Exception:
+        pass
+
+    if passages:
+        top = passages[0]
+        snippet = (top.get("text") or "")[:200]
+        return f"{snippet} [{top.get('id')}]"
+    return "Insufficient context"
+
+def _snippet(s: str, n: int = 220) -> str:
+    s = (s or "").strip()
+    return (s[:n] + "…") if len(s) > n else s
 
 # -------------------------
 # Composition helpers
@@ -175,28 +283,62 @@ def _compose_MEM(query, product, session, steps, sources, parts):
         parts.append(f"Memory: {hits[0].content}")
         # record score for confidence
         top_score = getattr(hits[0], "score", None)
-        steps.append({"source": "MEM", "score": top_score})
+        steps.append({"source": _canon_source("MEM"), "score": top_score})
         # add sources
         for h in hits[:2]:
             sources.append({"type": "memory", "score": getattr(h, "score", None), "snippet": h.content})
     return bool(hits)
 
-
 def _compose_SEARCH(query, product, session, steps, sources, parts):
-    hits = []
-    search_q = f"{product or ''} {query}".strip() if product else query
+    """
+    NEW: Use HybridRetriever + context-bound answerer.
+    Logs top CE score to steps for confidence; logs per-doc sources.
+    """
+    top_k = int(os.getenv("RETRIEVE_K", "8"))
+    passages = _retrieve_context(query, product, top_k=top_k)
+
+    if passages:
+        # Build the final answer with citations
+        answer = _answer_with_fallback(query, passages)
+        parts.append(answer)
+
+        # Step logging (use top CE score if present)
+        top_score = passages[0].get("score", None)
+        steps.append({
+            "source": _canon_source("SEARCH"),
+            "score": top_score,
+            "k": len(passages),
+            "doc_ids": [p.get("id") for p in passages[:min(5, len(passages))]]
+        })
+
+        # Source logging (first few for trace readability)
+        for p in passages[:min(5, len(passages))]:
+            sources.append({
+                "type": "search",
+                "id": p.get("id"),
+                "score": p.get("score"),
+                "title": p.get("title"),
+                "snippet": _snippet(p.get("text", "")),
+            })
+        return True
+
+    # No passages → graceful fallback
     try:
-        hits = search_service.search(query_text=search_q, top_k=3)
+        # Try legacy search_service for a last resort snippet
+        hits = search_service.search(query_text=(product + " " + query if product else query), top_k=3) or []
     except Exception:
         hits = []
+
     if hits:
         parts.append(f"Search: {getattr(hits[0], 'text', getattr(hits[0], 'content', ''))}")
         top_score = getattr(hits[0], "score", None)
-        steps.append({"source": "SEARCH", "score": top_score})
+        steps.append({"source": _canon_source("SEARCH"), "score": top_score})
         for h in hits[:2]:
-            sources.append({"type": "search", "score": getattr(h, "score", None), "snippet": getattr(h, "text", getattr(h, "content", ""))})
-    return bool(hits)
+            sources.append({"type": "search", "score": getattr(h, "score", None),
+                            "snippet": getattr(h, "text", getattr(h, "content", ""))})
+        return True
 
+    return False
 
 def _compose_SYM(query, product, session, steps, sources, parts):
     sym = None
@@ -207,7 +349,7 @@ def _compose_SYM(query, product, session, steps, sources, parts):
     if sym:
         parts.append(sym.text)
         steps.append({
-            "source": "SYM",
+            "source": _canon_source("SYM"),
             # expose a minimal verdict for confidence if available
             "proved": getattr(sym, "proved", None),
             "refuted": getattr(sym, "refuted", None),
@@ -220,7 +362,6 @@ def _compose_SYM(query, product, session, steps, sources, parts):
             "evidence": getattr(sym, "evidence", None),
         })
     return bool(sym)
-
 
 def _compose_for_action(action: str, query: str, product: Optional[str], session: str) -> Dict[str, Any]:
     steps: List[Dict[str, Any]] = []
@@ -241,15 +382,26 @@ def _compose_for_action(action: str, query: str, product: Optional[str], session
         had_sym = _compose_SYM(query, product, session, steps, sources, parts)
         if not had_mem and not had_sym:
             _compose_SEARCH(query, product, session, steps, sources, parts)
+
+    elif a == "RAG_BASE":
+    # retrieval only; no MEM or SYM
+        _compose_SEARCH(query, product, session, steps, sources, parts)
+    elif a == "SYM_ONLY":
+         had_sym = _compose_SYM(query, product, session, steps, sources, parts)
+         if not had_sym:
+             parts.append("Insufficient context")  # abstain-like behavior
     else:
         _compose_SEARCH(query, product, session, steps, sources, parts)
 
     if not parts:
         parts.append("No result found.")
-        steps.append({"source": "BASE"})
+        steps.append({"source": _canon_source("BASE")})
 
     return {"answer": " ".join(parts), "steps": steps, "sources": sources}
 
+# -------------------------
+# Router helpers
+# -------------------------
 
 def _router_predict(model: Any, feats: Dict[str, Any]) -> str:
     """
@@ -281,6 +433,9 @@ def _router_predict(model: Any, feats: Dict[str, Any]) -> str:
 
     return "ADAPTIVERAG"
 
+# -------------------------
+# Main route
+# -------------------------
 
 @router.post("/solve")
 def solve(req: SolveRequest, x_run_mode: str | None = Header(default=None)):

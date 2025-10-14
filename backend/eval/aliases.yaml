@@ -1,0 +1,89 @@
+# backend/eval/aliases.yaml
+# Canonical term: list of aliases/synonyms/abbreviations.
+# Keep short, precise phrases (BM25 loves these).
+Extended Producer Responsibility:
+  - EPR
+  - producer responsibility
+  - extended producer’s responsibility
+  - take-back scheme
+  - take back scheme
+
+Declaration of Conformity:
+  - DoC
+  - EU declaration of conformity
+  - conformity declaration
+  - CE declaration
+
+coefficient of performance:
+  - COP
+  - performance coefficient
+
+Material Safety Data Sheet:
+  - MSDS
+  - SDS
+  - safety data sheet
+
+waste electrical and electronic equipment:
+  - WEEE
+  - e-waste
+  - electronic waste
+  - weee directive
+
+restriction of hazardous substances:
+  - RoHS
+  - hazardous substance restriction
+
+registration, evaluation, authorization and restriction of chemicals:
+  - REACH
+  - reach compliance
+
+producer responsibility organization:
+  - PRO
+  - compliance scheme
+
+bill of materials:
+  - BoM
+  - material list
+  - component list
+
+mean time between failures:
+  - MTBF
+  - reliability rating
+
+# Lexmark-ish, generic office devices
+toner cartridge:
+  - print cartridge
+  - toner
+  - drum
+  - imaging unit
+
+firmware update:
+  - firmware upgrade
+  - device update
+
+# Viessmann-ish, HVAC/thermal
+heat pump:
+  - hp unit
+  - heating pump
+
+seasonal coefficient of performance:
+  - SCOP
+  - seasonal COP
+
+refrigerant charge:
+  - refrigerant mass
+  - refrigerant amount
+
+# Batteries, recycling
+state of charge:
+  - SoC
+  - charge level
+  - battery percentage
+
+state of health:
+  - SoH
+  - battery health
+
+cathode active material:
+  - CAM
+  - cathode material

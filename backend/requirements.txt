@@ -10,3 +10,4 @@ httpx
 sentence-transformers
 torch
 openai
+rank-bm25
