@@ -130,13 +130,13 @@ def tests_path_for_domain(domain: str) -> Path:
 
 def seed_path_for_domain(domain: str) -> Path:
     """
-    New layout: tests/{domain}/seed_docs.jsonl
-    Legacy (fallback): tests/{domain}/seed/seed_docs.jsonl
+    New layout: tests/{domain}/seed_mem.jsonl
+    Legacy (fallback): tests/{domain}/seed/seed_mem.jsonl
     """
-    p = ROOT / "tests" / domain / "seed_docs.jsonl"
+    p = ROOT / "tests" / domain / "seed_mem.jsonl"
     if p.exists():
         return p
-    p2 = ROOT / "tests" / domain / "seed" / "seed_docs.jsonl"
+    p2 = ROOT / "tests" / domain / "seed" / "seed_mem.jsonl"
     if p2.exists():
         return p2
     return p  # default

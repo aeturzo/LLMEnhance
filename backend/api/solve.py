@@ -285,7 +285,7 @@ def _compose_MEM(query, product, session, steps, sources, parts):
         top_score = getattr(hits[0], "score", None)
         steps.append({"source": _canon_source("MEM"), "score": top_score})
         # add sources
-        for h in hits[:2]:
+        for h in hits[:]:
             sources.append({"type": "memory", "score": getattr(h, "score", None), "snippet": h.content})
     return bool(hits)
 
@@ -333,7 +333,7 @@ def _compose_SEARCH(query, product, session, steps, sources, parts):
         parts.append(f"Search: {getattr(hits[0], 'text', getattr(hits[0], 'content', ''))}")
         top_score = getattr(hits[0], "score", None)
         steps.append({"source": _canon_source("SEARCH"), "score": top_score})
-        for h in hits[:2]:
+        for h in hits[:]:
             sources.append({"type": "search", "score": getattr(h, "score", None),
                             "snippet": getattr(h, "text", getattr(h, "content", ""))})
         return True

@@ -57,7 +57,7 @@ def _compose_mem_search(query: str, product: Optional[str], session: str,
             parts.append(f"Memory: {mem_hits[0].content}")
             top_score = getattr(mem_hits[0], "score", None)
             steps.append({"source": "MEM", "score": top_score})
-            for h in mem_hits[:2]:
+            for h in mem_hits[:]:
                 sources.append({"type": "memory", "score": getattr(h, "score", None), "snippet": h.content})
 
     # SEARCH (gated by threshold, or if no MEM contributed)
@@ -71,7 +71,7 @@ def _compose_mem_search(query: str, product: Optional[str], session: str,
             parts.append(f"Search: {getattr(search_hits[0], 'text', getattr(search_hits[0], 'content', ''))}")
             top_score = getattr(search_hits[0], "score", None)
             steps.append({"source": "SEARCH", "score": top_score})
-            for h in search_hits[:2]:
+            for h in search_hits[:]:
                 sources.append({"type": "search", "score": getattr(h, "score", None), "snippet": getattr(h, "text", getattr(h, "content", ""))})
 
     if not parts:
