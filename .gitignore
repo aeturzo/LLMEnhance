@@ -94,6 +94,7 @@ model_cache/
 transformers_cache/
 huggingface_cache/
 hf_cache/
+frontend/node_modules/
 
 # ---- Optional: local data staging dirs (keep dir, ignore contents) ----
 data/cache/**
