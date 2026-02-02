@@ -1,0 +1,34 @@
+\begin{tabular}{lllrrrrr}
+\toprule
+domain & mode & baseline & risk_reduction@0.3 & risk_reduction@0.5 & risk_reduction@0.7 & aurc_delta & utility_delta \\
+\midrule
+battery & ADAPTIVERAG & RAG_BASE & 0.075701 & 1.000000 & 1.000000 & 0.537366 & 0.075701 \\
+battery & BASE & RAG_BASE & -0.900935 & 0.000000 & 0.000000 & -0.441589 & -0.733178 \\
+battery & MEM & RAG_BASE & -0.380374 & 0.000000 & 0.000000 & 0.224017 & -0.230374 \\
+battery & MEMSYM & RAG_BASE & -0.306542 & 1.000000 & 1.000000 & 0.414994 & -0.168318 \\
+battery & RL & RAG_BASE & -0.001869 & 0.851541 & 0.800774 & 0.158921 & 0.083785 \\
+battery & ROUTER & RAG_BASE & -0.821913 & 1.000000 & 1.000000 & 0.082949 & -0.665888 \\
+battery & SYM_ONLY & RAG_BASE & -0.804673 & 1.000000 & 1.000000 & 0.093885 & -0.654673 \\
+lexmark & ADAPTIVERAG & RAG_BASE & 0.084402 & 1.000000 & 1.000000 & 0.541694 & 0.084402 \\
+lexmark & BASE & RAG_BASE & -0.902778 & 0.000000 & 0.000000 & -0.445513 & -0.741026 \\
+lexmark & MEM & RAG_BASE & -0.526709 & 0.000000 & 0.000000 & 0.189794 & -0.376709 \\
+lexmark & MEMSYM & RAG_BASE & -0.441239 & 1.000000 & 1.000000 & 0.351707 & -0.304380 \\
+lexmark & RL & RAG_BASE & -0.001068 & 0.895713 & 0.879679 & 0.050544 & 0.039637 \\
+lexmark & ROUTER & RAG_BASE & -0.814033 & 1.000000 & 1.000000 & 0.083323 & -0.653419 \\
+lexmark & SYM_ONLY & RAG_BASE & -0.803419 & 1.000000 & 1.000000 & 0.093938 & -0.653419 \\
+viessmann & ADAPTIVERAG & RAG_BASE & 0.074491 & 1.000000 & 1.000000 & 0.538188 & 0.074491 \\
+viessmann & BASE & RAG_BASE & -0.891075 & 0.000000 & 0.000000 & -0.435699 & -0.721398 \\
+viessmann & MEM & RAG_BASE & -0.324666 & 0.000000 & 0.000000 & 0.198685 & -0.174666 \\
+viessmann & MEMSYM & RAG_BASE & -0.249473 & 1.000000 & 1.000000 & 0.444980 & -0.110752 \\
+viessmann & RL & RAG_BASE & 0.000000 & 0.892679 & 0.832250 & 0.153700 & 0.077793 \\
+viessmann & ROUTER & RAG_BASE & -0.814756 & 1.000000 & 1.000000 & 0.083038 & -0.651124 \\
+viessmann & SYM_ONLY & RAG_BASE & -0.796205 & 1.000000 & 1.000000 & 0.098331 & -0.646205 \\
+pooled & ADAPTIVERAG & RAG_BASE & 0.077574 & 1.000000 & 1.000000 & 0.539639 & NaN \\
+pooled & BASE & RAG_BASE & -0.897346 & 0.000000 & 0.000000 & -0.440216 & NaN \\
+pooled & MEM & RAG_BASE & -0.397200 & 0.000000 & 0.000000 & 0.204392 & NaN \\
+pooled & MEMSYM & RAG_BASE & -0.319627 & 1.000000 & 1.000000 & 0.412609 & NaN \\
+pooled & RL & RAG_BASE & -0.000875 & 0.883051 & 0.841691 & 0.128600 & NaN \\
+pooled & ROUTER & RAG_BASE & -0.816791 & 1.000000 & 1.000000 & 0.083096 & NaN \\
+pooled & SYM_ONLY & RAG_BASE & -0.800817 & 1.000000 & 1.000000 & 0.095749 & NaN \\
+\bottomrule
+\end{tabular}

@@ -38,10 +38,34 @@ logs/
 .env
 .env.*
 .envrc
+temp_env*.sh
+temporay_enviornment.rtf
+temporay_environment.rtf
+*.key
+*.pem
+*.p12
+*.pfx
+*.secrets
 
 # ---- Project artifacts (generated) ----
 artifacts/**
 !artifacts/.gitkeep
+indices/**
+!indices/.gitkeep
+tables/**
+figures/**
+artifacts/dev/**
+
+# ---- Eval/trace outputs (generated) ----
+**/trace_*.jsonl
+**/eval_*.csv
+**/eval_joined_*.csv
+**/eval_summary_*.csv
+**/eval_*_calibrated.csv
+
+# ---- Paper results bundles (keep) ----
+!paper_results_*/
+!paper_results_*/**
 
 # Memory/search persistence (generated at runtime)
 memory.index

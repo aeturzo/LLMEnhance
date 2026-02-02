@@ -1,0 +1,15 @@
+{
+  "n_by_domain": {
+    "battery": 1070,
+    "lexmark": 936,
+    "viessmann": 1423
+  },
+  "n_total": 3429,
+  "n_by_type": {
+    "logic": 295,
+    "open": 2297,
+    "recall": 837
+  },
+  "ece_mean": 0.3277675,
+  "aurc_mean": 0.42454180053269863
+}
