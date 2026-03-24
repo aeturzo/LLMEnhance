@@ -67,6 +67,9 @@ artifacts/dev/**
 !paper_results_*/
 !paper_results_*/**
 
+# Re-ignore OS metadata inside kept result bundles.
+.DS_Store
+
 # Memory/search persistence (generated at runtime)
 memory.index
 memory.meta.jsonl
