@@ -40,8 +40,8 @@
 \newcommand{\SymOnly}{\textsc{Sym-Only}}
 \newcommand{\RouterMode}{\textsc{Router}}
 \newcommand{\RLMode}{\textsc{RL}}
-\newcommand{\LongCtx}{\textsc{GPT4o-LongCtx}}
-\newcommand{\LogicLM}{\textsc{Logic-LM}}
+\newcommand{\LongCtx}{\textsc{GPT4o-Retrieved}}
+\newcommand{\LogicLM}{\textsc{Logic-LM-style}}
 % Best configuration is COMPASS. The macro below keeps any legacy
 % \AdaptiveRAG references compiling and rendering as COMPASS.
 \newcommand{\AdaptiveRAG}{\textsc{COMPASS}}
@@ -217,8 +217,8 @@ structured knowledge \cite{glimm2014hermit}, and the OWL~2 profiles define
 fragments with favourable computational properties
 \cite{motik2009owl2profiles}. In the LLM era, systems such as LINC and
 Logic-LM couple language models to symbolic solvers to improve logical
-reasoning \cite{olausson2023linc,pan2023logiclm}; we adopt Logic-LM as a
-baseline. What this literature rarely reports is where symbolic machinery
+reasoning \cite{olausson2023linc,pan2023logiclm}; our external comparisons use
+prompted approximations of their procedures. What this literature rarely reports is where symbolic machinery
 actually applies in a deployed workload and how reliable it is when it does.
 We contribute exactly these measurements: symbolic \emph{coverage} (the
 fraction of questions on which rules fire) and symbolic \emph{precision}
@@ -329,27 +329,22 @@ The retriever combines sparse lexical and dense embedding search with
 optional reranking, consistent with evidence that hybrids outperform purely
 dense or sparse retrieval on heterogeneous corpora
 \cite{lewis2020rag,izacard2021fid}. Every returned passage carries a
-provenance identifier. The persistent memory stores validated facts (for
-example extracted component types, test reports, and dates), each with its
-own provenance; at query time, memory facts are retrieved by semantic
-similarity and merged with the retrieved passages. Memory serves questions
+provenance identifier. The prototype persistent memory stores timestamped
+text entries within a session; at query time, entries are retrieved by
+semantic similarity and merged with the retrieved passages. Memory serves questions
 whose supporting facts entered the documentation long before the current
 interaction, and it reduces dependence on fitting everything into one
 context window.
 
-Facts enter memory through a fixed ingestion path: extraction from a source
-document, normalization, linking to the source via a provenance identifier,
-and validation before storage; facts that fail validation are not stored.
-Stored facts are immutable and carry their provenance and timestamps, so a
-correction supersedes rather than overwrites, and retrieval is scoped by
-product identity to prevent cross product leakage.
-% TODO (authors): verify this lifecycle description against the memory
-% implementation (conflict handling, supersession, scoping) and refine.
+The current memory store is scoped by session rather than by an independently
+enforced product identifier. It does not yet enforce provenance validation,
+immutable supersession, or correction history; these are requirements for a
+production DPP deployment rather than properties evaluated in this study.
 
 A recurring failure of document grounded QA is that the generator mixes
 retrieved evidence with unsupported extrapolation. \Compass\ counters this
 with the \emph{context pack}: a deduplicated set of evidence snippets and
-memory facts, each annotated with a provenance identifier. The answerer is
+memory facts, each annotated with an evidence identifier. The answerer is
 constrained to the pack; identifiers are surfaced as citations in the answer
 and logged for audit. The pack is thus both the grounding mechanism and the
 audit trail: what the model saw is exactly what a reviewer can inspect.
@@ -515,16 +510,17 @@ Total & 295 & 2297 & 837 & 3429 \\
 In the pooled reliability suite we compare against \RAGBase\ (a strong hybrid
 retrieval baseline) and the ablation modes above. On the verified release and
 in the compositional benchmark we additionally compare against strong
-external baselines: \LongCtx, an oracle context baseline in which a long
-context LLM receives all evidence relevant to each question directly in its
-window \cite{liu2024lostinthemiddle}; \LogicLM, an LLM coupled to a symbolic
-solver \cite{pan2023logiclm}; and, on the verified release, LINC, an LLM
-paired with a first order theorem prover \cite{olausson2023linc}. All systems
-are scored on identical question sets by the same validators, and the exact
-model snapshots, prompts, decoding parameters, and evidence budgets for every
-baseline are exported with the release.
-% TODO (authors): confirm baseline configs (model snapshot, temperature,
-% prompts, token limits) are in the released harness configs. All quantitative results are produced by an
+external baselines: \LongCtx, a GPT-4o-mini baseline supplied with up to
+12,000 characters of deterministically retrieval-selected evidence
+\cite{liu2024lostinthemiddle}; \LogicLM, a prompted approximation of the
+classify-and-reason procedure of Logic-LM \cite{pan2023logiclm}; and, on the
+verified release, a prompted LINC-style premise/goal/reasoning baseline
+\cite{olausson2023linc}. The latter two do not execute the published systems'
+solver pipelines and are named accordingly. All systems use identical row
+keys and deterministic validators. The release exports prompts, decoding
+parameters, evidence budgets, and known configuration gaps; the archived runs
+record the mutable \texttt{gpt-4o-mini} alias but not its exact snapshot, which
+the frozen rerun will correct. All quantitative results are produced by an
 automated pipeline and exported directly into paper ready tables and figures
 to reduce transcription error and support reproducibility.
 
@@ -628,7 +624,7 @@ Section~5.1. Table~\ref{tab:verified} reports the comparison. \Compass\
 answers all 6,270 questions correctly (Wilson CI [0.9994, 1.0000]); the
 external baselines land between 0.9488 and 0.9699, with errors concentrated
 on logic for \LongCtx\ (0.9309) and \LogicLM\ (0.9362) and on open
-extraction for LINC (0.9162). Exact McNemar tests on identical rows are
+extraction for the LINC-style baseline (0.9162). Exact McNemar tests on identical rows are
 decisive in every pairing (215, 321, and 189 wins with zero losses;
 $p<10^{-10}$). Two qualifications apply: the filters remove noisy items, so
 the ceiling is attainable by a system that grounds every answer; and
@@ -651,7 +647,7 @@ Method & Acc. & 95\% CI & Logic & Open & Recall & McNemar \\
 \Compass & \textbf{1.0000} & [0.9994, 1.0000] & 1.0000 & 1.0000 & 1.0000 & --- \\
 \LogicLM & 0.9699 & [0.9653, 0.9738] & 0.9362 & 0.9782 & 0.9996 & 189 / 0 \\
 \LongCtx & 0.9657 & [0.9609, 0.9699] & 0.9309 & 0.9656 & 0.9993 & 215 / 0 \\
-LINC & 0.9488 & [0.9431, 0.9540] & 0.9536 & 0.9162 & 0.9545 & 321 / 0 \\
+LINC-style & 0.9488 & [0.9431, 0.9540] & 0.9536 & 0.9162 & 0.9545 & 321 / 0 \\
 \bottomrule
 \end{tabular}
 \end{table}

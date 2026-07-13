@@ -1,0 +1,49 @@
+{
+  "status": "PASS_WITH_HISTORICAL_TRUNCATION_LIMITATION",
+  "expected_rows": 6270,
+  "common_rows": 6270,
+  "validator": "scripts.run_baselines.score_answer",
+  "systems": [
+    {
+      "system": "COMPASS",
+      "rows": 6270,
+      "missing": 0,
+      "extra": 0,
+      "metadata_mismatches": 0,
+      "stored_score_mismatches": 0,
+      "truncated_answers_unverifiable": 0,
+      "common_validator_correct": 6270
+    },
+    {
+      "system": "GPT4O_LONGCTX",
+      "rows": 6270,
+      "missing": 0,
+      "extra": 0,
+      "metadata_mismatches": 0,
+      "stored_score_mismatches": 0,
+      "truncated_answers_unverifiable": 0,
+      "common_validator_correct": 6055
+    },
+    {
+      "system": "LINC",
+      "rows": 6270,
+      "missing": 0,
+      "extra": 0,
+      "metadata_mismatches": 0,
+      "stored_score_mismatches": 0,
+      "truncated_answers_unverifiable": 20,
+      "common_validator_correct": 5929
+    },
+    {
+      "system": "LOGIC_LM",
+      "rows": 6270,
+      "missing": 0,
+      "extra": 0,
+      "metadata_mismatches": 0,
+      "stored_score_mismatches": 0,
+      "truncated_answers_unverifiable": 0,
+      "common_validator_correct": 6081
+    }
+  ],
+  "failures": []
+}

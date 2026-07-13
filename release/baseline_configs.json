@@ -1,0 +1,318 @@
+{
+  "generated_utc": "2026-07-13T22:24:42.488740+00:00",
+  "git_commit": "151c028040992e3633492052ba0ee89274fdaddd",
+  "known_gaps": [
+    "Exact historical model snapshots cannot be recovered from the verified-release CSVs.",
+    "The compositional LINC-style path is newly added and has no historical result; it must be run in Phase B.",
+    "The verified and compositional harnesses use different prompt templates.",
+    "The paper's oracle-context label is not supported by the implemented evidence selector."
+  ],
+  "schema_version": 1,
+  "status": "Historical configuration audit. Proposed snapshot fields are plans for Phase B, not claims about completed historical runs.",
+  "systems": [
+    {
+      "evaluations": [
+        {
+          "answer_processing": "raw stripped response",
+          "benchmark": "verified_release_6270",
+          "evidence_selection": {
+            "correction": "The paper must not call this oracle context: gold annotations are not used to select evidence and the supplied context is retrieval-ranked and capped.",
+            "limits": {
+              "document_chunks": 12,
+              "memory_hits": 10,
+              "ontology_chars": 4500,
+              "total_chars": 12000
+            },
+            "method": "deterministic lexical/product retrieval from seed documents, memory facts, and ontology snippets",
+            "oracle_context": false,
+            "uses_gold_for_selection": false
+          },
+          "historical_exact_model_snapshot": null,
+          "historical_model_alias": "gpt-4o-mini",
+          "historical_snapshot_status": "UNKNOWN: archived CSVs contain token counts but no model field; the harness default and run documentation identify only the mutable alias",
+          "max_context_chars": 12000,
+          "max_output_tokens": 200,
+          "prompt": {
+            "system": "You are a product-passport reasoning assistant. Answer using ONLY the provided context. If the context does not contain enough evidence, respond with 'INSUFFICIENT EVIDENCE'. For yes/no logic questions, respond with a single word 'yes' or 'no'. For factual recall/open questions, respond with a short phrase that quotes the relevant value.",
+            "user_template": "Domain: {domain}\nQuestion type: {question_type}\n\nContext:\n{selected_context}\n\nQuestion: {question}"
+          },
+          "proposed_frozen_snapshot_for_rerun": "gpt-4o-mini-2024-07-18",
+          "retry_policy": {
+            "backoff_seconds": "min(45, 2 * attempt_number)",
+            "max_attempts": 8,
+            "request_timeout_seconds": 60,
+            "retryable_errors": [
+              "APIConnectionError",
+              "APIStatusError",
+              "APITimeoutError",
+              "InternalServerError",
+              "RateLimitError"
+            ]
+          },
+          "seed": null,
+          "seed_status": "not set by the harness",
+          "source": "scripts/run_baselines.py",
+          "source_sha256": "1fcdc3edd5cdee92df23e0434fe66f007a4bf2af49a03e2c748dfe3dac4f5281",
+          "temperature": 0.0,
+          "validator": {
+            "rules": "type-aware deterministic polarity or normalized substring/compact match; no LLM judge",
+            "source": "scripts/run_baselines.py:normalize_text/score_answer"
+          }
+        },
+        {
+          "answer_processing": "raw stripped response",
+          "benchmark": "compositional_3000",
+          "evidence_selection": {
+            "method": "benchmark-declared document, memory, and symbolic sections",
+            "oracle_context": true,
+            "qualification": "the constructed benchmark supplies declared source-specific evidence, including symbolic values from gold_evidence; this applies only to the compositional study",
+            "uses_gold_for_selection": true
+          },
+          "historical_exact_model_snapshot": null,
+          "historical_model_alias": "gpt-4o-mini",
+          "historical_run_status": "archived run exists",
+          "max_context_chars": null,
+          "max_context_status": "no explicit total character cap in the compositional context builder",
+          "max_output_tokens": 220,
+          "prompt": {
+            "system": "You are a product-passport reasoning assistant. Answer using ONLY the provided context. Return a concise answer containing all requested values. If insufficient, say INSUFFICIENT EVIDENCE.",
+            "user_template": "Domain: {domain}\nContext:\n{context}\n\nQuestion: {question}"
+          },
+          "proposed_frozen_snapshot_for_rerun": "gpt-4o-mini-2024-07-18",
+          "retry_policy": {
+            "linear_wait_multiplier_seconds": 1.0,
+            "outer_row_attempts": 4
+          },
+          "seed": null,
+          "source": "scripts/run_arch_smoke_comparison.py",
+          "source_sha256": "be7552ab9cab7e7fce27b0bcbe6b1194b74e9a88e4c70f85674f401248d3a23a",
+          "temperature": 0.0,
+          "validator": {
+            "rules": "every expected value group must match after compact normalization; no LLM judge",
+            "source": "scripts/run_arch_smoke_comparison.py:score_answer"
+          }
+        }
+      ],
+      "id": "GPT4O_LONGCTX",
+      "implementation_fidelity": "prompted retrieval-context baseline; not an oracle long-context baseline",
+      "paper_label_recommended": "GPT-4o-mini + retrieved context"
+    },
+    {
+      "evaluations": [
+        {
+          "answer_processing": "extract text after the final 'Final:' marker when present",
+          "benchmark": "verified_release_6270",
+          "evidence_selection": {
+            "correction": "The paper must not call this oracle context: gold annotations are not used to select evidence and the supplied context is retrieval-ranked and capped.",
+            "limits": {
+              "document_chunks": 12,
+              "memory_hits": 10,
+              "ontology_chars": 4500,
+              "total_chars": 12000
+            },
+            "method": "deterministic lexical/product retrieval from seed documents, memory facts, and ontology snippets",
+            "oracle_context": false,
+            "uses_gold_for_selection": false
+          },
+          "historical_exact_model_snapshot": null,
+          "historical_model_alias": "gpt-4o-mini",
+          "historical_snapshot_status": "UNKNOWN: archived CSVs contain token counts but no model field; the harness default and run documentation identify only the mutable alias",
+          "max_context_chars": 12000,
+          "max_output_tokens": 300,
+          "prompt": {
+            "system": "You are a neuro-symbolic reasoning agent in the style of LINC (Olausson et al., 2023). Solve the question by: (1) extracting premises as first-order-logic statements; (2) writing the question as a goal predicate; (3) reasoning step by step; (4) emitting a single final answer. For yes/no questions answer 'yes' or 'no'. For factual questions answer with the exact phrase. If the premises are insufficient answer 'INSUFFICIENT'.",
+            "user_template": "Domain: {domain}\nQuestion type: {question_type}\n\nContext (treat as premises):\n{selected_context}\n\nQuestion: {question}\n\nOutput format:\nPremises: ...\nGoal: ...\nReasoning: ...\nFinal: <answer>"
+          },
+          "proposed_frozen_snapshot_for_rerun": "gpt-4o-mini-2024-07-18",
+          "retry_policy": {
+            "backoff_seconds": "min(45, 2 * attempt_number)",
+            "max_attempts": 8,
+            "request_timeout_seconds": 60,
+            "retryable_errors": [
+              "APIConnectionError",
+              "APIStatusError",
+              "APITimeoutError",
+              "InternalServerError",
+              "RateLimitError"
+            ]
+          },
+          "seed": null,
+          "seed_status": "not set by the harness",
+          "source": "scripts/run_baselines.py",
+          "source_sha256": "1fcdc3edd5cdee92df23e0434fe66f007a4bf2af49a03e2c748dfe3dac4f5281",
+          "temperature": 0.0,
+          "validator": {
+            "rules": "type-aware deterministic polarity or normalized substring/compact match; no LLM judge",
+            "source": "scripts/run_baselines.py:normalize_text/score_answer"
+          }
+        },
+        {
+          "answer_processing": "extract text after the final 'Final:' marker when present",
+          "benchmark": "compositional_3000",
+          "evidence_selection": {
+            "method": "benchmark-declared document, memory, and symbolic sections",
+            "oracle_context": true,
+            "qualification": "the constructed benchmark supplies declared source-specific evidence, including symbolic values from gold_evidence; this applies only to the compositional study",
+            "uses_gold_for_selection": true
+          },
+          "historical_exact_model_snapshot": null,
+          "historical_model_alias": null,
+          "historical_run_status": "not run; added for the Phase B frozen comparison",
+          "max_context_chars": null,
+          "max_context_status": "no explicit total character cap in the compositional context builder",
+          "max_output_tokens": 220,
+          "prompt": {
+            "system": "You are a neuro-symbolic reasoning agent in the style of LINC. Extract premises from the supplied context, express the question as a goal, reason step by step, and return one final answer containing all requested values. Use only the supplied context.",
+            "user_template": "Domain: {domain}\nContext:\n{context}\n\nQuestion: {question}"
+          },
+          "proposed_frozen_snapshot_for_rerun": "gpt-4o-mini-2024-07-18",
+          "retry_policy": {
+            "linear_wait_multiplier_seconds": 1.0,
+            "outer_row_attempts": 4
+          },
+          "seed": null,
+          "source": "scripts/run_arch_smoke_comparison.py",
+          "source_sha256": "be7552ab9cab7e7fce27b0bcbe6b1194b74e9a88e4c70f85674f401248d3a23a",
+          "temperature": 0.0,
+          "validator": {
+            "rules": "every expected value group must match after compact normalization; no LLM judge",
+            "source": "scripts/run_arch_smoke_comparison.py:score_answer"
+          }
+        }
+      ],
+      "id": "LINC",
+      "implementation_fidelity": "prompted approximation; it does not execute the published LINC theorem-prover pipeline",
+      "paper_label_recommended": "LINC-style prompted baseline"
+    },
+    {
+      "evaluations": [
+        {
+          "answer_processing": "extract text after the final 'Answer:' marker when present",
+          "benchmark": "verified_release_6270",
+          "evidence_selection": {
+            "correction": "The paper must not call this oracle context: gold annotations are not used to select evidence and the supplied context is retrieval-ranked and capped.",
+            "limits": {
+              "document_chunks": 12,
+              "memory_hits": 10,
+              "ontology_chars": 4500,
+              "total_chars": 12000
+            },
+            "method": "deterministic lexical/product retrieval from seed documents, memory facts, and ontology snippets",
+            "oracle_context": false,
+            "uses_gold_for_selection": false
+          },
+          "historical_exact_model_snapshot": null,
+          "historical_model_alias": "gpt-4o-mini",
+          "historical_snapshot_status": "UNKNOWN: archived CSVs contain token counts but no model field; the harness default and run documentation identify only the mutable alias",
+          "max_context_chars": 12000,
+          "max_output_tokens": 200,
+          "prompt": {
+            "system": "You are Logic-LM (Pan et al., 2023). Step 1: classify the question as RULE (yes/no compliance), LOOKUP (factual recall), or OPEN. Step 2: solve it using only the provided context. For RULE answer 'yes' or 'no'. For LOOKUP/OPEN return the exact factual phrase. If the context is insufficient, return 'INSUFFICIENT'.",
+            "user_template": "Domain: {domain}\nDeclared question type: {question_type}\n\nContext:\n{selected_context}\n\nQuestion: {question}\n\nOutput format:\nKind: RULE|LOOKUP|OPEN\nAnswer: <one line>"
+          },
+          "proposed_frozen_snapshot_for_rerun": "gpt-4o-mini-2024-07-18",
+          "retry_policy": {
+            "backoff_seconds": "min(45, 2 * attempt_number)",
+            "max_attempts": 8,
+            "request_timeout_seconds": 60,
+            "retryable_errors": [
+              "APIConnectionError",
+              "APIStatusError",
+              "APITimeoutError",
+              "InternalServerError",
+              "RateLimitError"
+            ]
+          },
+          "seed": null,
+          "seed_status": "not set by the harness",
+          "source": "scripts/run_baselines.py",
+          "source_sha256": "1fcdc3edd5cdee92df23e0434fe66f007a4bf2af49a03e2c748dfe3dac4f5281",
+          "temperature": 0.0,
+          "validator": {
+            "rules": "type-aware deterministic polarity or normalized substring/compact match; no LLM judge",
+            "source": "scripts/run_baselines.py:normalize_text/score_answer"
+          }
+        },
+        {
+          "answer_processing": "extract text after the final 'Answer:' marker when present",
+          "benchmark": "compositional_3000",
+          "evidence_selection": {
+            "method": "benchmark-declared document, memory, and symbolic sections",
+            "oracle_context": true,
+            "qualification": "the constructed benchmark supplies declared source-specific evidence, including symbolic values from gold_evidence; this applies only to the compositional study",
+            "uses_gold_for_selection": true
+          },
+          "historical_exact_model_snapshot": null,
+          "historical_model_alias": "gpt-4o-mini",
+          "historical_run_status": "archived run exists",
+          "max_context_chars": null,
+          "max_context_status": "no explicit total character cap in the compositional context builder",
+          "max_output_tokens": 220,
+          "prompt": {
+            "system": "You are Logic-LM. Classify the question, extract relevant premises from the provided context, reason over them, and return a single final answer containing all requested values. Use only context.",
+            "user_template": "Domain: {domain}\nContext:\n{context}\n\nQuestion: {question}"
+          },
+          "proposed_frozen_snapshot_for_rerun": "gpt-4o-mini-2024-07-18",
+          "retry_policy": {
+            "linear_wait_multiplier_seconds": 1.0,
+            "outer_row_attempts": 4
+          },
+          "seed": null,
+          "source": "scripts/run_arch_smoke_comparison.py",
+          "source_sha256": "be7552ab9cab7e7fce27b0bcbe6b1194b74e9a88e4c70f85674f401248d3a23a",
+          "temperature": 0.0,
+          "validator": {
+            "rules": "every expected value group must match after compact normalization; no LLM judge",
+            "source": "scripts/run_arch_smoke_comparison.py:score_answer"
+          }
+        }
+      ],
+      "id": "LOGIC_LM",
+      "implementation_fidelity": "prompted approximation; it does not execute the full published Logic-LM pipeline",
+      "paper_label_recommended": "Logic-LM-style prompted baseline"
+    },
+    {
+      "answer_processing": "citation enforcement plus deterministic field, memory, and symbolic fallbacks; final answer provenance is recorded in answer_trace",
+      "historical_exact_model_snapshot": null,
+      "historical_mode_id": "ADAPTIVERAG (verified release), AUTO_COMPOSE (compositional benchmark)",
+      "historical_model_alias": "gpt-4o-mini",
+      "historical_snapshot_status": "UNKNOWN for the verified-release CSV; compositional traces record the mutable gpt-4o-mini alias",
+      "id": "COMPASS",
+      "implementation_fidelity": "project system",
+      "max_chars_per_passage": 2000,
+      "max_context_chars": 12000,
+      "max_output_tokens": 256,
+      "max_passages": 6,
+      "paper_label_recommended": "COMPASS",
+      "proposed_frozen_snapshot_for_rerun": "gpt-4o-mini-2024-07-18",
+      "retry_policy": {
+        "architecture_harness_outer_row_retries": 4,
+        "sdk_max_retries_default": 0
+      },
+      "seed": null,
+      "sources": [
+        {
+          "path": "backend/api/answerer_ctx.py",
+          "sha256": "0d4bda07e55c4adf9674d622b6acaaaf82c4028acdf82121e0566e236372b0a6"
+        },
+        {
+          "path": "backend/api/solve_auto.py",
+          "sha256": "5951fc508bafa3e4f7dcad5909dbfde954b85b439dfb5dbab3df4829f4c879d5"
+        },
+        {
+          "path": "scripts/run_arch_smoke_comparison.py",
+          "sha256": "be7552ab9cab7e7fce27b0bcbe6b1194b74e9a88e4c70f85674f401248d3a23a"
+        }
+      ],
+      "system_prompt": "You must answer ONLY using the provided context.\nIf the context is insufficient, respond exactly with: Insufficient context.\nFor factual attribute or numeric questions, copy the exact source phrase; do not paraphrase values, units, symbols, or dash characters.\nWhen you quote or rely on a span, add a citation like [doc_id].",
+      "temperature": null,
+      "temperature_status": "API-path dependent in current code: Responses API and modern OpenAI chat path do not set it; OpenRouter/legacy fallbacks set 0.2",
+      "user_template": "Question: {question}\n\nContext:\n{formatted_context}\n\nAnswer:",
+      "validators": {
+        "compositional": "all expected value groups must appear after compact normalization",
+        "no_llm_judge": true,
+        "verified_release": "same stored success/expected_contains schema aggregated for every system"
+      }
+    }
+  ]
+}

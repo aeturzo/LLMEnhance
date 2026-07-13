@@ -74,6 +74,7 @@ import json
 import math
 import os
 import re
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -112,6 +113,11 @@ EVAL_CSV_FIELDS = [
     "answer",
     "expected_contains",
     "cost_usd_running",
+    "model",
+    "temperature",
+    "max_context_chars",
+    "max_output_tokens",
+    "harness_commit",
 ]
 
 
@@ -889,6 +895,13 @@ def main() -> int:
     ap.add_argument("--print-prompt", action="store_true")
     args = ap.parse_args()
 
+    try:
+        harness_commit = subprocess.check_output(
+            ["git", "rev-parse", "HEAD"], cwd=REPO_ROOT, text=True
+        ).strip()
+    except Exception:
+        harness_commit = "unknown"
+
     rows = BENCHMARK_LOADERS[args.benchmark]()
     print(f"[run_baselines] benchmark={args.benchmark}  raw rows={len(rows)}")
     filtered = apply_filters(rows, args)
@@ -990,9 +1003,17 @@ def main() -> int:
                 "cost_tokens_in": usage.get("in", 0),
                 "cost_tokens_out": usage.get("out", 0),
                 "n_steps": 1,
-                "answer": (answer if not err else err)[:500],
+                # Preserve the full response so every stored score can be
+                # independently recomputed. Historical LINC CSVs truncated
+                # this field to 500 characters and lost some final answers.
+                "answer": answer if not err else err,
                 "expected_contains": test["expected_contains"],
                 "cost_usd_running": f"{running_cost:.4f}",
+                "model": args.model,
+                "temperature": "0.0",
+                "max_context_chars": args.max_ctx_chars,
+                "max_output_tokens": MODE_MAX_OUTPUT[args.mode],
+                "harness_commit": harness_commit,
             }
             writer.writerow(row)
             fh.flush()

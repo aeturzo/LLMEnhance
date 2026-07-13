@@ -7,6 +7,7 @@ import csv
 import json
 import os
 import re
+import subprocess
 import sys
 import time
 from collections import defaultdict
@@ -36,7 +37,7 @@ from scripts.run_baselines import ontology_context, query_terms  # noqa: E402
 from scripts.run_baselines import load_seed_doc_chunks, load_seed_mem_facts, ranked_items  # noqa: E402
 
 
-MODES = ("AUTO_COMPOSE", "GPT4O_LONGCTX", "LOGIC_LM")
+MODES = ("AUTO_COMPOSE", "GPT4O_LONGCTX", "LINC", "LOGIC_LM")
 
 PRODUCTS = {
     "battery": {
@@ -400,6 +401,17 @@ def call_baseline(
             "values. If insufficient, say INSUFFICIENT EVIDENCE."
         )
         user = f"Domain: {row['domain']}\nContext:\n{ctx}\n\nQuestion: {row['query']}"
+    elif mode == "LINC":
+        system = (
+            "You are a neuro-symbolic reasoning agent in the style of LINC. "
+            "Extract premises from the supplied context, express the question "
+            "as a goal, reason step by step, and return one final answer containing "
+            "all requested values. Use only the supplied context."
+        )
+        user = (
+            f"Domain: {row['domain']}\nContext:\n{ctx}\n\nQuestion: {row['query']}\n\n"
+            "Output format:\nPremises: ...\nGoal: ...\nReasoning: ...\nFinal: <one line>"
+        )
     else:
         system = (
             "You are Logic-LM. Classify the question, extract relevant premises "
@@ -419,6 +431,10 @@ def call_baseline(
     answer = (resp.choices[0].message.content or "").strip()
     if mode == "LOGIC_LM":
         m = re.search(r"Answer\s*:\s*(.+)", answer, flags=re.IGNORECASE | re.DOTALL)
+        if m:
+            answer = m.group(1).strip()
+    elif mode == "LINC":
+        m = re.search(r"Final\s*:\s*(.+)", answer, flags=re.IGNORECASE | re.DOTALL)
         if m:
             answer = m.group(1).strip()
     return answer, int(resp.usage.prompt_tokens), int(resp.usage.completion_tokens)
@@ -460,7 +476,7 @@ def summarize(rows: List[Dict[str, Any]], out_path: Path, summary_path: Path) ->
             by_mode_subtype[(r["mode"], r["subtype"])].append(s)
 
     lines = ["# Architecture Smoke Comparison", "", f"Rows: {len(rows)}", "", "## Overall", "", "| Mode | Correct | Accuracy |", "|---|---:|---:|"]
-    for mode in ("AUTO_COMPOSE", "GPT4O_LONGCTX", "LOGIC_LM"):
+    for mode in MODES:
         vals = by_mode.get(mode, [])
         lines.append(f"| `{mode}` | {sum(vals)} / {len(vals)} | {sum(vals) / len(vals) if vals else 0:.4f} |")
     lines.extend(["", "## By Subtype", "", "| Mode | Subtype | Correct | Accuracy |", "|---|---|---:|---:|"])
@@ -485,6 +501,13 @@ def main() -> int:
     ap.add_argument("--input-usd-per-1m", type=float, default=0.15)
     ap.add_argument("--output-usd-per-1m", type=float, default=0.60)
     args = ap.parse_args()
+
+    try:
+        harness_commit = subprocess.check_output(
+            ["git", "rev-parse", "HEAD"], cwd=REPO_ROOT, text=True
+        ).strip()
+    except Exception:
+        harness_commit = "unknown"
 
     rows = load_benchmark_rows(args.data, limit=args.limit, sample_mixed=args.sample_mixed) if args.data else build_rows(args.n)
     args.out.parent.mkdir(parents=True, exist_ok=True)
@@ -511,7 +534,8 @@ def main() -> int:
     fields = [
         "id", "mode", "domain", "subtype", "product", "session", "query",
         "expected_groups", "success", "llm_used", "answer", "tokens_in",
-        "tokens_out", "answer_trace",
+        "tokens_out", "answer_trace", "model", "temperature",
+        "max_output_tokens", "harness_commit",
     ]
     done = existing_done(args.out)
     running_cost = prior_token_cost(args.out, args.input_usd_per_1m, args.output_usd_per_1m)
@@ -566,6 +590,10 @@ def main() -> int:
                     "tokens_in": tokens_in,
                     "tokens_out": tokens_out,
                     "answer_trace": json.dumps(trace, ensure_ascii=False),
+                    "model": str(trace.get("model") or trace.get("configured_model") or args.model),
+                    "temperature": "API-path dependent; see release/baseline_configs.json",
+                    "max_output_tokens": 256,
+                    "harness_commit": harness_commit,
                 })
                 fh.flush()
                 if idx % 20 == 0:
@@ -575,7 +603,7 @@ def main() -> int:
                 if args.sleep:
                     time.sleep(args.sleep)
 
-            for mode in ("GPT4O_LONGCTX", "LOGIC_LM"):
+            for mode in ("GPT4O_LONGCTX", "LINC", "LOGIC_LM"):
                 for idx, row in enumerate(rows, start=1):
                     key = (mode, row["id"], row["domain"])
                     if key in done:
@@ -606,6 +634,10 @@ def main() -> int:
                         "tokens_in": tokens_in,
                         "tokens_out": tokens_out,
                         "answer_trace": "",
+                        "model": args.model,
+                        "temperature": "0.0",
+                        "max_output_tokens": 220,
+                        "harness_commit": harness_commit,
                     })
                     fh.flush()
                     if idx % 20 == 0:

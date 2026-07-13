@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-07-13T22:24:44.103434+00:00",
+  "status": "PASS",
+  "paid_calls_made": false,
+  "checks": {
+    "benchmark_counts": {
+      "artifacts/paper_split.json": {
+        "expected": 3429,
+        "actual": 3429
+      },
+      "artifacts/release_clean_verified_v1.json": {
+        "expected": 6270,
+        "actual": 6270
+      },
+      "artifacts/auto_compose_v2/auto_compose_arch_3000_v2.json": {
+        "expected": 3000,
+        "actual": 3000
+      }
+    },
+    "protected_hash_mismatches": [],
+    "baseline_parity": "PASS_WITH_HISTORICAL_TRUNCATION_LIMITATION",
+    "router_source": "artifacts/dev/eval_joined_20260201_205635.csv",
+    "calibrator_source": "/Users/turzo/Desktop/StudyUIO/Research/LLMENHANCE/llmmain/artifacts/dev/eval_joined_20260201_205635.csv",
+    "output_dir": "/Users/turzo/Desktop/StudyUIO/Research/LLMENHANCE/llmmain/paper_results_20260713_frozen",
+    "output_dir_exists": false,
+    "git_commit": "151c028040992e3633492052ba0ee89274fdaddd",
+    "git_clean": false,
+    "openai_api_key_available": false,
+    "frozen_model_snapshot": "gpt-4o-mini-2024-07-18",
+    "compositional_linc_path_present": true,
+    "disk_free_bytes": 1263205498880
+  },
+  "warnings": [
+    "20 historical LINC rows cannot be rescored because archived answers were truncated",
+    "working tree is not clean; Phase A must be committed before tagging/running",
+    "OPENAI_API_KEY is not set in this shell"
+  ],
+  "blockers": []
+}
