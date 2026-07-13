@@ -1,0 +1,77 @@
+schema_version: "0.1"
+notes:
+  - This file maps canonical calculator categories to curated rows or flow names in the EF workbook.
+  - Do not use the raw workbook directly at runtime.
+  - Leave entries null until the factor selection is manually reviewed.
+
+raw_materials:
+  plastics_generic:
+    target_flow_name: null
+    target_location: null
+    target_method: "Climate change"
+    status: needs_manual_curation
+    source_ref: totalCarbonfootprintcalculation/EF-LCIAMethod_CF(EF-v3.1).xlsx
+  steel_generic:
+    target_flow_name: null
+    target_location: null
+    target_method: "Climate change"
+    status: needs_manual_curation
+    source_ref: totalCarbonfootprintcalculation/EF-LCIAMethod_CF(EF-v3.1).xlsx
+  electronics_generic:
+    target_flow_name: null
+    target_location: null
+    target_method: "Climate change"
+    status: needs_manual_curation
+    source_ref: totalCarbonfootprintcalculation/EF-LCIAMethod_CF(EF-v3.1).xlsx
+  elastomers_generic:
+    target_flow_name: null
+    target_location: null
+    target_method: "Climate change"
+    status: needs_manual_curation
+    source_ref: totalCarbonfootprintcalculation/EF-LCIAMethod_CF(EF-v3.1).xlsx
+
+transport:
+  transport_truck_generic:
+    target_flow_name: null
+    target_location: null
+    target_method: "Climate change"
+    status: needs_manual_curation
+    source_ref: totalCarbonfootprintcalculation/EF-LCIAMethod_CF(EF-v3.1).xlsx
+  transport_ship_generic:
+    target_flow_name: null
+    target_location: null
+    target_method: "Climate change"
+    status: needs_manual_curation
+    source_ref: totalCarbonfootprintcalculation/EF-LCIAMethod_CF(EF-v3.1).xlsx
+  transport_rail_generic:
+    target_flow_name: null
+    target_location: null
+    target_method: "Climate change"
+    status: needs_manual_curation
+    source_ref: totalCarbonfootprintcalculation/EF-LCIAMethod_CF(EF-v3.1).xlsx
+  transport_air_generic:
+    target_flow_name: null
+    target_location: null
+    target_method: "Climate change"
+    status: needs_manual_curation
+    source_ref: totalCarbonfootprintcalculation/EF-LCIAMethod_CF(EF-v3.1).xlsx
+
+end_of_life:
+  eol_recycling_mixed_electronics:
+    target_flow_name: null
+    target_location: null
+    target_method: "Climate change"
+    status: needs_manual_curation
+    source_ref: totalCarbonfootprintcalculation/EF-LCIAMethod_CF(EF-v3.1).xlsx
+  eol_incineration_mixed_electronics:
+    target_flow_name: null
+    target_location: null
+    target_method: "Climate change"
+    status: needs_manual_curation
+    source_ref: totalCarbonfootprintcalculation/EF-LCIAMethod_CF(EF-v3.1).xlsx
+  eol_landfill_mixed_electronics:
+    target_flow_name: null
+    target_location: null
+    target_method: "Climate change"
+    status: needs_manual_curation
+    source_ref: totalCarbonfootprintcalculation/EF-LCIAMethod_CF(EF-v3.1).xlsx

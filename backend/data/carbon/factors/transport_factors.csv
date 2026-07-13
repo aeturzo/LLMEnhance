@@ -1,0 +1,5 @@
+factor_key,mode,unit,value_kg_co2e_per_ton_km,source_ref,status,notes
+transport_truck_generic,truck,ton-km,0.180,EEA EMEP/EEA 2023 HDV freight,grounded_meta,"Heavy-duty truck average; aligns with PEF reference for road freight"
+transport_ship_generic,ship,ton-km,0.012,Clean Cargo Working Group 2023,grounded_meta,"Container ocean freight average"
+transport_rail_generic,rail,ton-km,0.025,EEA EMEP/EEA 2023 electric/diesel mix,grounded_meta,"Used for inland European distribution"
+transport_air_generic,air,ton-km,0.870,DEFRA 2024 long-haul belly-freight,grounded_meta,"Used only when air freight is explicitly in scope"

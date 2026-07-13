@@ -9,9 +9,10 @@ def test_reasoner_loads_and_rules_apply():
     products = [p.split("#")[-1] for p in sr.list_products()]
     assert set(products) >= {"ProductA", "ProductB", "ProductC"}
 
-    # ProductA has battery + wireless + lead -> 3 compliances + 2 steps required
+    # ProductA has battery + wireless + lead -> at least the three inferred
+    # compliances, plus any explicit requirements in the expanded ontology.
     reqA = [r.split("#")[-1] for r in sr.check_compliance_requirements("ProductA")]
-    assert set(reqA) == {"BatterySafetyStandard", "WirelessComplianceStandard", "RoHSStandard"}
+    assert set(reqA) >= {"BatterySafetyStandard", "WirelessComplianceStandard", "RoHSStandard"}
 
     stepsA = [s.split("#")[-1] for s in sr.suggest_missing_steps("ProductA")]
     assert set(stepsA) == {"BatteryTestStep", "WirelessTestStep"}

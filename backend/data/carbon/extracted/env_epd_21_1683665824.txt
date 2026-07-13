@@ -1,0 +1,56 @@
+Environmental Product Declaration (EPD)
+• The Product Category Rules (PCR) for Printers and Multi-Function Printing Units provide the technical requirements and  
+guidance for an Environmental Product Declara tion (EPD).
+• The EPD takes the LCA-derived information to assess the environmental performance of the p roducts over the life cycle, from  
+cradle to grave. Using the guidance from the  PCR, the EPD standardizes how you communicate the LCA results.
+• Lexmark uses software called GaBi to perform the life cycle assessment, and then to generate the EPD.
+• Once the EPD is complete, it i s reviewed and certified by a 3rd party for completeness and accuracy.
+What is the difference in Environmental Product Declaration (EPD)  vs. Product  Environmental Footprint (PEF)
+Lexmark’s EPDs report on 6 environmental impact categories:  Global Warming Potential, Ozone Depletion Potential, Acidification 
+Potential, Eutrophication Pote ntial, Fossil Fuel Depletion Potential, and Mineral Resource Depletion Potential
+Product Environmental Footprint (PEF) method – is comparable  to the EPD method, but primarily used in Europe. The PEF can report on 
+up to 16 environmental impact categories. 
+Lexmark selected the EPD metho dology for EPEAT purposes. EPEAT (Electronic Product Environmental Assessment Tool) is a method for 
+purchasers to evaluate the eff ect of a product on the environment.
+Lexmark Product Lifecycle Assessments (LCA) 
+csr.lexmark.com
+LCA- Environmental Product  Declaration
+A Life cycle  assessment is a standardized tool that evaluates  the environmental impact  of products throughout the entire 
+life cycle.
+ It analyzes and  quantifies the direct and  indirect environmental  burdens associated  with the product, a material, 
+a process, or a system.
+
+Key Take away i nformation
+Global warming potential
+• The primary information that most  customers seek is  in the Global  Warming Potential section  is the first 
+environmental impact category  in the Interpretation of  the results section.
+• Lexmark’s EPD is  broken into 3 phases: Printer  Manufacturing, Use Phase,  and the End-of-Life Phase
+• The data  output for each of the 3 phases can  be analyzed  4 different ways (columns)
+• The first 2 columns break out the results on a per 1,000-page basis.
+• The final 2 columns break out the results on a per printer lifetime (5 years).
+• Either method can include the paper carbon footprint effect, or not.
+• Paper is the highest carbon footprint impact in the Use Phase.
+Example: Maintenance Carbon Footprin t
+Per Printer Lifetime Excluding Paper – Use 
+Phase: 1.51E03 kg CO2 eq
+Draw lines around Maintenance E
+stimate % = 91% - 33% = 58%
+58% x 1.51E03 = 875.8 kg CO2 eq
+1.5% Waste treatment
+7.5% Packaging
+58% Maintenance
+4% Energy
+2% Distribution
+27% Cartridges/toner
+0.3% Waste treatment
+81% Paper
+1.4% Packaging
+10.8% Maintenance
+0.37% Distribution
+5% Cartridges/toner
+0.8% Energy
+The carbon footprint results can be further broken down into various components or stages of the use phase.
+Per printer lifeti me
+including paper
+Per printer lifetime not
+including paper

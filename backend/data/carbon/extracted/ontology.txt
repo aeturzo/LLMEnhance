@@ -1,0 +1,480 @@
+@prefix : <http://example.org/lca#> . 1 
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> . 2 
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> . 3 
+@prefix owl: <http://www.w3.org/2002/07/owl#> . 4 
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> . 5 
+ 6 
+################################################################# 7 
+# Ontology 8 
+################################################################# 9 
+ 10 
+:lcaOntology rdf:type owl:Ontology ; 11 
+    rdfs:label "Universal Product Carbon Footprint Ontology" . 12 
+ 13 
+################################################################# 14 
+# Classes 15 
+################################################################# 16 
+ 17 
+:Product rdf:type owl:Class . 18 
+:Scenario rdf:type owl:Class . 19 
+:FunctionalUnit rdf:type owl:Class . 20 
+:LifeCycleStage rdf:type owl:Class . 21 
+:ActivityData rdf:type owl:Class . 22 
+:EmissionFactor rdf:type owl:Class . 23 
+:CalculationStep rdf:type owl:Class . 24 
+:Result rdf:type owl:Class . 25 
+:Source rdf:type owl:Class . 26 
+:Unit rdf:type owl:Class . 27 
+:DataStatus rdf:type owl:Class . 28 
+ 29 
+################################################################# 30 
+# Individuals for stages 31 
+################################################################# 32 
+ 33 
+:Manufacturing rdf:type :LifeCycleStage ; 34 
+    rdfs:label "Manufacturing" . 35 
+ 36 
+:UsePhase rdf:type :LifeCycleStage ; 37 
+    rdfs:label "Use Phase" . 38 
+ 39 
+:Transport rdf:type :LifeCycleStage ; 40 
+    rdfs:label "Transport" . 41 
+ 42 
+:EndOfLife rdf:type :LifeCycleStage ; 43 
+    rdfs:label "End of Life" . 44 
+ 45 
+################################################################# 46 
+# Individuals for status 47 
+################################################################# 48 
+ 49 
+:Known rdf:type :DataStatus ; 50 
+    rdfs:label "Known" . 51 
+ 52 
+:Estimated rdf:type :DataStatus ; 53 
+    rdfs:label "Estimated" . 54 
+ 55 
+:Missing rdf:type :DataStatus ; 56 
+    rdfs:label "Missing" . 57 
+ 58 
+################################################################# 59 
+# Object Properties 60 
+################################################################# 61 
+ 62 
+:hasScenario rdf:type owl:ObjectProperty ; 63 
+    rdfs:domain :Product ; 64 
+    rdfs:range :Scenario . 65 
+ 66 
+:hasFunctionalUnit rdf:type owl:ObjectProperty ; 67 
+    rdfs:domain :Scenario ; 68 
+    rdfs:range :FunctionalUnit . 69 
+ 70 
+:hasStage rdf:type owl:ObjectProperty ; 71 
+    rdfs:domain :Scenario ; 72 
+    rdfs:range :LifeCycleStage . 73 
+ 74 
+:hasActivity rdf:type owl:ObjectProperty ; 75 
+    rdfs:domain :LifeCycleStage ; 76 
+    rdfs:range :ActivityData . 77 
+ 78 
+:usesEmissionFactor rdf:type owl:ObjectProperty ; 79 
+    rdfs:domain :ActivityData ; 80 
+    rdfs:range :EmissionFactor . 81 
+ 82 
+:hasCalculationStep rdf:type owl:ObjectProperty ; 83 
+    rdfs:domain :Scenario ; 84 
+    rdfs:range :CalculationStep . 85 
+ 86 
+:hasResult rdf:type owl:ObjectProperty ; 87 
+    rdfs:domain :Scenario ; 88 
+    rdfs:range :Result . 89 
+ 90 
+:derivedFrom rdf:type owl:ObjectProperty ; 91 
+    rdfs:domain :ActivityData ; 92 
+    rdfs:range :Source . 93 
+ 94 
+:factorSource rdf:type owl:ObjectProperty ; 95 
+    rdfs:domain :EmissionFactor ; 96 
+    rdfs:range :Source . 97 
+ 98 
+:hasUnit rdf:type owl:ObjectProperty ; 99 
+    rdfs:domain :ActivityData ; 100 
+    rdfs:range :Unit . 101 
+ 102 
+:factorUnit rdf:type owl:ObjectProperty ; 103 
+    rdfs:domain :EmissionFactor ; 104 
+    rdfs:range :Unit . 105 
+ 106 
+:resultUnit rdf:type owl:ObjectProperty ; 107 
+    rdfs:domain :Result ; 108 
+    rdfs:range :Unit . 109 
+ 110 
+:hasStatus rdf:type owl:ObjectProperty ; 111 
+    rdfs:domain :ActivityData ; 112 
+    rdfs:range :DataStatus . 113 
+ 114 
+:belongsToStage rdf:type owl:ObjectProperty ; 115 
+    rdfs:domain :Result ; 116 
+    rdfs:range :LifeCycleStage . 117 
+ 118 
+:inputActivity rdf:type owl:ObjectProperty ; 119 
+    rdfs:domain :CalculationStep ; 120 
+    rdfs:range :ActivityData . 121 
+ 122 
+:inputFactor rdf:type owl:ObjectProperty ; 123 
+    rdfs:domain :CalculationStep ; 124 
+    rdfs:range :EmissionFactor . 125 
+ 126 
+:outputResult rdf:type owl:ObjectProperty ; 127 
+    rdfs:domain :CalculationStep ; 128 
+    rdfs:range :Result . 129 
+ 130 
+################################################################# 131 
+# Datatype Properties 132 
+################################################################# 133 
+ 134 
+:productName rdf:type owl:DatatypeProperty ; 135 
+    rdfs:domain :Product ; 136 
+    rdfs:range xsd:string . 137 
+ 138 
+:scenarioName rdf:type owl:DatatypeProperty ; 139 
+    rdfs:domain :Scenario ; 140 
+    rdfs:range xsd:string . 141 
+ 142 
+:functionalUnitText rdf:type owl:DatatypeProperty ; 143 
+    rdfs:domain :FunctionalUnit ; 144 
+    rdfs:range xsd:string . 145 
+ 146 
+:flowName rdf:type owl:DatatypeProperty ; 147 
+    rdfs:domain :ActivityData ; 148 
+    rdfs:range xsd:string . 149 
+ 150 
+:activityValue rdf:type owl:DatatypeProperty ; 151 
+    rdfs:domain :ActivityData ; 152 
+    rdfs:range xsd:decimal . 153 
+ 154 
+:factorValue rdf:type owl:DatatypeProperty ; 155 
+    rdfs:domain :EmissionFactor ; 156 
+    rdfs:range xsd:decimal . 157 
+ 158 
+:geography rdf:type owl:DatatypeProperty ; 159 
+    rdfs:domain :EmissionFactor ; 160 
+    rdfs:range xsd:string . 161 
+ 162 
+:method rdf:type owl:DatatypeProperty ; 163 
+    rdfs:domain :EmissionFactor ; 164 
+    rdfs:range xsd:string . 165 
+ 166 
+:sourceName rdf:type owl:DatatypeProperty ; 167 
+    rdfs:domain :Source ; 168 
+    rdfs:range xsd:string . 169 
+ 170 
+:sourceReference rdf:type owl:DatatypeProperty ; 171 
+    rdfs:domain :Source ; 172 
+    rdfs:range xsd:string . 173 
+ 174 
+:unitName rdf:type owl:DatatypeProperty ; 175 
+    rdfs:domain :Unit ; 176 
+    rdfs:range xsd:string . 177 
+ 178 
+:formulaText rdf:type owl:DatatypeProperty ; 179 
+    rdfs:domain :CalculationStep ; 180 
+    rdfs:range xsd:string . 181 
+ 182 
+:resultValue rdf:type owl:DatatypeProperty ; 183 
+    rdfs:domain :Result ; 184 
+    rdfs:range xsd:decimal . 185 
+ 186 
+:resultType rdf:type owl:DatatypeProperty ; 187 
+    rdfs:domain :Result ; 188 
+    rdfs:range xsd:string . 189 
+ 190 
+################################################################# 191 
+# Units 192 
+################################################################# 193 
+ 194 
+:kWh rdf:type :Unit ; 195 
+    unitName "kWh" . 196 
+ 197 
+:kg rdf:type :Unit ; 198 
+    unitName "kg" . 199 
+ 200 
+:tonkm rdf:type :Unit ; 201 
+    unitName "ton-km" . 202 
+ 203 
+:kgCO2e rdf:type :Unit ; 204 
+    unitName "kg CO2e" . 205 
+ 206 
+:kgCO2ePerkWh rdf:type :Unit ; 207 
+    unitName "kg CO2e/kWh" . 208 
+ 209 
+:kgCO2ePerkg rdf:type :Unit ; 210 
+    unitName "kg CO2e/kg" . 211 
+ 212 
+:kgCO2ePertonkm rdf:type :Unit ; 213 
+    unitName "kg CO2e/ton-km" . 214 
+ 215 
+################################################################# 216 
+# Example Sources 217 
+################################################################# 218 
+ 219 
+:CoM2024 rdf:type :Source ; 220 
+    sourceName "CoM Emission factors for national electricity 2024" ; 221 
+    sourceReference "CoM-Emission-factors-for-national-electricity-2024.xlsx" . 222 
+ 223 
+:MaterialDB rdf:type :Source ; 224 
+    sourceName "Generic materials EF dataset" ; 225 
+    sourceReference "Add your steel/plastic/electronics source here" . 226 
+ 227 
+:TransportDB rdf:type :Source ; 228 
+    sourceName "Generic transport EF dataset" ; 229 
+    sourceReference "Add your transport EF source here" . 230 
+ 231 
+:EoLDB rdf:type :Source ; 232 
+    sourceName "Generic end-of-life EF dataset" ; 233 
+    sourceReference "Add your end-of-life EF source here" . 234 
+ 235 
+:ProductSpec rdf:type :Source ; 236 
+    sourceName "Product specification or LCA report" ; 237 
+    sourceReference "Add product PDF file name and page here" . 238 
+ 239 
+################################################################# 240 
+# Example Product and Scenario 241 
+################################################################# 242 
+ 243 
+:MyProduct rdf:type :Product ; 244 
+    productName "Generic Product" ; 245 
+    hasScenario :Scenario1 . 246 
+ 247 
+:Scenario1 rdf:type :Scenario ; 248 
+    scenarioName "Default lifetime scenario" ; 249 
+    hasFunctionalUnit :FU1 ; 250 
+    hasStage :Manufacturing, :UsePhase, :Transport, :EndOfLife ; 251 
+    hasCalculationStep :CalcElectricity, :CalcSteel, :CalcPlastic, :CalcElectronics, 252 
+:CalcTransport, :CalcWaste, :CalcTotal ; 253 
+    hasResult :ResElectricity, :ResSteel, :ResPlastic, :ResElectronics, :ResTransport, 254 
+:ResWaste, :ResManufacturingStage, :ResUseStage, :ResTransportStage, :ResEoLStage, 255 
+:ResTotal . 256 
+ 257 
+:FU1 rdf:type :FunctionalUnit ; 258 
+    functionalUnitText "One product over its lifetime" . 259 
+ 260 
+################################################################# 261 
+# Activity Data 262 
+################################################################# 263 
+ 264 
+:ElectricityUse rdf:type :ActivityData ; 265 
+    flowName "Electricity use" ; 266 
+    activityValue "140.0"^^xsd:decimal ; 267 
+    hasUnit :kWh ; 268 
+    hasStatus :Known ; 269 
+    derivedFrom :ProductSpec ; 270 
+    usesEmissionFactor :ElectricityEF . 271 
+ 272 
+:SteelMass rdf:type :ActivityData ; 273 
+    flowName "Steel" ; 274 
+    activityValue "4.0"^^xsd:decimal ; 275 
+    hasUnit :kg ; 276 
+    hasStatus :Estimated ; 277 
+    derivedFrom :ProductSpec ; 278 
+    usesEmissionFactor :SteelEF . 279 
+ 280 
+:PlasticMass rdf:type :ActivityData ; 281 
+    flowName "Plastic" ; 282 
+    activityValue "3.0"^^xsd:decimal ; 283 
+    hasUnit :kg ; 284 
+    hasStatus :Estimated ; 285 
+    derivedFrom :ProductSpec ; 286 
+    usesEmissionFactor :PlasticEF . 287 
+ 288 
+:ElectronicsMass rdf:type :ActivityData ; 289 
+    flowName "Electronics" ; 290 
+    activityValue "1.5"^^xsd:decimal ; 291 
+    hasUnit :kg ; 292 
+    hasStatus :Estimated ; 293 
+    derivedFrom :ProductSpec ; 294 
+    usesEmissionFactor :ElectronicsEF . 295 
+ 296 
+:TransportActivity rdf:type :ActivityData ; 297 
+    flowName "Transport" ; 298 
+    activityValue "50.0"^^xsd:decimal ; 299 
+    hasUnit :tonkm ; 300 
+    hasStatus :Estimated ; 301 
+    derivedFrom :ProductSpec ; 302 
+    usesEmissionFactor :TransportEF . 303 
+ 304 
+:WasteMass rdf:type :ActivityData ; 305 
+    flowName "Waste treatment" ; 306 
+    activityValue "7.0"^^xsd:decimal ; 307 
+    hasUnit :kg ; 308 
+    hasStatus :Estimated ; 309 
+    derivedFrom :ProductSpec ; 310 
+    usesEmissionFactor :WasteEF . 311 
+ 312 
+################################################################# 313 
+# Link Activities to Stages 314 
+################################################################# 315 
+ 316 
+:UsePhase hasActivity :ElectricityUse . 317 
+:Manufacturing hasActivity :SteelMass, :PlasticMass, :ElectronicsMass . 318 
+:Transport hasActivity :TransportActivity . 319 
+:EndOfLife hasActivity :WasteMass . 320 
+ 321 
+################################################################# 322 
+# Emission Factors 323 
+################################################################# 324 
+ 325 
+:ElectricityEF rdf:type :EmissionFactor ; 326 
+    factorValue "0.40"^^xsd:decimal ; 327 
+    factorUnit :kgCO2ePerkWh ; 328 
+    geography "EU/RER" ; 329 
+    method "GWP100" ; 330 
+    factorSource :CoM2024 . 331 
+ 332 
+:SteelEF rdf:type :EmissionFactor ; 333 
+    factorValue "2.10"^^xsd:decimal ; 334 
+    factorUnit :kgCO2ePerkg ; 335 
+    geography "RER" ; 336 
+    method "GWP100" ; 337 
+    factorSource :MaterialDB . 338 
+ 339 
+:PlasticEF rdf:type :EmissionFactor ; 340 
+    factorValue "2.80"^^xsd:decimal ; 341 
+    factorUnit :kgCO2ePerkg ; 342 
+    geography "RER" ; 343 
+    method "GWP100" ; 344 
+    factorSource :MaterialDB . 345 
+ 346 
+:ElectronicsEF rdf:type :EmissionFactor ; 347 
+    factorValue "6.50"^^xsd:decimal ; 348 
+    factorUnit :kgCO2ePerkg ; 349 
+    geography "RER" ; 350 
+    method "GWP100" ; 351 
+    factorSource :MaterialDB . 352 
+ 353 
+:TransportEF rdf:type :EmissionFactor ; 354 
+    factorValue "0.10"^^xsd:decimal ; 355 
+    factorUnit :kgCO2ePertonkm ; 356 
+    geography "RER" ; 357 
+    method "GWP100" ; 358 
+    factorSource :TransportDB . 359 
+ 360 
+:WasteEF rdf:type :EmissionFactor ; 361 
+    factorValue "0.50"^^xsd:decimal ; 362 
+    factorUnit :kgCO2ePerkg ; 363 
+    geography "RER" ; 364 
+    method "GWP100" ; 365 
+    factorSource :EoLDB . 366 
+ 367 
+################################################################# 368 
+# Calculation Steps 369 
+################################################################# 370 
+ 371 
+:CalcElectricity rdf:type :CalculationStep ; 372 
+    inputActivity :ElectricityUse ; 373 
+    inputFactor :ElectricityEF ; 374 
+    outputResult :ResElectricity ; 375 
+    formulaText "CO2e_electricity = activityValue × factorValue" . 376 
+ 377 
+:CalcSteel rdf:type :CalculationStep ; 378 
+    inputActivity :SteelMass ; 379 
+    inputFactor :SteelEF ; 380 
+    outputResult :ResSteel ; 381 
+    formulaText "CO2e_steel = activityValue × factorValue" . 382 
+ 383 
+:CalcPlastic rdf:type :CalculationStep ; 384 
+    inputActivity :PlasticMass ; 385 
+    inputFactor :PlasticEF ; 386 
+    outputResult :ResPlastic ; 387 
+    formulaText "CO2e_plastic = activityValue × factorValue" . 388 
+ 389 
+:CalcElectronics rdf:type :CalculationStep ; 390 
+    inputActivity :ElectronicsMass ; 391 
+    inputFactor :ElectronicsEF ; 392 
+    outputResult :ResElectronics ; 393 
+    formulaText "CO2e_electronics = activityValue × factorValue" . 394 
+ 395 
+:CalcTransport rdf:type :CalculationStep ; 396 
+    inputActivity :TransportActivity ; 397 
+    inputFactor :TransportEF ; 398 
+    outputResult :ResTransport ; 399 
+    formulaText "CO2e_transport = activityValue × factorValue" . 400 
+ 401 
+:CalcWaste rdf:type :CalculationStep ; 402 
+    inputActivity :WasteMass ; 403 
+    inputFactor :WasteEF ; 404 
+    outputResult :ResWaste ; 405 
+    formulaText "CO2e_endOfLife = activityValue × factorValue" . 406 
+ 407 
+:CalcTotal rdf:type :CalculationStep ; 408 
+    formulaText "Total CO2e = Manufacturing + UsePhase + Transport + EndOfLife" ; 409 
+    outputResult :ResTotal . 410 
+ 411 
+################################################################# 412 
+# Results 413 
+################################################################# 414 
+ 415 
+:ResElectricity rdf:type :Result ; 416 
+    resultType "FlowResult" ; 417 
+    resultValue "56.0"^^xsd:decimal ; 418 
+    resultUnit :kgCO2e ; 419 
+    belongsToStage :UsePhase . 420 
+ 421 
+:ResSteel rdf:type :Result ; 422 
+    resultType "FlowResult" ; 423 
+    resultValue "8.4"^^xsd:decimal ; 424 
+    resultUnit :kgCO2e ; 425 
+    belongsToStage :Manufacturing . 426 
+ 427 
+:ResPlastic rdf:type :Result ; 428 
+    resultType "FlowResult" ; 429 
+    resultValue "8.4"^^xsd:decimal ; 430 
+    resultUnit :kgCO2e ; 431 
+    belongsToStage :Manufacturing . 432 
+ 433 
+:ResElectronics rdf:type :Result ; 434 
+    resultType "FlowResult" ; 435 
+    resultValue "9.75"^^xsd:decimal ; 436 
+    resultUnit :kgCO2e ; 437 
+    belongsToStage :Manufacturing . 438 
+ 439 
+:ResTransport rdf:type :Result ; 440 
+    resultType "FlowResult" ; 441 
+    resultValue "5.0"^^xsd:decimal ; 442 
+    resultUnit :kgCO2e ; 443 
+    belongsToStage :Transport . 444 
+ 445 
+:ResWaste rdf:type :Result ; 446 
+    resultType "FlowResult" ; 447 
+    resultValue "3.5"^^xsd:decimal ; 448 
+    resultUnit :kgCO2e ; 449 
+    belongsToStage :EndOfLife . 450 
+ 451 
+:ResManufacturingStage rdf:type :Result ; 452 
+    resultType "StageResult" ; 453 
+    resultValue "26.55"^^xsd:decimal ; 454 
+    resultUnit :kgCO2e ; 455 
+    belongsToStage :Manufacturing . 456 
+ 457 
+:ResUseStage rdf:type :Result ; 458 
+    resultType "StageResult" ; 459 
+    resultValue "56.0"^^xsd:decimal ; 460 
+    resultUnit :kgCO2e ; 461 
+    belongsToStage :UsePhase . 462 
+ 463 
+:ResTransportStage rdf:type :Result ; 464 
+    resultType "StageResult" ; 465 
+    resultValue "5.0"^^xsd:decimal ; 466 
+    resultUnit :kgCO2e ; 467 
+    belongsToStage :Transport . 468 
+ 469 
+:ResEoLStage rdf:type :Result ; 470 
+    resultType "StageResult" ; 471 
+    resultValue "3.5"^^xsd:decimal ; 472 
+    resultUnit :kgCO2e ; 473 
+    belongsToStage :EndOfLife . 474 
+ 475 
+:ResTotal rdf:type :Result ; 476 
+    resultType "TotalResult" ; 477 
+    resultValue "91.05"^^xsd:decimal ; 478 
+    resultUnit :kgCO2e . 479 
+ 480

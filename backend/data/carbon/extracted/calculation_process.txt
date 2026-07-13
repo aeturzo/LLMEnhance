@@ -1,0 +1,37 @@
+To  calculate  the  final  CO ₂  of  a  product,  we  divide  the  life  cycle  into  four  parts:  electricity  use,  
+materials,
+ 
+transport,
+ 
+and
+ 
+end-of-life.
+ 
+For
+ 
+each
+ 
+part,
+ 
+we
+ 
+apply
+ 
+the
+ 
+same
+ 
+formula:
+ 
+CO ₂ e  =  Activity  Data×Emission  Factor  
+So,  the  calculations  are:  
+●  Electricity  CO ₂ e  =  Electricity  use  (kWh)  ×  Electricity  emission  factor  (kg  CO ₂ e/kWh)  ●  Materials  CO ₂ e  =  Sum  of  [Material  mass  (kg)  ×  Material  emission  factor  (kg  
+CO
+₂
+e/kg)]
+ ●  Transport  CO ₂ e  =  Transport  activity  (ton-km)  ×  Transport  emission  factor  (kg  
+CO
+₂
+e/ton-km)
+ ●  End-of-life  CO ₂ e  =  Waste  mass  (kg)  ×  End-of-life  emission  factor  (kg  CO ₂ e/kg)  
+ Total  CO ₂ e  =  Electricity  CO ₂ e  +  Materials  CO ₂ e  +  Transport  CO ₂ e  +  End-of-life  CO ₂ e

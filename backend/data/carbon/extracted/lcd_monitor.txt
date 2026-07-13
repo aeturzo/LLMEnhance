@@ -1,0 +1,98 @@
+Philips Product Carbon Footprint (PCF) Information Sheet 
+ 
+ 
+Commercial Name LCD Monitor 
+ 
+Model Number 276B1 
+Issue Date 2021-2-17 
+ 
+Product Environmental Attributes 
+(a) Product Carbon Footprint Value: 541.33 kg of CO2e (see Note 1 below) 
+(b) Product Picture: (c) Life Cycle Detail by Life Stage (Pie Chart): 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Note 1: 
+Disclaimer:  
+All estimates of carbon footprint are uncertain.  
+This information sheet contains a description of the carbon footprint data for this declared product, which is 
+based on estimates of the current state of the product life cycle, but is subject to known or unknown risks or 
+uncertainties, so actual results m ay be different from the statement.  
+Note 2: 
+This product is based on the PAS2050:2011 & ISO 14067:2018 standard for carbon footprint inventory and 
+calculation. 
+And this product use SimaPro 9. 1.0 for PCF calculation tool. The lifecycle impact assessment methodology 
+follows the IPCC 100 -year Greenhouse Gas Emissions Assessment Method (IPCC 2013 GWP 100a) to 
+calculate the CO2 emission equivalent of a product from raw material extraction to product disposal (Cradle to 
+Grave). 
+Note 3: 
+This calculation was based upon a PHILIPS 276B1 with the assumptions and configuration described in the 
+calculation assumptions in the next page.  
+Note 4: 
+This pie chart provides the percent contribution of the mean value for each element of the analysis for the full life 
+cycle CO2e impacts of the product. If individual elements displaying 0% are less than 0. 1%. 
+ 
+ 
+ 
+ 
+ Page 1 of 2 
+
+PHILIPS Product Carbon Footprint (PCF) Information Sheet 
+ 
+Assumption Table 
+Category Element Unit Input 
+ 
+ 
+ 
+Product 
+Specifics 
+Product Net Weight kg 7.12 
+Form Factor no unit 2560 x 1440 
+Screen Size inches 27 
+Product Lifetime years 3 
+Standby Mode &  Power-On Mode w 0.5 & 32 
+Estimated standby hour & usage hour hr 8 & 8 
+ Estimated total annual standby and power-on consumption kw 94.90 
+  
+Location 
+Assembly Location  no unit CN 
+Use Location no unit GLO 
+ 
+ 
+ 
+ 
+Transport 
+ from Assembly 
+to Customer 
+To country of use: by air  fraction 0 
+To country of use: by ship  fraction 1 
+To country of use: by rail  fraction 0 
+To country of use: by truck  fraction 0 
+In country of use: by air  fraction 0 
+In country of use: by ship  fraction 0 
+In country of use: by rail  fraction 0 
+In country of use: by truck  fraction 1 
+ 
+End of Life 
+Waste incineration  % 5 
+Material recycling  % 95 
+The PCF value is calculated using the specific attributes above for assembly, use and transportation mode.  
+Notes: 
+Life Cycle Analysis (LCA) can be grouped into f ive categories which include Raw Material, Manufacture, Transport, Use, and End-of-
+Life. Below is a brief description of each phase.  
+Raw Material: This life cycle phase captures emissions generated during the extraction, production,  and transport of raw materials . 
+Manufacture: This life cycle phase captures emissions ge nerated during the manufacture of subassemblies (including the product 
+packaging) and product assembly.  
+Transport: Emissions included in the distribute phase include all those generated during the air, ocean or land distribute of finished or 
+semi-finished PHILIPS products between PHILIPS facilities and from PHILIPS facilities to customers.  
+Use: In use energy consumption is calculated in acco rdance with the U.S. Environmental Protection Agency’s Energy Star® Typical 
+Energy Consumption (TEC) methodology.  Calculated energy consumption is then used in combination with average emissions factors 
+for the designated country of use to calculate emissions.  
+End-of-life: The recycle rate is calculated based on the company's own calculated WEEE re cycle rate. It is also assumed that the 
+balance of the product waste materials is disposed of by landfill. Emissions generated during the mechanical destruction, sep aration and 
+transport of end of life materials are included in the calculation.  
+                             Page 2 of 2

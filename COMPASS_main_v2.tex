@@ -1,0 +1,836 @@
+\documentclass[runningheads]{llncs}
+
+% =====================================================================
+% COMPASS -- IJCKG submission (In-Use Track recommended)
+% NOTE ON VENUE STYLE: This file keeps the LNCS class so it compiles in
+% your existing Overleaf project (llncs.cls + splncs04.bst). If IJCKG
+% mandates the ACM sigconf style, switching is mechanical:
+%   - replace the \documentclass line and \bibliographystyle,
+%   - move \keywords into the ACM \ccsdesc/\keywords block,
+%   - the body text below is style-agnostic and can be pasted as-is.
+% Confirm the required style on the IJCKG submission page before final.
+% =====================================================================
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{placeins}
+\usepackage[hidelinks]{hyperref}
+\usepackage[strings]{underscore}
+
+% ---- natbib-free compatibility shims ----
+\providecommand{\citep}[1]{\cite{#1}}
+\providecommand{\citet}[1]{\cite{#1}}
+
+% Helper macro to input auto-generated LaTeX tables that contain underscores
+\newcommand{\code}[1]{\texttt{\detokenize{#1}}}
+\newcommand{\InputTableSanitized}[1]{%
+  \begingroup\catcode`\_=12\relax\input{#1}\endgroup}
+
+% Pretty mode / system names
+\newcommand{\Compass}{\textsc{COMPASS}}
+\newcommand{\BaseMode}{\textsc{Base}}
+\newcommand{\MemMode}{\textsc{Mem}}
+\newcommand{\MemSymMode}{\textsc{Mem+Sym}}
+\newcommand{\RAGBase}{\textsc{RAG-Base}}
+\newcommand{\SymOnly}{\textsc{Sym-Only}}
+\newcommand{\RouterMode}{\textsc{Router}}
+\newcommand{\RLMode}{\textsc{RL}}
+\newcommand{\LongCtx}{\textsc{GPT4o-LongCtx}}
+\newcommand{\LogicLM}{\textsc{Logic-LM}}
+% Best configuration is COMPASS. The macro below keeps any legacy
+% \AdaptiveRAG references compiling and rendering as COMPASS.
+\newcommand{\AdaptiveRAG}{\textsc{COMPASS}}
+
+\title{COMPASS: Reliable and Auditable Question Answering\\
+for Digital Product Passports}
+\titlerunning{COMPASS: Reliable and Auditable QA for Digital Product Passports}
+% IJCKG 2026 In-Use Track is NOT double-blind: fill in authors and affiliations.
+% TODO (authors): add \author{...} and \institute{...} with ORCIDs per LNCS style.
+\author{}
+\institute{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Digital Product Passports (DPPs) are emerging as a regulatory and industrial
+mechanism for exposing technical, compliance, and sustainability information
+about products, which auditors, regulators, and procurement teams must query
+on demand. Reliable querying means answers grounded in source records,
+auditable under scrutiny, and withheld when required information is missing
+or uncertain. DPP evidence is heterogeneous, incomplete, and spread across
+documents, datasheets, and ontologies; this limits fixed schema SQL or SPARQL
+querying. Language models offer a flexible interface. However, retrieval
+augmented and long context systems provide limited support for persistent
+reuse of validated facts, machine checkable compliance reasoning, and
+principled abstention when evidence is insufficient. We present \Compass, an
+architecture that puts reliability first: every output is an evidence
+grounded answer with provenance or an explicit abstention. It combines hybrid
+retrieval, persistent fact memory, targeted symbolic validation over a DPP
+ontology, and a selective decision layer with post hoc confidence
+calibration. On a reliability suite of 3,429 DPP questions, \Compass\
+improves accuracy over a strong retrieval baseline from 0.8973 to 0.9749 and
+reduces the area under the risk--coverage curve (AURC) from 0.5513 to 0.0117.
+On questions governed by rules, accuracy rises from 0.0102 to 0.7085; rules
+fire on 7.96\% of the workload with an observed conditional precision of
+1.000. On a verified release of 6,270 questions (42\% rule governed) and a
+compositional benchmark of 3,000 questions, \Compass\ reaches the ceiling
+under deterministic validators, while long context and neurosymbolic
+baselines leave 127 to 321 errors. On 4,021 queries over the unseen Open Food
+Facts schema, it achieves 0.972 decision accuracy at 0.730 answer coverage
+with an expected calibration error of 0.021. Targeted symbolic control, persistent evidence reuse,
+and selective abstention thus improve the reliability and auditability of
+product record querying. Calibration on the source
+domains remains an open challenge.
+\end{abstract}
+
+\keywords{Digital Product Passports \and reliable question answering \and selective prediction \and auditable AI \and retrieval-augmented generation \and targeted symbolic reasoning \and ontologies \and knowledge graphs \and calibration}
+
+\section{Introduction}
+Large Language Models (LLMs) are increasingly used to query technical
+documentation and semistructured product records. In regulated product
+settings, the familiar failures of such models, including hallucinated
+properties, unverified compliance claims, and overconfident answers, are not
+merely usability issues: they propagate into audits, procurement decisions,
+sustainability reporting, and downstream supply chain actions. Digital Product
+Passports (DPPs) sharpen these requirements by moving product information
+toward standardized, inspectable disclosure across the product life cycle,
+where decisions must remain defensible under external scrutiny
+\cite{eu2024espr,ec_espr_dpp}. The central concern is therefore not whether an
+answer sounds plausible, but whether it can be verified, traced back to
+evidence, and acted upon safely.
+
+This work originates in an applied setting. \Compass\ was developed within
+CE-RISE, an EU Horizon Europe project on circular economy resource
+information systems, and exercised on real product documentation collected
+through the project's industrial partners in the printing hardware and
+heating system domains, alongside a public battery corpus.
+An interactive DPP workbench built on \Compass, with a full audit panel
+(retrieved memory and passages, fired rules, derived triples, confidence,
+abstain status) plus carbon accounting and DPP validation, has been
+demonstrated live to consortium practitioners outside the development team.
+% TODO (authors): add concrete usage evidence (sessions, users, feedback)
+% if available; the In-Use track explicitly rewards it.
+The target users are compliance, procurement, and sustainability
+practitioners. For them, a confident but unsupported answer is more costly
+than an explicit ``don't know.''
+
+Querying DPP data must be reliable for three recurring reasons: answers
+often depend on facts introduced much earlier and across multiple documents,
+so evidence must be recalled over long horizons; many queries are governed
+by rules (obligations, forbidden combinations, ageing constraints), so
+correctness means satisfying structured conditions rather than producing
+fluent text; and the system must abstain when evidence is missing, stale,
+contradictory, or outside policy. Prompting alone guarantees none of this:
+models with long context windows remain sensitive to where evidence appears
+in the window \cite{liu2024lostinthemiddle}, and free text rationales may
+not reflect the model's actual decision process
+\cite{turpin2023unfaithfulcot,lanham2023faithfulnesscot}.
+
+Most current systems for querying product documents rely on retrieval
+augmented generation (RAG) or long context prompting for grounding. These
+answer many factual questions but offer limited support for reusing verified
+facts across sessions, for compliance decisions whose evidence a machine can
+check, and for operating points that trade coverage against risk. We
+therefore treat the choice between answering and abstaining as an explicit
+decision, characterized with risk--coverage curves, AURC, and calibration
+diagnostics so that operating points can be set by policy
+\cite{geifman2019selectivenet,kamath2020selectiveqa,guo2017calibration,traub2024aurc}.
+
+The foundation of \Compass\ is that decision, not any single knowledge
+source: hybrid retrieval and persistent fact memory handle open book and
+long horizon questions; a targeted symbolic layer validates compliance
+queries against structured facts under a DPP ontology informed by the
+CIRPASS-2 requirements specification and returns rule traces a machine can
+check; and a calibration layer converts the evidence signals into answer or
+abstain decisions tuned to a target coverage. The ontology and rules provide
+auditable validity on the subset of queries where structured constraints
+apply; they are not the sole knowledge store. The architecture transfers to
+other structured product records through schema and ontology adaptation, not
+a redesign of the decision interface.
+
+\noindent Our contributions are:
+\begin{itemize}[leftmargin=1.2em,itemsep=2pt,topsep=2pt]
+  \item \textbf{An architecture that puts reliability first} (\Compass),
+  composing hybrid retrieval, persistent fact memory, and a targeted symbolic
+  layer backed by a DPP ontology informed by the CIRPASS-2 requirements
+  specification, behind an explicit
+  interface that either answers with provenance or abstains.
+  \item \textbf{An evaluation protocol for auditable, selective querying},
+  pairing accuracy with Wilson confidence intervals \cite{wilson1927probable},
+  selective risk (risk--coverage curves and AURC)
+  \cite{kamath2020selectiveqa,traub2024aurc}, paired significance testing
+  (McNemar) \cite{mcnemar1947note}, calibration diagnostics
+  \cite{guo2017calibration}, and coverage and precision of the symbolic layer.
+  \item \textbf{Three complementary empirical studies:} a reliability suite of
+  3,429 questions on real partner and public corpora, scaled to a
+  deterministically filtered, verified release of 6,270 questions (2,649
+  governed by rules) for comparison against external baselines; a benchmark of 3,000 compositional questions
+  built for this study, run against strong baselines with long context windows
+  and neurosymbolic systems; and a generalization study of 4,021 queries from
+  a different domain, Open Food Facts (drawn from a database of 4.5M
+  products), which stresses calibration and abstention on an unseen schema.
+\end{itemize}
+
+\section{Related work}
+
+\paragraph{Retrieval augmented generation and structured grounding.}
+RAG improves factuality by conditioning the generator on retrieved passages
+\cite{lewis2020rag}, and hybrid retrieval with fusion readers improves
+evidence utilisation further \cite{izacard2021fid}. Retrieval alone,
+however, enforces neither logical validity nor calibrated trust, and longer
+context windows do not guarantee robust evidence use
+\cite{liu2024lostinthemiddle}. A complementary tradition answers questions
+over a knowledge graph as the primary store (KGQA), enforcing validity
+through graph structure but presuming graph coverage that heterogeneous,
+incomplete DPP corpora do not meet. \Compass\ occupies the ground between:
+retrieval and memory are the primary evidence path, the symbolic layer is
+invoked only on the compliance subset where structured validation adds
+provable value, and the system degrades gracefully where the graph is
+silent.
+
+\paragraph{Memory augmented language models.}
+External memory mechanisms range from differentiable controllers
+\cite{graves2014ntm,graves2016dnc} to nonparametric retrieval in language
+modelling \cite{khandelwal2020knnlm}; at scale, RETRO substitutes an
+external corpus for parametric capacity \cite{borgeaud2022retro}, recurrent
+memory transformers carry state beyond a single window \cite{bulatov2022rmt},
+and agentic systems accumulate experience stores \cite{wang2023voyager}.
+These lines optimise capacity or skill acquisition. Our requirement differs:
+what must persist is not experience but \emph{verified facts}, and what
+matters is auditability. \Compass\ therefore uses a deliberately narrow
+memory of validated facts with provenance identifiers, retrieved by
+similarity and merged into the evidence under the same citation discipline
+as retrieved passages.
+
+\paragraph{Neurosymbolic reasoning and verifiability.}
+Neurosymbolic approaches combine learning with explicit inference to improve
+verifiability and compositional generalisation
+\cite{riegel2020lnn,dong2019nlm,manhaeve2018deepproblog}. In ontology
+settings, OWL reasoners such as HermiT provide sound inference over
+structured knowledge \cite{glimm2014hermit}, and the OWL~2 profiles define
+fragments with favourable computational properties
+\cite{motik2009owl2profiles}. In the LLM era, systems such as LINC and
+Logic-LM couple language models to symbolic solvers to improve logical
+reasoning \cite{olausson2023linc,pan2023logiclm}; we adopt Logic-LM as a
+baseline. What this literature rarely reports is where symbolic machinery
+actually applies in a deployed workload and how reliable it is when it does.
+We contribute exactly these measurements: symbolic \emph{coverage} (the
+fraction of questions on which rules fire) and symbolic \emph{precision}
+(correctness conditional on firing). This turns auditability from a design
+claim into an empirically testable property and motivates the word
+\emph{targeted}: rules fire on a small fraction of the workload with high
+observed conditional precision (Section~\ref{sec:reliability}).
+
+\paragraph{Calibration, selective prediction, and faithful reasoning.}
+Neural networks are frequently miscalibrated
+\cite{guo2017calibration,desai2020calibration}; selective prediction
+formalises abstention under coverage constraints
+\cite{geifman2019selectivenet,kamath2020selectiveqa}, with AURC as a
+one-number summary \cite{traub2024aurc}. Natural language reasoning can be
+effective yet unfaithful to the model's actual decision process
+\cite{turpin2023unfaithfulcot,lanham2023faithfulnesscot}, and tool use in
+the style of ReAct improves factuality without formal guarantees or
+calibration \cite{yao2022react}. \Compass\ draws these threads together:
+the answerer is constrained to sanctioned evidence, symbolic conclusions
+carry traces independent of rationale fluency, and abstention is evaluated
+with the selective prediction toolkit rather than asserted.
+
+\paragraph{Positioning.}
+Prior work provides the ingredients (retrieval, memory, symbolic inference,
+calibration), but to our knowledge no product record querying system
+composes them behind one answer or abstain interface whose components are
+individually auditable and whose selective behaviour is measured end to end.
+That composition and its evaluation protocol are this paper's contributions.
+
+\section{Problem formulation and metrics}
+Given a query $x$ about a specific product and its documentation, the system
+outputs either (i) an answer $y$ with provenance (citations and/or a rule
+trace) or (ii) an abstention symbol $\bot$. The system operates over a domain
+corpus (technical documents) and a structured knowledge layer (ontology and
+facts), and targets workflows where reliability is critical and ``don't
+know'' is safer than a confident but unsupported answer. A confidence score
+$c(x)\in[0,1]$ and a threshold $\tau$ define a selective predictor that
+returns $y(x)$ when $c(x)\ge\tau$ and $\bot$ otherwise; \emph{coverage} is
+the fraction of instances answered and \emph{risk} is the error rate among
+answered instances. On datasets where some questions
+are unanswerable by design, we additionally distinguish \emph{decision
+accuracy}, which credits a correct answer or an abstention on an unanswerable
+question, from \emph{answer accuracy}, correctness among answered questions
+only, and we report abstention precision and recall against ground truth
+answerability. We summarise the risk--coverage trade-off with AURC; lower
+values indicate that errors concentrate at low confidence and can be avoided
+by abstention \cite{kamath2020selectiveqa,traub2024aurc}. Traub et al.\ also
+propose AUGRC as a refinement of AURC; we retain AURC for comparability with
+prior selective QA work and release per instance predictions so that
+alternative summaries can be recomputed. Operating points are policy
+choices (a mandated minimum coverage in customer support, stricter abstention
+in compliance auditing), so we report the entire curve rather than a single
+threshold.
+
+Calibration is reported as expected calibration error (ECE), the weighted
+average gap between per-bin confidence and per-bin accuracy
+\cite{guo2017calibration,desai2020calibration}. Because calibration is not
+arithmetically implied by high accuracy, we treat it as a separate
+reliability axis. To avoid over-interpreting small differences we report
+Wilson score 95\% confidence intervals \cite{wilson1927probable}, which are
+well behaved near 0 and 1, and McNemar's exact test for paired comparisons on
+identical question sets \cite{mcnemar1947note}. Finally, we report symbolic
+\emph{coverage} (fraction of questions triggering at least one rule) and
+symbolic \emph{precision} (correctness conditional on firing), isolating
+where explicit rules contribute and where the system relies on retrieval or
+memory.
+
+\section{The COMPASS architecture}
+
+\subsection{Design principles and inference path}
+Three principles shape the design. \emph{Evidence before generation}: the
+answerer is instructed to compose only from evidence that the system has
+explicitly gathered and sanctioned, and every claim carries a provenance
+identifier from that evidence; this is a design discipline enforced through
+prompting and audited through the surfaced citations, not a formal guarantee
+that parametric knowledge cannot leak. \emph{Targeted
+validity}: symbolic machinery is applied exactly where structured facts and
+rules exist, so that its guarantees are real rather than diluted over
+questions it cannot check. \emph{Selective output}: every response passes
+through a calibrated answer or abstain decision, so the system's confidence
+is a measured quantity with an operating point, not a stylistic property of
+generated text.
+
+Figure~\ref{fig:architecture} shows the resulting inference path. A query is
+processed in four stages. (1)~\emph{Evidence acquisition}: hybrid retrieval
+over the document corpus and similarity lookup in the persistent memory store
+assemble candidate evidence. (2)~\emph{Symbolic validation}: if the query
+touches structured facts, the ontology layer evaluates the applicable rules
+and emits conclusions together with traces. (3)~\emph{Composition}: a context
+bound LLM answerer drafts an answer using only the sanctioned evidence, with
+every claim linked to a provenance identifier. (4)~\emph{Decision}: a
+calibration layer maps the evidence signals to a confidence score, and the
+threshold $\tau$ decides between an answer with provenance and a safe
+abstention.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth,height=0.24\textheight,keepaspectratio]{architecture_overview-2.png}
+\caption{The \Compass\ architecture: hybrid evidence acquisition (corpus
+and persistent memory), ontology backed symbolic validation with rule
+traces, a context bound answerer, and a calibration layer with threshold
+$\tau$ yielding an answer with provenance or an abstention.}
+\label{fig:architecture}
+\end{figure}
+
+\subsection{Evidence acquisition: hybrid retrieval and persistent memory}
+The retriever combines sparse lexical and dense embedding search with
+optional reranking, consistent with evidence that hybrids outperform purely
+dense or sparse retrieval on heterogeneous corpora
+\cite{lewis2020rag,izacard2021fid}. Every returned passage carries a
+provenance identifier. The persistent memory stores validated facts (for
+example extracted component types, test reports, and dates), each with its
+own provenance; at query time, memory facts are retrieved by semantic
+similarity and merged with the retrieved passages. Memory serves questions
+whose supporting facts entered the documentation long before the current
+interaction, and it reduces dependence on fitting everything into one
+context window.
+
+Facts enter memory through a fixed ingestion path: extraction from a source
+document, normalization, linking to the source via a provenance identifier,
+and validation before storage; facts that fail validation are not stored.
+Stored facts are immutable and carry their provenance and timestamps, so a
+correction supersedes rather than overwrites, and retrieval is scoped by
+product identity to prevent cross product leakage.
+% TODO (authors): verify this lifecycle description against the memory
+% implementation (conflict handling, supersession, scoping) and refine.
+
+A recurring failure of document grounded QA is that the generator mixes
+retrieved evidence with unsupported extrapolation. \Compass\ counters this
+with the \emph{context pack}: a deduplicated set of evidence snippets and
+memory facts, each annotated with a provenance identifier. The answerer is
+constrained to the pack; identifiers are surfaced as citations in the answer
+and logged for audit. The pack is thus both the grounding mechanism and the
+audit trail: what the model saw is exactly what a reviewer can inspect.
+
+\subsection{Targeted symbolic validation over a DPP ontology}
+Some DPP questions cannot be answered by finding the right sentence in a
+document, because the answer is not written anywhere. Consider ``which
+compliance standards does this product require?'' The answer depends on
+which components the product contains and on which standard governs each
+component type. It must be \emph{derived} by checking structured conditions
+against structured facts, and a wrong derivation here is a compliance error,
+not a stylistic one. The symbolic layer exists for exactly this class of
+questions.
+
+\emph{From documents to a fact graph.} The input to the layer is the set of
+product facts that were extracted from the documentation and passed the
+validation step of Section~4.2, for example ``product $P$ contains cell
+$C$'' or ``the safety test report for $C$ is dated 2024-06-12.'' Each such
+fact is stored as an RDF triple, a subject--predicate--object statement such
+as $(P, \texttt{hasComponent}, C)$. The collection of all triples known
+about a product is its \emph{fact graph}: a machine readable summary of what
+the documentation asserts, on which conditions can be checked mechanically.
+
+\emph{The ontology.} A bag of triples is only useful if all parties agree on
+what its terms mean, and that shared vocabulary is what the ontology
+provides. It declares which classes of entities exist and which relations
+may connect them. Our DPP ontology has five core classes, matching what a
+product passport must describe: the \textsf{Product} itself, its
+\textsf{Component}s, the \textsf{Material}s they use, the
+\textsf{ProcessStep}s of their life cycle, and the \textsf{Standard}s they
+must satisfy. Five object properties connect these classes
+(\texttt{hasComponent}, \texttt{usesMaterial}, \texttt{requiresCompliance},
+\texttt{requiresStep}, \texttt{conformsTo}). Domain modules for battery,
+printing hardware, and heating systems (plus textiles and food for the
+generalization study) extend the core with domain specific component classes
+and standards. The design is informed by the concepts and competency
+questions of the CIRPASS-2 Ontology Requirements Specification for an EU DPP
+core ontology \cite{cirpass2}, and each core class carries a
+\texttt{skos:closeMatch} or \texttt{skos:exactMatch} link to the
+corresponding proposed CIRPASS-2 concept. These SKOS links are a descriptive
+crosswalk for interoperability and audit; they are not used for logical
+inference, which would require verified \texttt{owl:equivalentClass} axioms.
+
+\emph{Deriving obligations.} Given the fact graph and the vocabulary, the
+layer derives what follows from them. Obligation rules encode domain
+knowledge of the form ``components of this type are governed by this
+standard'':
+\[
+\texttt{hasComponent}(p,c) \wedge \texttt{type}(c,t) \wedge
+\texttt{governedBy}(t,s) \Rightarrow \texttt{requiresCompliance}(c,s),
+\]
+read as: if product $p$ contains component $c$, $c$ is of type $t$, and type
+$t$ is governed by standard $s$, then $c$ requires compliance with $s$. The
+\texttt{governedBy} relation is asserted in the ontology, so every variable
+in a rule head is bound in its body. To guarantee that this derivation
+always terminates, expressiveness is deliberately restricted to a decidable
+fragment (class and property assertions, subclass and subproperty axioms,
+domain and range restrictions) evaluated under OWL~2~RL semantics
+\cite{motik2009owl2profiles}; entailments are computed by forward chaining
+until no rule adds a new triple, and no description logic classifier is
+invoked at query time.
+
+\emph{Checking completeness.} Deriving new facts is not the same as noticing
+that a required fact is absent, and the second check needs different
+machinery. OWL adopts an open world reading in which an absent triple means
+``unknown,'' not ``false,'' so entailment alone can never conclude that a
+field is missing. Completeness checks are therefore implemented as
+explicitly defined validation rules evaluated under a closed world
+assumption over the finite fact graph: a required field that is absent is
+flagged as missing, and analogous rules flag stale test reports and dates
+outside permitted windows. Validation rules act only as conservative vetoes;
+they never assert new facts.
+
+\emph{Auditable traces.} Whenever rules contribute to an answer, the system
+returns the rule that fired and the triples it matched. An auditor can
+therefore replay the derivation and distinguish rule derived conclusions
+from purely neural generations. The layer is deliberately \emph{targeted}:
+it fires only where structured facts and a matching rule exist, and stays
+silent elsewhere. On the reliability suite, rules fire on 7.96\% of queries
+with an observed conditional precision of 1.000 (Wilson 95\% interval
+$[0.986, 1.000]$; Section~\ref{sec:reliability}).
+
+\subsection{Confidence, calibration, and operating modes}
+The final stage turns everything the system knows about a candidate answer
+into the answer or abstain decision, which requires a scalar confidence
+$c(x)$; the LLM's own generation probability is known to be unreliable as a
+probability \cite{guo2017calibration}. \Compass\ instead aggregates
+signals that each measure a different way an answer can be weak: retrieval
+score margins (was the evidence clearly better than the alternatives?),
+agreement across evidence snippets, whether symbolic rules fired, and
+generation probabilities when available. The resulting raw score
+$\hat{c}(x)$ orders answers but is not yet a probability, so a monotone
+calibrator $g$ is fitted on development data such that among questions with
+calibrated confidence $c(x)=g(\hat{c}(x))$, approximately a fraction $c(x)$
+are correct; isotonic regression is a standard choice
+\cite{zadrozny2002transforming,guo2017calibration}. The threshold $\tau$ is
+selected on a held out split to meet the coverage a deployment policy
+requires and applied unchanged to test data. Each signal is interpretable,
+so an abstention can be explained by what was weak: thin retrieval,
+disagreeing evidence, or an unverifiable structured condition.
+
+The evaluation harness exports ablation \emph{modes}: \RAGBase\ (retrieval
+only), \MemMode\ (adds memory), \SymOnly\ (symbolic only), \MemSymMode\
+(memory and symbolic), \RouterMode\ (supervised router), and \Compass\
+(full). A reinforcement learned router (\RLMode) is reported only for
+completeness; its paired tests show no significant improvement and it is not
+claimed as a contribution.
+
+\section{Experimental setting}
+\subsection{Studies and data}
+We report three complementary studies. (1) A \emph{reliability suite} of
+3,429 DPP aligned questions over three corpora (a battery corpus and two
+partner documentation corpora), categorised as \textbf{logic} (compliance
+questions governed by rules), \textbf{open} (extraction from retrieved
+documents), and \textbf{recall} (persistence over long horizons); counts
+appear in Table~\ref{tab:counts}. The pooled 3,429-question run supports the
+internal mode ablations and selective risk analysis; a scaled release of
+6,270 questions (logic 2,649, open 871, recall 2,750) supports the external
+baseline comparison. This \emph{verified release} is a deterministically
+filtered subset satisfying predefined support and label consistency
+criteria: model independent filters exclude items with malformed or
+ambiguous labels, gold answers not uniquely supported by the source, or
+conflicting knowledge base relations, and the filter definitions and
+exclusion lists ship with the release.
+(2) A \emph{compositional architecture benchmark} of 3,000 questions built
+for this study, whose subtypes require routing across document evidence,
+persistent memory, and structured system state (e.g.,
+\texttt{memory+document}, \texttt{memory+document+symbolic}); it targets
+exactly the multi-source cases that single mechanism systems handle poorly.
+(3) A \emph{generalization study} on Open Food Facts (OFF), a public database
+of 4.5M food products with 210 fields, from which we generated context bound
+evaluation queries spanning nutrition, attribute, missingness,
+sustainability, and fairness types. Every question carries a gold label
+produced by the dataset generators, and correctness is scored by
+deterministic, type specific validators: an open answer must contain the
+normalized gold evidence span, a recall answer must match the gold value or a
+curated alias after canonicalisation of case, punctuation, and whitespace,
+and a logic answer must match the gold label. No LLM judge is involved, so
+all scores are exactly reproducible from the released predictions.
+Abstentions are scored under the metric definitions of Section~3.
+
+\begin{table}[t]
+\centering
+\caption{Reliability suite question counts by corpus and query type in the pooled evaluation (total $n{=}3429$). Partner corpora were collected through the CE-RISE industrial partners.}
+\label{tab:counts}
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.0}
+\begin{tabular}{lrrrr}
+\toprule
+Corpus & Logic & Open & Recall & Total \\
+\midrule
+Battery (public) & 93 & 646 & 331 & 1070 \\
+Printing hardware (partner) & 76 & 749 & 111 & 936 \\
+Heating systems (partner) & 126 & 902 & 395 & 1423 \\
+\midrule
+Total & 295 & 2297 & 837 & 3429 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Baselines}
+In the pooled reliability suite we compare against \RAGBase\ (a strong hybrid
+retrieval baseline) and the ablation modes above. On the verified release and
+in the compositional benchmark we additionally compare against strong
+external baselines: \LongCtx, an oracle context baseline in which a long
+context LLM receives all evidence relevant to each question directly in its
+window \cite{liu2024lostinthemiddle}; \LogicLM, an LLM coupled to a symbolic
+solver \cite{pan2023logiclm}; and, on the verified release, LINC, an LLM
+paired with a first order theorem prover \cite{olausson2023linc}. All systems
+are scored on identical question sets by the same validators, and the exact
+model snapshots, prompts, decoding parameters, and evidence budgets for every
+baseline are exported with the release.
+% TODO (authors): confirm baseline configs (model snapshot, temperature,
+% prompts, token limits) are in the released harness configs. All quantitative results are produced by an
+automated pipeline and exported directly into paper ready tables and figures
+to reduce transcription error and support reproducibility.
+
+\section{Results}
+\label{sec:reliability}
+\subsection{Reliability suite: pooled performance}
+Table~\ref{tab:summary} reports pooled test set performance. All modes
+answer every question in this table; selective behaviour is characterized
+separately by sweeping the confidence threshold, which yields the
+risk--coverage curves and AURC. The final three columns give average pathway
+usage within the shared harness and are not deployment latency benchmarks;
+for \RLMode, per module counters are not separately attributed and its
+printed zeros should be read accordingly. The strongest overall mode is
+\Compass: pooled accuracy 0.9749 (CI 0.9691--0.9796) and AURC 0.0117,
+against 0.8973 (CI 0.8867--0.9071) and AURC 0.5513 for \RAGBase. An exact
+paired McNemar test confirms the gain: \Compass\ corrects 266 instances
+that \RAGBase\ answers incorrectly, with none in the reverse direction
+($p<10^{-6}$); the asymmetry follows from the construction, since \Compass\
+operates on a superset of \RAGBase's evidence.
+
+\begin{table}[t]
+\centering
+\caption{Pooled results on the 3,429-question reliability suite. ``Retrieval use'' and ``Symbolic checks'' denote the average fraction of queries invoking retrieval and rule evaluation; ``Pathway cost'' is an exporter-side proxy in arbitrary units and is not a wall-clock latency measurement.}
+\label{tab:summary}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.0}
+\begin{tabular}{lcccccc}
+\toprule
+Method & Acc. & 95\% CI & AURC & Retrieval & Symbolic & Pathway cost \\
+ &  &  &  & use & checks & (proxy units) \\
+\midrule
+\Compass & 0.9749 & [0.9691, 0.9796] & 0.0117 & 0.934 & 0.080 & 7560 \\
+\RAGBase & 0.8973 & [0.8867, 0.9071] & 0.5513 & 1.000 & 0.000 & 8281 \\
+\RLMode & 0.8965 & [0.8858, 0.9062] & 0.4227 & 0.000 & 0.000 & 17 \\
+\MemSymMode & 0.5777 & [0.5611, 0.5942] & 0.1387 & 0.312 & 0.080 & 9 \\
+\MemMode & 0.5001 & [0.4834, 0.5169] & 0.3469 & 0.312 & 0.000 & 380 \\
+\SymOnly & 0.0965 & [0.0871, 0.1069] & 0.4556 & 0.000 & 0.080 & 3 \\
+\RouterMode & 0.0869 & [0.0779, 0.0968] & 0.4667 & 0.000 & 0.080 & 723 \\
+\BaseMode & 0.0169 & [0.0131, 0.0218] & 0.9915 & 0.000 & 0.000 & 1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Reliability suite: where the gains come from}
+Table~\ref{tab:types} shows a sharp separation by task type. Open questions
+are near ceiling because many are short extractive queries whose answer span
+appears verbatim in the retrieved evidence; we read exact 1.000 values as
+benchmark saturation, not as a claim that open book QA is solved. The
+discriminative setting is \textbf{logic}: \Compass\ lifts accuracy on rule
+governed questions from 0.0102 (\RAGBase) to 0.7085, while \SymOnly\
+reaches 0.9051 at the cost of collapse everywhere else (0.000 open, 0.0765
+recall). \Compass\ thus trades a portion of attainable logic accuracy for
+uniform competence across all three types; closing that gap through better
+routing is future work.
+
+\begin{table}[t]
+\centering
+\caption{Accuracy by query type on the pooled reliability suite. Exact 1.000 values reflect extractive saturation on this frozen snapshot.}
+\label{tab:types}
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.0}
+\begin{tabular}{lccc}
+\toprule
+Method & Logic & Open & Recall \\
+\midrule
+\Compass & 0.7085 & 1.0000 & 1.0000 \\
+\RAGBase & 0.0102 & 1.0000 & 0.9283 \\
+\RLMode & 0.0034 & 1.0000 & 0.9271 \\
+\MemSymMode & 0.7085 & 0.5320 & 0.6571 \\
+\MemMode & 0.0136 & 0.5320 & 0.5842 \\
+\SymOnly & 0.9051 & 0.0000 & 0.0765 \\
+\RouterMode & 0.7932 & 0.0000 & 0.0765 \\
+\BaseMode & 0.1966 & 0.0000 & 0.0000 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The risk--coverage curves (Figure~\ref{fig:riskcov}) show \Compass\
+dominating \RAGBase\ across operating points. The symbolic layer fires on
+273 of 3,429 questions (7.96\%) with no observed false positives
+(conditional precision 1.000, Wilson 95\% interval $[0.986, 1.000]$); the
+firing set is identical in every mode that enables rules. We therefore frame
+the symbolic component as targeted, high precision control over the
+compliance subset, and attribute overall reliability to its combination with
+selective, evidence grounded abstention.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.55\linewidth]{artifacts/risk_coverage.png}
+\caption{Risk--coverage curves on the reliability suite. Lower risk at the same coverage indicates safer selective behaviour.}
+\label{fig:riskcov}
+\end{figure}
+
+\subsection{Verified release: external baselines at scale}
+The pooled suite's logic subset is small (295 questions). The verified
+release scales it ninefold: 2,649 of its 6,270 questions (42\%) are governed
+by rules, and every item has passed the deterministic filters of
+Section~5.1. Table~\ref{tab:verified} reports the comparison. \Compass\
+answers all 6,270 questions correctly (Wilson CI [0.9994, 1.0000]); the
+external baselines land between 0.9488 and 0.9699, with errors concentrated
+on logic for \LongCtx\ (0.9309) and \LogicLM\ (0.9362) and on open
+extraction for LINC (0.9162). Exact McNemar tests on identical rows are
+decisive in every pairing (215, 321, and 189 wins with zero losses;
+$p<10^{-10}$). Two qualifications apply: the filters remove noisy items, so
+the ceiling is attainable by a system that grounds every answer; and
+\Compass\ was rerun on this release after a routing fix, whereas baseline
+predictions were produced once and filtered to the verified rows. The
+comparison nevertheless shows that the logic advantage persists when rule
+governed questions dominate the workload.
+
+\begin{table}[t]
+\centering
+\caption{Accuracy on the verified release ($n{=}6270$; logic 2,649, open 871, recall 2,750). All systems are scored on identical rows by the same validators. McNemar columns give instance wins for \Compass\ / the baseline; all $p<10^{-10}$.}
+\label{tab:verified}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.0}
+\begin{tabular}{lcccccc}
+\toprule
+Method & Acc. & 95\% CI & Logic & Open & Recall & McNemar \\
+\midrule
+\Compass & \textbf{1.0000} & [0.9994, 1.0000] & 1.0000 & 1.0000 & 1.0000 & --- \\
+\LogicLM & 0.9699 & [0.9653, 0.9738] & 0.9362 & 0.9782 & 0.9996 & 189 / 0 \\
+\LongCtx & 0.9657 & [0.9609, 0.9699] & 0.9309 & 0.9656 & 0.9993 & 215 / 0 \\
+LINC & 0.9488 & [0.9431, 0.9540] & 0.9536 & 0.9162 & 0.9545 & 321 / 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Compositional architecture benchmark}
+The reliability suite saturates on open and recall questions, limiting its
+power to separate architectures. We therefore evaluate on a 3,000-question
+benchmark whose subtypes require composing evidence across documents,
+memory, and structured state. Two properties qualify the result: the
+benchmark is controlled and generated, so a system with all three evidence
+mechanisms can in principle reach the ceiling, and it is released in full
+with its generation scripts. Table~\ref{tab:arch} reports the outcome.
+\Compass\ is correct on all 3,000 questions, whereas the baselines degrade
+exactly where composition is required (\LongCtx\ 0.684, \LogicLM\ 0.640 on
+\texttt{memory+document+symbolic}) while remaining near perfect on single
+mechanism subtypes.
+
+\begin{table}[t]
+\centering
+\caption{Accuracy on the 3,000-question compositional benchmark. The gap concentrates on multi-source subtypes (bold), where baselines must combine document, memory, and symbolic evidence.}
+\label{tab:arch}
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.0}
+\begin{tabular}{lccc}
+\toprule
+Subtype & \Compass & \LongCtx & \LogicLM \\
+\midrule
+Overall (3000) & \textbf{1.000} & 0.958 & 0.940 \\
+\midrule
+atomic\_verified (1500) & 1.000 & 0.985 & 0.971 \\
+memory+document (225) & 1.000 & 0.871 & 0.751 \\
+memory+document+symbolic (225) & \textbf{1.000} & \textbf{0.684} & \textbf{0.640} \\
+memory+symbolic compliance (375) & 1.000 & 1.000 & 1.000 \\
+memory+symbolic component (375) & 1.000 & 0.989 & 1.000 \\
+memory+symbolic step (300) & 1.000 & 1.000 & 1.000 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Generalization to a different domain: Open Food Facts}
+We apply the architecture to Open Food Facts to test transfer to an unseen
+schema; the core transfers without retraining, with adaptation limited to
+schema mapping and a food domain ontology module. Real OFF data is highly
+incomplete (environmental score present for 16.6\% of products, Nutri-Score
+for 30.4\%), so many queries are unanswerable by design, and
+Table~\ref{tab:off} therefore separates decision accuracy from answer
+accuracy (Section~3). Over 4,021 queries the system attains 0.972 decision
+accuracy and 0.963 answer accuracy at 0.730 coverage, with ECE 0.021 and
+AURC 0.025; abstention precision is 0.998 and recall 1.000 against ground
+truth field availability. Abstentions concentrate on sustainability and
+nutrition queries, where required fields are systematically missing; on
+sustainability, answer accuracy among the 38\% answered is 0.787, which the
+low confidence correctly reflects. The fairness subset ($n{=}19$) is
+included only for completeness. Calibration here is far better than in
+domain (Section~\ref{sec:disc}), indicating the pipeline is effective when
+confidence signals align with evidence availability.
+
+\begin{table}[t]
+\centering
+\caption{Results on Open Food Facts (row context evaluation, $n{=}4021$). Decision accuracy credits a correct answer or an abstention on an unanswerable query; answer accuracy is correctness among answered queries; coverage is the fraction answered. The system abstains where required fields are systematically missing (sustainability, nutrition) and answers where evidence is present (attribute, missingness).}
+\label{tab:off}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.0}
+\begin{tabular}{lcccccc}
+\toprule
+Query type & $n$ & Dec.\ acc. & Ans.\ acc. & Coverage & ECE & AURC \\
+\midrule
+All & 4021 & 0.972 & 0.963 & 0.730 & 0.021 & 0.025 \\
+\midrule
+nutrition & 1450 & 1.000 & 1.000 & 0.696 & 0.004 & 0.000 \\
+attribute & 1146 & 0.998 & 1.000 & 0.998 & 0.002 & 0.000 \\
+missingness & 367 & 0.929 & 0.929 & 1.000 & 0.071 & 0.084 \\
+sustainability & 1039 & 0.919 & 0.787 & 0.380 & 0.060 & 0.071 \\
+fairness & 19 & 1.000 & 1.000 & 1.000 & 0.000 & 0.000 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Discussion and limitations}
+\label{sec:disc}
+\paragraph{What drives reliability.}
+The discriminative signals are logic accuracy, the compositional benchmark,
+and the selective risk curves, not pooled open accuracy, which saturates
+because retrieved evidence often contains the answer verbatim. Reliability
+comes from the \emph{combination} of targeted, high precision symbolic
+control (perfect observed precision on the 7.96\% rule fired subset; large
+gains on logic and multi-source composition) and selective, evidence
+grounded abstention (low AURC, with confidence well calibrated on the unseen
+schema but not yet in domain). Neither mechanism alone explains the gains.
+
+\paragraph{Calibration.}
+In domain ECE remains high even for the strongest accuracy configuration:
+with 10 bin ECE, \Compass\ scores 0.525 and \RAGBase\ 0.487 on the
+reliability suite, motivating conservative operating points and further
+uncertainty estimation.
+The Open Food Facts study shows the calibration pipeline performs well (ECE
+0.021) when confidence signals align with evidence availability, so we treat
+calibration as a measured reliability axis that is domain sensitive rather
+than a uniformly solved property.
+
+\paragraph{In-use evidence.}
+\Compass\ is exposed to its target users through the CE-RISE DPP workbench:
+practitioners query real partner documentation and see, for every answer, the
+retrieved memory and passages, the fired ontology rules and derived triples,
+the calibrated confidence, and the abstain status. The audit panel is the
+architecture made visible: the same provenance identifiers and rule traces
+that the harness scores are what a compliance practitioner inspects. The
+workbench has been demonstrated live to consortium partners outside the
+development team; production deployment, with logged abstentions and
+overrides, is the next step.
+
+\paragraph{Scope.}
+The reliability suite covers three DPP corpora; the verified release scales
+the logic subset from 295 to 2,649 questions, and the compositional and OFF
+studies extend the evaluation to multi-source reasoning and an unseen
+schema. The gap between \Compass\ and \SymOnly\ on the pooled suite's
+logic questions (0.7085 vs.\ 0.9051) reflects imperfect routing on that
+snapshot; the verified release, evaluated after a routing fix, closes it.
+Generalisation to further product categories and shifting regulatory
+constraints remains future work, and compliance critical decisions should
+retain human oversight.
+
+\section{Reproducibility and ethics}
+\paragraph{Reproducibility.}
+Evaluation outputs are generated by an automated harness and exported
+directly into the tables and figures above. We release a public repository
+containing the DPP ontology with its CIRPASS-2 crosswalk and per-domain
+modules, the
+rule set, the evaluation harness, the dataset construction scripts for the
+compositional benchmark, and version identifiers and checksums for data and
+model checkpoints.
+% TODO (authors): insert the public repository URL (or Zenodo DOI) here
+% before submission; the availability claim needs a resolvable link.
+The partner
+document corpora cannot be redistributed, but the generated question sets,
+gold labels, and per instance prediction files for every mode are included in
+the release artifacts, so all reported statistics can be recomputed without
+access to the raw documents.
+
+\paragraph{Ethics and responsible use.}
+This work targets factual, document grounded product information and
+supports abstention when evidence is missing. The system can still fail
+under distribution shift (new categories, altered documentation practices,
+changed regulations) and should be used with human oversight for compliance
+critical decisions; deployments should expose provenance by default and log
+abstentions and overrides for audit.
+
+\section{Conclusion}
+We presented \Compass, an architecture for reliable and auditable querying
+of Digital Product Passports that composes hybrid retrieval, persistent
+memory, and a targeted symbolic layer backed by a DPP ontology informed by
+the CIRPASS-2 requirements specification, behind an explicit answer or
+abstain interface. Across three studies, \Compass\ substantially improves
+selective risk and rule governed accuracy over a strong retrieval baseline,
+reaches the ceiling of the verified release and the compositional benchmark
+where strong external baselines leave 127 to 321 errors, and transfers to
+the unseen Open Food Facts schema with well calibrated confidence (ECE
+0.021). The
+results show that pairing targeted symbolic control with calibrated
+abstention yields trustworthy, auditable querying of structured product
+documentation, while in domain probability calibration remains a measurable
+open challenge.
+
+\paragraph{Acknowledgements.}
+This work was carried out within the CE-RISE project, funded by the European
+Union's Horizon Europe research and innovation programme.
+% TODO (authors): insert the grant agreement number and any partner
+% acknowledgements required by the consortium agreement.
+
+\paragraph{Generative AI use disclosure.}
+During manuscript preparation, generative AI tools were used only for minor
+language support (spelling, grammar, and limited phrasing refinement). They
+were not used for the research contribution, experimental design, result
+generation, interpretation, or conclusions. The authors reviewed and approved
+the final manuscript and take full responsibility for its content.
+
+\bibliographystyle{splncs04}
+\bibliography{refs}
+
+\end{document}

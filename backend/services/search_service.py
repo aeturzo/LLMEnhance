@@ -38,7 +38,7 @@ from backend.services.embedding_service import get_embedder, EmbeddingService
 # Persistence paths (absolute, resolved from repo root)
 # ---------------------------------------------------------------------------
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-SEARCH_META_PATH = os.path.join(REPO_ROOT, "search.meta.jsonl")  # JSONL rows: {"text", "meta", "timestamp"}
+SEARCH_META_PATH = os.getenv("SEARCH_META_PATH") or os.path.join(REPO_ROOT, "search.meta.jsonl")  # JSONL rows: {"text", "meta", "timestamp"}
 
 # ---------------------------------------------------------------------------
 # Helpers

@@ -1,0 +1,125 @@
+{
+  "schema_version": "0.2",
+  "product_id": "fairphone_4",
+  "display_name": "Fairphone 4",
+  "brand": "Fairphone",
+  "model": "Fairphone 4 (FP4)",
+  "category": "smartphone",
+  "product_class_key": "smartphone",
+  "ontology_class": "carb:Smartphone",
+  "calculation_scope": {
+    "default_basis": "per_device_lifecycle",
+    "supported_basis": ["per_device_lifecycle"],
+    "default_reporting_unit": "kg CO2e",
+    "compliance_standards": ["ISO 14040", "ISO 14044"],
+    "notes": [
+      "LCA performed by Fraunhofer IZM (2022).",
+      "Modular design with replaceable parts (modularity overhead 0.744 kg CO2e = 2.3% of production)."
+    ]
+  },
+  "defaults": {
+    "report_year": 2021,
+    "use_country_code": "DE",
+    "lifetime_years": 5.0,
+    "annual_energy_kwh": 1.6
+  },
+  "identity": {
+    "manufacturer": "Fairphone B.V.",
+    "product_family": "Fairphone 4",
+    "declared_function": "Modular repairable smartphone, 5G",
+    "official_spec_extracted": true
+  },
+  "source_refs": [
+    {
+      "id": "fairphone_4_lca_2022",
+      "path": "totalCarbonfootprintcalculation/fairphone_4_LCA_2022_extract.md",
+      "kind": "official_product_pdf",
+      "extract_status": "extracted",
+      "upstream_url": "https://www.fairphone.com/wp-content/uploads/2022/07/Fairphone-4-Life-Cycle-Assessment-22.pdf"
+    },
+    {
+      "id": "fraunhofer_izm",
+      "path": "https://www.izm.fraunhofer.de/",
+      "kind": "lca_practitioner",
+      "extract_status": "curated_web_observation"
+    }
+  ],
+  "observed_facts": {
+    "product_mass_kg": {
+      "value": 0.225,
+      "unit": "kg",
+      "status": "exact",
+      "source_ref_ids": ["fairphone_4_lca_2022"]
+    },
+    "lifecycle_total_kg_co2e_declared": {
+      "value": 43.0,
+      "unit": "kg CO2e",
+      "status": "exact",
+      "source_ref_ids": ["fairphone_4_lca_2022"]
+    },
+    "recycled_plastic_pct": {
+      "value": 50.0,
+      "unit": "%",
+      "status": "exact",
+      "source_ref_ids": ["fairphone_4_lca_2022"]
+    }
+  },
+  "life_cycle_inputs": {
+    "raw_materials": [
+      {
+        "material_key": "smartphone_composite_production_repairable",
+        "mass_kg": 0.225,
+        "factor_value_kg_co2e_per_kg": 168.0,
+        "status": "grounded_via_lca_reverse_engineering",
+        "source_ref_ids": ["fairphone_4_lca_2022"],
+        "notes": [
+          "Composite factor calibrated to ~37.8 kg CO2e production share (88% of 43 kg total).",
+          "Lower than Apple equivalent due to recycled content + simpler chipset."
+        ]
+      }
+    ],
+    "transport_legs": [
+      {
+        "leg_id": "factory_to_market_air",
+        "mode": "air",
+        "distance_km": 9000.0,
+        "mass_kg": 0.4,
+        "factor_value_kg_co2e_per_ton_km": 0.870,
+        "status": "estimated",
+        "source_ref_ids": ["fairphone_4_lca_2022"],
+        "notes": ["Press-release notes increased air freight share during COVID chipset crisis."]
+      }
+    ],
+    "use_phase": {
+      "annual_energy_kwh": 1.6,
+      "country_code": "DE",
+      "lifetime_years": 5.0,
+      "status": "estimated",
+      "source_ref_ids": ["fairphone_4_lca_2022"],
+      "notes": ["Fairphone targets 5-year use; published 31% annual reduction at 5 yr vs 3 yr."]
+    },
+    "end_of_life": {
+      "mass_kg": 0.225,
+      "recycling_rate_pct": 70.0,
+      "incineration_rate_pct": 20.0,
+      "landfill_rate_pct": 10.0,
+      "route_factors": {
+        "recycling": {"factor_value_kg_co2e_per_kg": 0.18, "source_ref": "eol_recycling_mixed_electronics"},
+        "incineration": {"factor_value_kg_co2e_per_kg": 0.35, "source_ref": "eol_incineration_mixed_electronics"},
+        "landfill": {"factor_value_kg_co2e_per_kg": 0.12, "source_ref": "eol_landfill_mixed_electronics"}
+      },
+      "status": "estimated",
+      "notes": ["Modular design improves end-of-life recoverability."]
+    }
+  },
+  "estimation_profile": {
+    "status": "estimate_ready",
+    "uncertainty_defaults_pct": {
+      "raw_materials": 18.0,
+      "transportation": 30.0,
+      "use_phase": 25.0,
+      "end_of_life": 35.0,
+      "total": 18.0
+    }
+  }
+}

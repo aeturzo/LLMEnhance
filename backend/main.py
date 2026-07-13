@@ -7,11 +7,13 @@ from fastapi.middleware.cors import CORSMiddleware
 
 
 # --- Strictly require the symbolic reasoner ---------------------------------
-from backend.services.symbolic_reasoning_service import build_reasoner  # must exist
+from backend.services.symbolic_reasoning_service import build_reasoner, SUPPORTED_DOMAINS  # must exist
 
 # --- Routers ----------------------------------------------------------------
 from backend.api.solve import router as solve_router
+from backend.api.solve_auto import router as solve_auto_router
 from backend.api.solve_rl import router as rl_router
+from backend.api.carbon import router as carbon_router
 
 # If you added seeding endpoints earlier, uncomment these:
 from backend.api.memory import router as memory_router
@@ -44,10 +46,13 @@ app.add_middleware(
 @app.on_event("startup")
 async def on_startup() -> None:
     log = logging.getLogger("backend.main")
-    log.info("Initializing symbolic reasoner…")
-    # Reasoner is required; if this raises, let it crash so you see the real error.
-    app.state.reasoner = build_reasoner(run_owl_rl=True)  # adjust arg name if yours differs
-    log.info("Symbolic reasoner initialized.")
+    log.info("Initializing symbolic reasoners…")
+    reasoners = {}
+    for domain in SUPPORTED_DOMAINS:
+        reasoners[domain] = build_reasoner(run_owl_rl=True, domain=domain)
+    app.state.reasoners = reasoners
+    app.state.reasoner = reasoners["battery"]
+    log.info("Symbolic reasoners initialized for domains: %s", ", ".join(sorted(reasoners.keys())))
 
 # --- Health -----------------------------------------------------------------
 @app.get("/", tags=["Health"])
@@ -56,6 +61,8 @@ def health():
 
 # --- Routes -----------------------------------------------------------------
 app.include_router(solve_router)      # POST /solve
+app.include_router(solve_auto_router) # POST /solve_auto
 app.include_router(rl_router)       
+app.include_router(carbon_router)     # POST /carbon/calculate
 app.include_router(memory_router)     # POST /memory/put   (optional seeding)
 app.include_router(ingest_router)     # POST /ingest/put   (optional seeding)

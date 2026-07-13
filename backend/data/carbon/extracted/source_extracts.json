@@ -1,0 +1,67 @@
+{
+  "pdf_sources": [
+    {
+      "source_id": "raw_calc_process",
+      "input_path": "totalCarbonfootprintcalculation/Calculation process .pdf",
+      "output_path": "backend/data/carbon/extracted/calculation_process.txt",
+      "status": "extracted",
+      "characters": 826,
+      "error": null
+    },
+    {
+      "source_id": "raw_ontology_pdf",
+      "input_path": "totalCarbonfootprintcalculation/Ontology.pdf",
+      "output_path": "backend/data/carbon/extracted/ontology.txt",
+      "status": "extracted",
+      "characters": 16354,
+      "error": null
+    },
+    {
+      "source_id": "raw_lexmark_epd_note",
+      "input_path": "totalCarbonfootprintcalculation/env-epd_21_1683665824.pdf",
+      "output_path": "backend/data/carbon/extracted/env_epd_21_1683665824.txt",
+      "status": "extracted",
+      "characters": 3101,
+      "error": null
+    },
+    {
+      "source_id": "raw_lcd_monitor_example",
+      "input_path": "totalCarbonfootprintcalculation/LCD monitor.pdf",
+      "output_path": "backend/data/carbon/extracted/lcd_monitor.txt",
+      "status": "extracted",
+      "characters": 3997,
+      "error": null
+    },
+    {
+      "source_id": "raw_product_pdf",
+      "input_path": "totalCarbonfootprintcalculation/Lexmark MX431adn.pdf",
+      "output_path": null,
+      "status": "unreadable",
+      "characters": 0,
+      "error": "DependencyError: cryptography>=3.1 is required for AES algorithm"
+    }
+  ],
+  "workbooks": {
+    "electricity_workbook": {
+      "source": "totalCarbonfootprintcalculation/CoM-Emission-factors-for-national-electricity-2024.xlsx",
+      "rows_written": 958,
+      "country_count": 30,
+      "min_year": 1990,
+      "max_year": 2021,
+      "skipped_non_numeric": 2
+    },
+    "ef_workbook": {
+      "source": "totalCarbonfootprintcalculation/EF-LCIAMethod_CF(EF-v3.1).xlsx",
+      "status": "inspected",
+      "sheet_names": [
+        "hints",
+        "flows",
+        "flowsOther",
+        "lciamethods",
+        "lciamethods_CF",
+        "UnitGroups",
+        "FlowProperties"
+      ]
+    }
+  }
+}

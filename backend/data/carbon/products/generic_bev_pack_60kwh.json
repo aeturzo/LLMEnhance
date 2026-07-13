@@ -1,0 +1,145 @@
+{
+  "schema_version": "0.2",
+  "product_id": "generic_bev_pack_60kwh",
+  "display_name": "Generic BEV Pack (60 kWh)",
+  "brand": "Generic",
+  "model": "60 kWh Li-ion pack (chemistry-mix default)",
+  "category": "ev_battery",
+  "product_class_key": "ev_battery",
+  "ontology_class": "carb:EVBattery",
+  "calculation_scope": {
+    "default_basis": "per_pack_lifecycle",
+    "supported_basis": ["per_pack_lifecycle"],
+    "default_reporting_unit": "kg CO2e",
+    "compliance_standards": ["EU Batteries Regulation 2023/1542", "Argonne R&D GREET"],
+    "notes": [
+      "Use case: traction pack for a 60 kWh BEV driven 200,000 km at 0.18 kWh/km.",
+      "Default chemistry: sales-weighted mix per IEA 2024."
+    ]
+  },
+  "defaults": {
+    "report_year": 2021,
+    "use_country_code": "DE",
+    "lifetime_years": 12.0,
+    "annual_energy_kwh": 3000.0,
+    "pack_capacity_kwh": 60.0,
+    "pack_chemistry": "mix"
+  },
+  "identity": {
+    "manufacturer": "Generic (assembly varies)",
+    "product_family": "BEV traction battery pack",
+    "declared_function": "60 kWh lithium-ion traction battery for passenger BEV",
+    "official_spec_extracted": false
+  },
+  "source_refs": [
+    {
+      "id": "ev_battery_lca_summary",
+      "path": "totalCarbonfootprintcalculation/ev_battery_LCA_summary.md",
+      "kind": "meta_analysis",
+      "extract_status": "extracted"
+    },
+    {
+      "id": "iea_ev_lca_2024",
+      "path": "https://www.iea.org/reports/global-ev-outlook-2024/outlook-for-emissions-reductions",
+      "kind": "primary_source_meta",
+      "extract_status": "curated_web_observation"
+    },
+    {
+      "id": "argonne_greet_2024",
+      "path": "https://greet.anl.gov/files/batteries_lca",
+      "kind": "primary_source_meta",
+      "extract_status": "curated_web_observation"
+    },
+    {
+      "id": "eu_batteries_regulation",
+      "path": "https://eur-lex.europa.eu/eli/reg/2023/1542/oj/eng",
+      "kind": "regulation",
+      "extract_status": "curated_web_observation"
+    }
+  ],
+  "observed_facts": {
+    "product_mass_kg": {
+      "value": 350.0,
+      "unit": "kg",
+      "status": "estimated",
+      "source_ref_ids": ["ev_battery_lca_summary"],
+      "notes": ["Typical mass of a 60 kWh pack (~5.8 kg/kWh including casing, BMS, cooling)."]
+    },
+    "pack_capacity_kwh": {
+      "value": 60.0,
+      "unit": "kWh",
+      "status": "exact",
+      "source_ref_ids": ["ev_battery_lca_summary"]
+    },
+    "lifecycle_total_kg_co2e_declared": {
+      "value": 14400.0,
+      "unit": "kg CO2e",
+      "status": "estimated",
+      "source_ref_ids": ["ev_battery_lca_summary"],
+      "notes": ["Cradle-to-grave: 5400 production + 9000 use-phase (DE 2021 grid) + 0 EoL net."]
+    }
+  },
+  "life_cycle_inputs": {
+    "raw_materials": [
+      {
+        "material_key": "li_ion_pack_mix",
+        "mass_kg": 60.0,
+        "factor_value_kg_co2e_per_kg": 90.0,
+        "status": "grounded_via_public_meta_analysis",
+        "source_ref_ids": ["iea_ev_lca_2024", "ev_battery_lca_summary"],
+        "notes": [
+          "activity_value is the pack capacity in kWh (not mass) because pack-level factors are per-kWh.",
+          "60 kWh × 90 kg CO2e/kWh = 5400 kg CO2e production.",
+          "Override material_key with 'li_ion_pack_lfp' (×72.8) or 'li_ion_pack_nmc' (×110) for chemistry-specific analysis."
+        ]
+      }
+    ],
+    "transport_legs": [
+      {
+        "leg_id": "pack_factory_to_oem",
+        "mode": "truck",
+        "distance_km": 1500.0,
+        "mass_kg": 350.0,
+        "factor_value_kg_co2e_per_ton_km": 0.180,
+        "status": "estimated",
+        "notes": ["Battery cell factories typically co-located with auto OEMs (Hungary, Sweden)."]
+      }
+    ],
+    "use_phase": {
+      "annual_energy_kwh": 3000.0,
+      "country_code": "DE",
+      "lifetime_years": 12.0,
+      "status": "estimated",
+      "source_ref_ids": ["ev_battery_lca_summary"],
+      "notes": [
+        "200,000 km / 12 yr × 0.18 kWh/km = 3000 kWh/yr charging energy.",
+        "Use-phase result is highly sensitive to grid mix — see ev_battery_LCA_summary.md."
+      ]
+    },
+    "end_of_life": {
+      "mass_kg": 350.0,
+      "recycling_rate_pct": 50.0,
+      "incineration_rate_pct": 0.001,
+      "landfill_rate_pct": 5.0,
+      "route_factors": {
+        "recycling": {"factor_value_kg_co2e_per_kg": 0.45, "source_ref": "eol_battery_recycling_li_ion"},
+        "landfill": {"factor_value_kg_co2e_per_kg": 0.20, "source_ref": "eol_battery_landfill_li_ion"}
+      },
+      "status": "estimated",
+      "notes": [
+        "EU Batteries Regulation requires increasing recycled-content targets.",
+        "Remaining 45% modelled as second-life / repurpose (zero direct emission)."
+      ]
+    }
+  },
+  "estimation_profile": {
+    "status": "estimate_ready",
+    "uncertainty_defaults_pct": {
+      "raw_materials": 22.0,
+      "transportation": 30.0,
+      "use_phase": 35.0,
+      "end_of_life": 40.0,
+      "total": 28.0
+    }
+  }
+}

@@ -3,6 +3,7 @@
 Thumbs.db
 *.swp
 *.swo
+~$*
 *.code-workspace
 .idea/
 .vscode/
@@ -41,6 +42,8 @@ logs/
 temp_env*.sh
 temporay_enviornment.rtf
 temporay_environment.rtf
+openApikey.rtf
+*apikey*.rtf
 *.key
 *.pem
 *.p12
@@ -104,3 +107,39 @@ data/cache/**
 !data/cache/.gitkeep
 data/tmp/**
 !data/tmp/.gitkeep
+
+# ---- Cleanup-script aliases (auto-deleted by scripts/cleanup_repo.sh) ----
+debug_bundle.txt
+repo_snapshot.txt
+diag_bundle.zip
+diag_pack/
+artifacts.zip
+frontend.zip
+*.bak
+# Empty placeholder marker files (workflow leftovers)
+/done
+/echo
+/import
+/items
+
+# ---- Independent projects (published from their own repositories) ----
+/CE-RISE-Demo/
+/bias_aware_qa/
+
+# ---- Local paper experiments and source-document archive ----
+# Keep these on disk; publish selected, frozen outputs separately (for example,
+# in a paper-results release or archival dataset) rather than in the code repo.
+/experiments/
+/totalCarbonfootprintcalculation/
+
+# ---- Historical generated release bundles ----
+/release/20251102_222146/
+/release/20251103_212056/
+/release/release_20250902_215155/tables/summary_latest.csv
+
+# Scratch marker created by local write checks.
+/_test_touch_marker
+
+# Local maintenance helper; it traverses nested projects and is intentionally
+# not part of the distributable main-project source.
+/scripts/cleanup_repo.sh

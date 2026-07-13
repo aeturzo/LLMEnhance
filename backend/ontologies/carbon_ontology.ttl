@@ -1,0 +1,227 @@
+@prefix carb: <http://example.com/carbon#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+carb:CarbonOntology a owl:Ontology ;
+  rdfs:label "Carbon Footprint Sidecar Ontology" ;
+  rdfs:comment "Product-generic carbon-footprint schema. Defines a product class hierarchy and a stage-wise activity-times-factor calculation model that is reusable across printers, smartphones, laptops, heat pumps, and EV batteries." ;
+  owl:versionInfo "0.2.0" .
+
+### Classes — product hierarchy (generic across DPP categories)
+carb:Product a owl:Class ;
+  rdfs:label "Product" ;
+  rdfs:comment "Any artefact whose lifecycle carbon footprint we model." .
+carb:ElectronicDevice a owl:Class ; rdfs:subClassOf carb:Product ; rdfs:label "Electronic device" .
+carb:OfficeEquipment a owl:Class ; rdfs:subClassOf carb:ElectronicDevice ; rdfs:label "Office equipment" .
+carb:Printer a owl:Class ; rdfs:subClassOf carb:OfficeEquipment ; rdfs:label "Printer" .
+carb:Smartphone a owl:Class ; rdfs:subClassOf carb:ElectronicDevice ; rdfs:label "Smartphone" .
+carb:Laptop a owl:Class ; rdfs:subClassOf carb:ElectronicDevice ; rdfs:label "Laptop computer" .
+carb:Display a owl:Class ; rdfs:subClassOf carb:ElectronicDevice ; rdfs:label "Display monitor" .
+carb:HVACEquipment a owl:Class ; rdfs:subClassOf carb:Product ; rdfs:label "HVAC equipment" .
+carb:HeatPump a owl:Class ; rdfs:subClassOf carb:HVACEquipment ; rdfs:label "Heat pump" .
+carb:AirSourceHeatPump a owl:Class ; rdfs:subClassOf carb:HeatPump ; rdfs:label "Air-source heat pump" .
+carb:EnergyStorage a owl:Class ; rdfs:subClassOf carb:Product ; rdfs:label "Energy storage product" .
+carb:EVBattery a owl:Class ; rdfs:subClassOf carb:EnergyStorage ; rdfs:label "Electric-vehicle traction battery" .
+carb:LFPBattery a owl:Class ; rdfs:subClassOf carb:EVBattery ; rdfs:label "LFP-chemistry EV battery" .
+carb:NMCBattery a owl:Class ; rdfs:subClassOf carb:EVBattery ; rdfs:label "NMC-chemistry EV battery" .
+
+### Calculation-model classes
+carb:Scenario a owl:Class .
+carb:FunctionalUnit a owl:Class .
+carb:LifeCycleStage a owl:Class .
+carb:ActivityData a owl:Class .
+carb:EmissionFactor a owl:Class .
+carb:CalculationStep a owl:Class .
+carb:Result a owl:Class .
+carb:StageResult a owl:Class ; rdfs:subClassOf carb:Result .
+carb:TraceResult a owl:Class ; rdfs:subClassOf carb:Result .
+carb:TotalResult a owl:Class ; rdfs:subClassOf carb:Result .
+carb:RecyclabilityResult a owl:Class ; rdfs:subClassOf carb:Result .
+carb:Source a owl:Class .
+carb:Unit a owl:Class .
+carb:DataStatus a owl:Class .
+carb:MaterialCategory a owl:Class .
+carb:TransportMode a owl:Class .
+carb:EndOfLifeRoute a owl:Class .
+carb:FactorSet a owl:Class .
+carb:Refrigerant a owl:Class ; rdfs:label "Refrigerant fluid (with explicit GWP)" .
+carb:Standard a owl:Class ; rdfs:label "LCA standard or PCR/PSR reference" .
+
+### Stage individuals
+carb:RawMaterials a carb:LifeCycleStage ; rdfs:label "Raw Materials" .
+carb:Transportation a carb:LifeCycleStage ; rdfs:label "Transportation" .
+carb:UsePhase a carb:LifeCycleStage ; rdfs:label "Use Phase" .
+carb:EndOfLife a carb:LifeCycleStage ; rdfs:label "End of Life" .
+
+### Status individuals
+carb:Known a carb:DataStatus ; rdfs:label "Known" .
+carb:Estimated a carb:DataStatus ; rdfs:label "Estimated" .
+carb:Missing a carb:DataStatus ; rdfs:label "Missing" .
+carb:Complete a carb:DataStatus ; rdfs:label "Complete" .
+carb:Partial a carb:DataStatus ; rdfs:label "Partial" .
+carb:Override a carb:DataStatus ; rdfs:label "Override" .
+
+### Units
+carb:kg a carb:Unit ; carb:unitName "kg" .
+carb:kWh a carb:Unit ; carb:unitName "kWh" .
+carb:tonkm a carb:Unit ; carb:unitName "ton-km" .
+carb:percent a carb:Unit ; carb:unitName "%" .
+carb:kgCO2e a carb:Unit ; carb:unitName "kg CO2e" .
+carb:kgCO2ePerkg a carb:Unit ; carb:unitName "kg CO2e/kg" .
+carb:kgCO2ePerkWh a carb:Unit ; carb:unitName "kg CO2e/kWh" .
+carb:kgCO2ePertonkm a carb:Unit ; carb:unitName "kg CO2e/ton-km" .
+
+### Object properties
+carb:hasScenario a owl:ObjectProperty ;
+  rdfs:domain carb:Product ;
+  rdfs:range carb:Scenario .
+
+carb:hasFunctionalUnit a owl:ObjectProperty ;
+  rdfs:domain carb:Scenario ;
+  rdfs:range carb:FunctionalUnit .
+
+carb:hasStage a owl:ObjectProperty ;
+  rdfs:domain carb:Scenario ;
+  rdfs:range carb:LifeCycleStage .
+
+carb:hasCalculationStep a owl:ObjectProperty ;
+  rdfs:domain carb:Scenario ;
+  rdfs:range carb:CalculationStep .
+
+carb:hasResult a owl:ObjectProperty ;
+  rdfs:domain carb:Scenario ;
+  rdfs:range carb:Result .
+
+carb:hasActivity a owl:ObjectProperty ;
+  rdfs:domain carb:LifeCycleStage ;
+  rdfs:range carb:ActivityData .
+
+carb:usesEmissionFactor a owl:ObjectProperty ;
+  rdfs:domain carb:ActivityData ;
+  rdfs:range carb:EmissionFactor .
+
+carb:derivedFrom a owl:ObjectProperty ;
+  rdfs:domain carb:ActivityData ;
+  rdfs:range carb:Source .
+
+carb:factorSource a owl:ObjectProperty ;
+  rdfs:domain carb:EmissionFactor ;
+  rdfs:range carb:Source .
+
+carb:hasUnit a owl:ObjectProperty ;
+  rdfs:domain carb:ActivityData ;
+  rdfs:range carb:Unit .
+
+carb:factorUnit a owl:ObjectProperty ;
+  rdfs:domain carb:EmissionFactor ;
+  rdfs:range carb:Unit .
+
+carb:resultUnit a owl:ObjectProperty ;
+  rdfs:domain carb:Result ;
+  rdfs:range carb:Unit .
+
+carb:hasStatus a owl:ObjectProperty ;
+  rdfs:range carb:DataStatus .
+
+carb:belongsToStage a owl:ObjectProperty ;
+  rdfs:domain carb:Result ;
+  rdfs:range carb:LifeCycleStage .
+
+carb:inputActivity a owl:ObjectProperty ;
+  rdfs:domain carb:CalculationStep ;
+  rdfs:range carb:ActivityData .
+
+carb:inputFactor a owl:ObjectProperty ;
+  rdfs:domain carb:CalculationStep ;
+  rdfs:range carb:EmissionFactor .
+
+carb:outputResult a owl:ObjectProperty ;
+  rdfs:domain carb:CalculationStep ;
+  rdfs:range carb:Result .
+
+carb:hasMaterialCategory a owl:ObjectProperty ;
+  rdfs:domain carb:ActivityData ;
+  rdfs:range carb:MaterialCategory .
+
+carb:hasTransportMode a owl:ObjectProperty ;
+  rdfs:domain carb:ActivityData ;
+  rdfs:range carb:TransportMode .
+
+carb:hasEndOfLifeRoute a owl:ObjectProperty ;
+  rdfs:domain carb:ActivityData ;
+  rdfs:range carb:EndOfLifeRoute .
+
+carb:hasFactorSet a owl:ObjectProperty ;
+  rdfs:domain carb:Scenario ;
+  rdfs:range carb:FactorSet .
+
+### Datatype properties
+carb:productId a owl:DatatypeProperty ; rdfs:domain carb:Product ; rdfs:range xsd:string .
+carb:productName a owl:DatatypeProperty ; rdfs:domain carb:Product ; rdfs:range xsd:string .
+carb:scenarioName a owl:DatatypeProperty ; rdfs:domain carb:Scenario ; rdfs:range xsd:string .
+carb:functionalUnitText a owl:DatatypeProperty ; rdfs:domain carb:FunctionalUnit ; rdfs:range xsd:string .
+carb:flowName a owl:DatatypeProperty ; rdfs:domain carb:ActivityData ; rdfs:range xsd:string .
+carb:activityValue a owl:DatatypeProperty ; rdfs:domain carb:ActivityData ; rdfs:range xsd:decimal .
+carb:factorValue a owl:DatatypeProperty ; rdfs:domain carb:EmissionFactor ; rdfs:range xsd:decimal .
+carb:factorKey a owl:DatatypeProperty ; rdfs:domain carb:EmissionFactor ; rdfs:range xsd:string .
+carb:geography a owl:DatatypeProperty ; rdfs:domain carb:EmissionFactor ; rdfs:range xsd:string .
+carb:method a owl:DatatypeProperty ; rdfs:domain carb:EmissionFactor ; rdfs:range xsd:string .
+carb:resultValue a owl:DatatypeProperty ; rdfs:domain carb:Result ; rdfs:range xsd:decimal .
+carb:resultType a owl:DatatypeProperty ; rdfs:domain carb:Result ; rdfs:range xsd:string .
+carb:formulaText a owl:DatatypeProperty ; rdfs:domain carb:CalculationStep ; rdfs:range xsd:string .
+carb:sourceName a owl:DatatypeProperty ; rdfs:domain carb:Source ; rdfs:range xsd:string .
+carb:sourceReference a owl:DatatypeProperty ; rdfs:domain carb:Source ; rdfs:range xsd:string .
+carb:sourceKind a owl:DatatypeProperty ; rdfs:domain carb:Source ; rdfs:range xsd:string .
+carb:unitName a owl:DatatypeProperty ; rdfs:domain carb:Unit ; rdfs:range xsd:string .
+carb:countryCode a owl:DatatypeProperty ; rdfs:domain carb:Scenario ; rdfs:range xsd:string .
+carb:reportYear a owl:DatatypeProperty ; rdfs:domain carb:Scenario ; rdfs:range xsd:integer .
+carb:includesPaper a owl:DatatypeProperty ; rdfs:domain carb:Scenario ; rdfs:range xsd:boolean .
+carb:annualElectricityKWh a owl:DatatypeProperty ; rdfs:domain carb:Scenario ; rdfs:range xsd:decimal .
+carb:lifetimeYears a owl:DatatypeProperty ; rdfs:domain carb:Scenario ; rdfs:range xsd:decimal .
+carb:lifetimePages a owl:DatatypeProperty ; rdfs:domain carb:Scenario ; rdfs:range xsd:decimal .
+carb:materialMassKg a owl:DatatypeProperty ; rdfs:domain carb:ActivityData ; rdfs:range xsd:decimal .
+carb:recyclabilityRatePct a owl:DatatypeProperty ; rdfs:domain carb:RecyclabilityResult ; rdfs:range xsd:decimal .
+carb:recoverableMassKg a owl:DatatypeProperty ; rdfs:domain carb:RecyclabilityResult ; rdfs:range xsd:decimal .
+carb:incinerationMassKg a owl:DatatypeProperty ; rdfs:domain carb:RecyclabilityResult ; rdfs:range xsd:decimal .
+carb:landfillMassKg a owl:DatatypeProperty ; rdfs:domain carb:RecyclabilityResult ; rdfs:range xsd:decimal .
+carb:assumptionText a owl:DatatypeProperty ; rdfs:domain carb:Scenario ; rdfs:range xsd:string .
+carb:noteText a owl:DatatypeProperty ; rdfs:range xsd:string .
+carb:missingInputText a owl:DatatypeProperty ; rdfs:domain carb:Scenario ; rdfs:range xsd:string .
+
+### Generic product-level properties (heat-pump / EV battery / phone-laptop friendly)
+carb:productClassKey a owl:DatatypeProperty ; rdfs:domain carb:Product ; rdfs:range xsd:string ;
+  rdfs:comment "Adapter routing key — printer / smartphone / laptop / heat_pump / ev_battery." .
+carb:productMassKg a owl:DatatypeProperty ; rdfs:domain carb:Product ; rdfs:range xsd:decimal .
+carb:packagingMassKg a owl:DatatypeProperty ; rdfs:domain carb:Product ; rdfs:range xsd:decimal .
+carb:referenceLifetimeYears a owl:DatatypeProperty ; rdfs:domain carb:Product ; rdfs:range xsd:decimal .
+carb:declaredFunction a owl:DatatypeProperty ; rdfs:domain carb:Product ; rdfs:range xsd:string .
+carb:complianceStandardLabel a owl:DatatypeProperty ; rdfs:domain carb:Standard ; rdfs:range xsd:string .
+carb:complianceStandardUri a owl:DatatypeProperty ; rdfs:domain carb:Standard ; rdfs:range xsd:anyURI .
+
+### Refrigerant + battery specifics
+carb:hasRefrigerant a owl:ObjectProperty ; rdfs:domain carb:HVACEquipment ; rdfs:range carb:Refrigerant .
+carb:refrigerantName a owl:DatatypeProperty ; rdfs:domain carb:Refrigerant ; rdfs:range xsd:string .
+carb:refrigerantGwp100 a owl:DatatypeProperty ; rdfs:domain carb:Refrigerant ; rdfs:range xsd:decimal .
+carb:refrigerantChargeKg a owl:DatatypeProperty ; rdfs:domain carb:HVACEquipment ; rdfs:range xsd:decimal .
+carb:packCapacityKWh a owl:DatatypeProperty ; rdfs:domain carb:EnergyStorage ; rdfs:range xsd:decimal .
+carb:packChemistry a owl:DatatypeProperty ; rdfs:domain carb:EnergyStorage ; rdfs:range xsd:string .
+
+### Standards individuals reused by products
+carb:ISO14040 a carb:Standard ; carb:complianceStandardLabel "ISO 14040" .
+carb:ISO14044 a carb:Standard ; carb:complianceStandardLabel "ISO 14044" .
+carb:ISO14067 a carb:Standard ; carb:complianceStandardLabel "ISO 14067" .
+carb:ISO14025 a carb:Standard ; carb:complianceStandardLabel "ISO 14025" .
+carb:EN15804A2 a carb:Standard ; carb:complianceStandardLabel "EN 15804+A2" .
+carb:PEFR2021 a carb:Standard ; carb:complianceStandardLabel "EU Commission Recommendation 2021/2279 (PEF)" .
+carb:PAIA a carb:Standard ; carb:complianceStandardLabel "PAIA — MIT Materials Systems Laboratory streamlined LCA" .
+carb:GREET a carb:Standard ; carb:complianceStandardLabel "Argonne R&D GREET" .
+
+### Generic carbon rules (informal — implemented in symbolic_reasoning_service)
+# R-CARB-1: every Product instance must hasScenario at least one Scenario.
+# R-CARB-2: every Scenario must hasFunctionalUnit at least one FunctionalUnit.
+# R-CARB-3: every LifeCycleStage with ActivityData must usesEmissionFactor an EmissionFactor.
+# R-CARB-4: an HVACEquipment with hasRefrigerant must declare refrigerantGwp100 and refrigerantChargeKg.
+# R-CARB-5: an EVBattery must declare packCapacityKWh and packChemistry.
+# R-CARB-6: a Result whose belongsToStage is carb:UsePhase must carry an electricity-factor source with declared geography.

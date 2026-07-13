@@ -21,4 +21,16 @@ try:
 except ImportError:
     pass
 
+try:
+    from . import solve_auto
+    api.include_router(solve_auto.router)
+except ImportError:
+    pass
+
+try:
+    from . import carbon
+    api.include_router(carbon.router)
+except ImportError:
+    pass
+
 __all__ = ["api"]

@@ -3,6 +3,8 @@ from __future__ import annotations
 
 import logging
 import os
+import hashlib
+import re
 from functools import lru_cache
 from typing import List, Optional, Tuple
 
@@ -21,6 +23,24 @@ def _l2_normalize_2d(arr: np.ndarray, eps: float = 1e-12) -> np.ndarray:
     norms = np.maximum(norms, eps)
     out = arr / norms
     return out.astype(np.float32, copy=False)
+
+
+_TOKEN_RE = re.compile(r"[a-z0-9_./:-]+", re.IGNORECASE)
+
+
+def _hash_embedding(text: str, dim: int) -> np.ndarray:
+    """Fast deterministic fallback embedding for offline/dev runs."""
+    vals = [0.0] * dim
+    tokens = _TOKEN_RE.findall((text or "").lower())
+    if not tokens:
+        tokens = [text or ""]
+    for tok in tokens[:256]:
+        digest = hashlib.blake2b(tok.encode("utf-8", "ignore"), digest_size=8).digest()
+        bucket = int.from_bytes(digest[:4], "little") % dim
+        sign = 1.0 if digest[4] & 1 else -1.0
+        vals[bucket] += sign
+    vec = np.asarray(vals, dtype=np.float32)
+    return _l2_normalize_2d(vec).reshape(-1)
 
 
 class EmbeddingService:
@@ -217,10 +237,9 @@ class EmbeddingService:
             return _l2_normalize_2d(vec).reshape(-1)
 
         # Deterministic random fallback (dev only)
-        rng = np.random.default_rng(abs(hash(text)) % (2**32))
         if not self.vector_dim:
             self.vector_dim = 384
-        return _l2_normalize_2d(rng.random(self.vector_dim)).reshape(-1)
+        return _hash_embedding(text, self.vector_dim)
 
     def generate_embeddings(self, texts: List[str]) -> np.ndarray:
         """
@@ -264,11 +283,7 @@ class EmbeddingService:
         # Fallback: deterministic random per text
         if not self.vector_dim:
             self.vector_dim = 384
-        mats = []
-        for t in texts:
-            rng = np.random.default_rng(abs(hash(t)) % (2**32))
-            mats.append(rng.random(self.vector_dim))
-        return _l2_normalize_2d(np.vstack(mats))
+        return _l2_normalize_2d(np.vstack([_hash_embedding(t, self.vector_dim) for t in texts]))
 
     # ----------------------------- Aliases -----------------------------------
 

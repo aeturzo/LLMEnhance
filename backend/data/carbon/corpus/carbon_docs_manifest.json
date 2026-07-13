@@ -1,0 +1,36 @@
+{
+  "schema_version": "0.1",
+  "corpus_path": "/Users/turzo/Desktop/StudyUIO/Research/LLMENHANCE/llmmain/backend/data/carbon/corpus/carbon_docs.jsonl",
+  "product_count": 1,
+  "doc_count": 8,
+  "products": [
+    {
+      "product_id": "lexmark_mx431adn",
+      "status": "partial",
+      "requested_stages": [
+        "raw_materials",
+        "transportation",
+        "use_phase",
+        "end_of_life"
+      ],
+      "doc_count": 8,
+      "missing_input_count": 20,
+      "stage_statuses": {
+        "raw_materials": "partial",
+        "transportation": "partial",
+        "use_phase": "partial",
+        "end_of_life": "partial"
+      },
+      "asset_kinds": [
+        "overview",
+        "total",
+        "raw_materials",
+        "transportation",
+        "use_phase",
+        "end_of_life",
+        "recyclability",
+        "missing_inputs"
+      ]
+    }
+  ]
+}

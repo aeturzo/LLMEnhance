@@ -1,0 +1,163 @@
+{
+  "schema_version": "0.2",
+  "product_id": "daikin_altherma_m_hw_260l",
+  "display_name": "Daikin Altherma M HW (Indoor Monobloc) 260 L",
+  "brand": "Daikin Europe N.V.",
+  "model": "EKHHEU260CV37",
+  "category": "heat_pump",
+  "product_class_key": "heat_pump",
+  "ontology_class": "carb:AirSourceHeatPump",
+  "calculation_scope": {
+    "default_basis": "per_unit_lifecycle_17yr",
+    "supported_basis": ["per_unit_lifecycle_17yr"],
+    "default_reporting_unit": "kg CO2e",
+    "compliance_standards": ["EN 15804+A2", "ISO 14025", "ISO 21930"],
+    "notes": [
+      "PEP ecopassport DAIK-00060-V01.01-EN.",
+      "Functional unit: production of 1 L of stored DHW at 40 C over RLT 17 years.",
+      "Refrigerant: R-134a (GWP100 = 1430), modelled with 3 refills over RLT."
+    ]
+  },
+  "defaults": {
+    "report_year": 2021,
+    "use_country_code": "UK",
+    "lifetime_years": 17.0,
+    "annual_energy_kwh": 1210.0,
+    "include_paper": false
+  },
+  "identity": {
+    "manufacturer": "Daikin Europe N.V.",
+    "product_family": "Daikin Altherma M HW",
+    "declared_function": "Air-to-water heat pump for domestic hot water (260 L)",
+    "place_of_production": "Italy",
+    "official_spec_extracted": true
+  },
+  "source_refs": [
+    {
+      "id": "daikin_altherma_m_hw_epd",
+      "path": "totalCarbonfootprintcalculation/daikin_altherma_m_hw_EPD_extract.md",
+      "kind": "official_product_pdf",
+      "extract_status": "extracted",
+      "upstream_url": "https://my.daikin.eu/content/dam/dauk/document-library/epds/60_EPD_EKHHE260CV37_IU_Daikin%20Altherma%203%20M%20HW_UK_V1.pdf"
+    },
+    {
+      "id": "pep_ecopassport",
+      "path": "https://www.pep-ecopassport.org",
+      "kind": "epd_program_operator",
+      "extract_status": "curated_web_observation"
+    },
+    {
+      "id": "ipcc_ar6_gwp",
+      "path": "https://www.ipcc.ch/report/ar6/wg1/",
+      "kind": "background_method",
+      "extract_status": "curated_web_observation"
+    }
+  ],
+  "observed_facts": {
+    "product_mass_kg": {
+      "value": 99.5,
+      "unit": "kg",
+      "status": "exact",
+      "source_ref_ids": ["daikin_altherma_m_hw_epd"]
+    },
+    "packaging_mass_kg": {
+      "value": 13.5,
+      "unit": "kg",
+      "status": "exact",
+      "source_ref_ids": ["daikin_altherma_m_hw_epd"]
+    },
+    "lifecycle_total_kg_co2e_declared": {
+      "value": 7420.0,
+      "unit": "kg CO2e",
+      "status": "exact",
+      "source_ref_ids": ["daikin_altherma_m_hw_epd"],
+      "notes": ["GWP-total across A1-D modules."]
+    },
+    "refrigerant_charge_kg": {
+      "value": 0.93,
+      "unit": "kg",
+      "status": "exact",
+      "source_ref_ids": ["daikin_altherma_m_hw_epd"],
+      "notes": ["R-134a, GWP100 = 1430."]
+    },
+    "annual_operational_energy_kwh": {
+      "value": 1210.0,
+      "unit": "kWh/yr",
+      "status": "exact",
+      "source_ref_ids": ["daikin_altherma_m_hw_epd"]
+    }
+  },
+  "life_cycle_inputs": {
+    "raw_materials": [
+      {
+        "material_key": "heatpump_composite_production",
+        "mass_kg": 99.5,
+        "factor_value_kg_co2e_per_kg": 5.15,
+        "status": "grounded_via_epd_reverse_engineering",
+        "source_ref_ids": ["daikin_altherma_m_hw_epd"],
+        "notes": ["Composite for A1-A3 modules; calibrated to reproduce EPD's 513 kg CO2e production share."]
+      },
+      {
+        "material_key": "refrigerant_r134a",
+        "mass_kg": 0.051,
+        "factor_value_kg_co2e_per_kg": 1430.0,
+        "status": "grounded",
+        "source_ref_ids": ["daikin_altherma_m_hw_epd", "ipcc_ar6_gwp"],
+        "notes": [
+          "Refrigerant leakage modelled at ~5.5% of total charge (0.93 kg) × 3 refills over RLT.",
+          "B1 leakage in EPD: 72.9 kg CO2e ≈ 0.051 kg × 1430."
+        ]
+      }
+    ],
+    "transport_legs": [
+      {
+        "leg_id": "intracontinental_distribution",
+        "mode": "truck",
+        "distance_km": 3500.0,
+        "mass_kg": 113.0,
+        "factor_value_kg_co2e_per_ton_km": 0.091,
+        "status": "estimated",
+        "source_ref_ids": ["daikin_altherma_m_hw_epd"],
+        "notes": ["EPD Table 2: intracontinental transport 3500 km by lorry. Combined factor balances A4 = 35.9 kg."]
+      }
+    ],
+    "use_phase": {
+      "annual_energy_kwh": 1210.0,
+      "country_code": "UK",
+      "lifetime_years": 17.0,
+      "electricity_factor_value_kg_co2e_per_kwh": 0.32,
+      "status": "exact",
+      "source_ref_ids": ["daikin_altherma_m_hw_epd"],
+      "notes": [
+        "UK electricity factor 0.32 kg CO2e/kWh used directly from EPD.",
+        "Total lifetime energy 20,570 kWh × 0.32 = 6582 kg CO2e ≈ EPD B6 (6530 kg)."
+      ]
+    },
+    "end_of_life": {
+      "mass_kg": 99.5,
+      "recycling_rate_pct": 70.0,
+      "incineration_rate_pct": 10.0,
+      "landfill_rate_pct": 20.0,
+      "route_factors": {
+        "recycling": {"factor_value_kg_co2e_per_kg": 0.10, "source_ref": "eol_hp_recycling_metal"},
+        "incineration": {"factor_value_kg_co2e_per_kg": 0.35, "source_ref": "eol_incineration_mixed_electronics"},
+        "landfill": {"factor_value_kg_co2e_per_kg": 0.12, "source_ref": "eol_landfill_mixed_electronics"}
+      },
+      "status": "estimated",
+      "notes": [
+        "Metal-dominant heat-pump disposal.",
+        "Refrigerant recovered at 90% per F-Gas Regulation EU 517/2014; residual 10% direct emission already captured in B1 leakage line."
+      ]
+    }
+  },
+  "estimation_profile": {
+    "status": "estimate_ready",
+    "uncertainty_defaults_pct": {
+      "raw_materials": 12.0,
+      "transportation": 18.0,
+      "use_phase": 15.0,
+      "end_of_life": 25.0,
+      "total": 14.0
+    }
+  }
+}

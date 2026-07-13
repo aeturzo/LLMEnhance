@@ -37,7 +37,7 @@ from backend.services.embedding_service import EmbeddingService, get_embedder
 # Persistence paths (absolute, resolved from repo root)
 # ---------------------------------------------------------------------------
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-META_PATH = os.path.join(REPO_ROOT, "memory.meta.jsonl")  # JSONL metadata only
+META_PATH = os.getenv("MEMORY_META_PATH") or os.path.join(REPO_ROOT, "memory.meta.jsonl")  # JSONL metadata only
 
 
 def _as_f32c(a: np.ndarray) -> np.ndarray:

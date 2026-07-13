@@ -3,17 +3,54 @@ from __future__ import annotations
 
 import os
 import math
+import re
 from typing import Optional, Literal, List, Dict, Any, Tuple
 from pydantic import BaseModel, Field
 from fastapi import APIRouter, HTTPException, Header
 
 from backend.services import memory_service, search_service  # search_service is used as a fallback
-from backend.services.policy_router import RouterModel, MODEL_PATH
 from backend.services.symbolic_reasoning_service import answer_symbolic, sym_fire_flags
+from backend.services.carbon_query_service import is_carbon_query, solve_carbon_query
+
+try:
+    from backend.services.policy_router import RouterModel, MODEL_PATH
+except Exception:
+    RouterModel = None  # type: ignore[assignment]
+    MODEL_PATH = None  # type: ignore[assignment]
 
 # NEW: hybrid retriever + context-bound answerer
 from backend.retrieval.hybrid import HybridRetriever
 from backend.api.answerer_ctx import answer_with_context
+
+try:
+    from backend.api.answerer_ctx import answer_with_context_detailed, answerer_config
+except ImportError:
+    # Compatibility with lightweight integrations that implement only the
+    # original answer_with_context() contract.
+    def answerer_config() -> Dict[str, Any]:
+        return {
+            "configured_provider": None,
+            "configured_model": None,
+            "llm_disabled": True,
+        }
+
+    def answer_with_context_detailed(
+        question: str,
+        passages: List[Dict[str, Any]],
+    ) -> Dict[str, Any]:
+        return {
+            "answer": answer_with_context(question, passages),
+            "trace": {
+                **answerer_config(),
+                "llm_attempted": False,
+                "llm_used": False,
+                "provider": None,
+                "model": None,
+                "api": None,
+                "path": "legacy_answerer",
+                "passage_count": len(passages),
+            },
+        }
 
 router = APIRouter()
 
@@ -26,7 +63,7 @@ class SolveRequest(BaseModel):
     q: Optional[str] = Field(default=None)
     product: Optional[str] = None
     session: Optional[str] = "s1"
-    mode: Optional[Literal["BASE", "MEM", "SEARCH", "SYM", "MEMSYM", "ROUTER", "ADAPTIVERAG","RAG_BASE","SYM_ONLY"]] = "BASE"
+    mode: Optional[Literal["BASE", "MEM", "SEARCH", "SYM", "MEMSYM", "ROUTER", "ADAPTIVERAG","RAG_BASE","SYM_ONLY","CARBON"]] = "BASE"
 
 
 def _pick_query(req: SolveRequest) -> str:
@@ -42,6 +79,8 @@ def _get_router() -> RouterModel | None:
     global _ROUTER
     if _ROUTER is not None:
         return _ROUTER
+    if RouterModel is None or MODEL_PATH is None:
+        return None
     try:
         _ROUTER = RouterModel.load(MODEL_PATH)
     except Exception:
@@ -214,6 +253,32 @@ def _retrieve_context(query: str, product: Optional[str], top_k: int) -> List[Di
     if ret is not None:
         try:
             hits = ret.search(fused_q)[:top_k]
+            exact = []
+            exact_ids = []
+            if product:
+                exact_ids.append(product)
+            exact_ids.extend(re.findall(r"\b(?:battery|lexmark|viessmann)_seed_\d{4}\b", query or ""))
+            if exact_ids:
+                seen_exact: set[str] = set()
+                for psg in getattr(ret, "passages", []):
+                    pid = getattr(psg, "pid", None)
+                    doc_id = getattr(psg, "doc_id", None)
+                    if any(pid == target or doc_id == target for target in exact_ids):
+                        if str(pid) in seen_exact:
+                            continue
+                        seen_exact.add(str(pid))
+                        exact.append({
+                            "id": pid,
+                            "title": getattr(psg, "title", None) or pid,
+                            "text": getattr(psg, "text", "") or "",
+                            "score": None,
+                            "domain": getattr(psg, "domain", ""),
+                            "source": "exact_product",
+                        })
+                if exact:
+                    seen = {item["id"] for item in exact}
+                    hits = exact + [h for h in hits if h.get("id") not in seen]
+                    hits = hits[:top_k]
             # Ensure uniform keys
             out = []
             for h in hits:
@@ -246,13 +311,14 @@ def _retrieve_context(query: str, product: Optional[str], top_k: int) -> List[Di
     except Exception:
         return []
 
-def _answer_with_fallback(question: str, passages: List[Dict[str, Any]]) -> str:
+def _answer_with_fallback_detailed(question: str, passages: List[Dict[str, Any]]) -> Tuple[str, Dict[str, Any]]:
     """
     Prefer the LLM answerer with citations; if it's not wired, fall back to
     echoing a high-scoring snippet with a citation.
     """
     try:
-        return answer_with_context(question, passages)
+        out = answer_with_context_detailed(question, passages)
+        return out["answer"], out["trace"]
     except NotImplementedError:
         pass
     except Exception:
@@ -261,8 +327,29 @@ def _answer_with_fallback(question: str, passages: List[Dict[str, Any]]) -> str:
     if passages:
         top = passages[0]
         snippet = (top.get("text") or "")[:200]
-        return f"{snippet} [{top.get('id')}]"
-    return "Insufficient context"
+        return f"{snippet} [{top.get('id')}]", {
+            **answerer_config(),
+            "llm_attempted": False,
+            "llm_used": False,
+            "provider": None,
+            "model": None,
+            "api": None,
+            "path": "snippet_fallback",
+            "fallback_source_id": top.get("id"),
+            "passage_count": len(passages),
+            "reason": "Detailed answerer path was unavailable.",
+        }
+    return "Insufficient context", {
+        **answerer_config(),
+        "llm_attempted": False,
+        "llm_used": False,
+        "provider": None,
+        "model": None,
+        "api": None,
+        "path": "no_passages",
+        "passage_count": 0,
+        "reason": "No passages were available.",
+    }
 
 def _snippet(s: str, n: int = 220) -> str:
     s = (s or "").strip()
@@ -299,7 +386,7 @@ def _compose_SEARCH(query, product, session, steps, sources, parts):
 
     if passages:
         # Build the final answer with citations
-        answer = _answer_with_fallback(query, passages)
+        answer, answer_trace = _answer_with_fallback_detailed(query, passages)
         parts.append(answer)
 
         # Step logging (use top CE score if present)
@@ -308,7 +395,8 @@ def _compose_SEARCH(query, product, session, steps, sources, parts):
             "source": _canon_source("SEARCH"),
             "score": top_score,
             "k": len(passages),
-            "doc_ids": [p.get("id") for p in passages[:min(5, len(passages))]]
+            "doc_ids": [p.get("id") for p in passages[:min(5, len(passages))]],
+            "answer_trace": answer_trace,
         })
 
         # Source logging (first few for trace readability)
@@ -397,7 +485,16 @@ def _compose_for_action(action: str, query: str, product: Optional[str], session
         parts.append("No result found.")
         steps.append({"source": _canon_source("BASE")})
 
-    return {"answer": " ".join(parts), "steps": steps, "sources": sources}
+    answer_trace = None
+    for step in reversed(steps):
+        if isinstance(step, dict) and isinstance(step.get("answer_trace"), dict):
+            answer_trace = step["answer_trace"]
+            break
+
+    out = {"answer": " ".join(parts), "steps": steps, "sources": sources}
+    if answer_trace is not None:
+        out["answer_trace"] = answer_trace
+    return out
 
 # -------------------------
 # Router helpers
@@ -447,6 +544,10 @@ def solve(req: SolveRequest, x_run_mode: str | None = Header(default=None)):
     session = req.session or "s1"
     product = (req.product or "").strip() or None
 
+    carbon_disabled = os.getenv("DISABLE_CARBON_ROUTING", "").strip().lower() in {"1", "true", "yes", "y"}
+    if mode == "CARBON" or (not carbon_disabled and is_carbon_query(text, mode=mode)):
+        return solve_carbon_query(query=text, product=product, session=session)
+
     # --- ROUTER ---
     if mode == "ROUTER":
         feats = _safe_features(text, product, session)
@@ -474,10 +575,10 @@ def solve(req: SolveRequest, x_run_mode: str | None = Header(default=None)):
         t_search = float(os.getenv("ADAPTIVE_SEARCH_T", "0.55"))
         if float(feats.get("mem_top", 0.0)) >= t_mem:
             action = "MEM"
-        elif float(feats.get("search_top", 0.0)) >= t_search:
-            action = "SEARCH"
         elif int(feats.get("sym_fired", 0)) == 1:
             action = "SYM"
+        elif float(feats.get("search_top", 0.0)) >= t_search:
+            action = "SEARCH"
         else:
             action = "MEMSYM"  # safe combo when signals are weak
         out = _compose_for_action(action, text, product, session)

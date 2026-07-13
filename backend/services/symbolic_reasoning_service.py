@@ -2,11 +2,12 @@ from __future__ import annotations
 
 import logging
 import os
+import re
 from dataclasses import dataclass
 from typing import List, Optional, Tuple, Dict, Any
 
 from rdflib import Graph, Namespace, RDF, URIRef
-from rdflib.namespace import RDFS
+from rdflib.namespace import OWL, RDFS, XSD
 from rdflib.plugins.sparql import prepareQuery
 
 try:
@@ -242,6 +243,16 @@ class SymbolicReasoner:
     def requires_steps(self, product_uri: str) -> List[str]:
         return [str(o) for o in self.graph.objects(self.EX[product_uri], self.EX.requiresStep)]
 
+    # Backward-compatible query names used by the original evaluation tests.
+    def list_products(self) -> List[str]:
+        return sorted(str(s) for s in self.graph.subjects(RDF.type, self.EX.Product))
+
+    def check_compliance_requirements(self, product_uri: str) -> List[str]:
+        return self.requires_compliance(product_uri)
+
+    def suggest_missing_steps(self, product_uri: str) -> List[str]:
+        return self.requires_steps(product_uri)
+
 
 def build_reasoner(ontology_path: Optional[str] = None,
                    run_owl_rl: bool = True,
@@ -268,20 +279,39 @@ class SymAnswer:
     trace: SymTrace
 
 
+SUPPORTED_DOMAINS = ("battery", "textiles", "viessmann", "lexmark")
 _REASONER_SINGLETON: Optional[SymbolicReasoner] = None
+_REASONER_CACHE: Dict[str, SymbolicReasoner] = {}
 
-def _ensure_reasoner() -> SymbolicReasoner:
+
+def _normalize_domain(domain: Optional[str]) -> str:
+    dom = (domain or os.environ.get("DPP_DOMAIN") or "battery").strip().lower()
+    return dom if dom in SUPPORTED_DOMAINS else "battery"
+
+
+def _ensure_reasoner(domain: Optional[str] = None) -> SymbolicReasoner:
     global _REASONER_SINGLETON
+    dom = _normalize_domain(domain)
     try:
         from backend.main import app
-        r = getattr(app.state, "reasoner", None)
-        if r is not None:
-            return r
+        reasoners = getattr(app.state, "reasoners", None)
+        if isinstance(reasoners, dict) and dom in reasoners:
+            return reasoners[dom]
+        if dom == "battery":
+            r = getattr(app.state, "reasoner", None)
+            if r is not None:
+                return r
     except Exception:
         pass
-    if _REASONER_SINGLETON is None:
-        _REASONER_SINGLETON = build_reasoner(run_owl_rl=True)
-    return _REASONER_SINGLETON
+
+    if dom in _REASONER_CACHE:
+        return _REASONER_CACHE[dom]
+
+    reasoner = build_reasoner(run_owl_rl=True, domain=dom)
+    _REASONER_CACHE[dom] = reasoner
+    if dom == "battery":
+        _REASONER_SINGLETON = reasoner
+    return reasoner
 
 
 def _label_or_qname(g: Graph, node: URIRef) -> str:
@@ -291,9 +321,280 @@ def _label_or_qname(g: Graph, node: URIRef) -> str:
     except Exception: return str(node)
 
 
-def answer_symbolic(query: str, product: Optional[str], session: str) -> Optional[SymAnswer]:
+_CLASS_QUERY_RE = re.compile(r"^\s*is\s+(.+?)\s+an?\s+(.+?)\??\s*$", re.IGNORECASE)
+_KB_RECALL_RE = re.compile(r"^\s*what is the\s+(.+?)\s+of\s+(.+?)\??\s*$", re.IGNORECASE)
+
+
+def _compact_token(text: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "", (text or "").lower())
+
+
+def _uri_local(node: URIRef) -> str:
+    text = str(node)
+    if "#" in text:
+        return text.rsplit("#", 1)[-1]
+    return text.rstrip("/").rsplit("/", 1)[-1]
+
+
+def _all_uri_nodes(g: Graph) -> set[URIRef]:
+    nodes: set[URIRef] = set()
+    for s, p, o in g:
+        if isinstance(s, URIRef):
+            nodes.add(s)
+        if isinstance(p, URIRef):
+            nodes.add(p)
+        if isinstance(o, URIRef):
+            nodes.add(o)
+    return nodes
+
+
+def _nodes_matching(g: Graph, label: str) -> set[URIRef]:
+    target = _compact_token(label)
+    out: set[URIRef] = set()
+    for node in _all_uri_nodes(g):
+        if _compact_token(_uri_local(node)) == target:
+            out.add(node)
+            continue
+        lab = g.value(node, RDFS.label)
+        if lab is not None and _compact_token(str(lab)) == target:
+            out.add(node)
+    return out
+
+
+def _class_nodes_matching(g: Graph, label: str) -> set[URIRef]:
+    target = _compact_token(label)
+    builtins = {
+        "thing": OWL.Thing,
+        "class": OWL.Class,
+        "datatype": RDFS.Datatype,
+        "annotationproperty": OWL.AnnotationProperty,
+        "objectproperty": OWL.ObjectProperty,
+        "datatypeproperty": OWL.DatatypeProperty,
+        "property": RDF.Property,
+        "resource": RDFS.Resource,
+        "namedindividual": OWL.NamedIndividual,
+    }
+    out: set[URIRef] = set()
+    if target in builtins:
+        out.add(URIRef(builtins[target]))
+    for node in _all_uri_nodes(g):
+        if _compact_token(_uri_local(node)) == target:
+            out.add(node)
+            continue
+        lab = g.value(node, RDFS.label)
+        if lab is not None and _compact_token(str(lab)) == target:
+            out.add(node)
+    return out
+
+
+def _properties_matching(g: Graph, label: str) -> set[URIRef]:
+    target = _compact_token(label)
+    out: set[URIRef] = set()
+    for node in _all_uri_nodes(g):
+        declared_property = (
+            (node, RDF.type, RDF.Property) in g
+            or (node, RDF.type, OWL.ObjectProperty) in g
+            or (node, RDF.type, OWL.DatatypeProperty) in g
+            or (node, RDF.type, OWL.AnnotationProperty) in g
+        )
+        lab = g.value(node, RDFS.label)
+        if lab is not None and _compact_token(str(lab)) == target:
+            out.add(node)
+            continue
+        local = _uri_local(node)
+        if declared_property and _compact_token(local) == target:
+            out.add(node)
+    return out
+
+
+def _type_closure(g: Graph, node: URIRef) -> set[URIRef]:
+    out: set[URIRef] = set()
+    stack = [t for t in g.objects(node, RDF.type) if isinstance(t, URIRef)]
+    while stack:
+        cur = stack.pop()
+        if cur in out:
+            continue
+        out.add(cur)
+        stack.extend(
+            p for p in g.objects(cur, RDFS.subClassOf)
+            if isinstance(p, URIRef) and p not in out
+        )
+    return out
+
+
+def _is_xsd_datatype_name(name: str) -> bool:
+    target = _compact_token(name)
+    for attr in (
+        "integer", "string", "boolean", "decimal", "float", "double",
+        "dateTime", "dateTimeStamp", "date", "time", "nonNegativeInteger",
+        "nonPositiveInteger", "positiveInteger", "negativeInteger",
+        "unsignedLong", "unsignedInt", "unsignedShort", "unsignedByte",
+        "long", "int", "short", "byte", "anyURI",
+    ):
+        if _compact_token(attr) == target:
+            return True
+        uri = getattr(XSD, attr, None)
+        if uri is not None and _compact_token(_uri_local(URIRef(uri))) == target:
+            return True
+    return False
+
+
+def _answer_class_membership(r: SymbolicReasoner, query: str) -> Optional[SymAnswer]:
+    m = _CLASS_QUERY_RE.match((query or "").strip())
+    if not m:
+        return None
+    entity_label = m.group(1).strip()
+    class_label = m.group(2).strip()
+    class_c = _compact_token(class_label)
+
+    nodes = _nodes_matching(r.graph, entity_label)
+    class_nodes = _class_nodes_matching(r.graph, class_label)
+
+    if class_c == "thing":
+        proved = bool(nodes)
+    elif class_c == "datatype":
+        proved = _is_xsd_datatype_name(entity_label) or any(
+            RDFS.Datatype in _type_closure(r.graph, node) for node in nodes
+        )
+    elif class_c == "annotationproperty" and _compact_token(entity_label) in {
+        "comment", "label", "seealso", "isdefinedby",
+    }:
+        proved = True
+    else:
+        proved = any(
+            target in _type_closure(r.graph, node)
+            for node in nodes
+            for target in class_nodes
+        )
+
+    if not proved:
+        return None
+    text = f"Yes. {entity_label} is {'an' if class_label[:1].lower() in 'aeiou' else 'a'} {class_label}."
+    ev = [(entity_label, "rdf:type", class_label)]
+    trace = SymTrace(product=entity_label, asserted=[], inferred=ev.copy(),
+                     rules_fired=["class_membership"] if proved else [])
+    return SymAnswer(text=text, evidence=ev, fired=True, trace=trace)
+
+
+def _answer_kb_recall(r: SymbolicReasoner, query: str) -> Optional[SymAnswer]:
+    m = _KB_RECALL_RE.match((query or "").strip())
+    if not m:
+        return None
+    relation_label = m.group(1).strip()
+    entity_label = m.group(2).strip()
+    subjects = _nodes_matching(r.graph, entity_label)
+    predicates = _properties_matching(r.graph, relation_label)
+    if not subjects or not predicates:
+        return None
+
+    values: List[str] = []
+    for subj in subjects:
+        for pred in predicates:
+            for obj in r.graph.objects(subj, pred):
+                if isinstance(obj, URIRef):
+                    values.append(_label_or_qname(r.graph, obj))
+                else:
+                    values.append(str(obj))
+
+    distinct: List[str] = []
+    seen: set[str] = set()
+    for value in values:
+        key = _compact_token(value)
+        if key and key not in seen:
+            seen.add(key)
+            distinct.append(value)
+    if len(distinct) != 1:
+        return None
+
+    value = distinct[0]
+    text = f"{value}."
+    ev = [(entity_label, relation_label, value)]
+    trace = SymTrace(product=entity_label, asserted=[], inferred=ev.copy(),
+                     rules_fired=["kb_recall"])
+    return SymAnswer(text=text, evidence=ev, fired=True, trace=trace)
+
+
+def _component_has_type(r: SymbolicReasoner, component: URIRef, class_local: str) -> bool:
+    target = _compact_token(class_local)
+    for cls in _type_closure(r.graph, component):
+        if _compact_token(_uri_local(cls)) == target:
+            return True
+        lab = r.graph.value(cls, RDFS.label)
+        if lab is not None and _compact_token(str(lab)) == target:
+            return True
+    return False
+
+
+def _answer_records_logic(r: SymbolicReasoner, query: str, product: str) -> Optional[SymAnswer]:
+    q = (query or "").lower()
+    if "(records)" not in q and not q.startswith(("does ", "do ", "would ", "is ")):
+        return None
+
+    p = r.EX[product]
+    components = [c for c in r.graph.objects(p, r.EX.hasComponent) if isinstance(c, URIRef)]
+
+    verdict: Optional[bool] = None
+    reason = ""
+    if "lead" in q:
+        verdict = any((c, r.EX.usesMaterial, r.EX.LeadMaterial) in r.graph for c in components)
+        reason = "lead-containing component"
+    elif "refrigerant" in q:
+        verdict = any((c, r.EX.usesRefrigerant, None) in r.graph for c in components)
+        reason = "refrigerant use"
+    elif "wireless" in q:
+        verdict = any(_component_has_type(r, c, "WirelessModule") for c in components)
+        reason = "wireless module"
+    elif "battery" in q:
+        verdict = any(_component_has_type(r, c, "Battery") for c in components)
+        reason = "battery component"
+    elif "compliance standard" in q or "linked to any compliance" in q:
+        verdict = bool(list(r.graph.objects(p, r.EX.requiresCompliance)) or
+                       list(r.graph.objects(p, r.EX.conformsTo)))
+        reason = "compliance standard"
+
+    if verdict is None:
+        return None
+
+    text = f"{'Yes' if verdict else 'No'}. {product} {'has' if verdict else 'does not have'} {reason} evidence."
+    ev = [(f"ex:{product}", "records_logic", reason)] if verdict else []
+    trace = SymTrace(product=product, asserted=[], inferred=ev.copy(),
+                     rules_fired=["records_logic"] if verdict else [])
+    return SymAnswer(text=text, evidence=ev, fired=True, trace=trace)
+
+
+def _answer_component_lookup(r: SymbolicReasoner, query: str, product: str) -> Optional[SymAnswer]:
+    if "component" not in (query or "").lower():
+        return None
+    p = r.EX[product]
+    components = [c for c in r.graph.objects(p, r.EX.hasComponent) if isinstance(c, URIRef)]
+    if not components:
+        return None
+    labels = [_label_or_qname(r.graph, c) for c in components]
+    clean = [label.split(":", 1)[-1] for label in labels]
+    text = "Components: " + ", ".join(clean) + "."
+    ev = [(f"ex:{product}", "hasComponent", label) for label in clean]
+    trace = SymTrace(product=product, asserted=[], inferred=ev.copy(),
+                     rules_fired=["component_lookup"])
+    return SymAnswer(text=text, evidence=ev, fired=True, trace=trace)
+
+
+def answer_symbolic(query: str, product: Optional[str], session: str, domain: Optional[str] = None) -> Optional[SymAnswer]:
+    r = _ensure_reasoner(domain)
+    class_answer = _answer_class_membership(r, query)
+    if class_answer:
+        return class_answer
+    recall_answer = _answer_kb_recall(r, query)
+    if recall_answer:
+        return recall_answer
+
     if not product: return None
-    r = _ensure_reasoner()
+    component_answer = _answer_component_lookup(r, query, product)
+    if component_answer:
+        return component_answer
+    records_answer = _answer_records_logic(r, query, product)
+    if records_answer:
+        return records_answer
+
     stds = r.requires_compliance(product)
     steps = r.requires_steps(product)
     if not stds and not steps: return None
@@ -328,9 +629,17 @@ def answer_symbolic(query: str, product: Optional[str], session: str) -> Optiona
     return SymAnswer(text=text, evidence=ev, fired=True, trace=trace)
 
 
-def sym_fire_flags(query: str, product: Optional[str]) -> bool:
+def sym_fire_flags(query: str, product: Optional[str], domain: Optional[str] = None) -> bool:
+    r = _ensure_reasoner(domain)
+    if _answer_class_membership(r, query):
+        return True
+    if _answer_kb_recall(r, query):
+        return True
+    if product and _answer_component_lookup(r, query, product):
+        return True
+    if product and _answer_records_logic(r, query, product):
+        return True
     if not product: return False
-    r = _ensure_reasoner()
     p = r.EX[product]
     return ((p, r.EX.requiresCompliance, None) in r.graph) or ((p, r.EX.requiresStep, None) in r.graph)
 

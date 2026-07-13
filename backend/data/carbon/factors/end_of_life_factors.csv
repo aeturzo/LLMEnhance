@@ -1,0 +1,8 @@
+factor_key,route,unit,value_kg_co2e_per_kg,source_ref,status,notes
+eol_recycling_mixed_electronics,recycling,kg,0.18,Ecoinvent 3.8 WEEE recycling,grounded_meta,"For recovered electronics body fractions"
+eol_incineration_mixed_electronics,incineration,kg,0.35,Ecoinvent 3.8 municipal incineration,grounded_meta,
+eol_landfill_mixed_electronics,landfill,kg,0.12,Ecoinvent 3.8 inert landfill,grounded_meta,
+eol_battery_recycling_li_ion,recycling,kg,0.45,GREET 2024 hydrometallurgical Li recycling,grounded_meta,"Net energy cost of recycling process per kg of pack"
+eol_battery_landfill_li_ion,landfill,kg,0.20,GREET 2024 hazardous-waste route,grounded_meta,"Rarely used because Li-ion is regulated against landfill in EU"
+eol_hp_recycling_metal,recycling,kg,0.10,Ecoinvent 3.8 metal-fraction WEEE,grounded_meta,"Heat-pump metal-dominant disposal"
+eol_hp_refrigerant_recovery,refrigerant_recovery,kg,0.00,F-Gas Regulation EU 517/2014 recovery,grounded,"90% recovery; remaining direct emission handled at refrigerant factor"

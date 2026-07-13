@@ -1,15 +1,43 @@
-@prefix ex:   <http://example.com/dpp#> .
-@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex:        <http://example.com/dpp#> .
+@prefix rdf:       <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:      <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:       <http://www.w3.org/2002/07/owl#> .
+@prefix skos:      <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms:   <http://purl.org/dc/terms/> .
+# CIRPASS-2 EU DPP Core Ontology Proposal (Requirements Spec v1.0, March 2025).
+# Final IRIs were not yet stable when this file was last revised; this prefix
+# tracks the consortium's pre-announced namespace. Update to the published IRI
+# when the CIRPASS-2 core ontology v1 TTL is released.
+@prefix cirpass2:  <https://w3id.org/cirpass2/dpp/core#> .
+
+# Ontology metadata
+<http://example.com/dpp> a owl:Ontology ;
+  rdfs:label "Hybrid DPP reasoning ontology (Oslo)" ;
+  rdfs:comment """Engineering-informatics DPP schema used by the calibration-aware
+  neuro-symbolic framework. Designed to align with the CIRPASS-2 EU DPP Core
+  Ontology Proposal (Maigre et al., March 2025, DOI 10.5281/zenodo.14892666);
+  see docs/cirpass2_mapping.md for the term-by-term alignment.""" ;
+  owl:versionInfo "0.2.0" ;
+  rdfs:seeAlso <https://doi.org/10.5281/zenodo.14892666> ;
+  dcterms:references <https://doi.org/10.5281/zenodo.14892666> .
 
 #######################################################################
 # CLASSES
+# Each class has skos:closeMatch / skos:exactMatch to the corresponding
+# CIRPASS-2 core term. See docs/cirpass2_mapping.md for justification.
 #######################################################################
-ex:Product     a rdfs:Class .
-ex:Component   a rdfs:Class .
-ex:Material    a rdfs:Class .
-ex:ProcessStep a rdfs:Class .
-ex:Standard    a rdfs:Class .
+ex:Product     a rdfs:Class ;
+  skos:closeMatch cirpass2:Product ;
+  rdfs:comment "Generic product instance; aligned with CIRPASS-2 core class Product." .
+ex:Component   a rdfs:Class ;
+  skos:closeMatch cirpass2:Component .
+ex:Material    a rdfs:Class ;
+  skos:closeMatch cirpass2:Material .
+ex:ProcessStep a rdfs:Class ;
+  skos:closeMatch cirpass2:LifecycleProcess .
+ex:Standard    a rdfs:Class ;
+  skos:closeMatch cirpass2:Claim ;
+  rdfs:comment "Compliance reference reused as a Claim target in CIRPASS-2 terms." .
 
 #######################################################################
 # SUBCLASSES
