@@ -11,6 +11,7 @@ import re
 import subprocess
 import sys
 import time
+from collections import deque
 from pathlib import Path
 from typing import Any
 
@@ -385,6 +386,34 @@ async def run_live_async(args: argparse.Namespace) -> int:
     completed_this_run = 0
     handle = args.raw_output.open("a", encoding="utf-8")
 
+    class RollingTokenLimiter:
+        def __init__(self, tokens_per_minute: int) -> None:
+            self.limit = tokens_per_minute
+            self.events: deque[tuple[float, int]] = deque()
+            self.total = 0
+            self.guard = asyncio.Lock()
+
+        async def acquire(self, tokens: int) -> None:
+            while True:
+                delay = 0.0
+                async with self.guard:
+                    now = time.monotonic()
+                    while self.events and now - self.events[0][0] >= 60.0:
+                        _, expired = self.events.popleft()
+                        self.total -= expired
+                    if self.total + tokens <= self.limit:
+                        self.events.append((now, tokens))
+                        self.total += tokens
+                        return
+                    if self.events:
+                        delay = max(0.05, 60.05 - (now - self.events[0][0]))
+                await asyncio.sleep(delay)
+
+    limiter = RollingTokenLimiter(args.tpm_limit)
+    if args.initial_delay:
+        print(f"[live] initial cooldown={args.initial_delay:.1f}s", flush=True)
+        await asyncio.sleep(args.initial_delay)
+
     async def worker() -> None:
         nonlocal running_in, running_out, running_cost, completed_this_run
         while not queue.empty() and not stop.is_set():
@@ -394,8 +423,10 @@ async def run_live_async(args: argparse.Namespace) -> int:
                 return
             last_error: Exception | None = None
             response = None
+            estimated_tokens = estimated_request_input_tokens(item)
             for attempt in range(args.attempts):
                 try:
+                    await limiter.acquire(estimated_tokens)
                     response = await client.chat.completions.create(**item["body"])
                     break
                 except Exception as exc:
@@ -633,6 +664,8 @@ def parser() -> argparse.ArgumentParser:
     live.add_argument("--limit", type=int, default=None)
     live.add_argument("--price-in", type=float, default=0.15)
     live.add_argument("--price-out", type=float, default=0.60)
+    live.add_argument("--tpm-limit", type=int, default=170000)
+    live.add_argument("--initial-delay", type=float, default=0.0)
     live.set_defaults(function=run_live)
     check = sub.add_parser("status")
     check.add_argument("--state-json", type=Path, required=True)
