@@ -9,6 +9,7 @@ import os
 import re
 import subprocess
 import sys
+import time
 from pathlib import Path
 from typing import Any
 
@@ -211,6 +212,148 @@ def submit(args: argparse.Namespace) -> int:
     return 0
 
 
+def estimated_request_input_tokens(row: dict[str, Any]) -> int:
+    messages = row["body"].get("messages") or []
+    return sum(approx_tokens(str(message.get("content") or "")) for message in messages) + 16
+
+
+def shard(args: argparse.Namespace) -> int:
+    requests = read_jsonl(args.input_jsonl)
+    metadata = read_jsonl(args.manifest_jsonl)
+    if len(requests) != len(metadata):
+        raise SystemExit("request/manifest length mismatch")
+    by_id = {row["custom_id"]: row for row in metadata}
+    shards: list[dict[str, Any]] = []
+    current: list[dict[str, Any]] = []
+    current_tokens = 0
+
+    def flush() -> None:
+        nonlocal current, current_tokens
+        if not current:
+            return
+        index = len(shards)
+        directory = args.output_dir / f"shard_{index:03d}"
+        input_path = directory / "input.jsonl"
+        manifest_path = directory / "manifest.jsonl"
+        write_jsonl(input_path, current)
+        write_jsonl(manifest_path, [by_id[row["custom_id"]] for row in current])
+        shards.append(
+            {
+                "index": index,
+                "requests": len(current),
+                "estimated_input_tokens": current_tokens,
+                "input_jsonl": str(input_path),
+                "manifest_jsonl": str(manifest_path),
+                "state_json": str(directory / "state.json"),
+                "raw_output": str(directory / "output.jsonl"),
+            }
+        )
+        current = []
+        current_tokens = 0
+
+    for row in requests:
+        tokens = estimated_request_input_tokens(row)
+        if tokens > args.max_estimated_input_tokens:
+            raise SystemExit(f"single request exceeds shard token cap: {row['custom_id']} tokens={tokens}")
+        if current and current_tokens + tokens > args.max_estimated_input_tokens:
+            flush()
+        current.append(row)
+        current_tokens += tokens
+    flush()
+    args.output_dir.mkdir(parents=True, exist_ok=True)
+    index_path = args.output_dir / "SHARDS.json"
+    index_path.write_text(
+        json.dumps(
+            {
+                "schema_version": 1,
+                "source_requests": len(requests),
+                "max_estimated_input_tokens": args.max_estimated_input_tokens,
+                "shards": shards,
+            },
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    print(json.dumps({"shards": len(shards), "requests": len(requests), "index": str(index_path)}, indent=2))
+    return 0
+
+
+def run_shards(args: argparse.Namespace) -> int:
+    index = json.loads(args.shards_json.read_text(encoding="utf-8"))
+    client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+    terminal_bad = {"failed", "expired", "cancelled"}
+    for item in index["shards"]:
+        state_path = Path(item["state_json"])
+        raw_output = Path(item["raw_output"])
+        if raw_output.exists():
+            print(f"[batch-shards] shard={item['index']} already downloaded", flush=True)
+            continue
+        if state_path.exists():
+            state = json.loads(state_path.read_text(encoding="utf-8"))
+            batch = client.batches.retrieve(state["batch_id"])
+        else:
+            with Path(item["input_jsonl"]).open("rb") as handle:
+                uploaded = client.files.create(file=handle, purpose="batch")
+            batch = client.batches.create(
+                input_file_id=uploaded.id,
+                endpoint="/v1/chat/completions",
+                completion_window="24h",
+                metadata={
+                    "evaluation": "IJCKG2026-frozen-external-baselines",
+                    "commit": git_commit(),
+                    "shard": str(item["index"]),
+                },
+            )
+            state = {
+                "batch_id": batch.id,
+                "input_file_id": uploaded.id,
+                "status": batch.status,
+                "harness_commit": git_commit(),
+                "shard": item["index"],
+            }
+            state_path.write_text(json.dumps(state, indent=2) + "\n", encoding="utf-8")
+            print(f"[batch-shards] submitted shard={item['index']} batch={batch.id}", flush=True)
+        while batch.status not in {"completed", *terminal_bad}:
+            counts = batch.request_counts.model_dump() if batch.request_counts else {}
+            print(f"[batch-shards] shard={item['index']} status={batch.status} counts={counts}", flush=True)
+            time.sleep(args.poll_seconds)
+            batch = client.batches.retrieve(batch.id)
+        if batch.status in terminal_bad:
+            detail = batch.errors.model_dump() if batch.errors else None
+            raise SystemExit(f"shard {item['index']} ended with {batch.status}: {detail}")
+        if not batch.output_file_id:
+            raise SystemExit(f"shard {item['index']} completed without output_file_id")
+        raw_output.write_text(client.files.content(batch.output_file_id).text, encoding="utf-8")
+        state.update({"status": batch.status, "output_file_id": batch.output_file_id})
+        state_path.write_text(json.dumps(state, indent=2) + "\n", encoding="utf-8")
+        print(f"[batch-shards] completed shard={item['index']} output={raw_output}", flush=True)
+    return 0
+
+
+def combine_shards(args: argparse.Namespace) -> int:
+    index = json.loads(args.shards_json.read_text(encoding="utf-8"))
+    request_count = 0
+    args.raw_output.parent.mkdir(parents=True, exist_ok=True)
+    with args.raw_output.open("w", encoding="utf-8") as output, args.manifest_jsonl.open("w", encoding="utf-8") as manifest:
+        for item in index["shards"]:
+            raw_path = Path(item["raw_output"])
+            manifest_path = Path(item["manifest_jsonl"])
+            if not raw_path.exists():
+                raise SystemExit(f"missing shard output: {raw_path}")
+            raw_text = raw_path.read_text(encoding="utf-8")
+            output.write(raw_text)
+            if raw_text and not raw_text.endswith("\n"):
+                output.write("\n")
+            manifest_text = manifest_path.read_text(encoding="utf-8")
+            manifest.write(manifest_text)
+            if manifest_text and not manifest_text.endswith("\n"):
+                manifest.write("\n")
+            request_count += sum(1 for line in raw_text.splitlines() if line.strip())
+    print(f"combined shard outputs: {request_count} rows -> {args.raw_output}")
+    return 0 if request_count == index["source_requests"] else 3
+
+
 def fetch_batch(state_path: Path) -> tuple[OpenAI, Any]:
     state = json.loads(state_path.read_text(encoding="utf-8"))
     client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
@@ -344,6 +487,21 @@ def parser() -> argparse.ArgumentParser:
     send.add_argument("--input-jsonl", type=Path, required=True)
     send.add_argument("--state-json", type=Path, required=True)
     send.set_defaults(function=submit)
+    split = sub.add_parser("shard")
+    split.add_argument("--input-jsonl", type=Path, required=True)
+    split.add_argument("--manifest-jsonl", type=Path, required=True)
+    split.add_argument("--output-dir", type=Path, required=True)
+    split.add_argument("--max-estimated-input-tokens", type=int, default=1_650_000)
+    split.set_defaults(function=shard)
+    run = sub.add_parser("run-shards")
+    run.add_argument("--shards-json", type=Path, required=True)
+    run.add_argument("--poll-seconds", type=int, default=30)
+    run.set_defaults(function=run_shards)
+    combine = sub.add_parser("combine-shards")
+    combine.add_argument("--shards-json", type=Path, required=True)
+    combine.add_argument("--raw-output", type=Path, required=True)
+    combine.add_argument("--manifest-jsonl", type=Path, required=True)
+    combine.set_defaults(function=combine_shards)
     check = sub.add_parser("status")
     check.add_argument("--state-json", type=Path, required=True)
     check.set_defaults(function=status)
