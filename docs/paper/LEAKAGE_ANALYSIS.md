@@ -4,12 +4,12 @@ The verified subset removes 645 of 6,915 rows (9.3%) using evidence-only rules t
 
 ## Before and after objective filtering
 
-| system                          |   unfiltered_n | unfiltered_accuracy   |   verified_n |   verified_accuracy | delta   |
-|:--------------------------------|---------------:|:----------------------|-------------:|--------------------:|:--------|
-| COMPASS                         |            nan | pending               |         6270 |              1      | pending |
-| GPT-4o-mini + retrieved context |           6915 | 0.9424                |         6270 |              0.9657 | 0.0233  |
-| LINC-style prompted             |           6915 | 0.9202                |         6270 |              0.9488 | 0.0286  |
-| Logic-LM-style prompted         |           6915 | 0.9503                |         6270 |              0.9699 | 0.0196  |
+| system                          |   unfiltered_n |   unfiltered_accuracy |   verified_n |   verified_accuracy |   delta |
+|:--------------------------------|---------------:|----------------------:|-------------:|--------------------:|--------:|
+| COMPASS                         |           6915 |                0.9721 |         6270 |              0.9998 |  0.0278 |
+| GPT-4o-mini + retrieved context |           6915 |                0.9424 |         6270 |              0.9657 |  0.0233 |
+| LINC-style prompted             |           6915 |                0.9202 |         6270 |              0.9488 |  0.0286 |
+| Logic-LM-style prompted         |           6915 |                0.9503 |         6270 |              0.9699 |  0.0196 |
 
 ## Validator-neutrality audit
 

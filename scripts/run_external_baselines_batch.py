@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import asyncio
 import csv
 import json
 import os
@@ -17,7 +18,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from openai import OpenAI
+from openai import AsyncOpenAI, OpenAI
 
 from scripts import run_arch_smoke_comparison as arch
 from scripts import run_baselines as verified
@@ -354,6 +355,113 @@ def combine_shards(args: argparse.Namespace) -> int:
     return 0 if request_count == index["source_requests"] else 3
 
 
+async def run_live_async(args: argparse.Namespace) -> int:
+    requests = read_jsonl(args.input_jsonl)
+    if args.limit is not None:
+        requests = requests[: args.limit]
+    completed: set[str] = set()
+    prior_in = prior_out = 0
+    if args.raw_output.exists():
+        for row in read_jsonl(args.raw_output):
+            response = row.get("response") or {}
+            if response.get("status_code") == 200:
+                completed.add(row["custom_id"])
+                usage = (response.get("body") or {}).get("usage") or {}
+                prior_in += int(usage.get("prompt_tokens", 0))
+                prior_out += int(usage.get("completion_tokens", 0))
+    remaining = [row for row in requests if row["custom_id"] not in completed]
+    running_in, running_out = prior_in, prior_out
+    running_cost = running_in * args.price_in / 1_000_000 + running_out * args.price_out / 1_000_000
+    if running_cost >= args.budget_usd:
+        raise SystemExit(f"existing live output cost ${running_cost:.4f} already reaches cap ${args.budget_usd:.4f}")
+    args.raw_output.parent.mkdir(parents=True, exist_ok=True)
+    client = AsyncOpenAI(api_key=os.environ["OPENAI_API_KEY"], max_retries=0, timeout=args.timeout)
+    queue: asyncio.Queue[dict[str, Any]] = asyncio.Queue()
+    for row in remaining:
+        queue.put_nowait(row)
+    lock = asyncio.Lock()
+    stop = asyncio.Event()
+    failures: list[dict[str, str]] = []
+    completed_this_run = 0
+    handle = args.raw_output.open("a", encoding="utf-8")
+
+    async def worker() -> None:
+        nonlocal running_in, running_out, running_cost, completed_this_run
+        while not queue.empty() and not stop.is_set():
+            try:
+                item = queue.get_nowait()
+            except asyncio.QueueEmpty:
+                return
+            last_error: Exception | None = None
+            response = None
+            for attempt in range(args.attempts):
+                try:
+                    response = await client.chat.completions.create(**item["body"])
+                    break
+                except Exception as exc:
+                    last_error = exc
+                    if attempt + 1 < args.attempts:
+                        await asyncio.sleep(min(15.0, 1.5 * (2**attempt)))
+            if response is None:
+                async with lock:
+                    failures.append({"custom_id": item["custom_id"], "error": f"{type(last_error).__name__}: {last_error}"})
+                    stop.set()
+                queue.task_done()
+                return
+            body = response.model_dump()
+            usage = body.get("usage") or {}
+            output = {
+                "custom_id": item["custom_id"],
+                "execution_api": "live",
+                "response": {
+                    "status_code": 200,
+                    "request_id": getattr(response, "_request_id", ""),
+                    "body": body,
+                },
+                "error": None,
+            }
+            async with lock:
+                handle.write(json.dumps(output, ensure_ascii=False, separators=(",", ":")) + "\n")
+                handle.flush()
+                running_in += int(usage.get("prompt_tokens", 0))
+                running_out += int(usage.get("completion_tokens", 0))
+                running_cost = running_in * args.price_in / 1_000_000 + running_out * args.price_out / 1_000_000
+                completed_this_run += 1
+                if completed_this_run % 100 == 0:
+                    print(
+                        f"[live] completed={len(completed) + completed_this_run}/{len(requests)} "
+                        f"cost=${running_cost:.4f} failures={len(failures)}",
+                        flush=True,
+                    )
+                if running_cost > args.budget_usd:
+                    stop.set()
+            queue.task_done()
+
+    try:
+        await asyncio.gather(*(worker() for _ in range(args.concurrency)))
+    finally:
+        handle.close()
+        await client.close()
+    report = {
+        "requests": len(requests),
+        "previously_completed": len(completed),
+        "completed_this_run": completed_this_run,
+        "remaining": len(requests) - len(completed) - completed_this_run,
+        "tokens_in": running_in,
+        "tokens_out": running_out,
+        "cost_usd": running_cost,
+        "budget_cap_usd": args.budget_usd,
+        "failures": failures,
+    }
+    args.live_report.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps(report, indent=2))
+    return 0 if not failures and report["remaining"] == 0 else 3
+
+
+def run_live(args: argparse.Namespace) -> int:
+    return asyncio.run(run_live_async(args))
+
+
 def fetch_batch(state_path: Path) -> tuple[OpenAI, Any]:
     state = json.loads(state_path.read_text(encoding="utf-8"))
     client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
@@ -375,7 +483,7 @@ def status(args: argparse.Namespace) -> int:
     return 0 if batch.status not in {"failed", "expired", "cancelled"} else 2
 
 
-def verified_row(meta: dict[str, Any], body: dict[str, Any], request_id: str) -> dict[str, Any]:
+def verified_row(meta: dict[str, Any], body: dict[str, Any], request_id: str, execution_api: str) -> dict[str, Any]:
     source = meta["row"]
     mode = meta["mode"]
     raw = body["choices"][0]["message"]["content"] or ""
@@ -386,7 +494,7 @@ def verified_row(meta: dict[str, Any], body: dict[str, Any], request_id: str) ->
         "id": source["id"], "mode": mode, "type": source["type"], "domain": source["domain"],
         "query": source["query"], "product": source.get("product", ""), "session": source.get("session", "s1"),
         "success": success,
-        "steps": json.dumps([{"source": mode, "text": raw, "request_id": request_id, "execution_api": "batch"}]),
+        "steps": json.dumps([{"source": mode, "text": raw, "request_id": request_id, "execution_api": execution_api}]),
         "correct": success, "latency_ms": "", "confidence": 0.85 if success else 0.45,
         "confidence_raw": 0.85 if success else 0.45, "confidence_cal": 0.85 if success else 0.45,
         "cost_retrieval_calls": 1, "cost_rule_checks": 0,
@@ -397,7 +505,7 @@ def verified_row(meta: dict[str, Any], body: dict[str, Any], request_id: str) ->
     }
 
 
-def compositional_row(meta: dict[str, Any], body: dict[str, Any], request_id: str) -> dict[str, Any]:
+def compositional_row(meta: dict[str, Any], body: dict[str, Any], request_id: str, execution_api: str) -> dict[str, Any]:
     source = meta["row"]
     mode = meta["mode"]
     raw = body["choices"][0]["message"]["content"] or ""
@@ -409,21 +517,15 @@ def compositional_row(meta: dict[str, Any], body: dict[str, Any], request_id: st
         "expected_groups": json.dumps(source["expected_groups"], ensure_ascii=False),
         "success": arch.score_answer(answer, source["expected_groups"]), "llm_used": 1, "answer": answer,
         "tokens_in": int(usage.get("prompt_tokens", 0)), "tokens_out": int(usage.get("completion_tokens", 0)),
-        "answer_trace": json.dumps({"raw_answer": raw, "request_id": request_id, "execution_api": "batch"}),
+        "answer_trace": json.dumps({"raw_answer": raw, "request_id": request_id, "execution_api": execution_api}),
         "model": body.get("model", ""), "temperature": "0.0", "max_output_tokens": meta["max_tokens"],
         "harness_commit": meta["harness_commit"],
     }
 
 
-def collect(args: argparse.Namespace) -> int:
-    client, batch = fetch_batch(args.state_json)
-    if batch.status != "completed" or not batch.output_file_id:
-        raise SystemExit(f"batch is not collectable: status={batch.status}")
-    content = client.files.content(batch.output_file_id).text
-    args.raw_output.parent.mkdir(parents=True, exist_ok=True)
-    args.raw_output.write_text(content, encoding="utf-8")
+def materialize(content: str, manifest_path: Path, output_dir: Path, execution_api: str, run_id: str) -> int:
     output = {row["custom_id"]: row for row in (json.loads(line) for line in content.splitlines() if line.strip())}
-    manifest = read_jsonl(args.manifest_jsonl)
+    manifest = read_jsonl(manifest_path)
     failures = []
     verified_by_mode = {mode: [] for mode in MODES}
     compose_rows = []
@@ -441,32 +543,50 @@ def collect(args: argparse.Namespace) -> int:
         total_out += int(usage.get("completion_tokens", 0))
         resolved_models.add(str(body.get("model", "")))
         if meta["benchmark"] == "verified_release_6270":
-            verified_by_mode[meta["mode"]].append(verified_row(meta, body, response.get("request_id", "")))
+            verified_by_mode[meta["mode"]].append(
+                verified_row(meta, body, response.get("request_id", ""), execution_api)
+            )
         else:
-            compose_rows.append(compositional_row(meta, body, response.get("request_id", "")))
-    args.output_dir.mkdir(parents=True, exist_ok=True)
+            compose_rows.append(compositional_row(meta, body, response.get("request_id", ""), execution_api))
+    output_dir.mkdir(parents=True, exist_ok=True)
     for mode, rows in verified_by_mode.items():
-        path = args.output_dir / "verified" / f"{mode}.csv"
+        path = output_dir / "verified" / f"{mode}.csv"
         path.parent.mkdir(parents=True, exist_ok=True)
         with path.open("w", newline="", encoding="utf-8") as handle:
             writer = csv.DictWriter(handle, fieldnames=verified.EVAL_CSV_FIELDS)
             writer.writeheader(); writer.writerows(rows)
-    compose_path = args.output_dir / "compositional" / "external_baselines.csv"
+    compose_path = output_dir / "compositional" / "external_baselines.csv"
     compose_path.parent.mkdir(parents=True, exist_ok=True)
     fields = ["id", "domain", "subtype", "mode", "required_sources", "expected_groups", "success", "llm_used", "answer", "tokens_in", "tokens_out", "answer_trace", "model", "temperature", "max_output_tokens", "harness_commit"]
     with compose_path.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=fields); writer.writeheader(); writer.writerows(compose_rows)
     report = {
-        "batch_id": batch.id, "status": batch.status, "expected": len(manifest), "collected": len(output),
+        "run_id": run_id, "execution_api": execution_api, "status": "completed", "expected": len(manifest), "collected": len(output),
         "failures": len(failures), "verified_rows_by_mode": {k: len(v) for k, v in verified_by_mode.items()},
         "compositional_rows": len(compose_rows), "resolved_models": sorted(resolved_models),
         "tokens_in": total_in, "tokens_out": total_out,
-        "estimated_actual_batch_cost_usd": total_in * BATCH_PRICE_IN / 1_000_000 + total_out * BATCH_PRICE_OUT / 1_000_000,
+        "estimated_actual_cost_usd": total_in * (BATCH_PRICE_IN if execution_api == "batch" else 0.15) / 1_000_000
+        + total_out * (BATCH_PRICE_OUT if execution_api == "batch" else 0.60) / 1_000_000,
     }
-    (args.output_dir / "BATCH_COLLECTION_REPORT.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
-    (args.output_dir / "batch_failures.json").write_text(json.dumps(failures, indent=2) + "\n", encoding="utf-8")
+    (output_dir / "EXTERNAL_COLLECTION_REPORT.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    (output_dir / "external_failures.json").write_text(json.dumps(failures, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(report, indent=2))
     return 0 if not failures and all(len(v) == 6270 for v in verified_by_mode.values()) and len(compose_rows) == 9000 else 3
+
+
+def collect(args: argparse.Namespace) -> int:
+    client, batch = fetch_batch(args.state_json)
+    if batch.status != "completed" or not batch.output_file_id:
+        raise SystemExit(f"batch is not collectable: status={batch.status}")
+    content = client.files.content(batch.output_file_id).text
+    args.raw_output.parent.mkdir(parents=True, exist_ok=True)
+    args.raw_output.write_text(content, encoding="utf-8")
+    return materialize(content, args.manifest_jsonl, args.output_dir, "batch", batch.id)
+
+
+def collect_local(args: argparse.Namespace) -> int:
+    content = args.raw_output.read_text(encoding="utf-8")
+    return materialize(content, args.manifest_jsonl, args.output_dir, "live", "concurrent-live")
 
 
 def parser() -> argparse.ArgumentParser:
@@ -502,6 +622,18 @@ def parser() -> argparse.ArgumentParser:
     combine.add_argument("--raw-output", type=Path, required=True)
     combine.add_argument("--manifest-jsonl", type=Path, required=True)
     combine.set_defaults(function=combine_shards)
+    live = sub.add_parser("run-live")
+    live.add_argument("--input-jsonl", type=Path, required=True)
+    live.add_argument("--raw-output", type=Path, required=True)
+    live.add_argument("--live-report", type=Path, required=True)
+    live.add_argument("--concurrency", type=int, default=20)
+    live.add_argument("--attempts", type=int, default=4)
+    live.add_argument("--timeout", type=float, default=45.0)
+    live.add_argument("--budget-usd", type=float, default=6.0)
+    live.add_argument("--limit", type=int, default=None)
+    live.add_argument("--price-in", type=float, default=0.15)
+    live.add_argument("--price-out", type=float, default=0.60)
+    live.set_defaults(function=run_live)
     check = sub.add_parser("status")
     check.add_argument("--state-json", type=Path, required=True)
     check.set_defaults(function=status)
@@ -511,6 +643,11 @@ def parser() -> argparse.ArgumentParser:
     done.add_argument("--raw-output", type=Path, required=True)
     done.add_argument("--output-dir", type=Path, required=True)
     done.set_defaults(function=collect)
+    local = sub.add_parser("collect-local")
+    local.add_argument("--manifest-jsonl", type=Path, required=True)
+    local.add_argument("--raw-output", type=Path, required=True)
+    local.add_argument("--output-dir", type=Path, required=True)
+    local.set_defaults(function=collect_local)
     return root
 
 
