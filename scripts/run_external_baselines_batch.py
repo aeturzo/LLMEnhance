@@ -410,6 +410,20 @@ async def run_live_async(args: argparse.Namespace) -> int:
                 await asyncio.sleep(delay)
 
     limiter = RollingTokenLimiter(args.tpm_limit)
+    request_guard = asyncio.Lock()
+    next_request_at = 0.0
+
+    async def pace_request() -> None:
+        """Space requests globally when an account-level rolling RPD cap applies."""
+        nonlocal next_request_at
+        if args.request_interval <= 0:
+            return
+        async with request_guard:
+            now = time.monotonic()
+            delay = max(0.0, next_request_at - now)
+            if delay:
+                await asyncio.sleep(delay)
+            next_request_at = time.monotonic() + args.request_interval
     if args.initial_delay:
         print(f"[live] initial cooldown={args.initial_delay:.1f}s", flush=True)
         await asyncio.sleep(args.initial_delay)
@@ -427,6 +441,7 @@ async def run_live_async(args: argparse.Namespace) -> int:
             for attempt in range(args.attempts):
                 try:
                     await limiter.acquire(estimated_tokens)
+                    await pace_request()
                     response = await client.chat.completions.create(**item["body"])
                     break
                 except Exception as exc:
@@ -666,6 +681,12 @@ def parser() -> argparse.ArgumentParser:
     live.add_argument("--price-out", type=float, default=0.60)
     live.add_argument("--tpm-limit", type=int, default=170000)
     live.add_argument("--initial-delay", type=float, default=0.0)
+    live.add_argument(
+        "--request-interval",
+        type=float,
+        default=0.0,
+        help="minimum seconds between API requests across all workers (for rolling RPD limits)",
+    )
     live.set_defaults(function=run_live)
     check = sub.add_parser("status")
     check.add_argument("--state-json", type=Path, required=True)
