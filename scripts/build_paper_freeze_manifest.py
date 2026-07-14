@@ -23,6 +23,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 GROUPS = {
     "benchmarks": [
         "artifacts/paper_split.json",
+        "artifacts/paper_split_with_gold.json",
         "artifacts/release_clean_verified_v1.json",
         "artifacts/release_clean_verified_v1_ids.json",
         "artifacts/auto_compose_v2/auto_compose_arch_3000_v2.json",
@@ -35,6 +36,11 @@ GROUPS = {
         "artifacts/verified_v1/eval_LOGIC_LM_verified_v1.csv",
         "artifacts/auto_compose_v2/final_arch_3000_all3.csv",
         "experiments/openfoodfacts_20260506_165710/system_eval_20260506_174429_rescored/off_system_eval_gpt4o_mini.csv",
+        "artifacts/phase_bc_20260714_frozen/verified/COMPASS.csv",
+        "artifacts/phase_bc_20260714_frozen/verified/GPT4O_LONGCTX.csv",
+        "artifacts/phase_bc_20260714_frozen/verified/LINC.csv",
+        "artifacts/phase_bc_20260714_frozen/verified/LOGIC_LM.csv",
+        "artifacts/phase_bc_20260714_frozen/compositional/all_systems.csv",
     ],
     "ontology_and_rules": [
         "backend/ontologies/dpp_ontology.ttl",
@@ -52,6 +58,7 @@ GROUPS = {
         "backend/services/policy_router.py",
         "scripts/run_baselines.py",
         "scripts/run_arch_smoke_comparison.py",
+        "scripts/run_external_baselines_batch.py",
     ],
     "validators_and_exporters": [
         "scripts/filter_eval_to_verified_subset.py",
@@ -61,6 +68,11 @@ GROUPS = {
         "scripts/run_paper_pipeline.py",
         "backend/eval/mcnemar.py",
         "backend/eval/stats_polish.py",
+        "scripts/analyze_leakage.py",
+        "scripts/audit_pooled_rerun_inputs.py",
+        "scripts/calibration_diagnostics.py",
+        "scripts/plot_exact_risk_coverage.py",
+        "scripts/package_frozen_results.py",
     ],
     "calibration": [
         "artifacts/calibration_fit.json",
