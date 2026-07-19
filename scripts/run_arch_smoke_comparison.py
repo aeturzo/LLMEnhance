@@ -511,6 +511,9 @@ def main() -> int:
 
     rows = load_benchmark_rows(args.data, limit=args.limit, sample_mixed=args.sample_mixed) if args.data else build_rows(args.n)
     args.out.parent.mkdir(parents=True, exist_ok=True)
+    # AUTO_COMPOSE reads its model from GEN_MODEL inside the application
+    # runtime. Keep it pinned to the same CLI snapshot as the baselines.
+    os.environ["GEN_MODEL"] = args.model
     os.environ["AUTO_COMPOSE_DISABLE_PRE_LLM_DIRECT_FALLBACK"] = "1"
     os.environ.pop("AUTO_COMPOSE_DISABLE_DIRECT_FALLBACK", None)
     os.environ["AUTO_COMPOSE_FAIL_ON_LLM_ERROR"] = "1"

@@ -559,7 +559,8 @@ def compositional_row(meta: dict[str, Any], body: dict[str, Any], request_id: st
     usage = body.get("usage") or {}
     return {
         "id": source["id"], "domain": source["domain"], "subtype": source.get("subtype", source.get("type", "")),
-        "mode": mode, "required_sources": "+".join(source.get("required_sources") or []),
+        "mode": mode, "product": source.get("product", ""),
+        "session": source.get("session", "s1"), "query": source["query"],
         "expected_groups": json.dumps(source["expected_groups"], ensure_ascii=False),
         "success": arch.score_answer(answer, source["expected_groups"]), "llm_used": 1, "answer": answer,
         "tokens_in": int(usage.get("prompt_tokens", 0)), "tokens_out": int(usage.get("completion_tokens", 0)),
@@ -603,7 +604,14 @@ def materialize(content: str, manifest_path: Path, output_dir: Path, execution_a
             writer.writeheader(); writer.writerows(rows)
     compose_path = output_dir / "compositional" / "external_baselines.csv"
     compose_path.parent.mkdir(parents=True, exist_ok=True)
-    fields = ["id", "domain", "subtype", "mode", "required_sources", "expected_groups", "success", "llm_used", "answer", "tokens_in", "tokens_out", "answer_trace", "model", "temperature", "max_output_tokens", "harness_commit"]
+    # Keep the compositional output schema identical to run_arch_smoke_comparison.py
+    # so its completed external rows can be resumed safely for AUTO_COMPOSE only.
+    fields = [
+        "id", "mode", "domain", "subtype", "product", "session", "query",
+        "expected_groups", "success", "llm_used", "answer", "tokens_in",
+        "tokens_out", "answer_trace", "model", "temperature",
+        "max_output_tokens", "harness_commit",
+    ]
     with compose_path.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=fields); writer.writeheader(); writer.writerows(compose_rows)
     report = {
