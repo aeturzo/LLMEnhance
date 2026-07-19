@@ -533,6 +533,11 @@ def main() -> int:
     )
     doc_cache: Dict[str, List[Dict[str, str]]] = {}
     mem_cache: Dict[str, List[Dict[str, str]]] = {}
+    isolated_memory = os.environ.get("AUTO_COMPOSE_ISOLATED_MEMORY") == "1"
+    if isolated_memory:
+        if not os.environ.get("MEMORY_META_PATH"):
+            raise SystemExit("AUTO_COMPOSE_ISOLATED_MEMORY=1 requires MEMORY_META_PATH")
+        memory_service.reset_storage()
 
     fields = [
         "id", "mode", "domain", "subtype", "product", "session", "query",
@@ -650,8 +655,11 @@ def main() -> int:
                     if args.sleep:
                         time.sleep(args.sleep)
         finally:
-            for row in rows:
-                memory_service.flush_session(row["session"])
+            if isolated_memory:
+                memory_service.reset_storage()
+            else:
+                for row in rows:
+                    memory_service.flush_session(row["session"])
 
     summarize(rows, args.out, args.summary)
     print(args.summary.read_text(encoding="utf-8"))
