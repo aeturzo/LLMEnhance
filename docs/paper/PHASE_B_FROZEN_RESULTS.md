@@ -7,11 +7,19 @@ Finalization date: 2026-07-20
 - Release tag: `ijckg2026-phase-b-frozen-20260719`
 - Final harness commit: `a4e623402a37e2276d2e680633144d5c0564966e`
 - Requested OpenAI model alias: `gpt-4o-mini`
-- API-resolved model recorded on every final LLM row:
-  `gpt-4o-mini-2024-07-18`
+- API-resolved model recorded on every external-baseline row and every
+  compositional LLM row: `gpt-4o-mini-2024-07-18`
 - Direct requests to the dated name returned HTTP 403 for this account. The
   supported alias was therefore used and the API-resolved snapshot was stored
-  from every response.
+  from those responses.
+
+A Phase D nested-trace audit found a narrower provenance gap in the verified
+COMPASS file. Of its 6,270 outputs, 5,265 use a deterministic symbolic path
+and 1,001 use deterministic field extraction. Four use an LLM. Those four
+nested traces retain only the `gpt-4o-mini` alias; their dated snapshot and
+temperature were not copied to the top-level row. The numerical result is
+unchanged, but the paper must not describe COMPASS as fully deterministic or
+as fully snapshot-matched in the verified comparison.
 
 The external request manifest records commit
 `b3da0efcb33025a739a784324b844af10ebe8a35`; AUTO_COMPOSE records final harness
@@ -21,6 +29,18 @@ benchmark memory cleanup. They do not change the frozen prompts, benchmark
 rows, scoring rules, or external request bodies. This distinction must remain
 visible in the release rather than being described as identical execution
 commit strings.
+
+The verified set and compositional set are template-generated benchmarks over
+released seed records and ontology assets. They are DPP-like controlled tests,
+not samples of independent natural queries. A Phase D normalization audit
+found 289 question forms among the 6,270 verified items and 497 among the 3,000
+compositional items. Row-level intervals and paired tests are descriptive of
+these items.
+
+`AUTO_COMPOSE` attempted an LLM call on all 3,000 compositional rows.
+Post-LLM deterministic checks changed or supplemented 198 final answers. In
+20 final traces, the LLM answer was discarded. The reported 1.0000 accuracy is
+for this full pipeline, not for the LLM alone.
 
 ## Final results
 
@@ -44,3 +64,7 @@ and machine-readable validation are in
 The historical 3,429-row pooled suite was not regenerated because 2,084 rows
 in the retained split lack recoverable gold labels. See
 `docs/paper/POOLED_RERUN_LIMITATION.md`. No labels or results were fabricated.
+
+The Open Food Facts run is an older, separate row-context evaluation. Its
+outputs retain the `gpt-4o-mini` alias but not a dated model identifier. It is
+not part of the snapshot-matched Phase B comparison.

@@ -2,7 +2,20 @@
 
 Status: **PASSED**.
 
-All evaluated LLM rows must resolve to `gpt-4o-mini-2024-07-18`.
+Top-level model fields in the external-baseline and compositional LLM rows
+resolve to `gpt-4o-mini-2024-07-18`. The validator did not inspect nested
+answer traces in the verified COMPASS file. A later audit found four LLM paths
+there with only the mutable `gpt-4o-mini` alias. Row parity, scores, and paired
+tests below remain valid; full snapshot parity does not.
+
+These are item-level tests on template-generated benchmarks. Normalizing
+identifiers and numbers yields 289 question forms in the verified set and 497
+in the compositional set. The p-values describe the frozen benchmark rows and
+are not population-level inference for independent natural queries.
+
+All 3,000 `AUTO_COMPOSE` rows attempted an LLM call. Deterministic output
+checks then changed or supplemented 198 answers; 20 final traces discard the
+LLM answer. The compositional score is for the full pipeline.
 
 | Benchmark | Reference | Comparison | n | Reference only | Comparison only | Exact p |
 |---|---|---|---:|---:|---:|---:|
