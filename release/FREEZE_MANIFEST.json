@@ -1,0 +1,415 @@
+{
+  "created_utc": "2026-07-20T09:50:36.679193+00:00",
+  "groups": {
+    "benchmarks": [
+      {
+        "git_tracked": false,
+        "mtime_utc": "2026-05-16T17:10:56.121462+00:00",
+        "path": "artifacts/paper_split.json",
+        "sha256": "c6f4a3c023ca293f360d56527a07d9c8e7a919b2c3c648cce323bcae51d0737e",
+        "size_bytes": 867043,
+        "status": "present"
+      },
+      {
+        "git_tracked": false,
+        "mtime_utc": "2026-05-16T17:10:56.207289+00:00",
+        "path": "artifacts/paper_split_with_gold.json",
+        "sha256": "b7cef401dd6b373d11959005fede9d59d96e78b3685d1a0de19e3feb4b9bd588",
+        "size_bytes": 531544,
+        "status": "present"
+      },
+      {
+        "git_tracked": false,
+        "mtime_utc": "2026-05-21T13:19:18.705900+00:00",
+        "path": "artifacts/release_clean_verified_v1.json",
+        "sha256": "79e59bd14c42e69d169b02c85f739ad25fb81cb6aa97df0130fdda0b45585fe8",
+        "size_bytes": 1476120,
+        "status": "present"
+      },
+      {
+        "git_tracked": false,
+        "mtime_utc": "2026-05-21T13:19:18.708574+00:00",
+        "path": "artifacts/release_clean_verified_v1_ids.json",
+        "sha256": "4e2df94f0ffdb020bd7f09cf8f9771fcc5b8a84f6fa48327bad37b6894e0ba8e",
+        "size_bytes": 227904,
+        "status": "present"
+      },
+      {
+        "git_tracked": false,
+        "mtime_utc": "2026-05-22T15:58:22.331239+00:00",
+        "path": "artifacts/auto_compose_v2/auto_compose_arch_3000_v2.json",
+        "sha256": "4636e20a88530dd854a15406246a76557362ebcb63aed6060c2424c3f09c746c",
+        "size_bytes": 2159580,
+        "status": "present"
+      }
+    ],
+    "calibration": [
+      {
+        "git_tracked": false,
+        "mtime_utc": "2026-02-02T16:16:29.731230+00:00",
+        "path": "artifacts/calibration_fit.json",
+        "sha256": "33b997f44319015a4eb71606a025e232cd56ad6350fc885e074aef6705c9414b",
+        "size_bytes": 330,
+        "status": "present"
+      },
+      {
+        "git_tracked": false,
+        "mtime_utc": "2026-02-02T16:16:28.760851+00:00",
+        "path": "artifacts/calibration_meta.json",
+        "sha256": "33500041028b2a54e84d00990291ef1e77984e8a1b8ad296186d6ab1df53a3a4",
+        "size_bytes": 242,
+        "status": "present"
+      },
+      {
+        "git_tracked": false,
+        "mtime_utc": "2025-11-06T17:31:32.812273+00:00",
+        "path": "artifacts/selective/selective_calibrated.csv",
+        "sha256": "1d43438331bafa0f9d61c78a23769ae7239d18e04d741928efbe5d2d7c76bf6f",
+        "size_bytes": 6542,
+        "status": "present"
+      },
+      {
+        "git_tracked": false,
+        "mtime_utc": "2026-06-03T13:37:46.147608+00:00",
+        "path": "artifacts/paper_handoff_20260603/off_calibration_bins.csv",
+        "sha256": "e18476275d214ac7be59e00225f6acb7d97c2d7b3323473dcf4e933ce6edd522",
+        "size_bytes": 421,
+        "status": "present"
+      }
+    ],
+    "current_results": [
+      {
+        "git_tracked": false,
+        "mtime_utc": "2026-02-02T18:24:23.137384+00:00",
+        "path": "artifacts/eval_joined_pooled_20260202_192420.csv",
+        "sha256": "c9fa19f7195894109ec9107ceb4a78737d96eeb6a968260a60e5bb7b3c31740f",
+        "size_bytes": 4722621,
+        "status": "present"
+      },
+      {
+        "git_tracked": false,
+        "mtime_utc": "2026-05-21T14:37:59.328612+00:00",
+        "path": "artifacts/verified_v1/eval_ADAPTIVERAG_verified_v1_full.csv",
+        "sha256": "70ee2dee435e4d57fb6d4c861521c552a4c3468fe8bac9bdadabfc9469cce2d2",
+        "size_bytes": 3203990,
+        "status": "present"
+      },
+      {
+        "git_tracked": false,
+        "mtime_utc": "2026-05-21T13:19:29.411687+00:00",
+        "path": "artifacts/verified_v1/eval_GPT4O_LONGCTX_verified_v1.csv",
+        "sha256": "6edc9a96907160d1eccab8e921e916b8da77b2c14ed162e53904d3d430566371",
+        "size_bytes": 1436065,
+        "status": "present"
+      },
+      {
+        "git_tracked": false,
+        "mtime_utc": "2026-05-21T13:19:29.482254+00:00",
+        "path": "artifacts/verified_v1/eval_LINC_verified_v1.csv",
+        "sha256": "63d4cdf566d38100cffda5283c054abe12cd62f39dbc1d1ac4b51bcbf145f03f",
+        "size_bytes": 1436499,
+        "status": "present"
+      },
+      {
+        "git_tracked": false,
+        "mtime_utc": "2026-05-21T13:19:29.551399+00:00",
+        "path": "artifacts/verified_v1/eval_LOGIC_LM_verified_v1.csv",
+        "sha256": "f7416003cf4219e369d27c7f6abc8dc39d83d2408a519ae8d2a42f5798fbcfd7",
+        "size_bytes": 1396907,
+        "status": "present"
+      },
+      {
+        "git_tracked": false,
+        "mtime_utc": "2026-06-02T22:32:15.278145+00:00",
+        "path": "artifacts/auto_compose_v2/final_arch_3000_all3.csv",
+        "sha256": "6d56c0d3472f05a030bd7863df763f6232fed8e09eed457297e1a1f85701574f",
+        "size_bytes": 3774290,
+        "status": "present"
+      },
+      {
+        "git_tracked": false,
+        "mtime_utc": "2026-05-06T16:11:24.438288+00:00",
+        "path": "experiments/openfoodfacts_20260506_165710/system_eval_20260506_174429_rescored/off_system_eval_gpt4o_mini.csv",
+        "sha256": "794bc3827d956483309f942995ab11079885f05048ef85256594a2377d64ca52",
+        "size_bytes": 2107649,
+        "status": "present"
+      },
+      {
+        "git_tracked": false,
+        "mtime_utc": "2026-07-14T09:39:32.022575+00:00",
+        "path": "artifacts/phase_bc_20260714_frozen/verified/COMPASS.csv",
+        "sha256": "b0b53fb1adb18cb8b86f4b5a6c487550abbde4043f345c6ac9ef87c771f69491",
+        "size_bytes": 3137090,
+        "status": "present"
+      },
+      {
+        "git_tracked": false,
+        "mtime_utc": "2026-07-17T21:18:38.539148+00:00",
+        "path": "artifacts/phase_bc_20260714_frozen/verified/GPT4O_LONGCTX.csv",
+        "sha256": "cda3872a51da716f80a478849ec9347ec9b7c7ff423924d2695f45c8ef1f4724",
+        "size_bytes": 2412692,
+        "status": "present"
+      },
+      {
+        "git_tracked": false,
+        "mtime_utc": "2026-07-17T21:18:38.630633+00:00",
+        "path": "artifacts/phase_bc_20260714_frozen/verified/LINC.csv",
+        "sha256": "da4ca632fb38ade0b4b049334629e02dcacbe30208f36c37928f75c5e7d40202",
+        "size_bytes": 5750162,
+        "status": "present"
+      },
+      {
+        "git_tracked": false,
+        "mtime_utc": "2026-07-17T21:18:38.681733+00:00",
+        "path": "artifacts/phase_bc_20260714_frozen/verified/LOGIC_LM.csv",
+        "sha256": "950d7ae4fc57d49cc986a8e9b43a29a20df6784413101a68765392a0cefbb7e3",
+        "size_bytes": 2518535,
+        "status": "present"
+      },
+      {
+        "git_tracked": false,
+        "mtime_utc": "2026-07-19T18:38:06.406563+00:00",
+        "path": "artifacts/phase_bc_20260714_frozen/compositional/all_systems.csv",
+        "sha256": "00780909dff5293218eafcfea218135b59fde37d9873abf0a9bdae84772dfaf7",
+        "size_bytes": 9286646,
+        "status": "present"
+      }
+    ],
+    "ontology_and_rules": [
+      {
+        "git_tracked": true,
+        "mtime_utc": "2026-07-14T00:22:18.697289+00:00",
+        "path": "backend/ontologies/dpp_ontology.ttl",
+        "sha256": "170094eed8138368007ca5bf01997c8aae8a6c47a36cca13ee4719924dc3a19d",
+        "size_bytes": 100010,
+        "status": "present"
+      },
+      {
+        "git_tracked": true,
+        "mtime_utc": "2026-07-14T00:22:18.696790+00:00",
+        "path": "backend/ontologies/carbon_ontology.ttl",
+        "sha256": "a504193102aad138632da5bd0fede3d6cc1b817eb427395b8f2d7fa9af7713e3",
+        "size_bytes": 12278,
+        "status": "present"
+      },
+      {
+        "git_tracked": true,
+        "mtime_utc": "2026-07-14T00:22:18.707485+00:00",
+        "path": "backend/services/symbolic_reasoning_service.py",
+        "sha256": "57c043cb3827d04c8c8deab004e75b2876bb35cac77beb8ed82cf2ba02285ce9",
+        "size_bytes": 26634,
+        "status": "present"
+      },
+      {
+        "git_tracked": true,
+        "mtime_utc": "2026-07-14T00:22:18.703328+00:00",
+        "path": "backend/services/carbon_ontology_service.py",
+        "sha256": "dcc5a4ad30e8456e12dad4ba9b3ee003261f47d6921b0e75603f9152f6c2aa66",
+        "size_bytes": 28925,
+        "status": "present"
+      },
+      {
+        "git_tracked": true,
+        "mtime_utc": "2026-07-14T00:22:18.674500+00:00",
+        "path": "backend/config/domains/battery.yml",
+        "sha256": "b3919ad70c0661a7806f620f3bce43de7bd80c3e506fbc388d3fa837a3a18805",
+        "size_bytes": 1829,
+        "status": "present"
+      },
+      {
+        "git_tracked": true,
+        "mtime_utc": "2026-07-14T00:22:18.674664+00:00",
+        "path": "backend/config/domains/lexmark.yml",
+        "sha256": "ec8d7cb3f9878e56f3003d449949871d294352fd8e975d7512b50a66c80ef86c",
+        "size_bytes": 1688,
+        "status": "present"
+      },
+      {
+        "git_tracked": true,
+        "mtime_utc": "2026-07-14T00:22:18.674969+00:00",
+        "path": "backend/config/domains/viessmann.yml",
+        "sha256": "fce904ab332948c1e8b0d03a93b8d007e0b5669a4441c7a038f242b60dafb11f",
+        "size_bytes": 1710,
+        "status": "present"
+      }
+    ],
+    "prompts_and_routing": [
+      {
+        "git_tracked": true,
+        "mtime_utc": "2026-07-19T08:13:44.469908+00:00",
+        "path": "backend/api/answerer_ctx.py",
+        "sha256": "5a4ac8408b0bd3b003d20b7286264b18a8e76892f06b011ee24113aa99a8dca9",
+        "size_bytes": 14999,
+        "status": "present"
+      },
+      {
+        "git_tracked": true,
+        "mtime_utc": "2026-07-14T00:22:18.671697+00:00",
+        "path": "backend/api/solve.py",
+        "sha256": "ef14d405bc06feca8419f712066640a8077cbc48ec28e2041cb0c8bd7a780eff",
+        "size_bytes": 21291,
+        "status": "present"
+      },
+      {
+        "git_tracked": true,
+        "mtime_utc": "2026-07-14T00:22:18.672268+00:00",
+        "path": "backend/api/solve_auto.py",
+        "sha256": "5951fc508bafa3e4f7dcad5909dbfde954b85b439dfb5dbab3df4829f4c879d5",
+        "size_bytes": 30638,
+        "status": "present"
+      },
+      {
+        "git_tracked": true,
+        "mtime_utc": "2026-07-14T00:22:18.706347+00:00",
+        "path": "backend/services/policy_router.py",
+        "sha256": "981fc88ef74ee28388d8388d5298931e2277a37a481ade6e36ca8f6e84cf7991",
+        "size_bytes": 8409,
+        "status": "present"
+      },
+      {
+        "git_tracked": true,
+        "mtime_utc": "2026-07-14T00:22:18.795517+00:00",
+        "path": "scripts/run_baselines.py",
+        "sha256": "1fcdc3edd5cdee92df23e0434fe66f007a4bf2af49a03e2c748dfe3dac4f5281",
+        "size_bytes": 41028,
+        "status": "present"
+      },
+      {
+        "git_tracked": true,
+        "mtime_utc": "2026-07-19T08:20:13.769288+00:00",
+        "path": "scripts/run_arch_smoke_comparison.py",
+        "sha256": "2871484acb646d150a3daec3c775da1c60094e32f8ee9466051e83e9f70501ed",
+        "size_bytes": 28183,
+        "status": "present"
+      },
+      {
+        "git_tracked": true,
+        "mtime_utc": "2026-07-17T21:18:14.321750+00:00",
+        "path": "scripts/run_external_baselines_batch.py",
+        "sha256": "2aa15b716de0bf4b244a81d5514c5f29e04e534eaa81c8af7ba4f7c4b8b4cb55",
+        "size_bytes": 33174,
+        "status": "present"
+      }
+    ],
+    "validators_and_exporters": [
+      {
+        "git_tracked": true,
+        "mtime_utc": "2026-07-14T00:22:18.791522+00:00",
+        "path": "scripts/filter_eval_to_verified_subset.py",
+        "sha256": "5f022a937f3151f76d41910efb92d06f19370c7edd612a923768ceb752617af7",
+        "size_bytes": 7212,
+        "status": "present"
+      },
+      {
+        "git_tracked": true,
+        "mtime_utc": "2026-07-14T00:22:18.786344+00:00",
+        "path": "scripts/aggregate_verified_v1.py",
+        "sha256": "9e28efd016c4abab6c43c1113600f1d34ecc55868d29c3f32602b095bbefbf98",
+        "size_bytes": 9606,
+        "status": "present"
+      },
+      {
+        "git_tracked": true,
+        "mtime_utc": "2026-07-14T00:22:18.785995+00:00",
+        "path": "scripts/aggregate_baselines.py",
+        "sha256": "09d45f0ad0976d6c701fbdd2ab5d10f18d8ec815f5a22034f70088d0d6046e0d",
+        "size_bytes": 10323,
+        "status": "present"
+      },
+      {
+        "git_tracked": true,
+        "mtime_utc": "2026-07-14T00:22:18.791319+00:00",
+        "path": "scripts/export_tables.py",
+        "sha256": "dfacf21e4a0eff5c1e9c00c0963db2fbb2d5497c9315b604bbca0df431683899",
+        "size_bytes": 1453,
+        "status": "present"
+      },
+      {
+        "git_tracked": true,
+        "mtime_utc": "2026-07-14T00:22:18.796045+00:00",
+        "path": "scripts/run_paper_pipeline.py",
+        "sha256": "2d36c18f45243fdc65163a0cfcdecd9d62bea4da7bb7375fa853b1580a6e4713",
+        "size_bytes": 7789,
+        "status": "present"
+      },
+      {
+        "git_tracked": true,
+        "mtime_utc": "2026-07-14T00:22:18.690912+00:00",
+        "path": "backend/eval/mcnemar.py",
+        "sha256": "477f9a5c17e7224b64cc9ad2f09521f10b9b71a50a9349fd65f02720f44e1e2f",
+        "size_bytes": 1335,
+        "status": "present"
+      },
+      {
+        "git_tracked": true,
+        "mtime_utc": "2026-07-14T00:22:18.693149+00:00",
+        "path": "backend/eval/stats_polish.py",
+        "sha256": "08336d14b4b6a90db32388545d8208c908ab6428b50a7c5b2cd1e4fb174b25fa",
+        "size_bytes": 5218,
+        "status": "present"
+      },
+      {
+        "git_tracked": true,
+        "mtime_utc": "2026-07-14T09:29:14.205149+00:00",
+        "path": "scripts/analyze_leakage.py",
+        "sha256": "92efa55178ae839c9cfbc4e8e647f872ed7d38a3de2bddcb3f4814925e3341b6",
+        "size_bytes": 9665,
+        "status": "present"
+      },
+      {
+        "git_tracked": true,
+        "mtime_utc": "2026-07-14T11:07:40.182801+00:00",
+        "path": "scripts/audit_pooled_rerun_inputs.py",
+        "sha256": "80b6a15e605d49eb8438078ff8384729c2e3bc4368d19734bf02413a5da20494",
+        "size_bytes": 2432,
+        "status": "present"
+      },
+      {
+        "git_tracked": true,
+        "mtime_utc": "2026-07-14T09:29:14.205362+00:00",
+        "path": "scripts/calibration_diagnostics.py",
+        "sha256": "a79c61b288a356f02c9ec2b89801dd00f355014554846c7511023e4cd4a44fdf",
+        "size_bytes": 6851,
+        "status": "present"
+      },
+      {
+        "git_tracked": true,
+        "mtime_utc": "2026-07-14T09:29:14.205559+00:00",
+        "path": "scripts/plot_exact_risk_coverage.py",
+        "sha256": "aae013c541998de234a5bdda0292c2fbaf828d3fd6fa6b105a314eb44e7d8e7f",
+        "size_bytes": 4253,
+        "status": "present"
+      },
+      {
+        "git_tracked": true,
+        "mtime_utc": "2026-07-14T11:07:40.183570+00:00",
+        "path": "scripts/package_frozen_results.py",
+        "sha256": "fd10c685f4f10ebe29157514d4dd494579ab062868b248b8443f8a8f955bf4da",
+        "size_bytes": 5315,
+        "status": "present"
+      },
+      {
+        "git_tracked": true,
+        "mtime_utc": "2026-07-20T09:49:36.694637+00:00",
+        "path": "scripts/validate_frozen_phase_bc.py",
+        "sha256": "a0c0c0b5cc04c5f856c26558599b7c9e819b7034c15d5becb0a2c166a8a14e40",
+        "size_bytes": 7383,
+        "status": "present"
+      }
+    ]
+  },
+  "repository": {
+    "branch": "",
+    "commit": "85093eae95e74b30f3266578936717a54423797b",
+    "root": "/Users/turzo/Desktop/StudyUIO/Research/LLMENHANCE/compass_ijckg2026_freeze_20260714",
+    "tracked_status": [],
+    "tracked_worktree_clean": true
+  },
+  "schema_version": 1,
+  "summary": {
+    "files_declared": 48,
+    "files_missing": 0,
+    "files_present": 48,
+    "present_bytes": 46882503
+  }
+}
