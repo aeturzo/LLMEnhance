@@ -73,6 +73,7 @@ GROUPS = {
         "scripts/calibration_diagnostics.py",
         "scripts/plot_exact_risk_coverage.py",
         "scripts/package_frozen_results.py",
+        "scripts/validate_frozen_phase_bc.py",
     ],
     "calibration": [
         "artifacts/calibration_fit.json",
