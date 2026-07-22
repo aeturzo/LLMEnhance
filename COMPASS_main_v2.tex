@@ -35,7 +35,7 @@
 \newcommand{\SymOnly}{\textsc{Sym-Only}}
 \newcommand{\RouterMode}{\textsc{Router}}
 \newcommand{\RLMode}{\textsc{RL}}
-\newcommand{\LongCtx}{\textsc{GPT4o-Retrieved}}
+\newcommand{\LongCtx}{\textsc{GPT-mini-Ret.}}
 \newcommand{\LogicLM}{\textsc{Logic-LM-style}}
 % Best configuration is COMPASS. The macro below keeps any legacy
 % \AdaptiveRAG references compiling and rendering as COMPASS.
@@ -52,187 +52,287 @@ for Digital Product Passports}
 \maketitle
 
 \begin{abstract}
-Digital Product Passports (DPPs) combine technical, compliance, and
-sustainability records. These records are often incomplete and split between
-files and structured data. We present \Compass, a question-answering system
-that links answers to evidence and can abstain. It combines word- and
-meaning-based retrieval, session-scoped text memory, targeted rules, and a
-confidence score. On a verified subset of a template-generated, DPP-like
-benchmark, \Compass\ answers 6,269 of 6,270 items correctly (0.9998). Three
-external baselines share one dated model version
-and score 0.9512--0.9702. On a controlled benchmark of 3,000 composition
-questions, \Compass\ scores 1.0000. The baselines score 0.8907--0.9593.
-Both benchmarks repeat question templates. The comparisons therefore describe
-only the observed items. Archived outputs mark 7.96\% of items as symbolic-path
-cases. All answers in that subset are labeled correct, but the traces do not
-identify the rules used. A separate test uses 4,021 Open Food Facts queries. It gives
-the model the relevant row and field names. A rule applied after generation
-treats explicit missing-evidence responses as abstentions. Decision accuracy
-is 0.972 at 0.730 answer coverage. Fixed-width-bin expected calibration error
-is 0.021. The test does not evaluate retrieval. These are controlled tests.
-They do not establish performance in real deployments. Confidence also
-remains poorly calibrated on the archived DPP run.
+Digital Product Passports (DPPs) expose product-level technical, compliance,
+and sustainability information. Errors in this setting can affect audits,
+purchasing decisions, and sustainability reports. A dependable
+question-answering system should link each answer to evidence. It should also
+withhold an answer when the required information is absent.
+
+Retrieval-augmented and long-context large language models (LLMs) can answer
+many factual questions from supplied text. Standard prompting alone, however,
+does not ensure correct rule application, reuse of earlier session facts, or
+consistent handling of missing evidence. We present \Compass, a DPP
+question-answering architecture that either returns an answer or abstains. It
+combines document retrieval, session-scoped text memory, and targeted rules
+over structured product facts. The rules operate on a DPP ontology informed by
+CIRPASS-2 requirements. Each released study retains the answer path and the
+evidence fields saved by its runner. The current endpoint has no shared online
+confidence threshold, so we analyze selective decisions only after inference.
+
+We evaluate \Compass\ on a verified subset of a template-generated DPP-like
+benchmark with 6,270 questions. A second controlled benchmark contains 3,000
+questions that combine document, memory, and structured evidence. A separate study
+supplies the relevant Open Food Facts row for each of 4,021 queries. On the
+verified benchmark, \Compass\ reaches 0.9998 accuracy, compared with 0.9702 for
+the strongest external baseline. This is a full-system comparison:
+6,266 outputs use deterministic document or symbolic graph paths, while four
+use the LLM fallback. The complete system also answers every compositional
+question correctly. In the Open Food Facts study, later text-based rescoring
+identifies explicit missing-evidence responses that the original JSON
+abstention flag misses.
+
+All three prompting baselines score below \Compass\ on both controlled
+benchmarks. These results are limited to the released tasks and do not
+establish performance on unrestricted natural queries or in production. We
+release the ontology, rules, benchmark generators, evaluation code, and
+per-item outputs for the two frozen benchmarks.
 \end{abstract}
 
-\keywords{Digital Product Passports \and knowledge graphs \and symbolic
-reasoning \and abstention \and calibration}
+\keywords{Digital Product Passports \and question answering \and retrieval
+\and symbolic reasoning \and abstention}
 
 \section{Introduction}
-Digital Product Passports (DPPs) are meant to make product information easy to
-inspect throughout a product's life cycle \cite{eu2024espr,ec_espr_dpp}.
-Users may need a technical value, a sustainability record, or evidence of
-compliance. A wrong answer can affect an audit or a purchase. It can also
-distort a sustainability report. The answer must therefore be supported by
-the product record. Plausible wording is not enough.
+Digital Product Passports (DPPs) make product information available across a
+product's life cycle \cite{eu2024espr}. A passport may contain a
+technical specification, a material record, an environmental value, or
+evidence related to a standard. People use these records for audits,
+procurement, repair, and sustainability reporting. In such settings, a fluent
+answer is not enough. The reader must be able to inspect its evidence. When
+the record does not support an answer, the system should say so.
+
+Three problems make this task harder than ordinary document search. First,
+evidence may be split across files and earlier messages in the same session.
+Second, some questions ask for a consequence of several facts. The answer must
+then be derived by a rule rather than copied from a passage. Third, product
+records are incomplete. Missing or conflicting evidence should lead to an
+abstention, not a plausible guess.
+
+Long-context prompting and retrieval-augmented generation (RAG) address part
+of this problem. RAG selects passages and gives them to a large language model
+(LLM) before it answers. A long prompt can instead hold more of the record at
+once. Neither method guarantees that the model will use the right passage.
+Evidence in the middle of a long prompt is often neglected
+\cite{liu2024lostinthemiddle}. A natural-language explanation can also differ
+from the process that produced the answer
+\cite{turpin2023unfaithfulcot}. Retrieval alone does
+not evaluate a compliance rule or decide how missing evidence should be
+handled.
+
+\Compass\ combines three limited and complementary sources. Document retrieval
+finds relevant passages. Session memory retrieves text saved earlier in the
+same interaction. A symbolic layer looks up graph facts and applies a small
+set of targeted rules. The graph is not a replacement for the documents.
+Runtime responses expose path and evidence fields when available; the frozen
+studies retain different subsets of those fields. We study answer coverage,
+error, and calibration only where a score was saved
+\cite{kamath2020selectiveqa,guo2017calibration,traub2024aurc}.
 
 We developed \Compass\ within CE-RISE, an EU Horizon Europe project on
-circular-resource information systems. Our evaluation uses released, curated
-DPP-like seed records for batteries, printing hardware, and heating systems.
-We demonstrated the project workbench to consortium practitioners
-outside the development team. We did not log those sessions in enough detail
-for a quantitative usage study.
-
-Several practical problems arise in DPP question answering. Evidence can be
-spread across documents or earlier parts of a session. Some answers must be
-derived from a rule. Others should be withheld because the required evidence
-is absent or conflicting. A long prompt does not remove these problems. A
-model can miss evidence because of its position in the prompt
-\cite{liu2024lostinthemiddle}. A fluent explanation may also misstate how the
-model reached its answer
-\cite{turpin2023unfaithfulcot,lanham2023faithfulnesscot}.
-
-Retrieval-augmented generation (RAG) gives a large language model (LLM)
-selected passages before it answers. RAG can improve factual grounding. It
-does not by itself apply a compliance rule or show when an answer should be
-withheld. \Compass\ adds session-scoped text memory and a small rule layer.
-The rule layer acts only when structured facts and a matching rule are
-available. Each response carries evidence and a confidence score. We study
-the trade-off between answer coverage and error, and we measure calibration
-separately
-\cite{geifman2019selectivenet,kamath2020selectiveqa,guo2017calibration,traub2024aurc}.
+circular-resource information systems. The released evaluation material uses
+curated DPP-like seed records for batteries, printing hardware, and heating
+systems. The workbench has been shown to consortium practitioners outside the
+development team. Those sessions were not logged in enough detail to support
+a user study.
 
 \noindent Our contributions are:
 \begin{itemize}[leftmargin=1.2em,itemsep=2pt,topsep=2pt]
-  \item We introduce \Compass. It combines word- and meaning-based retrieval,
-  session-scoped text memory, and targeted rules. Its interface returns an
-  answer with evidence or an abstention.
-  \item We use paired tests, risk--coverage curves, calibration, and
-  symbolic-path coverage to assess distinct parts of reliability
+  \item We present an answer-or-abstain interface for DPP question answering.
+  It combines document retrieval, same-session memory, graph lookup, and
+  targeted derivation while exposing path and available evidence fields.
+  \item We give a reliability evaluation that separates correctness,
+  risk under abstention, confidence calibration, and symbolic-path use. It
+  includes paired comparisons on identical questions
   \cite{wilson1927probable,mcnemar1947note}.
-  \item We release two frozen, template-generated benchmarks with predictions
-  for every item: 6,270 verified DPP-like questions and 3,000 controlled
-  composition questions. We also
-  report a field-aware abstention test with 4,021 Open Food Facts queries.
+  \item We release two frozen, template-generated benchmarks and their
+  item-level predictions: 6,270 verified DPP-like questions and 3,000
+  controlled composition questions. We also report a field-aware abstention
+  study with 4,021 Open Food Facts queries.
 \end{itemize}
 
 \section{Related work}
 
-\paragraph{Retrieval and memory.}
-RAG conditions an answer on retrieved passages. Fusion readers combine
-evidence from several passages \cite{lewis2020rag,izacard2021fid}. More context
-does not guarantee that the model will use the relevant evidence
-\cite{liu2024lostinthemiddle}. Prior systems use learned memory, retrieve from
-external stores, or carry state across text segments
-\cite{graves2014ntm,khandelwal2020knnlm,bulatov2022rmt}. Our aim is narrower.
-\Compass\ retrieves timestamped text within a session and places it beside
-document passages. A production system must prevent memory from mixing
-products. It must also record each entry's source and preserve a history of
-corrections.
+\paragraph{Retrieval and long context.}
+RAG conditions a generated answer on retrieved passages
+\cite{lewis2020rag}. It improves access to source text, but does not make the
+source complete or the answer logically valid. Longer contexts remain
+sensitive to where evidence appears \cite{liu2024lostinthemiddle}. \Compass\
+keeps retrieval for document questions. A separate symbolic path handles
+graph lookup and the limited facts derived from the structured record.
 
-\paragraph{Rules and abstention.}
-Neurosymbolic methods combine learned components with explicit rules or
-solvers \cite{riegel2020lnn,dong2019nlm,manhaeve2018deepproblog}. An ontology
-defines the entities and relations in a domain. OWL is the Web Ontology
-Language. Its restricted profiles allow efficient inference over an ontology
-\cite{motik2009owl2profiles}. LINC and Logic-LM couple an LLM to a symbolic
-solver \cite{olausson2023linc,pan2023logiclm}. Our LINC-style and
-Logic-LM-style comparisons approximate their prompting procedures. They do
-not execute the full published solver systems. Selective prediction asks when a
-system should abstain. Risk--coverage analysis measures the resulting
-trade-off \cite{geifman2019selectivenet,kamath2020selectiveqa,traub2024aurc}.
-Calibration must be tested independently of accuracy
-\cite{guo2017calibration,desai2020calibration}.
+\paragraph{External memory.}
+Prior work retrieves information outside model parameters or carries state
+across text segments \cite{khandelwal2020knnlm,bulatov2022rmt}. Our memory has
+a smaller role. It stores timestamped text within one session. It is not a
+verified product database. Durable use would require product isolation,
+source validation, and a correction history.
 
-\paragraph{Positioning.}
-\Compass\ does not replace documents with a knowledge graph. Retrieval and
-session memory handle most questions. Rules apply only to supported structured
-conditions. The released traces preserve evidence identifiers, derived
-triples, confidence, and answer paths for inspection. Our evaluation measures
-accuracy, abstention, confidence, and symbolic-path use.
+\paragraph{Ontologies and rules.}
+An ontology names the entities and relations in a domain. The Web Ontology
+Language (OWL) also supports rule-based inference over those relations.
+Restricted OWL profiles make this inference practical
+\cite{motik2009owl2profiles}. Neurosymbolic systems pair learned models with
+explicit rules or solvers. LINC and Logic-LM, for example, couple an LLM to
+symbolic inference \cite{olausson2023linc,pan2023logiclm}. Our comparison systems reproduce
+their prompting style, not their complete published solvers. \Compass\ uses a
+narrower symbolic layer. It looks up or derives selected DPP facts and leaves
+ordinary document questions to retrieval.
+
+\paragraph{Abstention and confidence.}
+Selective prediction studies when a model should answer and when it should
+abstain \cite{kamath2020selectiveqa}. A
+risk--coverage curve shows the price of answering more questions, while AURC
+summarizes that curve \cite{traub2024aurc}. Calibration asks a different
+question: whether a score such as 0.8 corresponds to about 80\% correctness
+\cite{guo2017calibration}. \Compass\ records a heuristic
+score. We test its ranking and calibration separately. We do not treat it as
+a probability merely because it lies between zero and one.
 
 \section{Problem formulation and metrics}
-For a product query $x$, the system returns an answer $y(x)$ with evidence. It
-may instead return the abstention symbol $\bot$. Each output has a confidence
-score $c(x)\in[0,1]$. In the selective analysis, a threshold $\tau$ marks
-scores below $\tau$ as abstentions. We vary this threshold after all answers
-are produced.
+For $N$ evaluated questions, let $x_i$ be question $i$ and $E_i$ its available
+document, memory, and structured evidence. The answer component is
+$y_i=f(x_i,E_i)$. It may be $\bot$, meaning that it is withheld. Trace fields
+differ by path and release. When a study retains a score $c_i\in[0,1]$, we
+treat it as a heuristic rather than an assumed probability. Applying an
+offline threshold $\tau$ yields
 
-\emph{Coverage} is the share of queries answered. \emph{Risk} is the error
-rate among those answers. A risk--coverage curve shows how risk changes as the
-threshold moves. The area under this curve (AURC) summarizes the trade-off.
-Lower is better
-\cite{kamath2020selectiveqa,traub2024aurc}. For datasets with deliberately
-unanswerable questions, \emph{decision accuracy} credits either a correct
-answer or a correct abstention. \emph{Answer accuracy} considers only the
-answered queries. We also report abstention precision and recall against the
-known answerability labels.
+\[
+\widetilde y_{\tau}(x_i)=
+\begin{cases}
+  y_i, & y_i\neq\bot\ \text{and}\ c_i\geq\tau,\\
+  \bot, & y_i=\bot\ \text{or}\ c_i<\tau.
+\end{cases}
+\tag{1}
+\]
 
-Expected calibration error (ECE) groups predictions by confidence. It is the
-weighted mean absolute gap between confidence and accuracy in those groups
-\cite{guo2017calibration,desai2020calibration}. We treat it as a
-separate metric because an accurate system can still be overconfident.
-The Brier score is the mean squared gap between confidence and correctness.
-Lower Brier scores are better.
-Accuracy estimates include Wilson 95\% intervals
-\cite{wilson1927probable}. Exact McNemar tests compare systems on the same
-queries \cite{mcnemar1947note}. \emph{Symbolic-path coverage} is the share of
-archived rows marked as using a symbolic step. \emph{Symbolic-path accuracy}
-is accuracy on that subset. These measures do not identify the exact rule that
-executed.
+Here, raising $\tau$ withholds more low-scoring answers. We vary it only after
+inference. The endpoint does not use a fitted calibrator or one shared
+production threshold.
+
+Let $z_i=1$ when the scorer marks the whole output correct, and $z_i=0$
+otherwise. In an answerability test, a required abstention can therefore have
+$z_i=1$. Let $A_{\tau}=\{i:y_i\neq\bot,\ c_i\geq\tau\}$ be the answered set.
+Then
+
+\[
+\operatorname{Coverage}(\tau)=\frac{|A_{\tau}|}{N},
+\qquad
+\operatorname{Risk}(\tau)=
+\frac{\sum_{i\in A_{\tau}}(1-z_i)}{|A_{\tau}|}.
+\tag{2}
+\]
+
+Coverage is the fraction answered. Risk is the error rate among those answers.
+Thus, coverage 0.80 and risk 0.05 mean that 80 of 100 questions are answered
+and four of those answers are wrong. Risk requires a nonempty $A_{\tau}$.
+
+A risk--coverage curve plots these two quantities as $\tau$ changes. Its area
+is
+
+\[
+\operatorname{AURC}=\int_{0}^{1}\operatorname{Risk}(u)\,du,
+\tag{3}
+\]
+
+where $u$ denotes coverage. We use trapezoids at the unique stored scores. For
+the zero-coverage boundary, the calculation carries back the risk at the first
+attainable threshold; that boundary is a numerical convention, not an observed
+operating point. A lower AURC means that errors tend to receive lower scores
+and are removed earlier. It does not establish calibration
+\cite{kamath2020selectiveqa,traub2024aurc}.
+
+Some benchmarks label each question as answerable or unanswerable.
+\emph{Decision accuracy} credits a correct answer to an answerable question or
+a correct abstention otherwise. \emph{Answer accuracy} is the fraction correct
+among answered questions. Abstention precision is the fraction of abstentions that were
+required. Abstention recall is the fraction of required abstentions made.
+Together, they expose a system that gains accuracy merely by refusing most
+questions.
+
+Expected calibration error (ECE) tests whether scores match observed
+correctness. Divide the outputs into $B$ score bins $I_b$. Let
+$\operatorname{acc}(I_b)$ and $\operatorname{conf}(I_b)$ be the mean
+correctness and score in bin $b$. We use
+
+\[
+\begin{aligned}
+\operatorname{ECE}&=\sum_{b=1}^{B}\frac{|I_b|}{N}
+ \left|\operatorname{acc}(I_b)-\operatorname{conf}(I_b)\right|,\\
+\operatorname{Brier}&=\frac{1}{N}\sum_{i=1}^{N}(c_i-z_i)^2.
+\end{aligned}
+\tag{4}
+\]
+
+If outputs near 0.8 confidence are correct only half the time, the score is
+overconfident in that bin. ECE depends on how bins are formed, so we report
+equal-count and fixed-width variants where available. Brier is the mean
+squared distance between score and correctness. Lower values are better
+\cite{guo2017calibration}.
+
+Wilson 95\% intervals summarize uncertainty around observed accuracy and
+remain well behaved near zero or one \cite{wilson1927probable}. McNemar's
+exact test compares two systems on the same questions by counting rows won
+only by each system \cite{mcnemar1947note}. Repeated templates limit how far
+either result can be generalized. Symbolic-path coverage is the
+fraction of rows marked as using a symbolic step. Symbolic-path accuracy is
+accuracy within that subset. Because the mark omits the exact rule and its
+premises, it is not individual-rule precision.
 
 \section{The COMPASS architecture}
 
 \subsection{Design principles and inference path}
-The answerer receives explicit evidence and is prompted to cite it. This
-instruction cannot ensure that the model ignores prior knowledge. Rules run
-only when structured facts support them. Each answer has a confidence score.
-We vary its use threshold after all answers are produced.
+Figure~\ref{fig:architecture} separates evidence acquisition from answer
+construction. Retrieval, same-session memory, and the symbolic graph provide
+candidate evidence. The verified path returns a document field, a looked-up
+graph fact, or a derived fact when available. It uses the LLM otherwise. The
+composition path asks the LLM to combine evidence; deterministic checks may
+supplement or replace its draft. The LLM is prompted to cite its context, but
+this cannot ensure that it ignores prior knowledge.
 
-Figure~\ref{fig:architecture} shows the two answer paths. Retrieval, session
-memory, and rules provide candidate evidence. The verified path returns a
-field or derived fact directly when possible. It uses the LLM otherwise. The
-composition path calls the LLM first, then checks its output against the
-evidence. Both paths save selected evidence and raw confidence.
+The frozen artifacts retain different trace fields. Verified rows keep a path
+label and either document identifiers or graph evidence, plus a stored score.
+Composition rows keep LLM path and model metadata, but no common confidence
+field and often no selected evidence identifiers. Figure~\ref{fig:architecture}
+therefore shows available release fields rather than a complete audit log.
 
-\begin{figure}[t]
+\begin{figure}[h]
 \centering
-\fbox{\begin{minipage}{0.94\linewidth}\centering\small
-\textbf{Query} $\rightarrow$
-\textbf{retrieval $\mid$ session memory $\mid$ rules} $\rightarrow$
-\textbf{verified direct/LLM $\mid$ composition LLM+checks} $\rightarrow$
-\textbf{answer + raw confidence}\\[-1pt]
-\footnotesize We analyze confidence and vary thresholds after answers are produced.
-\end{minipage}}
-\caption{The two evaluated \Compass\ paths. Selected identifiers, snippets,
-and derived symbolic triples are retained for inspection.}
+\includegraphics[width=0.88\linewidth]{figures/compass_architecture.pdf}
+\caption{The two frozen evaluation paths and available trace fields. Evidence
+and confidence fields vary by release. Dashed analysis occurs after inference
+and only where a score is retained.}
 \label{fig:architecture}
 \end{figure}
 
-\subsection{Evidence acquisition: hybrid retrieval and session memory}
-The retriever averages standardized word-based and dense E5 scores with equal
-weight \cite{lewis2020rag,izacard2021fid}. The word-based score uses term
-frequency--inverse document frequency (TF--IDF). It rewards words that are
-important in a passage but uncommon in the corpus. E5 embeddings compare
-meaning rather than exact wording. The system uses TF--IDF alone when dense
-search is unavailable. It does not rerank the results.
+\subsection{Evidence acquisition: document retrieval and session memory}
+The retriever always computes a TF--IDF score. The runtime can optionally add
+an E5 meaning-based score \cite{wang2022e5}. For query $x$ and candidate
+passage $d_j$, the optional hybrid score is
 
-Session memory stores timestamped text. It retrieves entries from the same
-session by cosine similarity, a measure of closeness between embeddings. The
-answerer is prompted to cite passage identifiers. If an LLM answer lacks a
-bracketed citation, the wrapper appends the first passage identifier. This
-enforces a citation format. It does not verify support for each claim. The
-saved trace keeps selected identifiers, scores, short snippets, and the answer
-path. It does not keep an immutable copy of the full prompt.
+\[
+s(x,d_j)=\tfrac{1}{2}\operatorname{zscore}\!\left(s_{\mathrm{TFIDF}}(x,d_j)\right)
+ +\tfrac{1}{2}\operatorname{zscore}\!\left(s_{\mathrm{E5}}(x,d_j)\right),
+\quad
+\operatorname{zscore}(s_j)=\frac{s_j-\bar{s}}{\sigma_s}.
+\tag{5}
+\]
+
+TF--IDF measures word overlap while giving more weight to words that are
+uncommon in the corpus. E5 represents the query and passage as vectors, so it
+can match similar meanings expressed with different words. Their raw score
+ranges differ. The mean $\bar{s}$ and standard deviation $\sigma_s$ are taken
+over the indexed passages for the query; zero variance uses a divisor of one.
+This standardization prevents one scale from dominating. Both frozen
+benchmark runners explicitly disabled E5 and ranked passages by TF--IDF alone.
+The reported results therefore do not measure the optional hybrid blend.
+Neither frozen runner reranks the retrieved passages.
+
+Session memory stores timestamped text and retrieves it within the same
+session. It uses cosine similarity, which measures closeness between embedding
+vectors. The answerer is prompted to cite passage identifiers. If an LLM
+answer lacks a bracketed citation, the wrapper appends the first identifier.
+This enforces format, not support for each claim. The runtime can return
+identifiers, scores, snippets, and the answer path, but it does not keep an
+immutable copy of the full prompt.
 
 The current memory can mix entries from different products in one session. It
 does not verify the source of an entry or preserve an append-only correction
@@ -265,9 +365,17 @@ rule is:
 {}\Rightarrow
 \texttt{requiresCompliance}(p,\texttt{BatterySafetyStandard}).
 \end{aligned}
+\tag{6}
 \]
-The conclusion applies to product $p$. At startup, the service first expands
-the static graph under the OWL~2~RL rule profile
+Here, $p$ stands for a product and $c$ for one of its components. The first
+statement says that $p$ contains $c$. The RDF type statement says that $c$ is
+a battery. The symbol $\wedge$ means that both statements must hold. The arrow
+then adds the conclusion on the right: the product requires the named battery
+safety standard. This is one derived graph fact. It is not, by itself, a legal
+finding or a complete proof of compliance.
+
+At startup, the service expands the static graph under OWL~2~RL, a restricted
+OWL profile designed for efficient rule-based inference
 \cite{motik2009owl2profiles}. It then applies the SPARQL rule list once. It
 does not repeat the rules until no new facts appear.
 
@@ -277,11 +385,12 @@ therefore unknown rather than false. Some released rules use
 that is not recorded in the loaded graph. The reasoner does not provide
 general checks for missing fields, stale reports, or date windows.
 
-\emph{Recorded evidence.} A symbolic response records derived standards and
-process steps. It also records whether the symbolic path was used. It does
-not retain every matched premise or the exact SPARQL rule identifier. The
-record supports inspection, but not reconstruction of the full proof. Historical
-symbolic-path coverage and accuracy appear in Section~\ref{sec:historical}.
+\emph{Recorded evidence.} Rule-derived responses record standards or process
+steps when present. Symbolic responses also record that the symbolic path was
+used. They do not retain every matched premise or the exact SPARQL rule
+identifier. The record supports inspection, but not reconstruction of the full
+proof. Historical symbolic-path coverage and accuracy appear in
+Section~\ref{sec:historical}.
 
 \subsection{Confidence, calibration, and operating modes}
 The runtime attaches a hand-designed confidence score to each answer. A memory
@@ -300,10 +409,10 @@ shared threshold. The Open Food Facts study also uses the model's reported
 confidence without fitting a later calibration model.
 
 The pooled study also reports configurations that isolate parts of the system.
-\RAGBase\ uses retrieval only. \MemMode\ uses memory only. \SymOnly\ uses
-rules only. \MemSymMode\ combines memory and rules. \RouterMode\ uses the
-learned router. \RLMode\ uses the project's experimental reinforcement-learning
-(RL) policy. The verified release records the project system as
+\RAGBase\ uses retrieval only. \MemMode\ uses memory only. \SymOnly\ uses the
+symbolic graph path. \MemSymMode\ combines memory and that path. \RouterMode\
+uses the learned router. The experimental \RLMode\ uses reinforcement
+learning (RL). The verified release records the project system as
 \texttt{ADAPTIVERAG}. The composition study
 records its full evidence-combining mode as \texttt{AUTO\_COMPOSE}. Both modes
 appear as \Compass\ in the paper, while the release keeps their internal
@@ -323,9 +432,9 @@ The second study is a controlled, generated benchmark with 3,000 questions.
 Its six subtypes require document evidence, session memory, structured facts,
 or combinations of these sources. The third study uses 4,021 Open Food Facts
 queries \cite{openfoodfacts}. It covers nutrition, product attributes, missing
-fields, sustainability, and fairness. The evaluator receives the relevant product row
-or aggregate missingness row. It also receives the names of the fields needed
-by the query.
+fields, sustainability, and fairness. The answerer receives the relevant
+product row or aggregate missingness row. Its prompt also names the fields
+needed by the query.
 
 We also report an archived, template-generated DPP-like run with 3,429
 questions. It predates the frozen release. Of these, 295 are logic questions,
@@ -349,10 +458,14 @@ McNemar tests therefore describe the observed benchmark items. They do not
 justify claims about a wider population of independent, naturally occurring
 queries.
 
+Both frozen DPP benchmarks contain supported, answerable items. They do not
+test native abstention decisions. Abstention evidence comes from the offline
+archived analysis and the separately rescored Open Food Facts study.
+
 \subsection{Baselines}
 The pooled suite uses \RAGBase\ and the internal component comparisons. The
-frozen studies add three GPT-4o-mini baselines. \LongCtx\ is a retrieval
-baseline. It receives
+frozen studies add three GPT-4o-mini baselines. \LongCtx\ denotes GPT-4o-mini
+with retrieved context. It receives
 up to 12,000 selected characters \cite{liu2024lostinthemiddle}. A
 Logic-LM-style prompt asks for classification and reasoning
 \cite{pan2023logiclm}. A LINC-style prompt supplies a premise, goal, and
@@ -366,16 +479,23 @@ settings, evidence budgets, predictions, and known departures from the
 published baseline procedures. The older Open Food Facts run retains only the
 \texttt{gpt-4o-mini} alias. Its dated model version was not saved.
 
+The composition harness supplies the benchmark's declared evidence sections.
+External baseline configurations mark this as oracle context
+and use gold source groups to select document, memory, and structured values.
+The comparison therefore tests composition given relevant evidence. It does
+not test end-to-end retrieval or source routing.
+
 \section{Results}
 \label{sec:results}
 \subsection{Frozen verified release}
 \label{sec:verified}
-The archived pooled suite contains 295 logic questions. The frozen verified
-release contains 2,649 logic questions among 6,270 questions in total.
-\Compass\ answers 6,269 questions correctly. Its accuracy is 0.9998, with a
+The frozen release contains 2,649 logic questions among 6,270 questions in
+total. \Compass\ answers 6,269 questions correctly. Its accuracy is 0.9998, with a
 Wilson 95\% interval of [0.9991, 1.0000]. \LogicLM\ scores 0.9702,
 \LongCtx\ 0.9662, and the LINC-style baseline 0.9512
-(Table~\ref{tab:verified}).
+(Table~\ref{tab:verified}). The result is also stable across the three source
+domains: 1,268 of 1,269 battery items and every printing-hardware and
+heating-system item are correct.
 
 The item-level paired tests use the same 6,270 rows for every system. The
 numbers of \Compass-only/baseline-only wins are 212/1 against \LongCtx, 306/1
@@ -383,11 +503,24 @@ against LINC-style, and 187/1 against \LogicLM. Every exact McNemar test has
 $p<10^{-10}$. These results show near-perfect item accuracy on this controlled
 subset. They do not show that DPP question answering is solved.
 
-This is a system-level comparison. \Compass\ uses a deterministic rule or
-field-extraction path on 6,266 rows. It uses an LLM on four rows. Those four
-records retain the \texttt{gpt-4o-mini} alias, but not its dated model version
-or temperature. Each external baseline uses the dated model version on every
-row. This missing version information limits reproducibility.
+This is a system-level comparison. The saved \Compass\ paths mark 5,265
+outputs as symbolic, 1,001 as direct field extraction, and four as LLM
+fallbacks. Within the symbolic group, trace labels mark 2,649 class-membership
+lookups, 2,594 knowledge-base recalls, 14 component lookups, and eight rows
+carrying both compliance and required-step labels. These are path labels, not
+retained proofs of individual custom-rule executions. The comparison therefore
+evaluates complete systems, not two prompts with equal model use.
+
+Every verified \Compass\ row stores confidence 0.5. This release cannot support
+a risk ranking or calibration analysis. The composition package has no common
+confidence field. Selective-risk and calibration evidence is therefore limited
+to the archived pooled run and Open Food Facts study below.
+
+The only \Compass\ error is a generated open-extraction item. Its question
+combines the labels ``Natural convection'' and ``Enclosure.'' The system
+returns ``Natural convection,'' while the reference expects the enclosure
+rating ``IP20.'' The case exposes a remaining boundary problem between nearby
+template fields rather than a missing document.
 
 \begin{table}[h]
 \centering
@@ -415,7 +548,8 @@ LINC-style & 0.9512 & [0.9456, 0.9563] & 0.9566 & 0.9208 & 0.9556 & 306 / 1 \\
 \label{sec:composition}
 The release names the full \Compass\ configuration \texttt{AUTO\_COMPOSE}.
 It answers all 3,000 benchmark questions correctly. \LongCtx\ answers 2,878
-(0.9593), \LogicLM\ 2,822 (0.9407), and LINC-style 2,672 (0.8907).
+(0.9593). \LogicLM\ answers 2,822 (0.9407), and LINC-style answers 2,672
+(0.8907).
 
 \texttt{AUTO\_COMPOSE} attempted an LLM call on every row. Deterministic output
 checks then changed or supplemented 198 answers. In 20 final traces, the LLM
@@ -429,31 +563,30 @@ document--memory subtype also separates the systems. By contrast, all
 baselines are near perfect on several memory--symbolic subtypes. Every
 item-level paired test against \Compass\ has $p<10^{-36}$.
 
-This benchmark is generated and controlled. Each system receives the evidence
-specified for its condition. It measures performance on designed composition
-tasks, not on naturally occurring queries.
+This generated benchmark measures composition from supplied evidence. It does
+not test retrieval or naturally occurring queries.
 
 \begin{table}[h]
 \centering
 \caption{Accuracy on the 3,000-question compositional benchmark. The largest
-gap occurs when a question needs document, memory, and symbolic evidence.}
+gap occurs when a question needs document, memory, and structured evidence.}
 \label{tab:arch}
 \footnotesize
-\setlength{\tabcolsep}{3.5pt}
+\setlength{\tabcolsep}{3pt}
 \renewcommand{\arraystretch}{1.0}
 \begin{tabular}{lcccc}
 \toprule
-Subtype & \Compass & \shortstack{GPT-4o\\retrieved} &
+Subtype & \Compass & \shortstack{GPT-4o-mini\\retrieved} &
 \shortstack{LINC-\\style} & \shortstack{Logic-LM-\\style} \\
 \midrule
 Overall (3000) & \textbf{1.000} & 0.959 & 0.891 & 0.941 \\
 \midrule
 Atomic verified (1500) & 1.000 & 0.984 & 0.913 & 0.973 \\
 Document + memory (225) & 1.000 & 0.867 & 0.702 & 0.760 \\
-Document + memory + rules (225) & 1.000 & 0.707 & 0.524 & 0.631 \\
-Memory + rules: compliance (375) & 1.000 & 1.000 & 0.968 & 1.000 \\
-Memory + rules: component (375) & 1.000 & 0.995 & 0.971 & 1.000 \\
-Memory + rules: process (300) & 1.000 & 1.000 & 1.000 & 1.000 \\
+Doc. + memory + structured (225) & 1.000 & 0.707 & 0.524 & 0.631 \\
+Memory + struct.: compliance (375) & 1.000 & 1.000 & 0.968 & 1.000 \\
+Memory + struct.: component (375) & 1.000 & 0.995 & 0.971 & 1.000 \\
+Memory + struct.: process (300) & 1.000 & 1.000 & 1.000 & 1.000 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -461,23 +594,23 @@ Memory + rules: process (300) & 1.000 & 1.000 & 1.000 & 1.000 \\
 \subsection{Field-aware abstention on Open Food Facts}
 \label{sec:off}
 We evaluate a GPT-4o-mini answerer given row context from Open Food Facts. The
-data uses a different schema. The evaluator receives the relevant product row or
-aggregate missingness row. It also receives the names of the fields required
-by the query. This is a field-aware row-context test. It does not evaluate
+data uses a different schema. The answerer receives the relevant product row
+or aggregate missingness row. Its prompt also names the fields required by the
+query. This is a field-aware row-context test. It does not evaluate
 retrieval over the raw data dump or transfer of the symbolic reasoner. A direct
 lookup is labeled unanswerable when its required field is absent. A missingness
 question asks whether a field is present, so it remains answerable.
 
 On 4,021 queries, decision accuracy is 0.972. Answer accuracy is 0.963 at
-0.730 coverage (Table~\ref{tab:off}). Fixed-width-bin ECE is 0.021, and AURC
-is 0.025. These figures use a text-based rule applied after generation during
-rescoring. It treats answers such as ``Missing'' or ``Insufficient context'' as
-abstentions, even when the model's JSON flag says otherwise. Missingness
-questions are exempt because ``missing'' is a valid factual answer. The raw
-flag marks 385 abstentions. Its recall against the unanswerable labels is 0.353.
-The text-based rule reclassifies 702 more outputs, producing 1,087 abstentions.
-Of these, 1,085 match the unanswerable labels. Effective abstention precision
-is 0.998 and recall is 1.000.
+0.730 coverage (Table~\ref{tab:off}). Fixed-width-bin ECE is 0.021. These
+figures use a text-based rule applied after generation during rescoring. It
+treats answers such as ``Missing'' or ``Insufficient context'' as abstentions,
+even when the model's JSON flag says otherwise. Missingness questions are
+exempt because ``missing'' is a valid factual answer. The raw flag marks 385
+abstentions. Its recall against the unanswerable labels is 0.353. The
+text-based rule reclassifies 702 more outputs, producing 1,087 abstentions. Of
+these, 1,085 match the unanswerable labels. Effective abstention precision is
+0.998 and recall is 1.000.
 Sustainability is the weakest category. Its answer accuracy is 0.787 at 0.380
 coverage. The fairness subset has only 19 questions. It is too small to
 support a separate claim.
@@ -486,22 +619,23 @@ support a separate claim.
 \centering
 \caption{Results on Open Food Facts ($n{=}4021$) after text-based abstention
 rescoring. Decision accuracy credits a correct answer or abstention.
-Answer accuracy covers answered queries only.}
+Answer accuracy covers answered queries only. ECE uses ten fixed-width bins
+and post-rescoring decision correctness.}
 \label{tab:off}
 \footnotesize
 \setlength{\tabcolsep}{4pt}
 \renewcommand{\arraystretch}{1.0}
-\begin{tabular}{lcccccc}
+\begin{tabular}{lccccc}
 \toprule
-Query type & $n$ & Dec.\ acc. & Ans.\ acc. & Coverage & ECE & AURC \\
+Query type & $n$ & Dec.\ acc. & Ans.\ acc. & Coverage & ECE \\
 \midrule
-All & 4021 & 0.972 & 0.963 & 0.730 & 0.021 & 0.025 \\
+All & 4021 & 0.972 & 0.963 & 0.730 & 0.021 \\
 \midrule
-nutrition & 1450 & 1.000 & 1.000 & 0.696 & 0.004 & 0.000 \\
-attribute & 1146 & 0.998 & 1.000 & 0.998 & 0.002 & 0.000 \\
-missingness & 367 & 0.929 & 0.929 & 1.000 & 0.071 & 0.084 \\
-sustainability & 1039 & 0.919 & 0.787 & 0.380 & 0.060 & 0.071 \\
-fairness & 19 & 1.000 & 1.000 & 1.000 & 0.000 & 0.000 \\
+nutrition & 1450 & 1.000 & 1.000 & 0.696 & 0.004 \\
+attribute & 1146 & 0.998 & 1.000 & 0.998 & 0.002 \\
+missingness & 367 & 0.929 & 0.929 & 1.000 & 0.071 \\
+sustainability & 1039 & 0.919 & 0.787 & 0.380 & 0.060 \\
+fairness & 19 & 1.000 & 1.000 & 1.000 & 0.000 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -514,29 +648,29 @@ not part of the frozen external-baseline comparison. Saved outputs contain an
 answer for every row. \Compass\ records 0.9749 accuracy and AURC 0.0115.
 \RAGBase\ records 0.8973 accuracy and AURC 0.1027. \Compass\ alone is correct
 on 266 paired rows. \RAGBase\ alone is correct on none ($p<10^{-6}$).
-\Compass\ receives retrieved evidence plus memory and rule pathways. The
+\Compass\ receives retrieved evidence plus memory and symbolic pathways. The
 comparison therefore does not isolate a single causal mechanism.
 
 \begin{table}[h]
 \centering
-\caption{Archived component comparison ($n{=}3429$). AURC uses every unique
-confidence threshold. Dashes mark modes omitted from that calculation.}
+\caption{Archived component and query-type results ($n{=}3429$). AURC uses
+every unique score. Dashes mark modes omitted from that calculation.}
 \label{tab:summary}
 \footnotesize
-\setlength{\tabcolsep}{6pt}
+\setlength{\tabcolsep}{2.6pt}
 \renewcommand{\arraystretch}{1.0}
-\begin{tabular}{lccc}
+\begin{tabular}{lcccccc}
 \toprule
-Method & Accuracy & 95\% CI & AURC \\
+Method & Acc. & 95\% CI & AURC & Logic & Open & Recall \\
 \midrule
-\Compass & 0.9749 & [0.9691, 0.9796] & 0.0115 \\
-\RAGBase & 0.8973 & [0.8867, 0.9071] & 0.1027 \\
-\RLMode & 0.8965 & [0.8858, 0.9062] & 0.4220 \\
-\MemSymMode & 0.5777 & [0.5611, 0.5942] & 0.1377 \\
-\MemMode & 0.5001 & [0.4834, 0.5169] & -- \\
-\SymOnly & 0.0965 & [0.0871, 0.1069] & 0.4158 \\
-\RouterMode & 0.0869 & [0.0779, 0.0968] & 0.4269 \\
-\BaseMode & 0.0169 & [0.0131, 0.0218] & -- \\
+\Compass & 0.9749 & [0.9691, 0.9796] & 0.0115 & 0.7085 & 1.0000 & 1.0000 \\
+\RAGBase & 0.8973 & [0.8867, 0.9071] & 0.1027 & 0.0102 & 1.0000 & 0.9283 \\
+\RLMode & 0.8965 & [0.8858, 0.9062] & 0.4220 & 0.0034 & 1.0000 & 0.9271 \\
+\MemSymMode & 0.5777 & [0.5611, 0.5942] & 0.1377 & 0.7085 & 0.5320 & 0.6571 \\
+\MemMode & 0.5001 & [0.4834, 0.5169] & -- & 0.0136 & 0.5320 & 0.5842 \\
+\SymOnly & 0.0965 & [0.0871, 0.1069] & 0.4158 & 0.9051 & 0.0000 & 0.0765 \\
+\RouterMode & 0.0869 & [0.0779, 0.0968] & 0.4269 & 0.7932 & 0.0000 & 0.0765 \\
+\BaseMode & 0.0169 & [0.0131, 0.0218] & -- & 0.1966 & 0.0000 & 0.0000 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -560,7 +694,7 @@ marked rows. It does not estimate the precision of individual SPARQL rules.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.72\linewidth]{artifacts/risk_coverage.pdf}
+\includegraphics[width=0.58\linewidth]{artifacts/risk_coverage.pdf}
 \caption{Risk--coverage curves from the archived pooled run. \RAGBase\ has
 one tied confidence value, so only its full-coverage endpoint is attainable.
 The line from zero coverage is drawn only to calculate AURC.}
@@ -570,14 +704,12 @@ The line from zero coverage is drawn only to calculate AURC.}
 \section{Discussion and limitations}
 \label{sec:disc}
 \paragraph{Interpretation.}
-The frozen verified and compositional studies provide the main evidence. The
-verified release contains far more logic questions than the archived run. The
-controlled benchmark shows the largest losses when a baseline must combine
-document and memory evidence. Open and recall questions in the archived run
-are saturated. They offer little separation between architectures. The
-archived comparison marks 273 cases as using a symbolic path. All are labeled
-correct, but this result does not isolate rule effects. Thresholding also
-reduces observed risk. Missing reference labels make this evidence secondary.
+The two frozen studies provide the strongest evidence. In the verified study,
+most \Compass\ outputs follow deterministic document or graph paths. In the
+composition study, the largest gap appears when supplied evidence spans
+documents, memory, and structured facts. The archived run is secondary because
+2,084 reference labels cannot be recovered. Its 273 symbolic-path cases are
+all correct, but they do not isolate individual rule effects.
 
 \paragraph{Calibration.}
 High accuracy does not imply reliable probabilities. The archived field named
@@ -585,28 +717,32 @@ High accuracy does not imply reliable probabilities. The archived field named
 a calibrated probability. Equal-count bins contain
 similar numbers of predictions. Fixed-width bins divide the confidence range
 into equal intervals. With equal-count bins, ECE is 0.5247 for \Compass\ on the
-archived run. Its bootstrap 95\% interval
-is [0.5181, 0.5311], and its Brier score is 0.3165. \RAGBase\ has ECE 0.4873,
-with interval [0.4771, 0.4967]. Both are poorly calibrated in the source
-domains. Open Food Facts gives better values. Its equal-count ECE is 0.0328,
-with interval [0.0276, 0.0377], and its Brier score is 0.0287. Its
-fixed-width-bin ECE is 0.021. The studies differ in task and domain. These
-results do not show that one calibration method will transfer.
+archived run. A row bootstrap, which resamples saved rows with replacement,
+gives a 95\% interval of [0.5181, 0.5311]. Its Brier score is 0.3165.
+\RAGBase\ has ECE 0.4873, interval [0.4771, 0.4967], and is also poorly
+calibrated. Open Food Facts has equal-count ECE 0.0328, interval [0.0276,
+0.0377], Brier 0.0287, and fixed-width ECE 0.021. Because templates repeat,
+the intervals describe saved rows rather than a population of natural
+queries. The tasks also differ, so calibration does not necessarily transfer.
 
 \paragraph{Filtering and validator checks.}
 \label{sec:filtering}
 The verified filter removes 645 of 6,915 rows. It checks source support,
 ambiguity, and whether each reference answer is a single value. It does not
-read system predictions. Before filtering, accuracies are 0.9721 for \Compass,
-0.9424 for \LongCtx, 0.9202 for
-LINC-style, and 0.9503 for \LogicLM. Every score rises after filtering. The
-gain is therefore not unique to \Compass.
+read system predictions. A retained audit scores the same saved outputs before
+and after filtering. Accuracy changes from 0.9721 to 0.9998 for \Compass,
+0.9424 to 0.9657 for \LongCtx, 0.9202 to
+0.9488 for LINC-style, and 0.9503 to 0.9699 for \LogicLM. The baseline scores
+in Table~\ref{tab:verified} come from the later frozen rerun and are slightly
+different. Filtering improves every system in the same-output audit. The gain
+from filtering is not unique to \Compass. Not every source file for this diagnostic is in the
+frozen package, so the summary cannot be fully recomputed from that package.
 
-The current scorer agrees with all archived labels in a sample of 100
-errors split almost equally across the three external baselines. Manual review
-flags 12 likely false negatives. In those cases, the exact-span rule requires
-an extra qualifier. This small audit does not establish the scorer's overall
-error rate. Static code
+The current deterministic scorer reproduces the archived decisions for a
+sample of 100 errors drawn roughly equally from the three external baselines.
+Manual review nevertheless identifies 12 likely false negatives. In these
+cases, the exact-span rule rejects an answer that omits an expected qualifier. This small audit
+does not establish the scorer's overall error rate. Static code
 inspection finds no imports between the question generator and runtime rule
 modules. They share the released ontology and seed data by design.
 
@@ -614,36 +750,30 @@ modules. They share the released ontology and seed data by design.
 The CE-RISE workbench has been demonstrated to consortium practitioners
 outside the development team. It shows retrieved passages, session memory,
 derived triples, raw confidence, and the selected answer path. We did not log
-historical session counts, user counts, or feedback. These demonstrations
-exposed the system to outside practitioners. They do not constitute a field-use
-or effectiveness study. Production evaluation remains future work.
+session counts, user counts, or feedback. The demonstrations therefore show
+outside exposure, not field effectiveness. Production evaluation remains
+future work.
 
 \paragraph{Scope.}
-The verified subset excludes ambiguous and unsupported items. The verified and
-compositional benchmarks are template-generated and reuse source entities. The
-LINC-style and Logic-LM-style baselines approximate their published procedures.
-They do not run the full solver systems. The external baselines and
-compositional run use the same
-dated model version. Four verified \Compass\ records retain only the
-model alias. The Open Food Facts study uses a supplied row and required field
-names. It does not test end-to-end retrieval or ontology transfer. The run used
-temperature zero. Its outputs retain the \texttt{gpt-4o-mini} alias but not a
-dated model version. We have not tested further product domains, model families,
-changing regulations, or production memory controls. Compliance-critical
-decisions still require human review.
+The verified subset excludes ambiguous and unsupported items. Both frozen
+benchmarks reuse source entities and templates. The LINC-style and
+Logic-LM-style baselines approximate, but do not run, the published solvers.
+External-baseline and composition-study model calls use the same dated version.
+Open Food Facts supplies the row and required field names, so it does not test
+retrieval or ontology transfer. Further domains, model families, regulatory
+change, and production memory controls remain untested.
 
 \section{Reproducibility and ethics}
 \paragraph{Reproducibility.}
 The \href{https://github.com/aeturzo/LLMEnhance}{public repository} includes a
 \href{https://github.com/aeturzo/LLMEnhance/tree/ijckg2026-phase-b-frozen-20260719}{frozen release tag}.
-It records run commits, file
-checksums, prompts, decoding settings, and resolved model identifiers where
-available. It also contains the questions, reference labels, and predictions
-for every item needed to recompute the verified and compositional results.
-Partner documents cannot be redistributed. Four verified \Compass\ LLM rows
-lack a dated model identifier. The Open Food Facts outputs also retain only
-the model alias. The pooled component comparison remains historical because
-2,084 rows lack recoverable reference labels.
+It records run commits, checksums, prompts, decoding settings, and resolved
+model identifiers where available. It also contains every question, reference
+label, and prediction needed to recompute the verified and compositional
+results. Partner documents cannot be redistributed. Four verified \Compass\
+LLM rows lack a dated model identifier; Open Food Facts retains only the model
+alias. The pooled comparison remains historical because 2,084 reference
+labels cannot be recovered.
 
 \paragraph{Ethics and responsible use.}
 Evidence can become stale as products, documents, or regulations change. A
@@ -651,19 +781,27 @@ deployment should show its evidence sources and log abstentions and human
 overrides. Compliance-critical answers require human review.
 
 \section{Conclusion}
-\Compass\ combines hybrid retrieval, session-scoped text memory, and targeted
-rules. On the template-generated verified benchmark, it answers 6,269 of 6,270
-questions correctly. The external baselines score 0.9512--0.9702. On the
-template-generated compositional benchmark, the full system answers all 3,000
-questions correctly. The baselines leave 122--328 errors. With later text-based
-rescoring, the Open Food Facts test reaches 0.972 decision accuracy.
+Reliable DPP question answering requires more than placing a long record in a
+prompt. Some answers must be copied from evidence. Others must combine a
+session fact with a document or derive a limited rule consequence. A system
+must also withhold an answer when the record is incomplete.
 
-Archived final answers marked as symbolic had no observed errors. The traces do
-not identify the rules used. In 702 Open Food Facts outputs, the text signaled
-missing evidence although the JSON abstention flag was false. These studies do
-not establish performance on unrestricted natural queries or in production.
-The stored confidence scores also remain poorly calibrated on the archived DPP
-run.
+\Compass\ addresses these needs with document retrieval, same-session text
+memory, symbolic graph lookup, and targeted derivation. The verified system
+answers 6,269 of 6,270 template-generated questions correctly, compared with
+0.9702 accuracy for the strongest external baseline. The complete composition
+pipeline answers all 3,000 controlled questions correctly. Its largest
+advantage appears when one question requires document, memory, and structured
+evidence. In the Open Food Facts study, later text rescoring recovers 702
+abstentions missed by the original JSON flag and yields 0.972 decision
+accuracy.
+
+The study design bounds these findings. Both main benchmarks repeat templates,
+and the Open Food Facts experiment supplies the relevant row and field names.
+The archived confidence scores are poorly calibrated, and the saved symbolic
+marks are not complete rule proofs. Thus, the results support \Compass\ on the
+released controlled tasks, not on unrestricted queries. Compliance decisions
+still require human review.
 
 \paragraph{Acknowledgements.}
 This work was funded by the European Union under Horizon Europe Grant
@@ -673,9 +811,9 @@ granting authority. Neither is responsible for them.
 
 \paragraph{Generative AI use disclosure.}
 The authors used generative AI tools for code review, evaluation support,
-consistency checks, and copy-editing. They defined the study and run settings.
-They checked item-level outputs and summary statistics, reviewed each
-interpretation, and take responsibility for the paper.
+consistency checks, and copy-editing. They set the study design, checked
+item-level outputs and summary statistics, reviewed every interpretation, and
+take responsibility for the paper.
 
 \bibliographystyle{splncs04}
 \bibliography{refs}

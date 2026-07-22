@@ -7,14 +7,26 @@ The verified subset removes 645 of 6,915 rows (9.3%) using evidence-only rules t
 | system                          |   unfiltered_n |   unfiltered_accuracy |   verified_n |   verified_accuracy |   delta |
 |:--------------------------------|---------------:|----------------------:|-------------:|--------------------:|--------:|
 | COMPASS                         |           6915 |                0.9721 |         6270 |              0.9998 |  0.0278 |
-| GPT-4o-mini + retrieved context |           6915 |                0.9424 |         6270 |              0.9662 |  0.0238 |
-| LINC-style prompted             |           6915 |                0.9202 |         6270 |              0.9512 |  0.0310 |
-| Logic-LM-style prompted         |           6915 |                0.9503 |         6270 |              0.9702 |  0.0199 |
+| GPT-4o-mini + retrieved context |           6915 |                0.9424 |         6270 |              0.9657 |  0.0233 |
+| LINC-style prompted             |           6915 |                0.9202 |         6270 |              0.9488 |  0.0286 |
+| Logic-LM-style prompted         |           6915 |                0.9503 |         6270 |              0.9699 |  0.0196 |
+
+These are the same-output pairs retained in
+`artifacts/phase_c_20260714/leakage_before_after.csv`. The final frozen
+baseline table comes from a later API rerun and has slightly different
+verified scores (0.9662, 0.9512, and 0.9702). Those later values must not be
+mixed with the earlier unfiltered outputs when estimating a filtering delta.
+Not every source CSV for the same-output diagnostic is packaged in the frozen
+branch, so the retained summary is not fully recomputable there.
 
 ## Validator-neutrality audit
 
 A deterministic, mode-balanced sample of 100 baseline errors is exported to `artifacts/phase_c_20260714/validator_audit_sample.csv` (seed 20260714).
-Current-validator rescoring disagreed with the archived label on 0 rows. Manual answer-versus-question review found 12/100 false negatives: the answer supplied the requested core value, but the exact-span validator required an additional qualifier or adjacent field. Every audit decision and note is included in the CSV.
+Current deterministic rescoring reproduced the archived outcome on all 100
+rows. Manual answer-versus-question review nevertheless judged 12/100 to be
+likely false negatives: the answer supplied the requested core value, but the
+exact-span validator required an additional qualifier or adjacent field. Every
+audit decision and note is included in the CSV.
 
 ## Generator/runtime separation
 

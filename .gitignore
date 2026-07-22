@@ -35,6 +35,14 @@ htmlcov/
 logs/
 *.log
 
+# ---- Local LaTeX build products ----
+/COMPASS_main*.aux
+/COMPASS_main*.bbl
+/COMPASS_main*.blg
+/COMPASS_main*.out
+/COMPASS_main*.pdf
+/COMPASS_main*.xdv
+
 # ---- Secrets / config ----
 .env
 .env.*
@@ -57,6 +65,8 @@ indices/**
 !indices/.gitkeep
 tables/**
 figures/**
+!figures/compass_architecture.tex
+!figures/compass_architecture.pdf
 artifacts/dev/**
 
 # ---- Eval/trace outputs (generated) ----
