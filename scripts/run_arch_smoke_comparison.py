@@ -511,6 +511,9 @@ def main() -> int:
 
     rows = load_benchmark_rows(args.data, limit=args.limit, sample_mixed=args.sample_mixed) if args.data else build_rows(args.n)
     args.out.parent.mkdir(parents=True, exist_ok=True)
+    # AUTO_COMPOSE reads its model from GEN_MODEL inside the application
+    # runtime. Keep it pinned to the same CLI snapshot as the baselines.
+    os.environ["GEN_MODEL"] = args.model
     os.environ["AUTO_COMPOSE_DISABLE_PRE_LLM_DIRECT_FALLBACK"] = "1"
     os.environ.pop("AUTO_COMPOSE_DISABLE_DIRECT_FALLBACK", None)
     os.environ["AUTO_COMPOSE_FAIL_ON_LLM_ERROR"] = "1"
@@ -530,6 +533,11 @@ def main() -> int:
     )
     doc_cache: Dict[str, List[Dict[str, str]]] = {}
     mem_cache: Dict[str, List[Dict[str, str]]] = {}
+    isolated_memory = os.environ.get("AUTO_COMPOSE_ISOLATED_MEMORY") == "1"
+    if isolated_memory:
+        if not os.environ.get("MEMORY_META_PATH"):
+            raise SystemExit("AUTO_COMPOSE_ISOLATED_MEMORY=1 requires MEMORY_META_PATH")
+        memory_service.reset_storage()
 
     fields = [
         "id", "mode", "domain", "subtype", "product", "session", "query",
@@ -647,8 +655,11 @@ def main() -> int:
                     if args.sleep:
                         time.sleep(args.sleep)
         finally:
-            for row in rows:
-                memory_service.flush_session(row["session"])
+            if isolated_memory:
+                memory_service.reset_storage()
+            else:
+                for row in rows:
+                    memory_service.flush_session(row["session"])
 
     summarize(rows, args.out, args.summary)
     print(args.summary.read_text(encoding="utf-8"))
